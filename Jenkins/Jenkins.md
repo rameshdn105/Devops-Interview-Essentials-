@@ -2,6 +2,7 @@ Idempotency: idempotent because applying it multiple times does not change the f
 -> No, Jenkins itself is not an example of idempotency. Jenkins is an open-source automation server
 -> However, the build and deployment processes defined within Jenkins can be designed to be idempotent. For example, if you set up a Jenkins job that builds a software application, you can configure it in such a way that running the build job multiple times will produce the same output or artifacts each time, assuming the codebase remains the same.
 
+
 Q. The errors or bugs in jenkins and how to troubleshoot it?
 -> There are many potential errors or bugs that can occur in Jenkins. Here are a few common issues that you might encounter:
 1. Build failures: One of the most common issues in Jenkins is build failures. This can 
