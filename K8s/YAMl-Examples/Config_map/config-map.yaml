@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: webapp-config-map
+data:
+  APP_COLOR: darkblue
+  APP_OTHER: disregard
+
+
+# kubectl create -f config-map.yaml

@@ -1,0 +1,8 @@
+1. What is terrafrom Workspace:
+-> A Terraform workspace is an isolated environment for managing infrastructure within a single Terraform configuration. 
+-> Workspaces allow you to have multiple, independent states for the same set of configurations. 
+-> This is useful when you want to create and manage different environments (like dev, staging, and production) using the same Terraform code.
+-> By default, Terraform uses the default workspace, but you can create and manage additional workspaces.
+
+2. How does terraform manage statefile for different workspaces?
+-> As we mention in backend configuration file, it will be stored with "env:/" folder inside S3 bucket we provide, it will create the various workspace folders like "Ex: dev, stage, prod".

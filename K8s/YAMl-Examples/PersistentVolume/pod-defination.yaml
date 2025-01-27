@@ -1,0 +1,28 @@
+
+# Once you create a PVC use it in a POD definition file by specifying the PVC Claim name under persistentVolumeClaim section in the volumes section like this:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: random-number-generator
+  labels:
+    app: alpine
+    type: alpine
+spec:
+  containers:
+    - name: alpine
+      image: alpine
+      command: ["/bin/sh", "-c"]
+      args: ["shuf -i 0-100 -n 1 >> /opt/number.out;"]
+      volumeMounts:
+        - mountPath: "/opt"
+          name: data-volume
+  volumes:
+    - name: mypd
+      persistentVolumeClaim:
+        claimName: myclaim
+
+
+# The same is true for ReplicaSets or Deployments. Add this to the pod template section of a Deployment on ReplicaSet.
+
+# Reference URL: [https://kubernetes.io/docs/concepts/storage/persistent-volumes/#claims-as-volumes\](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#claims-as-volumes)

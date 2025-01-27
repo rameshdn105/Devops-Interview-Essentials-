@@ -1,0 +1,10 @@
+Install the Helm Chart
+
+1. Package the chart:
+helm package my-helm-chart
+
+2. Install the chart:
+helm install devops-app ./my-helm-chart
+
+3. Verify the deployment:
+kubectl get all

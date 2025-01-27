@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: myclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: google-storage #from storage class, it would create PV automatically
+  resources:
+    requests:
+      storage: 500Mi
+# host path is not used in production environment so we followe below method
+
+# kubectl create -f pv-defiantion.yaml
+# kubectl get persistentvolumeclaim
