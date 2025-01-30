@@ -1,25 +1,21 @@
-Idempotency: idempotent because applying it multiple times does not change the final outcome.
--> No, Jenkins itself is not an example of idempotency. Jenkins is an open-source automation server
--> However, the build and deployment processes defined within Jenkins can be designed to be idempotent. For example, if you set up a Jenkins job that builds a software application, you can configure it in such a way that running the build job multiple times will produce the same output or artifacts each time, assuming the codebase remains the same.
+Idempotency: It refers to the property of an operation where performing the operation multiple times has the same effect as performing it once
 
+-> No, Jenkins itself is not an example of idempotency. Jenkins is an open-source automation server.
+-> Jenkins Pipelines Can Be Idempotent
+-> However, the build and deployment processes defined within Jenkins can be designed to be idempotent.
 
 Q. The errors or bugs in jenkins and how to troubleshoot it?
 -> There are many potential errors or bugs that can occur in Jenkins. Here are a few common issues that you might encounter:
-1. Build failures: One of the most common issues in Jenkins is build failures. This can 
-   occur for a variety of reasons, such as code issues, configuration errors, or problems with dependencies. 
-2. Plugin conflicts: Jenkins relies heavily on plugins to extend its functionality. However, 
-   sometimes plugin conflicts can occur, which can cause issues such as broken builds or problems with job execution.
-3. Resource constraints: Depending on the size and complexity of your Jenkins setup, you may encounter 
-   resource constraints, such as CPU or memory limitations, that can affect performance and lead to errors.
+1. Build failures: One of the most common issues in Jenkins is build failures. This can occur for a variety of reasons, such as code issues, configuration errors, or problems with dependencies. 
+2. Plugin conflicts: Jenkins relies heavily on plugins to extend its functionality. However, sometimes plugin conflicts can occur, which can cause issues such as broken builds or problems with job execution.
+3. Resource constraints: Depending on the size and complexity of your Jenkins setup, you may encounter resource constraints, such as CPU or memory limitations, that can affect performance and lead to errors.
 4. Security vulnerabilities: As with any software, there is always the risk of security vulnerabilities in Jenkins. 
-   These can be caused by issues with the core software or by vulnerabilities in third-party plugins.
-5. Networking issues: If your Jenkins instance is distributed across multiple servers or locations, 
-   you may encounter networking issues that can affect connectivity and cause job failures.
+-> These can be caused by issues with the core software or by vulnerabilities in third-party plugins.
+5. Networking issues: If your Jenkins instance is distributed across multiple servers or locations, you may encounter networking issues that can affect connectivity and cause job failures.
 
 -> To troubleshoot errors or bugs in Jenkins, it's important to gather as much information as possible about the issue. 
 1. looking at logs, monitoring metrics, or consulting documentation and support resources. 
--> Once you have identified the issue, you can work to develop and test a solution, and then roll out the 
-   fix carefully and with minimal disruption to end-users.
+-> Once you have identified the issue, you can work to develop and test a solution, and then roll out the fix carefully and with minimal disruption to end-users.
 
 Q: Difference between http clone and ssh clone?  
 -> ssh has the advantage that you can use public key authentication, while you must use a username and password with HTTPS.
@@ -73,8 +69,9 @@ after changing, restart jenkins,
 	To restart: jenkins.exe restart.
 
 Q. how will you change the port no. of jenkins?
--> sudo nano /etc/default/jenkins-->Scroll down and change HTTP portnumber-->sudo systemctl restart jenkins
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> sudo nano /etc/default/jenkins-->Scroll down and change HTTP portnumber-->sudo systemctl restart Jenkins
+
+-----------------------------------------------------------------------------------
 /var/lib/jenkins : default home directory: home folder, log folder, port confgs, encrypting jenkins
 /var/lib/jenkins/plugins: installed plugins will be there
 /var/log/jenkins : services related logs
@@ -153,19 +150,12 @@ Jenkins Slave:
   Jenkins pick the next available Slave.
 
 ----------------------------------------------------------------------------------------------------------------------------------------------
-Setting Up worker node:
+Setting Up EC2 instance  as worker node:
 ----------------------------------------
 
-1. Cloud
-2. Node
-
-1. Cloud:
-1.1 Install Amazon EC2 plugin (Manage Jenkins-plugin-Amazon EC2)
-1.2 Setting up worker node: (Manage Jenkins-Cloud-New cloud-Cloud NAme{Demo}-Type{EC2})
-1.3 Amazon EC2 Credentials: AWS IAM Access Key used to connect to EC2 {To provision instance}
-1.4 EC2 Key Pair's Private Key: SSH private key value {For master to authenticate with agent}
-1.5 AMI: AMI ID need to be provided, Security Gorup name, Remote FS root, Remote user: ubuntu, Remote ssh port:22
-1.6 Labels: Provide label name so that we can use it in pipeline [Idle termination time:30min], provide inline script if you want.
+1. Install Amazon EC2 plugin (Manage Jenkins-plugin-Amazon EC2)
+2. Setting up worker node: (Manage Jenkins-Cloud-New cloud-Cloud NAme{Demo}-Type{EC2})
+3. 
 
 
 ** What are the ways to configure Jenkins node agent to communicate with Jenkins master?
@@ -245,31 +235,28 @@ Q. How to secure jenkins?
    ## manage jenkins -> confg global securty -> select LDAP Security realm -> fill server details & test LDAP setting -> save
 
 2. Authorization:  what they can do, permission
-	a. matrix based security: it will allow to give required permission for a user by checking the checkboxes. (To add users here, you need to add users under, {Manage jenkins-Users-Add user})
+	a. matrix based security: it will allow to give required permission for a user by checking the checkboxes.
 	b. Role based authorization strategy
    ## manage jenkins -> confg global securty -> select matrix based security-> select checkboxes
 
-3. Enable CSRF Protection (Crumb Issuer: called a "crumb"):
--> CSRF (Cross-Site Request Forgery) is a type of attack where a malicious website or attacker tricks a user into performing actions on a web application without their knowledge or consent. In the context of Jenkins, CSRF can occur when an attacker makes authenticated requests on behalf of a user (for example, triggering builds, changing configurations, etc.).
+3. Enable CSRF Protection: Cross-Site Request Forgery
+-> Cross-Site Request Forgery (CSRF) protection should be enabled to prevent unauthorized commands being executed on behalf of authenticated users. This is   usually enabled by default in recent Jenkins versions.
 -> Cross-Site Request Forgery (CSRF): also known as "one-click attack" or "session riding," is a type of web security vulnerability that allows an attacker   to execute unauthorized actions on behalf of an authenticated user. It occurs when a user unknowingly performs actions on a web application without their consent.
-
-4. Markup Formatter:
--> security feature that controls how Jenkins processes and displays user-generated content (such as descriptions, job outputs, and other text-based inputs) that might contain HTML or other markup.
-** Purpose:
-a. The Markup Formatter is designed to prevent Cross-Site Scripting (XSS) attacks by ensuring that user input is either sanitized or restricted to prevent dangerous HTML or JavaScript from being executed.
-b. XSS attacks occur when an attacker injects malicious code (such as JavaScript) into a web page viewed by others. In Jenkins, malicious code could be injected into fields like job descriptions, parameters, or console outputs.
 
 4. Secure Jenkins Home Directory:
 -> Restrict access to the Jenkins home directory (usually located at /var/lib/jenkins) to authorized users and processes.
-
 5. Backup and Recovery:
 -> Regularly backup your Jenkins configuration and data. Implement a disaster recovery plan to restore Jenkins in case of any security incidents or hardware failures.
-
 6. Network Security:
 -> Implement proper network security measures, such as firewall rules, to restrict access to Jenkins from specific IP addresses or networks.
 	
+7. In-process Script Approval
+-> This protection is provided by the "Script Security plugin". As soon as an unsafe method is used in any of the scripts, the "In-process Script Approval" action should appear in "Manage Jenkins" to allow Administrators to make a decision about which unsafe methods, if any, should be allowed in the Jenkins environment.
+-> Designed to prevent the execution of unapproved or potentially dangerous scripts that could pose a security risk. It gives administrators control over which scripts can be executed and provides an approval process for scripts that need to run.
+
+
 Q. How do you store credentials in Jenkins securely?
--> Credentials can be stored securely in Jenkins using the Credentials plugin, which stores different types of credentials like - Username with a password,  SSH username with the private key, AWS Credentials, Jenkins Build Token, Secret File/Text, X509 & other certificates, Vault related credentials securely with proper encryption & decryption as and when required.
+-> Credentials can be stored securely in Jenkins using the Credentials plugin, which stores different types of credentials like - "Username with a password",  "SSH username with the private key", "AWS Credentials", "Jenkins Build Token", "Secret File/Text", "X509 & other certificates", "Vault related credentials" securely with proper encryption & decryption as and when required.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 3. What are the common use cases Jenkins is used for?
@@ -293,47 +280,34 @@ Q. How do you store credentials in Jenkins securely?
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 5. What is a Jenkins job?
--> A Job/Project is the fundamental unit of a logical work (like a software build, an automation task, test execution, etc) using the Jenkins automation server and other required plugins, configurations & infrastructures.
+-> A Job/Project is the fundamental unit of a logical work (like a software build, an automation task, test execution, etc) 
+   using the Jenkins automation server and other required plugins, configurations & infrastructures.
 *  Jobs can be of different types like - a freestyle project, a multi-configuration project, a pipeline project, a multi-branch project, etc.
 *  common job: sotware build, maven, freestyle, multistazze jobs, sonarquube, nexus these are common jobs
 
 -> Types of Jobs in Jenkin:
 ** Freestyle Project: Allows users to automate simple jobs, such as running tests, creating and packaging applications, producing reports, or executing commands. Freestyle projects are repeatable and contain both build steps and post-build actions.
-
 ** Pipeline: A DevOps pipeline is the set of automated processes and tools that the development and operations teams use to compile, construct, test, and deploy software code faster and easier. However, the term "pipeline" isn't an exact fit; it's more like an assembly line.
-
-** Multibranch Pipeline: It enables you to implement different Jenkinsfiles for different branches of the same project. 
--> In a Multibranch Pipeline project, Jenkins automatically discovers, manages and executes Pipelines for branches which contain a Jenkinsfile in source control.
--> Jenkins uses the SCM plugin (such as the Git plugin) to scan the connected repository for branches. Jenkins then executes the pipeline defined in the Jenkinsfile for each branch.
--> Branch Discovery strategies: you can configure Jenkins to build only specific branches using Branch Discovery strategies
-
+** Multiconfiguration Projects: We can create only one job with many configurations. Each configuration will be executed as a separate job. This is exactly what we need to simplify our scheduled tests, which can be used in conjunction with TestComplete or TestExecute.
 ** Folder: allows users to create "folders" to organize jobs. Users can define custom taxonomies (e.g. by project type, organization type).
--> Folder Job is essentially a container or a way to organize and group jobs (projects) together within the Jenkins UI. It doesn't execute any builds by itself, but it helps in managing jobs in a structured, hierarchical manner. Folder jobs allow you to categorize Jenkins projects, making it easier to manage and navigate a large number of jobs.
-
 ** GitHub organization: The Github Organization project module handles creating Jenkins Github Organization jobs, which are made up of multibranch pipelines for all repositories containing the specified Jenkinsfile(s). You may specify githuborg in the project-type attribute of the Job definition. Plugins required: GitHub Branch Source Plugin.
-
-** Multiconfiguration Projects/Matrix Projects or Multi-Branch Pipeline with Multiple Configurations: 
--> We can create only one job with many configurations. Each configuration will be executed as a separate job. This is exactly what we need to simplify our scheduled tests, which can be used in conjunction with TestComplete or TestExecute.
--> Allows you to run the same pipeline job across multiple configurations. This is useful when you need to test or build the same project under different conditions, such as multiple operating systems, JDK versions, or other environment variations.
-Key Concepts
-1. Matrix: In Jenkins, a matrix project allows you to define a set of axes (e.g., OS, JDK version) and run a job for each combination of those axes.
-2. Axes: These are variables that Jenkins uses to determine how to split the job. For example, an axis could be different operating systems (Linux, Windows), or different versions of Java (JDK 8, JDK 11).
-3. Configuration: A configuration is a specific combination of axis values, and Jenkins will run the pipeline with each configuration.
+** Multibranch Pipeline: It enables you to implement different Jenkinsfiles for different branches of the same project. In a Multibranch Pipeline project, Jenkins automatically discovers, manages and executes Pipelines for branches which contain a Jenkinsfile in source control.
 
 -> Difference between freestyle and pipeline:
 1. The main aim of the freestyle project is implementing, developing, or running simple jobs such as enabling you to specify the version control system from where you need to extract code and build it and call tests.  Freestyle projects are for orchestration simple jobs for a project.
 2. Pipeline Project is better either to set up a CD pipeline or to define the deployment pipeline as code. 
 The pipeline project is suitable to build pipelines for complex jobs whereas the freestyle project is suitable for simple jobs.
 
-** Triggering Stages while creating Jenkins job:
+** Stages while creating Jenkins job:
 - Build Trigger: It is used to trigger the job based on time, based on commit or if previous job is completed.
 - Build periodically: We have to mention time like crontab. It will trigger the build based on the time and also it is scheduler crontab.
   E.g: 1) we are deleting log file every tree hours.
        2) to purge log files to reduce the load on server Ex: eveery day or every monday at 10am.
 - Poll SCM: This will trigger based on commits within the specified time, job will be triggered based on commit.
 - Build Step: This is used to compile and make a target file and also compile and generate a binary.
-  - Execute shell, if you use execute shell it will executes shell scripts.
-- Post build-Action: this is used for post build activities like after deploying, you can run the test cases or sending an email notification or copying the shared path.
+             - Execute shell, if you use execute shell it will executes shell scripts.
+- Post build-Action: this is used for post build activities like after deploying, you can run the test cases or sending
+		    an email notification or copying the shared path.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 6. What is a Jenkins Pipeline?
@@ -367,7 +341,9 @@ For starters,
 - If Jenkinsfile starts with the word pipeline, then it’s a Declarative pipeline.
 - It is recommended using Declarative Pipeline as it offers more advantages over Scripted Pipeline.
 
-1. Scripted Pipeline: It uses the Groovy (JVM-based) language to create a pipeline as code. Some software developers prefer this pipeline because the use of Groovy code paves the way for making numerous APIs available. As a result, developers can orchestrate rather complex CD pipelines.
+1. Scripted Pipeline: It uses the Groovy (JVM-based) language to create a pipeline as code. Some software developers prefer 
+   this pipeline because the use of Groovy code paves the way for making numerous APIs available. As a result, developers 
+   can orchestrate rather complex CD pipelines.
 *  here node will be there, code defined in node block
 *  the steps/stages can be custom-defined & used using a groovy syntax which provides better control & fine-tuned execution levels.
 *  For creating scripted pipelines in Jenkins, developers must include a pipeline code within the UI(User Interface) and save it. 
@@ -390,8 +366,10 @@ node {
     }
 }
 
-2. Declarative Pipeline: It follows a relatively newer syntax, which narrows the scope of the pipeline structure through a pre-defined “minimum necessary structure.” 
--> On the technical front, the declarative syntax follows a conditional statement logic that generates a series of stages, executed sequentially throughout the pipeline’s lifecycle. 
+2. Declarative Pipeline: It follows a relatively newer syntax, which narrows the scope of the pipeline structure through a 
+pre-defined “minimum necessary structure.” 
+-> On the technical front, the declarative syntax follows a conditional statement logic that generates a series of stages, 
+executed sequentially throughout the pipeline’s lifecycle. 
 
 * Declarative Pipeline: It is the new way of witting jenkins pipeline with groovy declaratives.
 	- It is written in a file and is checked into git repo.
@@ -456,23 +434,26 @@ post {
                 subject: 'Deployment Notification',
                 to: 'user@example.com
 
-** Upstream and downstream job:
--> An upstream job is a configured project that triggers a project as part of its execution. 
--> A downstream job is a configured project that is triggered as part of a execution of pipeline. 
+*Upstream and downstream job:
+->An upstream job is a configured project that triggers a project as part of its execution. 
+->A downstream job is a configured project that is triggered as part of a execution of pipeline. 
   We can configure one or more projects as downstream jobs in Jenkins.
 
 Q. where is agent in jenkins:
 -> In Jenkins terminology, an agent is a machine that is set up to execute Jenkins jobs. 
--> The agent can be a physical or virtual machine, a container, or even a cloud instance.
+   The agent can be a physical or virtual machine, a container, or even a cloud instance.
 -> It can be /var/jenkins/agent/e2e-pipeline , but it varies according to your environment. 
    It is the working directory of the agent. Enter e2e-pipeline in Label. Select Launch agents via SSH in Launch method.
--> In Jenkins, go to Manage Jenkins, then Manage Nodes, then click New Node. Here you can give your agent node a name, then select Permanent Agent and click OK.
+-> In Jenkins, go to Manage Jenkins, then Manage Nodes, then click New Node. Here you can 
+   give your agent node a name, then select Permanent Agent and click OK.
    
 *Agents:
 1. Agent any: Runs pipeline/stage in any available agent.
 2. Agent docker: It uses docker container as a executer to pipeline stage
-3. Agent label: executes the stage on only labelled nodes, when you provide agent label each stage will mandatorily uses label node.
-4. Agent none: indicates there is no global agent for entire pipeline & each stage must specify its own agent.
+3. Agent label: executes the stage on only labelled nodes, when you provide agent label
+		each stage will mandatorily uses label node.
+4. Agent none: indicates there is no global agent for entire pipeline & each stage must
+		specify its own agent.
 5. Agent parallel: It run stages parallelly at a time.
 
 Stage: Defines particular stage (Build/test/deploy) of our job.
@@ -556,6 +537,8 @@ piepline groovy
 pipeline syntax
 maven comipler plugin
 
+
+
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 20. What is the Blue Ocean?
 Ans: Blue Ocean is the redefined user experience for Jenkins. Designed from the ground up for Jenkins Pipeline, it is still compatible with freestyle jobs, Blue Ocean reduces clutter and increases clarity. 
@@ -587,47 +570,46 @@ And as we can guess, this can be extended to several other extensible credential
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Q. *What is a trigger? Give an example of how the repository is pulled when a new commit is detected.
-Ans: Triggers are used to define when and how pipelines should be executed.  When Jenkins is integrated with an SCM tool, for example, Git, the repository can be pulled every time there is a commit.
+Ans: Triggers are used to define when and how pipelines should be executed. 
+-> When Jenkins is integrated with an SCM tool, for example, Git, the repository can be pulled every time there is a commit.
 
 ->The Git plugin should be first installed and set up. 
 ->After this, you can build a trigger that specifies when a new build should be started. 
 For example, you can create a job that pulls the repository and triggers a build when a change is committed.
 
-What are the ways to trigger a Jenkins Job/Pipeline?
+Q. What are the ways to trigger a Jenkins Job/Pipeline?
 Ans: There are many ways we can trigger a job in Jenkins. Some of the common ways are as below -
-*Trigger an API (POST) request to the target job URL with the required data.
-*Trigger it manually from the Jenkins web application.
-*Trigger it using Jenkins CLI from the master/slave nodes.
-*Time-based Scheduled Triggers like a cron job.
-*Event-based Triggers like SCM Actions (Git Commit, Pull Requests), WebHooks, etc.
-*Upstream/Downstream triggers by other Jenkins jobs.
+** Trigger an API (POST) request to the target job URL with the required data.
+** Trigger it manually from the Jenkins web application.
+** Trigger it using Jenkins CLI from the master/slave nodes.
+** Time-based Scheduled Triggers like a cron job.
+** Event-based Triggers like SCM Actions (Git Commit, Pull Requests), WebHooks, etc.
+** Upstream/Downstream triggers by other Jenkins jobs.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 12. What is Jenkins Build Cause?
 Ans: Build Cause is a text attribute that represents what made a job's build to be triggered, say it could be a Jenkins User (from UI), Timer for Scheduled jobs, Upstream jobs for a job which was triggered by upstream job, etc. This is mainly used to identify the nature of the builds - be it nightly, manual, automated, etc.
 
 13. How Jenkins knows when to execute a Scheduled job/pipeline and how it is triggered?
-Ans: Jenkins master will have the cron entries set up for the jobs as per the scheduled Job's configurations. As and when the time for a particular job comes, it commands agents (based on the configuration of the job) to execute the job with required configurations.
+Ans: Jenkins master will have the cron entries set up for the jobs as per the scheduled Job's configurations. As and when the time 
+    for a particular job comes, it commands agents (based on the configuration of the job) to execute the job with required
+    configurations.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 15. What are the Scopes of Jenkins Credentials?
 Ans: Jenkins credentials can be of one of the two scopes - Global & System
-* Global - the credential will be usable across all the jobs configured in the Jenkins instance (i.e. for all jobs). This is more suited for user Jobs (i.e. for the freestyle, pipeline, or other jobs) to authenticate itself with target services/infrastructures to accomplish the purpose of the job)
-* System - This is a special scope that will allow the Jenkins itself (i.e. the core Jenkins functionalities & some installed plugins) to authenticate itself to external services/infrastructures to perform some defined tasks. E.g. sending emails, etc.
+** Global - the credential will be usable across all the jobs configured in the Jenkins instance (i.e. for all jobs). This is more suited for user Jobs (i.e. for the freestyle, pipeline, or other jobs) to authenticate itself with target services/infrastructures to accomplish the purpose of the job)
+** System - This is a special scope that will allow the Jenkins itself (i.e. the core Jenkins functionalities & some installed plugins) to authenticate itself to external services/infrastructures to perform some defined tasks. E.g. sending emails, etc.
 
 -> Reset password in jenkins: How to give security permission to new user?
 ** Navigate to "Manage Jenkins" -> "Security" -> "Configure Global Security" -> "Authentication"
-*Select the "Security Realm" (e.g. "Jenkins’ own user database") and click on "Save"
-*Go to "People" -> Click on a username for which you want to change the password (e.g. admin) -> "Configure" -> Enter a new password in the "Password" and "Confirm password" fields and click on "Save"
+** Select the "Security Realm" (e.g. "Jenkins’ own user database") and click on "Save"
+** Go to "People" -> Click on a username for which you want to change the 
+ password (e.g. admin) -> "Configure" -> Enter a new password in the "Password" and "Confirm password" fields and click on "Save"
 
 Q. If I forgot login password of my jenkins how do i reset?
-Ans: 
-Method 1:
--- Stop the Jenkins Server  "sudo systemctl stop jenkins
-"
--- We can disable the user security option in   /var/lib/jenkins/
--- nfg.xml  & restart jenkins. 
--- sudo systemctl start jenkins
+Ans: We can disable the user security option in   /var/lib/jenkins/
+confg.xml  & restart jenkins. 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 16. What is a Jenkins Shared Library and how it is useful?
@@ -681,6 +663,13 @@ You can also select the option Download now and Install after restart.
 You will now see a “No updates available” message if you already have the Git plugin installed.
 4. Once you install the plugins , go to Manage Jenkins on your Jenkins dashboard. You will see your plugins listed among the rest.
 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*How to set up jenkins job:
+Log in to the dashboard of Jenkins.
+Click on an item or job.
+Click on Configure.
+Check the build periodically option and set the desired cron.
+
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 What is post build step?
 -> Image result for post build actions in jenkins
@@ -713,7 +702,7 @@ Answer: The environmental variables in Jenkins can be set from the Configure scr
 Q. Default Environment Variables by Jenkins & How to introduce custom environment variables?
 Ans: Jenkins provides several environment variables by default like - BRANCH_NAME, BUILD_NUMBER, BUILD_TAG, WORKSPACE, etc.
 
-Q. Name a Jenkins environment variable you have used in a shell script or batch file.
+*Name a Jenkins environment variable you have used in a shell script or batch file.
 There are numerous environment variables that are available by default in any Jenkins build job. A few commonly used ones include:
 $BRANCH_NAME
 $BUILD_NUMBER
@@ -766,7 +755,7 @@ c) LDAP (Lightweight Directory Access Protocol)
 *A login page will be displayed and login with the created account.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Q. How do I add jenkins permission on a per job basis or give security permission to access jenkins?
+How do I jenkins permission on a per job basis or give security permission to access jenkins?
 -> You need Project-based Matrix Authorization Strategy in Global Configuration, and on the Job Configuration, use Enable Project-based Security.
 -> If you have administrator status go to "Jenkins configuration" (picture 1) and then to "Manage and assign roles" (picture 2). 
    Here you will see "Manage roles" and "Assign roles".
@@ -785,7 +774,7 @@ The Role Strategy plugin is meant to be used from Jenkins to add a new role-base
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Q) What is the Challenging job in jenkins?
 Ans: When I have installed Jenkins in first time in my server, after some time server failed, at that time we could not able to recover jenkins.
-So i have searched for high availability of plugin and we found German plugin and installed it.
+     So i have searched for high availability of plugin and we found German plugin and installed it.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Q) How do I parameterized a Jenkins file?
@@ -812,7 +801,8 @@ in side maven--> general,SC mgmt, build trigeers, build environment, pre steps, 
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------
 Q) how do we configure different jobs for different worker nodes using pipeine script?
-Ans: We can give agent as none in pipeline script. Where agent none indicates there  is no global agent for entire pipeline & each stage must specify its own agent.
+Ans: We can give agent as none in pipeline script. Where agent none indicates there  is no global agent for entire pipeline 
+& each stage must specify its own agent.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 23. What is Artifact Archival & how to do it in Pipelines?
@@ -830,7 +820,9 @@ systemctl jenkin saferestart
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Q. What is the reasons to build failure in jenkins?
 Ans: 3 reasons
-1) Normally build failure occurs due to diff in the versions if we are integrating maven project if the default version of maven installed in master or worker node is different from the maven version in the jenkins server page then we get build failure.
+1) Normally build failure occurs due to diff in the versions if we are integrating
+   maven project if the default version of maven installed in master or worker node is
+   different from the maven version in the jenkins server page then we get build failure.
 2) One more reason in case of plugins. Plugins should be installed correctly.
 3) We can get build failure if the pom file not found.
 
@@ -841,13 +833,15 @@ There are multiple methods to back up the Jenkins configurations such as:
 2. using the git repo
 3. using disk snapshots
 
-Steps:Using thin backup
-Step 1: Manage Jenkins ->manage plugins -> click on available ->select “Thin Backup”->install without start.
-Step 2: By clicking on the manage Jenkins from the Jenkins home page redirected to the next page which is having an option for Manage plugins. On the next page, we can see the available tab, now select Thin Backup plugin and click on Install without restart button.
 
-Steps:Using git repo
-Here we take backup of  /var/lib/jenkins
-We create separate git repo for jenkins & we can push jenkins configurations files to git repo. The we can clone it whenever we need it. Or we can write shell script to automate the task & the script takes the backup * stores it in the repo.
+Method 1: Using thin backup
+-- Install the ThinBackup Plugin: Manage Jenkins ->manage plugins -> click on available ->select “Thin Backup”->install without start.
+-- Configure ThinBackup Plugin: Manage Jenkins → ThinBackup, 
+-> Go to System Global setting, under them you will have Thinkbacup, their you give backup folder name, schedule back to happen
+1. Backup Directory: /path/to/backup/directory
+-> For example, if you configure /var/backups/jenkins as the backup directory, ThinBackup will create backups like: /var/backups/jenkins/jenkins-backup-2025-01-29.tar.gz
+2. Backup Schedule: You can set the frequency of backups, like daily, weekly, etc.
+3. Backup Retention: You can set how many backups to keep and automatically delete older backups.
 
 Jenkins Backup Using Thin Backup Plugin:
 -Full backup
@@ -857,25 +851,31 @@ Jenkins Backup Using Thin Backup Plugin:
 -Cleanup of differential backups
 
 
-*Explain how you can move or copy Jenkins from one server to another?
+Method 2: Using git repo
+-- Here we take backup of  /var/lib/jenkins
+-- We create separate git repo for jenkins & we can push jenkins configurations files to git repo. 
+-- Then we can clone it whenever we need it. 
+-- Or we can write shell script to automate the task & the script takes the backup * stores it in the repo.
+
+Method 3:Jenkins Backup Using Disk Snapshots
+-- Attach an external disk to your Jenkins server.
+-- Mount the disk to the server on a folder, say /jenkins_data
+-- If you have existing data, move all data from /var/lib/jenkins to /jenkins_data folder first.
+-- Symlink /var/lib/jenkins to /jenkins_data.
+-- Restart Jenkins and check if Jenkins is using the newly mounted disk.
+
+** Explain how you can move or copy Jenkins job from one server to another?
 I will approach this task by copying the jobs directory from the old server to the new one. There are multiple ways to do that, I have mentioned it below:
 You can:
 1) Move a job from one installation of Jenkins to another by simply copying the corresponding job directory.
 2) Make a copy of an existing job by making a clone of a job directory by a different name.
 3) Rename an existing job by renaming a directory. Note that if you change a job name you will need to change any other job that tries to call the renamed job.
 
-Jenkins Backup Using Disk Snapshots
-*Attach an external disk to your Jenkins server.
-*Mount the disk to the server on a folder, say /jenkins_data
-*If you have existing data, move all data from /var/lib/jenkins to /jenkins_data folder first.
-*Symlink /var/lib/jenkins to /jenkins_data.
-*Restart Jenkins and check if Jenkins is using the newly mounted disk.
-
 --------------------------------------------------------------------------------------------------------
 Q. What is updating mechanism in jenkins?
-Ans: If we have downloaded jenkin version using yum install then we can use yum update jenkins.
+Ans: If we have downloaded jenkins version using yum install then we can use yum update jenkins.
 -if you still fail to get latest version we can download the .war file & upgrade it manually.
-*download jenkins.war from goolge, in command promt use wget 
+*download jenkins.war from google, in command prompt use wget 
 *Before we copy new war file take backup of existing version of the jenkins.
 *copy new version of jenkins.war file into /usr/lib/jenkins/ & after this we have to restart jenkins.
 -systemctl stop jenkins
@@ -886,9 +886,8 @@ To check whether service is running or not
 Q. How do u configure webhook for automatic build , when developers commits?
 -> Webhooks can be used to configure automatic builds when developers commit code changes. 
 -> Here are the general steps to configure a webhook for automatic builds:
-1. Set up a webhook in your version control system: This typically involves configuring a webhook in the  
-   settings of your repository on the version control system (e.g. GitHub, Bitbucket, GitLab). 
-   The webhook should be configured to trigger a build when a commit is made to the repository.
+1. Set up a webhook in your version control system: This typically involves configuring a webhook in the settings of your repository on the version control system (e.g. GitHub, Bitbucket, GitLab). 
+-> The webhook should be configured to trigger a build when a commit is made to the repository.
 2. Create a build pipeline: Create a build pipeline using a tool like Jenkins, Travis CI, or CircleCI. 
    The pipeline should be configured to build the code in the repository when triggered by the webhook.
 3. Configure the webhook to trigger the build pipeline: This typically involves providing the URL of the 
@@ -933,9 +932,9 @@ where can we see jenkins realted logs?   /var/log/jenkins
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 17. How Jenkins jobs can be Triggered/Stopped/Controlled programmatically?
 Ans: Jenkins Remote Access API can be used to do things like - 
-*Retrieving information about jobs, views, nodes, builds, etc. from Jenkins for programmatic consumption. 
-*Trigger a build (both parameterized & non-parameterized), stop/abort a build, enable/disable a Job, group/remove jobs into/from views, etc.
-*Create/copy/modify/delete jobs. 
+** Retrieving information about jobs, views, nodes, builds, etc. from Jenkins for programmatic consumption. 
+** Trigger a build (both parameterized & non-parameterized), stop/abort a build, enable/disable a Job, group/remove jobs into/from views, etc.
+** Create/copy/modify/delete jobs. 
 and many other programming language-specific functionalities. It has wrappers for main programming languages like - Python, Ruby & Java. 
 It can be triggered via CURLas below -
 -> Jobs without parameters
@@ -947,12 +946,18 @@ curl JENKINS_URL/job/JOB_NAME/buildWithParameters --user USER:TOKEN --dataid=123
 
 Q. How to trigger Jenkins job remotely?
 Ans: We use this option when we want to trigger new builds by accessing a special predefined URL. 
-In Jenkins, as soon as we select the "Trigger builds remotely"  option, we can see the suggested URL. 
-Now our task is to build this URL and hit that URL in the browser. As part of it, we need to follow below steps:
-
-Copy URL (JENKINS_URL/job/Simple_Java_Program/build?token=TOKEN_NAME) and paste this URL somewhere in notepad.
-Put Jenkins URL like in case of mine it is http://localhost:8080/ in place of JENKINS_URL.
-Put the token name in place of TOKEN_NAME like I put 1234 in this case. We need to put the same token name in the Authentication token text box.
+-> In Jenkins, as soon as we select the "Trigger builds remotely"  option, we can see the suggested URL.
+-- Go to your Jenkins job.
+-- Click on Configure.
+-- In the job configuration page, under Build Triggers, check the option -- Trigger builds remotely (e.g., from scripts).
+-- A new field will appear where you need to specify a token. This token is used to authenticate the remote request.
+-- Enter a custom token (e.g., my-remote-token). This will be used in the URL for triggering the job.
+-- Trigger the Job Remotely: http://<jenkins-server>/job/<job-name>/build?token=<your-token>
+	- Replace <jenkins-server> with the Jenkins server's address.
+	- Replace <job-name> with the name of the job you want to trigger.
+	- Replace <your-token> with the token you set in the job configuration.
+Authentication: curl -u <username>:<api-token> http://jenkins.example.com/job/my-job/build?token=my-remote-token
+-> curl -u Shyam:11eb5414b6f9ad57b5a0b9c1f5fac679ca http://jenkins.example.com/job/my-job/build?token=my-remote-toke
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 18. How to get the Jenkins version programmatically in Jobs/Pipelines or nodes other than master?
@@ -962,32 +967,32 @@ Ans: To check the version of Jenkins, load the top-level page or any top-level R
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Q. What is the Jenkins User Content service?
-Ans: Jenkins has a mechanism known as "User Content", where administrators can place files inside the $JENKINS_HOME/userContent folder and these 
-     files are served from yourhost/jenkins/userContent.
--This can be thought of as a mini HTTP server to serve images, stylesheets, and other static resources that you can use from various description 
- fields inside Jenkins.
+-> The Jenkins User "Content Service" is a feature in Jenkins that allows users to store and serve content (such as files, artifacts, and other static assets) directly from the Jenkins server, which can be accessed via a URL. 
+-> User content path: /var/lib/jenkins/userContent
+-> This service is commonly used for serving files that are publicly or privately accessible and are tied to specific Jenkins jobs or builds.
+$$ http://<jenkins-server>/userContent/<file-path>
+-> Use cases: Artifact Storage, Static File Serving, Shared Resources
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Q. How can we share information between different build steps or stages in a Jenkins Job?
-Ans: Every build step or stage will be running in its process and hence sharing information between two different build steps is not so direct. We can use either a File, a Database Entry, an Environment Variable, etc. to share info from one build step to another or a post-build action.
+-> Every build step or stage will be running in its process and hence sharing information between two different build steps is not so direct. We can use either a File, a Database Entry, an Environment Variable, etc. to share info from one build step to another or a post-build action.
 
 Q. How code coverage is measured/tracked using Jenkins in a CI environment?
-Ans: Using language-specific code coverage plugins like JaCoCo, CodeCov, etc or generic tools/plugins like Sonarqube which will add the code coverage data to builds with some minor tweaks in the code and the same can be displayed as a graph in Jenkins.
+-> Using language-specific code coverage plugins like JaCoCo, CodeCov, etc or generic tools/plugins like Sonarqube which will add the code coverage data to builds with some minor tweaks in the code and the same can be displayed as a graph in Jenkins.
 
 Q. How can a job configuration be reset to an earlier version/state?
-Ans: From the Job details page, we can use Job Config History to - See diff, Review & Revert the Job configs from the history of changes we have 
-     made to a particular job.
-This will be super useful when a job is misconfigured by someone by mistake, it can be reviewed and reverted easily to any of its earlier states.
+-> From the Job details page, we can use Job Config History to - See diff, Review & Revert the Job configs from the history of changes we have made to a particular job.
+-> This will be super useful when a job is misconfigured by someone by mistake, it can be reviewed and reverted easily to any of its earlier states.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Q. How to install a Custom Jenkins Plugin or a Version of Plugin Not available in Jenkins Update Center?
-Generally, it is the best practice to use the latest version of a plugin. But there are ways to install custom plugins or outdated 
+-> Generally, it is the best practice to use the latest version of a plugin. But there are ways to install custom plugins or outdated 
 versions of a published plugin. Jenkins Plugins are exported using a .hpi file and the same can be installed in multiple ways -
 
-Using the Jenkins CLI
+-> Using the Jenkins CLI
 java -jar jenkins-cli.jar -s http://localhost:8080/ install-plugin SOURCE ... [-deploy] [-name VAL] [-restart]
 
-The above command Installs a plugin either from a file, an URL or from the update center.
+-> The above command Installs a plugin either from a file, an URL or from the update center.
 
 SOURCE: If this points to a local file, that file will be installed. If this is an URL, Jenkins downloads the URL and installs that
 as a plugin. Otherwise, the name is assumed to be the short name of the plugin in the existing update center (like "findbugs") and 
@@ -1051,36 +1056,28 @@ then go to https://ci.jenkins.io/job/Infra/job/jenkins.io/job/master/lastSuccess
 functionalities for that build.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Q. What is In-process Script Approval and how it works?
--> Jenkins, and several plugins, allow users to execute Groovy scripts in Jenkins. To protect Jenkins from the execution of malicious 
-   scripts, these plugins execute user-provided scripts in a Groovy Sandbox that limits what internal APIs are accessible.
--> This protection is provided by the Script Security plugin. As soon as an unsafe method is used in any of the scripts, the 
-   "In-process Script Approval" action should appear in "Manage Jenkins" to allow Administrators to make a decision about which unsafe 
-    methods, if any, should be allowed in the Jenkins environment.
+Q. What is "In-process Script Approval" and how it works?
+-> Jenkins, and several plugins, allow users to execute Groovy scripts in Jenkins. To protect Jenkins from the execution of malicious scripts, these plugins execute user-provided scripts in a Groovy Sandbox that limits what internal APIs are accessible.
+-> This protection is provided by the "Script Security plugin". As soon as an unsafe method is used in any of the scripts, the "In-process Script Approval" action should appear in "Manage Jenkins" to allow Administrators to make a decision about which unsafe methods, if any, should be allowed in the Jenkins environment.
 -> This in-process script approval inherently improves the security of the overall Jenkins ecosystem.
+-> designed to prevent the execution of unapproved or potentially dangerous scripts that could pose a security risk. It gives administrators control over which scripts can be executed and provides an approval process for scripts that need to run.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Q. Can we monitor Jenkins using common Observability tools?
-Ans: Common monitoring platforms like DataDog, Prometheus, JavaMelody & few others - have their corresponding Jenkins plugin, which 
-     when configured, sends Metrics to the corresponding Monitoring platform, which can then be Observed with the latest tools & 
-     technologies. The same can be configured with Alarms & Notifications for immediate attention when something goes wrong.
+-> Common monitoring platforms like DataDog, Prometheus, JavaMelody & few others - have their corresponding Jenkins plugin, which when configured, sends Metrics to the corresponding Monitoring platform, which can then be Observed with the latest tools & technologies. The same can be configured with Alarms & Notifications for immediate attention when something goes wrong.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Q. What is a Ping Thread in Jenkins and how it works?
-Ans: Jenkins installs "ping thread" on every remote connection, such as Controller/Agent connections, regardless of its transport 
-     mechanism (such as SSH, JNLP, etc.). The lower level of the Jenkins Remoting Protocol is a message-oriented protocol, and a ping 
-     thread periodically sends a ping message that the receiving end will reply to. The ping thread measures the time it takes for the 
-     reply to arrive, and if it’s taking excessive time (currently 4 minutes and configurable), then it assumes that the connection was 
-     lost and initiates the formal close down.
+-> Jenkins installs "ping thread" on every remote connection, such as Controller/Agent connections, regardless of its transport mechanism (such as SSH, JNLP, etc.). 
+-> The lower level of the Jenkins Remoting Protocol is a message-oriented protocol, and a ping thread periodically sends a ping message that the receiving end will reply to. 
+-> The ping thread measures the time it takes for the reply to arrive, and if it’s taking excessive time (currently 4 minutes and configurable), then it assumes that the connection was lost and initiates the formal close down.
 
-*This is to avoid an infinite hang, as some of the failure modes in the network cannot be detected otherwise. The timeout is also set 
- to a long enough value so that a temporary surge in the load or a long garbage collection pause will not trip off the close-down.
+** This is to avoid an infinite hang, as some of the failure modes in the network cannot be detected otherwise. The timeout is also set to a long enough value so that a temporary surge in the load or a long garbage collection pause will not trip off the close-down.
 
-*Ping thread is installed on both controller & agent; each side pings the other and tries to detect the problem from their sides.
+** Ping thread is installed on both controller & agent; each side pings the other and tries to detect the problem from their sides.
 
-*The ping thread time out is reported through java.util.logging. Besides, the controller will also report this exception in the agent 
- launch log. Note that some agent launchers, most notably SSH agents, writes all stdout/stderr outputs from the agent JVM into this
- same log file, so you need to be careful.
+** The ping thread time out is reported through java.util.logging. Besides, the controller will also report this exception in the agent launch log. 
+-> Note that some agent launchers, most notably SSH agents, writes all stdout/stderr outputs from the agent JVM into this same log file, so you need to be careful.
 
 --------------------------------------------------------------------------------------------------------------------------------
 Java installation for slaves
@@ -1157,12 +1154,9 @@ pipeline {
     }
 }
 -> In this example, the pipeline starts with the "Build" stage, which runs the "./build.sh" script. 
-   If this script fails and throws an exception, the pipeline will enter the "catch" block and execute the "catchError" step, 
-   which simply echoes a message to the console. After that, the pipeline continues to the next stage, "Test" and "Deploy".
--> It's worth noting that in this example, even if the build step fails, it will be executed, but the pipeline will not stop 
-   and will continue to the next stages, which are test and deploy.
--> You can also configure the pipeline to stop execution, in case of failure, by setting the "failFast" parameter to "true" 
-   in catchError() step. This can be useful if you want to stop the pipeline execution in case of critical failure.
+-> If this script fails and throws an exception, the pipeline will enter the "catch" block and execute the "catchError" step, which simply echoes a message to the console. After that, the pipeline continues to the next stage, "Test" and "Deploy".
+-> It's worth noting that in this example, even if the build step fails, it will be executed, but the pipeline will not stop and will continue to the next stages, which are test and deploy.
+-> You can also configure the pipeline to stop execution, in case of failure, by setting the "failFast" parameter to "true" in catchError() step. This can be useful if you want to stop the pipeline execution in case of critical failure.
 
 catchError(failFast: true) {
         echo "Build failed, pipeline is stopping."
@@ -1170,18 +1164,7 @@ catchError(failFast: true) {
 -> This way, the pipeline will stop execution, and the next stages will not be executed, in case of failure.
 
 ------------------------------------------------------------------------------------------------------------------------------------------
-Q. Set a pipeline, so that I should get a email notification, when build completes, when artifacts ares stored, when deployment is completed?
--> Using CI/CD tool Jenkins or GitLab CI
-   Here are the general steps to set up a pipeline with email notifications:
-1. Set up a CI/CD pipeline: Create a pipeline using Jenkins or GitLab CI that includes build, test, and 
-   deploy stages. Configure the pipeline to run automatically when code is committed to the repository.
-2. Set up email notifications: Configure Jenkins or GitLab CI to send email notifications when specific 
-   events occur in the pipeline. For example, you can set up email notifications to be sent when a build 
-   completes, when artifacts are stored, and when deployment is completed.
-3. Configure email settings: Provide the necessary information for the CI/CD tool to send email notifications, 
-   such as the email server, port, and credentials.
-4. Test the pipeline: Test the pipeline by committing code changes to the repository and checking to see 
-   if the pipeline runs correctly and sends email notifications when the specified events occur.
+Q. Set a pipeline, so that I should get a email notification, when build completes, when artifacts are stored, when deployment is completed?
 
 pipeline {
     agent any
@@ -1232,8 +1215,7 @@ pipeline {
 
 -----------------------------------------------------------------------------------------------------------------------------------------
 Q. Pipeline is running and tasks are not completed, how u fix it
--> We have a Release pipeline to manage our releases. The pipeline has stages that run an agentless job, and the job performs 
-   different tasks. I noticed that even though the tasks complete successfully, the job continues running until it eventually times out
+-> We have a Release pipeline to manage our releases. The pipeline has stages that run an agentless job, and the job performs different tasks. I noticed that even though the tasks complete successfully, the job continues running until it eventually times out.
    
 ------------------------------------------------------------------------------------------------------------------------------------------------
 Q. example of declarative pipeline with all stages involved for an web appliction?
@@ -1345,7 +1327,3 @@ script.groovy:
       echo 'buidling the application...'
    }
  return this
-
-
-        
-         

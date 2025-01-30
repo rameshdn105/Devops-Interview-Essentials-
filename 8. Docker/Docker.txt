@@ -339,7 +339,6 @@ Docker commands:
 ** docker start $(docker ps -a -q --filter "status=exited")
 
 
-
 ** docker save <container name>  : to save file to local desktop
 ** How to Create a .tar File for Loading (Using docker save):
 -> To use docker load, you need a .tar file created with the docker save command. For example:
@@ -609,6 +608,27 @@ COPY --from=builder /app /app
 RUN npm prune --production
 CMD ["npm", "start"]
 
+
+** Advantages of Alpine Images:
+------------------------------
+
+1. Small image size (around 5MB).
+2. Faster container builds and pulls.
+3. Lower storage consumption.
+4. Improved security with a smaller attack surface.
+5. Minimalistic (only essential packages).
+6. Faster container startup times.
+7. Ideal for microservices and single-purpose containers.
+
+Disadvantages of Alpine Images:
+------------------------------
+
+1. Compatibility issues with glibc-based applications.
+2. Limited package availability in Alpine repositories.
+3. Difficulties with debugging (lack of common debugging tools).
+4. Potential performance overhead due to musl libc.
+5. Learning curve with the apk package manager.
+6. More manual configuration required for some tools and libraries.
 
 ===================================================================================================================
 ** Docker has two options for containers to store files on the host machine, so that the files are persisted even after the container stops: Volumes, and Bind mounts.
