@@ -42,14 +42,13 @@ Q. An application is running in web with a port, how do u restart the applicatio
 
 --------------------------------------------------------------------------------------------------------------------------
 1. What is Jenkins?
--> Jenkins is a self-contained, open-source automation server that can be used to
-automate all sorts of tasks related to building, testing, and delivering or deploying software. 
+-> Jenkins is a self-contained, open-source automation server that can be used to automate all sorts of tasks related to building, testing, and delivering or deploying software. 
 
 -> Jenkins can be installed through native system packages, Docker, or even run standalone by any machine with a Java Runtime Environment (JRE) installed.
 
 Jenkins
  - It is a tool, that will automate the manual procedure.
- - It is called as CI/CD tool ; CI: Continous Integration ,  CD:Continous deployment
+ - It is called as CI/CD tool ; CI: Continuous Integration ,  CD:Continous deployment
 
 after changing, restart jenkins, 
 1. $$ sudo systemctl restart jenkins
@@ -196,7 +195,8 @@ h. delete workspace when build is done
 i. set build states on github commit
 
 * What are Parameters in Jenkins?
--> Parameters are supported by Agent section and they are used to support various use-cases pipelines. Parameters are defined at the top-level of the pipeline or inside an individual stage directive.
+-> Parameters are supported by Agent section and they are used to support various use-cases pipelines. 
+-> Parameters are defined at the top-level of the pipeline or inside an individual stage directive.
 
 Jenkins:
 -> Dashboard-> (General, Source code management, Build triggers, Build environment, Pre-Steps, Build, Post steps. Build settings)
@@ -298,7 +298,7 @@ Q. How do you store credentials in Jenkins securely?
 2. Pipeline Project is better either to set up a CD pipeline or to define the deployment pipeline as code. 
 The pipeline project is suitable to build pipelines for complex jobs whereas the freestyle project is suitable for simple jobs.
 
-** Stages while creating Jenkins job:
+** Triggers:
 - Build Trigger: It is used to trigger the job based on time, based on commit or if previous job is completed.
 - Build periodically: We have to mention time like crontab. It will trigger the build based on the time and also it is scheduler crontab.
   E.g: 1) we are deleting log file every tree hours.
@@ -621,10 +621,10 @@ Ans: As an organization starts using more and more pipeline jobs, there is a cha
 Typically, all five applications need their own Jenkinsfile, but the content of the Jenkinsfiles is going to be mostly the same. 
 Jenkins Shared Library avoids this repetition of pipeline code by creating a shared library.
 
-*How to create and use the shared library?
--Create a separate git repo for the Jenkins pipeline library & push the shared library code to that repo.
--Integrate the shared library repo in Jenkins under the Manage Jenkins section.
--Create Jenkinsfile in the project. In that Jenkinsfile, Import & use the shared library.
+** How to create and use the shared library?
+-> Create a separate git repo for the Jenkins pipeline library & push the shared library code to that repo.
+-> Integrate the shared library repo in Jenkins under the Manage Jenkins section.
+-> Create Jenkinsfile in the project. In that Jenkinsfile, Import & use the shared library.
 
 E.g.
 #!/urs/bin/env groovy
@@ -640,10 +640,10 @@ Even then if a job is waiting for more time for the nodes/agents, then it is tim
 Q. How to do Global Tools Configuration in Jenkins?
 Ans: Global Tools are tools that need to be installed outside the Jenkins environment and need to be controlled from within the Jenkins environment. 
     Hence it needs its corresponding Jenkins plugin as well. Steps to using a Global Tool generally include - 
-*Install the tool Plugin into the Jenkins instance, to include the global tool into a list of global tools used by Jenkins.
-*Install the tool in the Jenkins instance or provide away (maybe a command to download and) install the tool during runtime.
-*Go to Manage Jenkins -> Global Tools Configuration and Scroll through the tool list and configure the global tool-specific configurations.
-*Make use of the installed global Tool in your job/pipeline.
+** Install the tool Plugin into the Jenkins instance, to include the global tool into a list of global tools used by Jenkins.
+** Install the tool in the Jenkins instance or provide away (maybe a command to download and) install the tool during runtime.
+** Go to Manage Jenkins -> Global Tools Configuration and Scroll through the tool list and configure the global tool-specific configurations.
+** Make use of the installed global Tool in your job/pipeline.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Q: Where can we modify jenkins related settings?
@@ -874,10 +874,10 @@ You can:
 --------------------------------------------------------------------------------------------------------
 Q. What is updating mechanism in jenkins?
 Ans: If we have downloaded jenkins version using yum install then we can use yum update jenkins.
--if you still fail to get latest version we can download the .war file & upgrade it manually.
-*download jenkins.war from google, in command prompt use wget 
-*Before we copy new war file take backup of existing version of the jenkins.
-*copy new version of jenkins.war file into /usr/lib/jenkins/ & after this we have to restart jenkins.
+-> if you still fail to get latest version we can download the .war file & upgrade it manually.
+** download jenkins.war from google, in command prompt use wget 
+** Before we copy new war file take backup of existing version of the jenkins.
+** copy new version of jenkins.war file into /usr/lib/jenkins/ & after this we have to restart jenkins.
 -systemctl stop jenkins
 -systemctl start jenkins
 To check whether service is running or not
@@ -975,7 +975,8 @@ $$ http://<jenkins-server>/userContent/<file-path>
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Q. How can we share information between different build steps or stages in a Jenkins Job?
--> Every build step or stage will be running in its process and hence sharing information between two different build steps is not so direct. We can use either a File, a Database Entry, an Environment Variable, etc. to share info from one build step to another or a post-build action.
+-> Every build step or stage will be running in its process and hence sharing information between two different build steps is not so direct. 
+-> We can use either use a File, a Database Entry, an Environment Variable, etc. to share info from one build step to another or a post-build action.
 
 Q. How code coverage is measured/tracked using Jenkins in a CI environment?
 -> Using language-specific code coverage plugins like JaCoCo, CodeCov, etc or generic tools/plugins like Sonarqube which will add the code coverage data to builds with some minor tweaks in the code and the same can be displayed as a graph in Jenkins.

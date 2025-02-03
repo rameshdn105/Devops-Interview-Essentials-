@@ -234,7 +234,7 @@ we'l see capacitive reservations later
 
 EBS(Elastic blast store): 
 	Is used to store our data/volume.  Once u create EC2 instance, You can see volumes attached to each and  every instance. 
-	it can enable persistantly to keep the data.  even if EC2 stops, ur data remains. u can use it for persistant storaage. 
+	it can enable persistently to keep the data.  even if EC2 stops, ur data remains. u can use it for persistant storaage. 
 	once u create an EC2 , u can see a volume attached to it. and u stop ur instance and come back and see. u always ve volumes attached to it. 
 	n no of volumes can be attached to single instance. but single volume cannot be attached to multiple instances.
 	the reason is , u will not loose the data no matter what. usually, u can copy the data wihtin the same availability zone as well.
@@ -257,7 +257,7 @@ snapshot:
 			depending upon neeed, u can choose type of volumes u require..
  
  Instance store vs EBS volume:
- 1. EBS volume: to store persistant data.
+ 1. EBS volume: to store persistent data.
  2. Instance store: meant for inpersistant data. if instances are being stopped, u may loose ur data. u've start/termination options only. 
                  no stop option. u cannot stop ur instance.
     u cannot ve the replication/snap shot. if u r working on ad-hoc, then use instance store.
@@ -429,7 +429,9 @@ now, purpose fully, stop any one instance and referesh it. load balancerwill rou
       go to target group--see total targets,  healthy, unheathy instances, unused,  initial, draining.
 
 ==============================================================================================\
-------------day3------------demo,  and ## Auto scaling ##
+------------day3------------demo,  and 
+
+## Auto scaling ##
  Capacity reservations (in EC2):
 we ve 4 instances, 4 users are working. Total 16Gb of data/memory is there. each instance is taking 4Gb of memory. 
 1st person is using $gb, 2nd person is using 3Gb,  3rd person needs 4Gb and extra 1Gb. let, 4th person is using 2gb.  

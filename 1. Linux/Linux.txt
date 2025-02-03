@@ -229,7 +229,7 @@ syn : wc -c filename
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Redirect (>) command : It is used to write the o/p of one command to a destination file.
-If destinationfile exists It will override the content, if destinationfile doesn't exists it will create new file and redirect the o/p
+If destinationfile exists, It will override the content, if destinationfile doesn't exists it will create new file and redirect the o/p
 for eg : echo "stmt" > destinationfile
 
 Append (>>) : It is used to write the o/p of one command to a destination file.
@@ -328,7 +328,7 @@ syn : ping <ipaddress>
 -> Below image depicts how traceroute command is used to reach the Google(172.217.26.206) host from the local machine and it also prints detail about all the hops that it visits in between.
 
 ** Traceroute: Prints the route that a packet takes to reach the host. 
-It is useful when you want to know about the route & about all the hops that a packet takes.
+-> It is useful when you want to know about the route & about all the hops that a packet takes.
 
 Finger: Finger command is a user information lookup command which gives details of all the users logged in. This tool is generally used by system administrators. It provides details like login name, user name, idle time, login time, and in some cases their email address even.
 
@@ -437,25 +437,25 @@ There are 2 types of links
 1. soft link/ symbolic link
 2. Hard link
 
-Soft link/symbolic link : It is a shortcut to file, if any modifications done to a actual file it will get reflected in original file.
+** Soft link/symbolic link: It is a shortcut to file, if any modifications done to a actual file it will get reflected in original file.
 and if we delete original file then soft link will not work.
 syn : ln -s filename(fullpath) linkname
 
-Hard link :It is a shortcut to file, if any modifications done to a actual file it will get reflected in original file.
+** Hard link: It is a shortcut to file, if any modifications done to a actual file it will get reflected in original file.
 and if we delete original file then hard link will work because it points to a inode of a file.
 syn : ln filename(fullpath) linkname
 
 where inode is a unique identification number which indicates memory address of a file.
 
-*Use the ls -i command to view the inode number. Files that are hard-linked together share the same inode number. 
+** Use the ls -i command to view the inode number. Files that are hard-linked together share the same inode number. 
 The shared inode number is 2730074, meaning these files are identical data
 
-Soft Link (Symbolic Link)							Hard Link
-Type of Link	A reference to the target file/directory	Additional directory entry to the same file
-Data		Does not contain the actual data		Shares the same data with the original file
+Soft Link 			(Symbolic Link)						Hard Link
+Type of Link		A reference to the target file/directory	Additional directory entry to the same file
+Data			Does not contain the actual data		Shares the same data with the original file
 Impact on Target	Deleting the link does not affect target	Deleting any link does not affect data or other links
-Cross File Systems	Can span across different file systems	Limited to the same file system
-Supported for		Works for both files and directories	Only supported for files, not directories
+Cross File Systems	Can span across different file systems		Limited to the same file system
+Supported for		Works for both files and directories		Only supported for files, not directories
 
 Assignment : Explore Bashrc and Bash-profile
 

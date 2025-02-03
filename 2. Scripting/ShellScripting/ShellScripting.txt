@@ -116,7 +116,7 @@ From: shellscript.sh/variables2.html ,The variable $@ is all parameters $1 .. wh
        The variable $*, is similar, but does not preserve any whitespace, and quoting, 
        so "File with spaces" becomes "File" "with" "spaces".
 
-Numerics:  functions of shell script
+Numeric:  functions of shell script
 -----------------
 -----------------
 -eq--> equals

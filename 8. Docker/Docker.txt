@@ -102,18 +102,16 @@ $$ docker system df   : summary of disk usage in your Docker environment, includ
 
 $$ docker system df -v
 
-
 $$ du -sh /var/lib/docker/ (Check Docker disk usage on the host)
 
 $$ docker stats (Monitor container resource usage)
 -> The docker stats command provides real-time statistics for running containers, including CPU usage, memory usage, network I/O, and disk I/O. Although it doesn't directly show disk usage, it's useful for monitoring resource consumption.
 
-
 ** docker scan:  is used to scan Docker images for known vulnerabilities. It integrates with Snyk, a tool that helps to identify and fix security vulnerabilities in your images.
 $$ docker scan <image_name>
 $$ docker scan my-app:latest
 
- 2. docker inspect: The docker inspect command provides detailed information about containers, images, volumes, and networks. You can use it to review security settings for a container (e.g., capabilities, mount points, network settings).
+2. docker inspect: The docker inspect command provides detailed information about containers, images, volumes, and networks. You can use it to review security settings for a container (e.g., capabilities, mount points, network settings).
 $$ docker inspect <container_id_or_name>
 
 3. docker info: $$ docker info
@@ -126,7 +124,7 @@ bash
 Copy
 
 4. docker exec: $$ docker exec -it <container_id_or_name> <command>
-The docker exec command allows you to execute commands inside a running container. 
+-> The docker exec command allows you to execute commands inside a running container. 
 -------------------------------------------------------------------------------------------------------------------------------
 Q. daemon login and container login
 -> Daemon Login: In computing, a daemon is a background process that runs on a computer and performs specific tasks. 
@@ -151,9 +149,8 @@ Q. What is the difference containerd and runC?
 -> containerd is called a high-level container runtime. For some actions, it makes use of yet another runtime, called a low-level container runtime. This low-level runtime is called runc
 
 Q. What is docker system prune?
--> docker system prune is not safe to be used in production. It may clean up and reclaim space but there's a possibility that one 
-   or more containers will die and need to be restarted manually. In production apps, you want the images to fail gracefully and 
-   restart automatically.
+-> docker system prune is not safe to be used in production. It may clean up and reclaim space but there's a possibility that one or more containers will die and need to be restarted manually. 
+-> In production apps, you want the images to fail gracefully and restart automatically.
 
 Q. What are orphaned containers?
 -> Orphaned containers are basically containers you used previously, but you deleted the dependencies to them so you can't use them anymore, but they are still present on your computer.
@@ -194,10 +191,10 @@ Q. docker layer
 -> Docker stores all caches in /var/lib/docker/<driver> , where <driver> is the storage driver overlay2 again
 ---------------------------------------------------------------------------------------------------------------
 
-*Assignment- Dangling images and how to delete them.
+** Assignment- Dangling images and how to delete them.
 Ans: Simply an unused image that’s got no name and tag. You can easily spot dangling images when you run the $$ docker images command because they show up as <none>:<none>.
 
-*docker system prune :Remove all dangling images. If -a is specified, will also remove all images not referenced by any container.
+** docker system prune :Remove all dangling images. If -a is specified, will also remove all images not referenced by any container.
 --all , -a		Remove all unused images, not just dangling ones
 --filter		Provide filter values (e.g. 'until=<timestamp>')
 --force , -f		Do not prompt for confirmation
@@ -205,13 +202,13 @@ Ans: Simply an unused image that’s got no name and tag. You can easily spot da
 List dangling images:
 $ sudo docker images -f dangling=true
 
-*How Are Dangling Images Created?
+** How Are Dangling Images Created?
 -> Dangling images are usually created when an existing image gets superseded by a new build.
-*Can You Use a Dangling Image?
+** Can You Use a Dangling Image?
 -> Dangling images function like any other image. The only difference is the missing tag. 
 -> You can start a container from a dangling image by directly referencing the image’s ID.
 
-*Cleaning Up Dangling Images
+** Cleaning Up Dangling Images
 -> You can delete a single dangling image using the docker rmi command, just like any other image. 
    Because the image won’t be tagged, you’ll need to identify it by its ID.
 -> Docker image prune :Remove all dangling images.
@@ -306,17 +303,28 @@ Docker registries:
 Docker Engine overview:
 -> Docker Engine is an open source containerization technology for building and containerizing your applications. 
    Docker Engine acts as a client-server application with:
-* A server with a long-running daemon process dockerd.
-* APIs which specify interfaces that programs can use to talk to and instruct the Docker daemon.
-* A command line interface (CLI) client docker.
+** A server with a long-running daemon process dockerd.
+** APIs which specify interfaces that programs can use to talk to and instruct the Docker daemon.
+** A command line interface (CLI) client docker.
 -> The CLI uses Docker APIs to control or interact with the Docker daemon through scripting or direct CLI commands. 
    Many other Docker applications use the underlying API and CLI. 
    The daemon creates and manage Docker objects, such as images, containers, networks, and volumes.
 
--> Docker container: A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly 
-   and reliably from one computing environment to another. 
--> A Docker container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: 
-   code, runtime, system tools, system libraries and settings.
+Docker container vs image:
+Docker image:
+1. A Docker image is a read-only template used to create containers.
+2. It serves as a blueprint for creating containers. You can think of it like a class in object-oriented programming, while the container is an instance of that class.
+3. Images are stored on disk or in a Docker registry (like Docker Hub or private registries).
+4. Immutability: Once an image is created, it is immutable. You cannot change it directly. If you need a different version, you'd have to build a new image.
+5. Example: The official Ubuntu image or Nginx image available on Docker Hub (ubuntu:20.04 or nginx:latest).
+
+Docker Container:
+-> A Docker container is a runnable instance of a Docker image. It is a lightweight, isolated environment where the application defined in the image runs.
+-> Containers provide the actual environment where applications are executed. They are created based on images but have a writable layer, allowing them to store temporary data during execution.
+-> Runtime: Containers run in isolated environments and are created from images, meaning each container is an instance of a particular image.
+-> Mutable: Unlike images, containers are mutable. They can store data in their writable layer (e.g., files created during the container’s runtime).
+-> Lifecycle: A container starts when you run it, and it can be stopped or removed. The container can be restarted from the same image, but once deleted, its state is lost unless data is persisted in volumes.
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Docker Container Lifecycle Management or stages of container:
@@ -370,14 +378,13 @@ Docker commands:
 ** docker ps -a -->list all the containers
 
 ** docker container ls---> to list the running containers
-** docker	image ls
-** docker	volume ls
-** docker	network ls
+** docker image ls
+** docker volume ls
+** docker network ls
 
 ** docker ps -f status=exited --> list only exited containers or stopped containers   (-f // --filter)
 ** docker ps -f status=exited | xargs -l {}docker rm                    alternate command docker rm $(docker ps -q -f status=exited)
 ** docker start $(docker ps -a -q --filter "status=exited")
-
 
 ** docker save <container name>  : to save file to local desktop
 ** How to Create a .tar File for Loading (Using docker save):
@@ -385,7 +392,6 @@ Docker commands:
 1. Save an image to a file:
 $$ docker save -o my_image.tar my_image:latest
 2. Transfer or share the .tar file, and it can then be loaded using docker load.
-
 
 ** docker load < my_image.tar:
 -> to load a Docker image from a tar archive (usually created using the docker save command)
@@ -493,7 +499,6 @@ $$ docker rm <containerid>  => to remove container
 $$ docker rm -f <containerid>   => forcefully
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
-
 ** Docker Hub: To push the image to docker hub or  to the repository
  - each repository in docker hub refers to only one name
  - imagename should be also unique , can be same as repository name created in docker hub
@@ -544,8 +549,7 @@ ENV  <VAR_NAME1><VALUE> <VAR_NAME2><VALUE> <VAR_NAME3><VALUE>---> It is used to 
 
 EXPOSE 5000		# Expose the port the Flask application will be listening on
 
--> Dockerfile provides a dedicated variable type ENV to create an environment variable. We can access ENV values during the build, as 
-	well as once the container runs.
+-> Dockerfile provides a dedicated variable type ENV to create an environment variable. We can access ENV values during the build, as well as once the container runs.
 -> We use "docker run --env-file [path-toenv-file]" to provide the environment variables to the container from a . env file
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -670,9 +674,27 @@ Disadvantages of Alpine Images:
 5. Learning curve with the apk package manager.
 6. More manual configuration required for some tools and libraries.
 
-===================================================================================================================
+===================================================================================================================-------------------------------------------------
+There are three types of volumes to consider:
+1. Named volumes: 
+-> Named volumes are managed by Docker, and they are stored in a specific directory on the host system (usually /var/lib/docker/volumes/). 
+-> Docker abstracts the location of these volumes, which makes them easier to use for data persistence and portability.
+-> They have a specific source from outside the container, for example, awesome:/bar .
+$$ docker run -d -v my_named_volume:/data --name my_container my_image
+
+2. Anonymous volumes: 
+-> Anonymous volumes are similar to named volumes, but they are created without specifying a name. Docker generates a unique name for them, which makes them useful for temporary data storage.
+-> They have no specific source, therefore, when the container is deleted, you can instruct the Docker Engine daemon to remove them.
+$$ docker run -d -v /data --name my_container my_image
+
+3. Host volumes (Bind Mounts): 
+-> A host volume can be accessed from within a Docker container and is stored on the host, as per the name. 
+-> Host volumes, also known as bind mounts, are a way to mount a directory or file from the host system into the container. 
+-> Unlike named or anonymous volumes, bind mounts map a specific location on the host filesystem to a location inside the container.
+$$ docker run -d -v /host/path:/container/path --name my_container my_image
 ** Docker has two options for containers to store files on the host machine, so that the files are persisted even after the container stops: Volumes, and Bind mounts.
 
+-----------------------------------------------------------------------------------------------------------
 Volumes:
 --------
 -> Managed by Docker, stored in host filesystem /var/lib/docker/volumes/
@@ -716,33 +738,12 @@ $$ docker volume inspect <volume name> --->to display the details about volume
 $$ docker run -v <volume name>:<continaer path>  --> attaching volume
 --> $$ docker run -it -v vol1:/root/vol1 --name tomcat_ubuntu ubuntu: mount container to the volume, or attach container to volume
     $$ docker run -it -v vol1:/root/vol1 --name <imagename> ubuntu
-------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-There are three types of volumes to consider:
-1. Named volumes: 
--> Named volumes are managed by Docker, and they are stored in a specific directory on the host system (usually /var/lib/docker/volumes/). Docker abstracts the location of these volumes, which makes them easier to use for data persistence and portability.
--> They have a specific source from outside the container, for example, awesome:/bar .
-$$ docker run -d -v my_named_volume:/data --name my_container my_image
-
-
-2. Anonymous volumes: 
--> Anonymous volumes are similar to named volumes, but they are created without specifying a name. Docker generates a unique name for them, which makes them useful for temporary data storage.
--> They have no specific source, therefore, when the container is deleted, you can instruct the Docker Engine daemon to remove them.
-$$ docker run -d -v /data --name my_container my_image
-
-3. Host volumes (Bind Mounts): 
--> A host volume can be accessed from within a Docker container and is stored on the host, as per the name. 
--> Host volumes, also known as bind mounts, are a way to mount a directory or file from the host system into the container. 
--> Unlike named or anonymous volumes, bind mounts map a specific location on the host filesystem to a location inside the container.
-$$ docker run -d -v /host/path:/container/path --name my_container my_image
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 Docker networking: 
 -----------------
 -> Docker networking allows you to attach a container to as many networks as you like.
--> Docker networking is primarily used to establish communication between Docker containers and the outside world via 
-   the host machine where the Docker daemon is running.
+-> Docker networking is primarily used to establish communication between Docker containers and the outside world via  the host machine where the Docker daemon is running.
 
 1. Bridge Network:-This is a private network created by docker on the host when we install docker.
 -> All the containers connected to the same bridge can communicate each other by default.
@@ -768,7 +769,7 @@ Docker networking:
 
 2. HOST NETWORK:-
 -> This driver removes the network isolation between the host machine and the docker. The containers are directly connected to host network.
-   It depends upon us when to use this network as per requirement. 
+-> It depends upon us when to use this network as per requirement. 
    
 	$$ docker run -d -it --network host <imagename:tag>
 -> Host networks are best when the network stack should not be isolated from the Docker host, but you want other aspects of the container to be isolated.
@@ -780,10 +781,12 @@ Docker networking:
 -> This option is used when a user wants to disable the networking access to a container.
 -> In simple terms, None is called a loopback interface, which means it has no external network interfaces. 
 Ex: perform operation (ansible vault) then we can assign none network
+$$ docker run --network none nginx
 
 4. Macvlan NETWORK:-
 -> It simplifies the communication process between containers.
--> This network assigns a MAC address to the Docker container. With this Mac address, the Docker daemon routes the network traffic to a router.
+-> This network assigns a MAC address to the Docker container. 
+-> With this Mac address, the Docker daemon routes the network traffic to a router.
 -> It is suitable when a user wants to directly connect the container to the physical network rather than the Docker host.
 -> Macvlan networks are best when you are migrating from a VM setup or need your containers to look like physical hosts on your network, each with a unique MAC address.
 
@@ -925,7 +928,7 @@ volumes:
 
 Q. what is the command syntax for retrieving container logs?
 -> The docker logs command instructs Docker to fetch the logs for a running container at the time of execution. 
-   It only works with containers utilizing the JSON-file or journald logging driver.
+-> It only works with containers utilizing the JSON-file or journald logging driver.
 -> The command syntax for retrieving container logs is:
 	$$ sudo docker container logs [option] container_id
 
@@ -947,13 +950,32 @@ docker cp ./ram.txt 67d47d1ec280:/etc
 Q. What is a .dockerignore file?
 -> Similar to a .gitignore file, a .Dockerignore files allows you to mention a list of files and/or directories which you might want to ignore while building the image. 
 -> This would definitely reduce the size of the image and also help to speed up the docker build process. 
-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> *.log, *.tmp, *.swp, *.bak, build/, dist/, node_modules/, .next/, target/
 
+
+======================================================================================
+Q. what is out of memory error in docker?
+-> If a container is using an unexpected amount of memory, it runs out of memory without affecting other containers or the host machine. 
+-> Within this setting, if the kernel memory limit is lower than the user memory limit, running out of kernel memory causes the container to experience an OOM error.
+-> However, it would be fine if the root user is used rather than the created user.
+-> On Linux systems, if the kernel detects that there is not enough memory to perform some system task then it throws OOM or out of memory error and starts killing the processes to free up some memory. 
+-> Any process can be killed by kernel. That means it can kill Docker and Docker containers as well. Which can be a high risk if your application is running on  production and suddenly due to out of memory error occurred , your container was killed and your production application faces some down time. So it is very important to understand and control this memory issue by docker.
+
+Q. What we can do? 
+1. We need to perform some analysis to understand the application's memory requirement before deploying it to production.
+2. Make sure you are using a host which has sufficient resources to run your containers and application.
+3. Control your container's behaviour and restrict it's too much memory consumption.
+   $$ sudo docker run -it --memory="[memory_limit]" [docker_image]
 -> To limit the maximum amount of memory usage for a container, add the --memory/-m option to the docker run command. 
 -> Within the command, specify how much memory you want to dedicate to that specific container. 
 The command should follow the syntax: 
-	$$ sudo docker run -it --memory="[memory_limit]" [docker_image]
+$$ sudo docker run -it --memory="[memory_limit]" [docker_image]
+$$ sudo docker run -it --memory="512m" nginx
+$$ sudo docker run -it --memory="2g" ubuntu
+$$ sudo docker run -it --memory="1g" --memory-swap="2g" ubuntu
+-> You can also set a swap memory limit by using the --memory-swap flag in conjunction with --memory. This sets the total memory plus swap allowed.
 
+-> Swap memory is a space on the disk that is used when the RAM (Random Access Memory) is full. When a system runs out of physical RAM, the operating system moves inactive pages of memory to the swap space to free up RAM for active processes.
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Q. How will you monitor Docker in production?
 -> Docker provides tools like "docker stats" and "docker events" to monitor Docker in production.
@@ -1012,23 +1034,7 @@ Q. How to take snapshot of container?
 -> An option that does not use an image (which you say you want to avoid) is indeed save and load.
 
 Q. How many containers can be run per host?
--> Using this simple calculation, we can estimate that we can run about 1,000 containers on a single host with 10GB of available disk space.
-
-
-======================================================================================
-Q. what is out of memory error in docker?
--> If a container is using an unexpected amount of memory, it runs out of memory without affecting other containers or the host machine. 
--> Within this setting, if the kernel memory limit is lower than the user memory limit, running out of kernel memory causes the container to experience an OOM error.
--> However, it would be fine if the root user is used rather than the created user.
--> On Linux systems, if the kernel detects that there is not enough memory to perform some system task then it throws OOM or out of memory error and starts killing the processes to free up some memory. 
--> Any process can be killed by kernel. That means it can kill Docker and Docker containers as well. Which can be a high risk if your application is running on  production and suddenly due to out of memory error occurred , your container was killed and your production application faces some down time. So it is very important to understand and control this memory issue by docker.
-
-Q. What we can do? 
-1. We need to perform some analysis to understand the application's memory requirement before deploying it to production.
-2. Make sure you are using a host which has sufficient resources to run your containers and application.
-3. Control your container's behaviour and restrict it's too much memory consumption.
-   $$ sudo docker run -it --memory="[memory_limit]" [docker_image]
-   
+-> Using this simple calculation, we can estimate that we can run about 1,000 containers on a single host with 10GB of available disk space.   
 
 =======================================================================================
 Q. Is it possible to edit the base image?

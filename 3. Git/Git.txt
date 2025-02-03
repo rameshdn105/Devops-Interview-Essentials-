@@ -140,7 +140,7 @@ syn : git merge <branch_name>
 Note : When you try to merge source branch to a destination branch you should be inside destination branch.
 
 Merge conflicts:
-Merge conflict occurs if the same line of code is modified on the same file on two differnt branches and when we try to 
+Merge conflict occurs if the same line of code is modified on the same file on two different branches and when we try to 
 merge those 2 branches, we will get merge conflicts.
 Resolution:
 If i don't know whose changes should i take in the merge, I contact developers who modified file on branch1 and branch2 then they will
@@ -167,7 +167,7 @@ git fetch : Git fetch is used to bring the changes from remote repo and store it
 syn : git fetch origin branchname
 
 Git cherry-pick : 
-It is used to merge specific commit to a branch and also used to pick a particular change in a branch.
+-> It is used to merge specific commit to a branch and also used to pick a particular change in a branch.
 syn : git cherry-pick <commit id>
 
 To merge multiple commits 
@@ -377,7 +377,7 @@ Q. What is Branch Protection?
 -> Branch protection facilitates a structured workflow for developers, where code contributions are scrutinized and tested, ensuring that only code that meets the team's standards is merged. This is particularly important in "inner sourcing" models, where everyone has "write" access to the source code repositories, but branches that are deployed to higher environments are protected. 
 
 Q. What is “Inner sourcing” and how does it work?
-In an "inner sourcing" model, while all developers have the ability to contribute code, not all contributions are treated equally. For instance, branches destined for production deployment are shielded by branch protection rules. This means that although developers can freely contribute to the codebase, their changes must undergo a rigorous review and testing process before being deployed to more sensitive environments. Inner sourcing leverages the collective expertise and creativity of the entire team while ensuring that the deployed code is secure, reliable, and aligned with organizational standards.
+-> In an "inner sourcing" model, while all developers have the ability to contribute code, not all contributions are treated equally. For instance, branches destined for production deployment are shielded by branch protection rules. This means that although developers can freely contribute to the codebase, their changes must undergo a rigorous review and testing process before being deployed to more sensitive environments. Inner sourcing leverages the collective expertise and creativity of the entire team while ensuring that the deployed code is secure, reliable, and aligned with organizational standards.
 
 
 Q. Branch Protection Contribution to DevOps Governance:

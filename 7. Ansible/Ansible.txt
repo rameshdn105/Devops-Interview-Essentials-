@@ -11,7 +11,7 @@ For example, you can use the "ansible" command to run ad-hoc commands, or the "a
 
 Q. How do u access shell env variables in ansible playbooks?  (lookup plugin)
 -> on the local server using the lookup plugin. It lets you access the system data and environment variables.
-   We can use the ansible_env and lookup function to retrieve the environment variables stored. 
+-> We can use the ansible_env and lookup function to retrieve the environment variables stored. 
    - name: Ansible playbook to get linux environment variables. 
    The above playbook retrieves all the environment variables inside the unix os. 
    Now we need to retrieve the USER env variable.
@@ -24,20 +24,24 @@ Q. What is dry run in ansible?  :
    For example:   $$ ansible-playbook myplaybook.yml --check
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
-Q. Diff between Replace and lineinfile module?  replace instances of string
--> "replace" module is used to replace all instances of a specified string in a file with a new string.
+Q. Diff between Replace and lineinfile module?  
+1. "replace" module is used to replace all occurrences/instances of a specified string in a file with a new string.
 - name: Replace all instances of 'old_string' with 'new_string' in a file
   replace:
     path: /tmp/sample.txt
     regexp: 'old_string'	(regexp: regular expression)
     replace: 'new_string'
 
--> LineinFile: It is more suited to scenarios where you want to ensure a specific line is present, absent, or modified within the file. It works line-by-line, ensuring the exact content you specify is present or replaced at the correct location in the file.
-- name: Ensure a specific line is in the file
-  lineinfile:
-    path: /tmp/sample.txt
-    line: 'my_config_option=enabled'
-    state: present/absent/modified
+
+2. LineinFile: 
+-> The lineinfile module is used to manage individual lines in a file. It ensures a particular line exists in a file (or is absent, depending on configuration). You can use it to add, modify, or remove lines in a file.
+
+- name: Ensure a specific line is present in the file
+  ansible.builtin.lineinfile:
+    path: /etc/config.txt
+    line: "ServerAddress=192.168.1.100"
+    create: yes
+
 -> This will ensure the line my_config_option=enabled is present in the file. If the line doesn't exist, it will be added; if it already exists, it will be unchanged.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -54,7 +58,7 @@ Q. What is notifiers & handlers in Ansible?
 
 -> Handler is like a task but will only run when called by a notifier in another task. 
 -> This feature is important because your requirements for running a task may depend on the state of a service, existence of a file or a follow up tasks when state changed.
-*Handlers: used to service start, restart, stop, reload on target nodes
+** Handlers: used to service start, restart, stop, reload on target nodes
 
 Q. What are task controllers in ansible?
 -> In Ansible, task controllers are used to control the execution of tasks. There are several types of task controllers that can be used in playbooks, including:
@@ -89,19 +93,18 @@ Q. How do you debug Ansible script?
 3. Use ansible-playbook --check (Dry Run)
 4. Check for Syntax Issues Using ansible-playbook --syntax-chec
 
+5. $$ ansible-playbook my-playbook.yml
+echo $?
+
 Q. How to run ansible playbook in debug mode?
 -> You can do this at the play level, in ansible. cfg, or with the environment variable ANSIBLE_STRATEGY=debug .
 
 Q. Parameters used in debug module?
--> The debug module in Ansible is used to print variables and expressions to the Ansible log. It has 
-   several parameters that can be used to customize its behavior, including:
-1. msg: This parameter is used to specify the message that should be printed to the Ansible log. 
-   It can be a string or a variable.
+-> The debug module in Ansible is used to print variables and expressions to the Ansible log. It has several parameters that can be used to customize its behavior, including:
+1. msg: This parameter is used to specify the message that should be printed to the Ansible log. It can be a string or a variable.
 2. var: specify a variable that should be printed to the Ansible log.
-3. verbosity: This parameter is used to specify the level of verbosity for the debug message. 
-   The default is 0, and higher numbers will increase the verbosity.
-4. log_level: This parameter is used to specify the log level for the debug message. 
-   The default is "debug" and can be one of the following: "debug", "info", "warning", "error", "critical"
+3. verbosity: This parameter is used to specify the level of verbosity for the debug message. The default is 0, and higher numbers will increase the verbosity.
+4. log_level: This parameter is used to specify the log level for the debug message. The default is "debug" and can be one of the following: "debug", "info", "warning", "error", "critical"
 5. log_file : This parameter is used to specify the file name in which the log should be stored.
 6. log_path : This parameter is used to specify the path of the log file
 
@@ -124,16 +127,40 @@ Q. Ansible-galaxy init /etc/ansible/roles/filpkart --offline  why above path?
 -> This location is often used because it is a standard location for storing configuration files and it keeps the roles separate from the rest of the system.
 -> The --offline flag indicates that the command should not connect to the internet to download any dependencies, it will use only the files already present in the local machine.
 
+-------------------------------------------------------------------------------------------------
 Q. What are facts in ansible?
 -> In Ansible, facts are pieces of information about the systems (hosts) being managed. They provide detailed data about the system's environment, hardware, operating system, network interfaces, and more.
 -> They are stored as variables and can be used throughout your playbook to make decisions or configure systems dynamically based on the information about the host.
 -> Examples of facts include:
-1. IP addresses of the host (ansible_ip_addresses)
-2. Operating system and version (ansible_os_family)
-3. Memory and CPU information (Memory information in megabytes)
-4. Environment variables
-5. Network interface information (ansible_interfaces)
-6. Installed packages and software versions
+1. Operating System Information:
+ansible_facts['os_family']: Determines the family of the OS (e.g., RedHat, Debian).
+ansible_facts['distribution']: Specific distribution (e.g., Ubuntu, CentOS).
+ansible_facts['distribution_version']: The version of the OS distribution.
+ansible_facts['kernel']: The kernel name (e.g., Linux).
+
+2. Hardware Information:
+ansible_facts['processor']: The processor type.
+ansible_facts['processor_cores']: The number of processor cores.
+ansible_facts['memory_mb']: Total memory in megabytes.
+
+3. Network Information:
+ansible_facts['ipv4']: The IPv4 address of the host.
+ansible_facts['fqdn']: Fully Qualified Domain Name of the host.
+ansible_facts['hostname']: Hostname of the system.
+ansible_facts['interfaces']: Network interfaces on the system.
+ansible_facts['default_ipv4']['address']: The IP address for the default interface.
+
+4. Disk Information:
+ansible_facts['disk'][0]['size']: Disk size.
+ansible_facts['fs_type']: File system types.
+
+5. User and Group Information:
+ansible_facts['user']: Current user.
+ansible_facts['group']: Current user group.
+
+6. Memory Information:
+ansible_facts['memtotal_mb']: Total memory in MB.
+ansible_facts['memfree_mb']: Free memory in MB.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 Ansible ( Important)
@@ -159,12 +186,12 @@ Q. What are the main use cases of Ansible?
 -> Ansible has various use cases in Provisioning, Configuration Management, Application Deployment, Continuous Deployment, Automation, and Orchestration.
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
-*What is configuration Management:
-	- In terms of Ansible, it maintains configuration of the product performance by keeping a record and updating detailed information which describes an enterprise's hardware and software.
+** What is configuration Management:
+-> In terms of Ansible, it maintains configuration of the product performance by keeping a record and updating detailed information which describes an enterprise's hardware and software.
 
-*How Ansible works:
-	- Ansible works by connecting nodes and pushing out small programs called "Ansible Modules" to nodes.
-	  Ansible executes these modules over SSH by default and remove them when finished.
+** How Ansible works:
+-> Ansible works by connecting nodes and pushing out small programs called "Ansible Modules" to nodes.
+-> Ansible executes these modules over SSH by default and remove them when finished.
 
 *Terms:
 1. Service/server:- It is a process on the machine that provides the service.
@@ -179,26 +206,24 @@ Q. What are the main use cases of Ansible?
 
 -> Ansible has three main files that you need to consider:
 * Host/inventory file: Contains the entry of the nodes that need to be managed.
-* Ansible.cfg file: Located by default at /etc/ansible/ansible.cfg, it has the necessary privilege escalation options 
-  and the location of the inventory file
+* Ansible.cfg file: Located by default at /etc/ansible/ansible.cfg, it has the necessary privilege escalation options and the location of the inventory file
 * Main file: A playbook that has modules that perform various tasks on a host listed in an inventory or host file
 
 ---------------------------------------------------------------------------------------------------------------------------------
 *Ansible Architecture:
 
-- Ansible orchestration engine:- It will interact with a user who is writing the ansible playbook to execute 
-  ansible orchestration and also interacts with service of private and public cloud and database.
-- Inventory:- It is list of nodes and hosts having IP address, databases, servers etc which needs be managed.
-- ApI's:- The ansible API's works as the transport for the public and private cloud services.
-- Modules:- Ansible connect nodes and spread out the ansible modules. Ansible will execute modules and remove them
-  once finished.   $ ansible-doc -l for a list of modules  $ansible-doc <modulename> for information about module options
-- Plugins:- It is a piece of code that expands the core functionality of ansible. There are many plugins and also we can write our own plugin. (Module Plugin, Inventory Script Plugin, Action Plugin, Lookup Plugin, )
-- Playbook:- It consists of code, and they are written YAML format which describes the tasks and executes through ansible. 
-  Task: ( Find out how ansible playbook launches tasks synchronously and asynchronously).
-- Hosts:- In ansible architecture, hosts are the nodes which are automated by ansible.
-- Networking:- Ansible is used to automate different networks and it uses simple, secure and powerful agentless automation framework for IT operations and   development.
-- Cloud:- Cloud is a network of remote servers on which you can store, manage and process the data.
-- CMDB (Configuration Management Database):- It is a type of repository which acts as warehouse for IT installation.
+-> Ansible orchestration engine:- It will interact with a user who is writing the ansible playbook to execute ansible orchestration and also interacts with service of private and public cloud and database.
+-> Inventory:- It is list of nodes and hosts having IP address, databases, servers etc which needs be managed.
+-> ApI's:- The ansible API's works as the transport for the public and private cloud services.
+-> Modules:- Ansible connect nodes and spread out the ansible modules. Ansible will execute modules and remove them once finished.   
+$ ansible-doc -l for a list of modules  $ansible-doc <modulename> for information about module options
+-> Plugins:- It is a piece of code that expands the core functionality of ansible. There are many plugins and also we can write our own plugin. (Module Plugin, Inventory Script Plugin, Action Plugin, Lookup Plugin, )
+-> Playbook:- It consists of code, and they are written YAML format which describes the tasks and executes through ansible. 
+-> Task: ( Find out how ansible playbook launches tasks synchronously and asynchronously).
+-> Hosts:- In ansible architecture, hosts are the nodes which are automated by ansible.
+-> Networking:- Ansible is used to automate different networks and it uses simple, secure and powerful agentless automation framework for IT operations and   development.
+-> Cloud:- Cloud is a network of remote servers on which you can store, manage and process the data.
+-> CMDB (Configuration Management Database):- It is a type of repository which acts as warehouse for IT installation.
 
 -> Ansible plugin: Plugins extend Ansible’s core functionality. Most plugin types execute on the control node within the "/usr/bin/ansible" process. 
 -> Plugins offer options and extensions for the core features of Ansible: transforming data, logging output, connecting to inventory, and more.
@@ -275,37 +300,54 @@ Tasks: surf for a simple playbook that installs maven and tomcat?
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------				
 ** Ansible Role ( Very important )
+-> A role is a set of tasks, variables, files, templates, and handlers grouped together, which can be reused and shared.
+-> Each role is limited to a particular functionality or desired output.
 -> Ansible Roles are a way to organize and reuse Ansible playbook code.
 -> They are like predefined sets of instructions or tasks that can be applied to multiple machines or environments.
 -> In ansible, the role is the primary mechanism for breaking a playbook into multiple files. 
 -> This will simplify writing complex playbooks, and it will make easier to reuse the playbook.
--> A role is a set of tasks, variables, files, templates, and handlers grouped together, which can be reused and shared.
--> Each role is limited to a particular functionality or desired output.
 
 *To install tree: $sudo apt-get install tree
 	
    Syntax: ansible-galaxy init <dir_name>/<role_name>
 	
 -> Example : ansible-galaxy init /etc/ansible/roles/filpkart -- offline :to initiate ansible roles
-				
-flipkart : role
-tree flipkart
-roles/
-  my_role/
-    defaults/
-      main.yml         # Default variables for the role
-    files/
-      myfile.txt       # Files to be copied to the remote system
-    handlers/
-      main.yml         # Handlers for the role (e.g., restart services)
-    meta/
-      main.yml         # Metadata for the role (e.g., dependencies)
-    tasks/
-      main.yml         # Main tasks for the role
-    templates/
-      mytemplate.j2    # Jinja2 templates
-    vars/
-      main.yml         # Role-specific variables
+		
+Structure of a Role:
+role_name/
+├── defaults/
+│   └── main.yml        # Default variables for the role
+├── files/
+│   └── some_file.txt   # Files to be copied to target machines
+├── handlers/
+│   └── main.yml        # Handlers that are triggered by notifications
+├── meta/
+│   └── main.yml        # Metadata about the role, such as dependencies
+├── tasks/
+│   └── main.yml        # Tasks to be executed by the role
+├── templates/
+│   └── some_template.j2  # Jinja2 templates to be applied on target machines
+└── vars/
+    └── main.yml        # Variables specific to the role
+
+		
+Example 1: Simple Role for Installing Apache
+Role: apache
+Directory structure:
+apache/
+├── tasks/
+│   └── main.yml		#This file defines the tasks for the role.
+├── defaults/
+│   └── main.yml		#This file sets the default variables for the role (optional, but good practice).
+├── handlers/
+│   └── main.yml		#This file defines any handlers that might be triggered during the execution of the role.
+
+Using the Role in a Playbook:
+---
+- hosts: webservers
+  become: yes
+  roles:
+    - apache
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 ** Ansible tags:
@@ -329,8 +371,8 @@ roles/
       tags:
         - webserver
 
-	  
-- command: ansible-playbook copy-playbook.yml --skip-tags "java"  : this will skip java step.
+	 
+ansible-playbook copy-playbook.yml --skip-tags "java"  : this will skip java step.
 ansible-playbook copy-playbook.yml --skip-tags "copy" : this will skip copy step.
 ansible-playbook xyz.yml --tags "copy,maven,tomcat" : This will run all the tags which are mentioned.
 
@@ -538,6 +580,7 @@ Windows        Win_copy 	Win_command 	Win_msi 	Win_ping 	Win_msq 	Win_shell 	Win
     owner: foo
     group: foo
     mode: '0644'
+
 -> This creates a directory named some_directory and sets the permission to 0755.
 - name: Create a directory if it does not exist
   file:
@@ -1072,23 +1115,22 @@ Playbook for creating instance:
 Ansible and Terraform are both popular infrastructure provisioning and configuration management tools, but they have different focuses and use cases. Here are some technical differences between Ansible and Terraform:
 
 Domain Focus:
+-- Ansible: Ansible is primarily a configuration management tool that focuses on automating the deployment and management of software and configurations on existing servers or infrastructure. It excels in tasks like software installation, configuration file management, and orchestration of tasks across multiple servers.
+-- Terraform: Terraform is a provisioning tool that focuses on creating and managing infrastructure resources. It enables the definition and deployment of infrastructure as code, including virtual machines, networks, storage, and other cloud resources. Terraform supports multiple cloud providers and infrastructure platforms.
 
-Ansible: Ansible is primarily a configuration management tool that focuses on automating the deployment and management of software and configurations on existing servers or infrastructure. It excels in tasks like software installation, configuration file management, and orchestration of tasks across multiple servers.
-Terraform: Terraform is a provisioning tool that focuses on creating and managing infrastructure resources. It enables the definition and deployment of infrastructure as code, including virtual machines, networks, storage, and other cloud resources. Terraform supports multiple cloud providers and infrastructure platforms.
 Declarative vs. Imperative:
+-- Ansible: Ansible uses a declarative approach. Playbooks are written in YAML and describe the desired state of the system. Ansible determines the actions needed to achieve that state and executes them.
+-- Terraform: Terraform uses an imperative approach. Configuration files are written in a domain-specific language (HCL) and define the desired infrastructure resources and their dependencies. Terraform analyzes the configuration and executes actions to create, modify, or destroy resources to match the defined state.
 
-Ansible: Ansible uses a declarative approach. Playbooks are written in YAML and describe the desired state of the system. Ansible determines the actions needed to achieve that state and executes them.
-Terraform: Terraform uses an imperative approach. Configuration files are written in a domain-specific language (HCL) and define the desired infrastructure resources and their dependencies. Terraform analyzes the configuration and executes actions to create, modify, or destroy resources to match the defined state.
 Scope:
+-- Ansible: Ansible can manage a broad range of tasks beyond infrastructure provisioning, such as application deployments, system configuration, and even network automation. It can be used for both on-premises and cloud environments.
+-- Terraform: Terraform is primarily focused on infrastructure provisioning and management. It excels at managing cloud resources and infrastructure as code, providing a consistent and reproducible way to create and manage infrastructure across multiple environments.
 
-Ansible: Ansible can manage a broad range of tasks beyond infrastructure provisioning, such as application deployments, system configuration, and even network automation. It can be used for both on-premises and cloud environments.
-Terraform: Terraform is primarily focused on infrastructure provisioning and management. It excels at managing cloud resources and infrastructure as code, providing a consistent and reproducible way to create and manage infrastructure across multiple environments.
 Resource Lifecycle Management:
+-- Ansible: Ansible doesn't explicitly manage the lifecycle of resources. It focuses on applying configurations and tasks to achieve the desired state. It can execute idempotent tasks repeatedly, ensuring consistency, but it doesn't handle resource creation or destruction directly.
+-- Terraform: Terraform explicitly manages the lifecycle of resources. It can create, update, and destroy resources based on the defined configuration. Terraform keeps track of the state of the resources it manages and applies changes incrementally.
 
-Ansible: Ansible doesn't explicitly manage the lifecycle of resources. It focuses on applying configurations and tasks to achieve the desired state. It can execute idempotent tasks repeatedly, ensuring consistency, but it doesn't handle resource creation or destruction directly.
-Terraform: Terraform explicitly manages the lifecycle of resources. It can create, update, and destroy resources based on the defined configuration. Terraform keeps track of the state of the resources it manages and applies changes incrementally.
 Ecosystem and Integrations:
-
-Ansible: Ansible has a broad ecosystem with a rich set of modules that cover various platforms, tools, and services. It integrates well with other configuration management tools and can be easily extended.
-Terraform: Terraform has a strong focus on cloud providers and offers a wide range of provider plugins to manage resources in different environments. It integrates closely with the APIs and services provided by cloud providers.
+-- Ansible: Ansible has a broad ecosystem with a rich set of modules that cover various platforms, tools, and services. It integrates well with other configuration management tools and can be easily extended.
+-- Terraform: Terraform has a strong focus on cloud providers and offers a wide range of provider plugins to manage resources in different environments. It integrates closely with the APIs and services provided by cloud providers.
 It's worth noting that Ansible and Terraform are not mutually exclusive, and they can complement each other in infrastructure provisioning and configuration management workflows. It's common to see developers and DevOps engineers using both tools together to leverage their respective strengths.

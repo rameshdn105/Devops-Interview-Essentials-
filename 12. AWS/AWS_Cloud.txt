@@ -47,13 +47,11 @@ Amazon Elastic Compute Cloud (Amazon EC2)
 
 Amazon EC2 Instance Types: 
 --------------------------
-
 1. General Purpose:
 2. Memory Optimized
 3. Compute Optimized
 4. Accelerated Computing
 5. Storage Optimized
-6. AMI
 
 1. General purpose instances (T3): 
 -> Provide a balance of compute, memory, and Networking resources. You can use them for a variety of workloads, such as:
