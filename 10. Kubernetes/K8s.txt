@@ -520,7 +520,7 @@ Labels:
    - k8s labels are applied to objects which allow to identify, select and operate on objects with label applied.
    - labels are key value pairs that can be applied/attached to pods, services, deployment, DaemonSet, nodes etc.
    - keys are defined by kubernetes and it is not user-defined.
-   - Label key should not conatin special character.
+   - Label key should not contain special character.
    - Values can include dot, but start and ending can only be alpha numeric.
 	
 	To list the labels of a pod 
