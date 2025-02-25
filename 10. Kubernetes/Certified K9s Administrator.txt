@@ -1648,7 +1648,7 @@ spec:
 How to create/schedule pods in a particular worker node?
 	1. Taint and tolerations. 
 	2. Affinity and Anti-Affinity. 
-        3. Node selector.
+  3. Node selector.
 
 1. Taint and Tolerations:
 --------------------------
@@ -1751,6 +1751,8 @@ Taints and Tolerations vs Node Affinity:
 -> Node Selector is a way to bind the pod to a particular worker node, whose label match the "NodeSelector" labels.
 -> When you provide node selector other pods can be scheduled on nodes. So we need "NodeSelector" but for precision of scheduling pods to nodes we need "NodeAffinity".
 -> Logical expressions type of selection cannot be achieved by "NodeSelector".
+
+Limitations: It only supports simple key-value pairs, and does not offer more advanced or complex scheduling rules.
 
 Step1:		
 -> list nodes: $$ sudo kubectl get nodes 
@@ -1955,7 +1957,8 @@ NOTE:
 
 Topology Spread Constraints:
 --------------------------
--> The topology spread constraints in Kubernetes allow you to control the distribution of pods across different topological domains, such as zones, regions, or nodes. This ensures a balanced workload and helps to improve availability and fault tolerance by spreading pods across failure domains.
+-> The topology spread constraints in Kubernetes allow you to control the distribution of pods across different topological domains, such as zones, regions, or nodes. 
+-> This ensures a balanced workload and helps to improve availability and fault tolerance by spreading pods across failure domains.
 
 apiVersion: apps/v1
 kind: Deployment

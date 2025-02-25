@@ -206,23 +206,17 @@ Below is an example of how to deploy ECS with Terraform.
 Example: ECS Deployment with Terraform
 1. Provider Configuration
 Set up the AWS provider in your main.tf file to authenticate with AWS.
-
-hcl
-Copy code
 provider "aws" {
   region = "us-west-2"  # Change the region as needed
 }
+
 2. Create an ECS Cluster
-hcl
-Copy code
 resource "aws_ecs_cluster" "example_cluster" {
   name = "example-cluster"
 }
+
 3. Create an IAM Role for ECS Tasks
 ECS tasks need an IAM role to interact with AWS services (like pulling from ECR or logging to CloudWatch).
-
-hcl
-Copy code
 resource "aws_iam_role" "ecs_task_role" {
   name = "ecs-task-role"
 
@@ -245,11 +239,11 @@ resource "aws_iam_role_policy_attachment" "ecs_task_policy_attachment" {
   role       = aws_iam_role.ecs_task_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
+
+
 4. Create ECS Task Definition
 This defines the container properties, such as the Docker image, environment variables, and memory.
 
-hcl
-Copy code
 resource "aws_ecs_task_definition" "example_task" {
   family                = "example-task"
   execution_role_arn    = aws_iam_role.ecs_task_role.arn
@@ -272,8 +266,6 @@ resource "aws_ecs_task_definition" "example_task" {
 5. Create an ECS Service
 The ECS service manages the task instances and ensures that the desired number of tasks are running.
 
-hcl
-Copy code
 resource "aws_ecs_service" "example_service" {
   name            = "example-service"
   cluster         = aws_ecs_cluster.example_cluster.id

@@ -1,0 +1,10 @@
+Best Practices for Securing Kubernetes Clusters:
+================================================
+1. Keep Kubernetes and Components Updated: Regularly apply security patches and updates.
+2. Use Network Policies: Restrict traffic between Pods and namespaces.
+3. Enable RBAC: Implement fine-grained access control.
+4. Use Pod Security Standards: Enforce security standards on Pods using the PodSecurity admission controller.
+5. Enable Audit Logs: Track and monitor API activity with audit logs.
+6. Use Secrets Management: Encrypt secrets and avoid hardcoding sensitive information.
+7. Monitor and Alert: Implement monitoring and alerting for unusual behavior (e.g., unauthorized access or privilege escalation).
+8. Limit Privileges: Run containers with the least privileges necessary and disable unnecessary capabilities.

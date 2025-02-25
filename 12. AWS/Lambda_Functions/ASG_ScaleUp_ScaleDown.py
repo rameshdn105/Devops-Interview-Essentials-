@@ -37,3 +37,44 @@ def lambda_handler(event, context):
         'statusCode': 200,
         'body': json.dumps(f'Auto Scaling Group capacity updated to {new_capacity}.')
     }
+
+
+
+# import json
+# import boto3
+# def lambda_handler(event, context):
+#     asg_client = boto3.client('autoscaling')
+#     # for x in event:
+#     #     print(x['Name'])
+#     #print(event[0])
+#     for x in event:
+#         asg_client.update_auto_scaling_group(
+#         AutoScalingGroupName=x['Name'],
+#         MinSize=x['min_size'],
+#         MaxSize=x['max_size']
+#         )
+ 
+ 
+ 
+#     #print(as)
+ 
+# payload
+# [
+#   {
+#     "Name": "xbrl",
+#     "min_size": 2,
+#     "max_size": 6,
+#     "desired_capacity": 3
+#   },
+#   {
+#     "Name": "demo-asg-lambda",
+#     "min_size": 1,
+#     "max_size": 6,
+#     "desired_capacity": 2
+#   }
+# ]
+    
+#     return {
+#         'statusCode': 200,
+#     }
+# has context menu

@@ -1,0 +1,21 @@
+
+1. Implement Pod Security Standards (PSS) with Admission Controllers:
+=====================================================================
+
+-> Kubernetes Pod Security Standards (PSS) enforce security policies on Pod configurations using the PodSecurity Admission Controller. You can apply security policies like restricted, baseline, or privileged to ensure Pods meet security best practices.
+
+** Steps to enable PodSecurity Admission Controller:
+-> Enable the PodSecurity Admission Controller in the API server.
+-> You will need to add this flag to your Kubernetes API server (--enable-admission-plugins=PodSecurity).
+-> Define Pod Security Standards (PSS) at the namespace level.
+For example, apply the restricted profile, which ensures Pods are more secure by restricting the use of privileges, root users, and unsafe container configurations.
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: my-secure-namespace
+  annotations:
+    pod-security.kubernetes.io/enforce: "restricted"
+    pod-security.kubernetes.io/enforce-version: "latest"
+
+-> This YAML applies the restricted profile to the my-secure-namespace namespace, enforcing strict security policies for Pods in that namespace.

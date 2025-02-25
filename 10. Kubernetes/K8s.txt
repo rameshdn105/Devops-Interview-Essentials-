@@ -1258,7 +1258,7 @@ Liveness Probe: (Health of application, if it fails container will be restarted)
 ** failureThreshold: no. of times probe tries before giving up/restarting (liveness & startup) or marking as Unready 
 		
 
-3. Readiness Probe: (appn is ready to accept traffic, wen this prob fails traffic will be halted to this pod and when successful the load balancer traffic is allowed to this pod )
+3. Readiness Probe: (appn is ready to accept traffic, when this prob fails traffic will be halted to this pod and when successful the load balancer traffic is allowed to this pod )
  
 -> A Readiness Probe is used to determine if a application is in a ready state to accept the traffic.
 -> When this probe fails traffic will be halted to this pod and when successful the load balancer traffic is allowed to this pod.	  
@@ -1814,19 +1814,107 @@ Verbs: The rules/operations which we want to do with the resources. ("get", "lis
 			
 2. SERVICE ACCOUNT:
 ------------------- 
--> A Service Account in Kubernetes is an identity that is used by processes running inside Pods to interact with the Kubernetes API server. 
+
+-> A Service Account in Kubernetes is an identity that is associated with a set of permissions to interact with the Kubernetes API. 
+-> Service accounts are typically used by applications or workloads running inside the cluster to interact with the Kubernetes control plane (such as accessing the Kubernetes API, creating or modifying resources, etc.).
+
 -> It is primarily used to authenticate Pods so that they can access the Kubernetes API and interact with cluster resources securely.
 -> It is used to access the API server by other tools and also components inside the clusetr.
 -> API server is responsible for such authentication process.
 -> If any application running inside a pod or ouside the cluster can access kubernetes cluster using a service account.
 -> when a service account is created it first creates a token and keeps that token in a secret object and token can be used by mounting the secret object. 
--> Secret object is linked to the service account.\
+-> Secret object is linked to the service account.
 
 Service accounts are commonly used for:
 
-Allowing Pods to authenticate with Kubernetes APIs.
-Granting permissions to Pods for specific actions in the cluster.
-Enabling fine-grained access control through RBAC (Role-Based Access Control).
+-- Allowing Pods to authenticate with Kubernetes APIs.
+-- Granting permissions to Pods for specific actions in the cluster.
+-- Enabling fine-grained access control through RBAC (Role-Based Access Control).
+
+** Key Features of Service Accounts:
+1. Identity for Pods: A service account is assigned to a Pod or Deployment, giving it an identity for API interactions.
+2. Role-Based Access Control (RBAC): Service accounts can be associated with RBAC roles to grant permissions to interact with various Kubernetes resources.
+3. API Access: Pods using a service account can authenticate to the Kubernetes API server with the associated credentials.
+
+** Components:
+-> Service Account: An object representing an identity.
+-> Service Account Token: Each service account is given a secret (JWT token) that pods can use to authenticate.
+-> RBAC Policies: Service accounts are associated with roles and role bindings to control access permissions.
+-> Default Service Account: If no service account is specified, the default service account is used for the pod.
+
+How to Create and Use a Service Account in Kubernetes:
+------------------------------------------------------
+1. Create a Service Account
+Example: Service Account YAML:
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: my-service-account
+  namespace: default  # You can specify a namespace here
+
+$$ kubectl apply -f service-account.yaml    or
+$$ kubectl create serviceaccount my-service-account -n default
+
+2. Assigning Roles and Permissions to the Service Account:
+
+a. Create a Role (or ClusterRole) that defines the permissions.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: pod-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+
+b. Create a RoleBinding that binds the my-service-account to the pod-reader role.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: my-service-account-binding
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  name: my-service-account
+  namespace: default
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+
+$$ kubectl apply -f role.yaml
+$$ kubectl apply -f rolebinding.yaml
+
+3. Using the Service Account in a Pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  serviceAccountName: my-service-account  # Link the service account to the pod
+  containers:
+  - name: my-container
+    image: nginx
+
+$$ apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  serviceAccountName: my-service-account  # Link the service account to the pod
+  containers:
+  - name: my-container
+    image: nginx
+
+4. Accessing the Service Account Token Inside the Pod
+-> Kubernetes automatically mounts the service account's token into the pod at the path /var/run/secrets/kubernetes.io/serviceaccount/token. 
+-> You can access it from within your application if you need to interact with the Kubernetes API.
+
+-> For example, to access the token from within a container, use:
+$$ cat /var/run/secrets/kubernetes.io/serviceaccount/token
+
+
 
 Kubectl create sa <sa-name> -n namespace
 
@@ -1883,7 +1971,7 @@ rules:
 		- list
      		- watch
 
-Role Binding and ClusterRole Binding
+** Role Binding and ClusterRole Binding
 -> Role and ClusterRole binding is used to attach the Role to a service account.
 -> In Role binding we can bind role to a ClusterRole within a namespace.
 	
@@ -1902,8 +1990,6 @@ subjects:
    - kind: ServiceAccount
      name: myaccount
      namespace: test
-
-
 
 
 -----------------------------------------------------------------------------------------------------------------------------------------
