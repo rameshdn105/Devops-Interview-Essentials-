@@ -1216,8 +1216,10 @@ Pod Probes:
 		periodSeconds:10
 
 
-Liveness Probe: (Health of application, if it fails container will be restarted)
+Liveness Probe: (Health of application, if a container is still running and responsive, if it fails container will be restarted)
 ----------------
+-> A Liviness Probe in Kubernetes checks if a container is still running and responsive. If the liveness probe fails, 
+Kubernetes automatically restarts the container.
 -> The livenessProbe is used to determine the health of the applicaiton running inside the pod.
 -> If livenessProbe fails the container will be restarted.
 -> Ex: Due to some reason like memory leaks in applicaiton or due to high CPU/RAM usage the applicaiton is not responding to our requests, Then in this situation livenessProbe will fail and it will restart the pod.
@@ -2441,7 +2443,7 @@ kubectl get pods [check status of pods]
 kubectl get logs application[wil be chceked for dependencies]
 kubectl describe pod <pod name>[to view appl related to pods]
 kubectl describe service <service name>[to view service related to pods]
-the pod vwill be deleted and restarted
+the pod will be deleted and restarted
 
 Q. Explain Kubectl cmds?
 kubectl run <pod-name> --image=<image-name>
