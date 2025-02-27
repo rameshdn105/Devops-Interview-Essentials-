@@ -35,8 +35,6 @@ Docker Commands:
 -> pulling images for centos (installing centos) from docker image registry(called docker hub), to create and run a container
 * $$ docker stop <containerID>
 * $$ docker start <containerID>
-* $$ docker stats <containerID> 
-* $$ docker inspect <containerID>: 
 * docker info   : it gives the information of the docker, like no of containers, kernel version, kernal name
 * flags -p: assign port target
         -d: detached mode
@@ -73,11 +71,11 @@ Docker Commands:
    to publish all the available exposed port of the container 
    $$ docker run -P ..............
 25.container logs: for retrieving container logs
-  $$ sudo docker container logs [option] container_id
+  $$ docker container logs [option] container_id
 26.container logs: all logs of a docker container
   $$ docker ps -q | xargs -L 1 docker logs
 27.docker memory: To limit the maximum amount of memory usage for a container, add the --memory/-m
-  $$ sudo docker run -it --memory=" [memory_limit]" [docker_image]
+  $$ docker run -it --memory=" [memory_limit]" [docker_image]
 
 28. Docker compose commands
 $$ docker compose up -d :to start docker compose file
@@ -88,55 +86,28 @@ $$ docker compose stop--->The stop command will terminate the container executio
 $$ docker compose down--->If you want to remove the containers, networks, and volumes associated with this containerized environment, use the down command
 
 
-29. Docker disk usage monitoring commands
+29. Docker Monitoring commands
 $$ docker system df: Disk usage summary
 $$ docker system df -v: Disk usage summary all container, all images, including cache etc
-$$ docker stats: Monitor container resource usage
-$$ docker scan:  is used to scan Docker images for known vulnerabilities
-$$ docker inspect <container_id_or_name>: detailed information about containers, images, volumes, and networks
+$$ docker stats: Monitor container resource usage, real-time statistics for running containers, including CPU usage, memory usage, network I/O, and disk I/O
+$$ docker inspect <container_id_or_name>: detailed information about containers, images, volumes, and networks. You can use it to review security settings for a container (e.g., capabilities, mount points, network settings).
+$$ docker scan <image_name>:  is used to scan Docker images for known vulnerabilities, It integrates with Snyk, a tool that helps to identify and fix security vulnerabilities in your images.
+$$ docker inspect <container_id_or_name>: detailed information about containers, images, volumes, and networks. provides detailed information on constructs controlled by Docker, render results in a JSON array
 $$ docker exec -it <container_id_or_name> <command>
+$$ docker info: provides general information about the Docker daemon and its configuration, including security-related settings such as: Cgroup driver, Security options (AppArmor, SELinux, etc.), User namespaces, Docker daemon and client version
 $$ docker info --security: This shows security configurations related to the Docker daemon, which is useful for auditing and ensuring that best practices are followed for container security.
-
-1. docker system df (Disk usage summary)
-$$ docker system df   : summary of disk usage in your Docker environment, including space used by images, containers, local volumes, and build cache.
-
-$$ docker system df -v
 
 $$ du -sh /var/lib/docker/ (Check Docker disk usage on the host)
 
-$$ docker stats (Monitor container resource usage)
--> The docker stats command provides real-time statistics for running containers, including CPU usage, memory usage, network I/O, and disk I/O. Although it doesn't directly show disk usage, it's useful for monitoring resource consumption.
-
-** docker scan:  is used to scan Docker images for known vulnerabilities. It integrates with Snyk, a tool that helps to identify and fix security vulnerabilities in your images.
-$$ docker scan <image_name>
-$$ docker scan my-app:latest
-
-2. docker inspect: The docker inspect command provides detailed information about containers, images, volumes, and networks. You can use it to review security settings for a container (e.g., capabilities, mount points, network settings).
-$$ docker inspect <container_id_or_name>
-
-3. docker info: $$ docker info
--> The docker info command provides general information about the Docker daemon and its configuration, including security-related settings such as:
-Cgroup driver
-Security options (AppArmor, SELinux, etc.)
-User namespaces
-Docker daemon and client version
-bash
-Copy
-
-4. docker exec: $$ docker exec -it <container_id_or_name> <command>
--> The docker exec command allows you to execute commands inside a running container. 
 -------------------------------------------------------------------------------------------------------------------------------
 Q. daemon login and container login
--> Daemon Login: In computing, a daemon is a background process that runs on a computer and performs specific tasks. 
--> A Daemon Login is a type of login in which a user is granted access to the computer as a daemon process, allowing them to run specific tasks in the background. 
+1. A Daemon Login is a type of login in which a user is granted access to the computer as a daemon process, allowing them to run specific tasks in the background. 
 -> This type of login is typically used by system administrators to perform administrative tasks, such as starting and stopping services or running scripts.
-
--> Container Login: A Container Login is the process of logging into a container to access its environment and run commands or make changes. This is typically done by using a command line interface (CLI) such as Docker or Kubernetes. 
+2. Container Login: A Container Login is the process of logging into a container to access its environment and run commands or make changes. This is typically done by using a command line interface (CLI) such as Docker or Kubernetes. 
 
 Q. restart policies for docker container with example?
 -> It tells Docker how to handle restart a container that has stopped.
-    Here are the available restart policies:
-1. No: Never attempt to restart the container. (
+1. No: Never attempt to restart the container. 
 	$$ docker run --name my_container --restart=no my_image
 2. On-failure: Restart the container only if it stops due to an error, and add a maximum restart count.
 	$$ docker run --name my_container --restart=on-failure:5 my_image
@@ -146,18 +117,22 @@ Q. restart policies for docker container with example?
 	$$ docker run --name my_container --restart=unless-stopped my_image
 
 Q. What is the difference containerd and runC?
--> containerd is called a high-level container runtime. For some actions, it makes use of yet another runtime, called a low-level container runtime. This low-level runtime is called runc
+-> containerd is called a high-level container runtime. For some actions, it makes use of yet another runtime, called a low-level container runtime. This low-level runtime is called runc.
+containerd:
+** It is an industry-standard core container runtime that provides basic container management features such as image transfer, storage, container execution, and supervision.
+** It is a daemon that acts as an interface between container orchestration systems (like Kubernetes) and lower-level container runtimes.
+runC:
+** runC is a lightweight container runtime that is responsible for actually running containers.
+** It provides a low-level container runtime that interacts with the host OS to create and manage containers.
+** runC is an implementation of the Open Container Initiative (OCI) runtime specification, which standardizes how containers are launched and run on a system.
 
 Q. What is docker system prune?
--> docker system prune is not safe to be used in production. It may clean up and reclaim space but there's a possibility that one or more containers will die and need to be restarted manually. 
--> In production apps, you want the images to fail gracefully and restart automatically.
+-> It is used to clean up unused Docker resources in your system. It removes various unused or unnecessary Docker objects, such as containers, networks, volumes, and images that are not currently being used.
+-> docker system prune is not safe to be used in production. It may clean up and reclaim space but there's a possibility that one or more containers will die and need to be restarted manually. In production apps, you want the images to fail gracefully and restart automatically.
 
 Q. What are orphaned containers?
 -> Orphaned containers are basically containers you used previously, but you deleted the dependencies to them so you can't use them anymore, but they are still present on your computer.
   $$ docker-compose up -d --remove-orphans
-
-Q. Docker inspect: provides detailed information on constructs controlled by Docker, render results in a JSON array
- $ docker volume inspect
 
 Q. Diff between running and creating the container?
 -> Start will start any stopped containers. This includes freshly created containers. 
@@ -166,8 +141,8 @@ Q. Diff between running and creating the container?
 
 Q. Difference between Docker kill and Docker stop:
 -> To terminate a container, Docker provides the docker stop and docker kill commands. 
-   Both the docker kill and docker stop commands look similar, but their internal execution is different. 
-   The docker stop commands issue the SIGTERM signal to the main process running, whereas the docker kill commands sends the SIGKILL signal to the process.
+"Docker stop" commands issue the SIGTERM signal to the main process running
+"Docker kill" commands sends the SIGKILL signal to the process.
 -> ‘docker stop’ gives the container time to shutdown gracefully, in situations when it is taking too much time for getting the container to stop, one can opt to kill it
 
 Q. The three primary differences between the Dockerfile and docker-compose are:
@@ -189,29 +164,31 @@ Q. Difference between docker image and layer?
 Q. docker layer
 -> the fundamental building blocks for creating, deploying, and scaling systems.
 -> Docker stores all caches in /var/lib/docker/<driver> , where <driver> is the storage driver overlay2 again
----------------------------------------------------------------------------------------------------------------
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------
 ** Assignment- Dangling images and how to delete them.
-Ans: Simply an unused image that’s got no name and tag. You can easily spot dangling images when you run the $$ docker images command because they show up as <none>:<none>.
+-> Simply an unused image that’s got no name and tag. You can easily spot dangling images when you run the $$ docker images command because they show up as <none>:<none>.
 
-** docker system prune :Remove all dangling images. If -a is specified, will also remove all images not referenced by any container.
+$$ docker image prune :Remove all dangling images. If -a is specified, will also remove all images not referenced by any container.
 --all , -a		Remove all unused images, not just dangling ones
 --filter		Provide filter values (e.g. 'until=<timestamp>')
 --force , -f		Do not prompt for confirmation
 
 List dangling images:
-$ sudo docker images -f dangling=true
+$ docker images -f dangling=true
 
 ** How Are Dangling Images Created?
 -> Dangling images are usually created when an existing image gets superseded by a new build.
 ** Can You Use a Dangling Image?
 -> Dangling images function like any other image. The only difference is the missing tag. 
 -> You can start a container from a dangling image by directly referencing the image’s ID.
+$$ docker tag <image_id> <repository>:<tag>
+$$ docker tag abc123def456 myapp:v1.0
 
 ** Cleaning Up Dangling Images
 -> You can delete a single dangling image using the docker rmi command, just like any other image. 
    Because the image won’t be tagged, you’ll need to identify it by its ID.
--> Docker image prune :Remove all dangling images.
+$$ docker image prune :Remove all dangling images.
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 
 Why Docker
@@ -261,8 +238,7 @@ Deployment		Deploying is easy as only a single image, 			Deployment is comparati
                		containerized can be used across all platforms.   		are responsible for execution.		
 
 -> A hypervisor, also known as a virtual machine monitor or VMM, is software that creates and runs virtual machines (VMs). 
--> A hypervisor allows one host computer to support multiple guest VMs by virtually sharing its resources, such as memory 
-  and processing.
+-> A hypervisor allows one host computer to support multiple guest VMs by virtually sharing its resources, such as memory and processing.
 Types:
 1. Type 1 (Bare metal) : acts like a lightweight operating system and runs directly on the host's hardware
 2. Type 2 (Hosted) :  runs as a software layer on an operating system, like other computer programs.
@@ -272,10 +248,10 @@ Docker architecture:
 https://docs.docker.com/get-started/overview/
 
 Docker uses a client-server architecture. 
-*The Docker client talks to the Docker daemon, which does the heavy lifting of building, running, and distributing your Docker containers. 
-*The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon. 
-*The Docker client and daemon communicate using a REST API, over UNIX sockets or a network interface. 
-*Another Docker client is Docker Compose, that lets you work with applications consisting of a set of containers.
+** The Docker client talks to the Docker daemon, which does the heavy lifting of building, running, and distributing your Docker containers. 
+** The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon. 
+** The Docker client and daemon communicate using a REST API, over UNIX sockets or a network interface. 
+** Another Docker client is Docker Compose, that lets you work with applications consisting of a set of containers.
 
 The Docker client: 
 -> The Docker client (docker) is the primary way that many Docker users interact with Docker. When you use commands such as 
@@ -284,19 +260,18 @@ The Docker client:
 
 The Docker daemon: 
 -> The Docker daemon (dockerd) listens for Docker API requests and manages Docker objects such as images, containers, networks, and volumes. 
-   A daemon can also communicate with other daemons to manage Docker services.
+-> A daemon can also communicate with other daemons to manage Docker services.
 
 Docker Desktop:
 -> Docker Desktop is an easy-to-install application for your Mac, Windows or Linux environment that enables you to build and 
    share containerized applications and microservices. 
--> Docker Desktop includes the Docker daemon (dockerd), the Docker client (docker), Docker Compose, Docker Content Trust, Kubernetes, and Credential Helper. For more information, see Docker Desktop.
+-> Docker Desktop includes the Docker daemon (dockerd), the Docker client (docker), Docker Compose, Docker Content Trust, Kubernetes, and Credential Helper. 
 
 Docker registries:
--> A Docker registry stores Docker images. Docker Hub is a public registry that anyone can use, and Docker is configured to look for 
-   images on Docker Hub by default. You can even run your own private registry.
+-> A Docker registry stores Docker images. Docker Hub is a public registry that anyone can use, and Docker is configured to look for images on Docker Hub by default. You can even run your own private registry.
 -> When you use the docker pull or docker run commands, the required images are pulled from your configured registry. 
-   When you use the docker push command, your image is pushed to your configured registry. (To push we login to dockerhub)
--> Private registry: Amazon ECS(Elastic container service), Docker enterprise, Azure Kuberntes service, Google Kubernetes Engine (GKE)
+-> When you use the docker push command, your image is pushed to your configured registry. (To push we login to Dockerhub)
+-> Private registry: Amazon ECS(Elastic container service), Docker enterprise, Azure Kubernetes service, Google Kubernetes Engine (GKE)
 -> Other registries: Google Container Registry, Amazon Elastic Container Registry, Azure Container Registry, GitLab Container Registry, 
    JFrog Container Registry, Quay, Harbor.
 
@@ -306,14 +281,11 @@ Docker Engine overview:
 ** A server with a long-running daemon process dockerd.
 ** APIs which specify interfaces that programs can use to talk to and instruct the Docker daemon.
 ** A command line interface (CLI) client docker.
--> The CLI uses Docker APIs to control or interact with the Docker daemon through scripting or direct CLI commands. 
-   Many other Docker applications use the underlying API and CLI. 
-   The daemon creates and manage Docker objects, such as images, containers, networks, and volumes.
 
 Docker container vs image:
 Docker image:
 1. A Docker image is a read-only template used to create containers.
-2. It serves as a blueprint for creating containers. You can think of it like a class in object-oriented programming, while the container is an instance of that class.
+2. It serves as a blueprint for creating containers. (You can think of it like a class in object-oriented programming, while the container is an instance of that class.)
 3. Images are stored on disk or in a Docker registry (like Docker Hub or private registries).
 4. Immutability: Once an image is created, it is immutable. You cannot change it directly. If you need a different version, you'd have to build a new image.
 5. Example: The official Ubuntu image or Nginx image available on Docker Hub (ubuntu:20.04 or nginx:latest).
@@ -326,7 +298,6 @@ Docker Container:
 -> Lifecycle: A container starts when you run it, and it can be stopped or removed. The container can be restarted from the same image, but once deleted, its state is lost unless data is persisted in volumes.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 Docker Container Lifecycle Management or stages of container:
 1. Created state : docker create --name <name-of-container> <docker-image-name>
 2. Running state : docker run <container-id or container-name> 
@@ -373,7 +344,7 @@ it: interactive terminal
 Docker commands:
 ** docker stats [OPTIONS] [CONTAINER...]  -->Display a live stream of container(s) resource usage statistics.
 ** docker info --> displays system wide information regarding the Docker installation (kernel version, number of containers and images)
-** docker ps-->list the running containers
+** docker ps  -->list the running containers
 ** docker ps -q   :(--quiet only the container IDs)
 ** docker ps -a -->list all the containers
 
@@ -385,6 +356,15 @@ Docker commands:
 ** docker ps -f status=exited --> list only exited containers or stopped containers   (-f // --filter)
 ** docker ps -f status=exited | xargs -l {}docker rm                    alternate command docker rm $(docker ps -q -f status=exited)
 ** docker start $(docker ps -a -q --filter "status=exited")
+
+*********************************************************************************
+** To copy a file from container to local machine.
+$$ docker cp <Container ID>:<Path of file inside the container> <Path in the local machine>
+$$ docker cp 67d47d1ec280:/ram.txt ./
+
+** To copy a file from local machine to container
+$$ docker cp <Path in the local machine> <Container ID>:<Path of file inside the container>
+$$ docker cp ./ram.txt 67d47d1ec280:/etc
 
 ** docker save <container name>  : to save file to local desktop
 ** How to Create a .tar File for Loading (Using docker save):
@@ -406,8 +386,9 @@ $$ docker load < multiple_images.tar
 Ouput: Loaded image: image_one:tag1
 Loaded image: image_two:tag2
 
-3. Suppress Output During Loading:
-docker load --quiet < my_image.tar
+3. $$ docker load --quiet < my_image.tar
+-> Suppress Output During Loading: command is used to suppress output during the process of loading a Docker image from a tarball file. 
+-> When you load an image with docker load, by default, Docker displays output related to the image being loaded (e.g., the image ID, repository, and tag). The --quiet flag will prevent this output, making the process silent.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 Best way To delete all the running containers
@@ -419,7 +400,7 @@ Best way To delete all the running containers
 ** docker rm $(docker stop <contaner id>)
 
 Automatically delete the container when it stopped
-*docker run --rm 
+** docker run --rm 
 
 To create a container in background /in detached mode (If we don't run in detach mode we can run commands)
 ** docker run -d <imagename>:<tagname>
@@ -500,10 +481,10 @@ $$ docker rm -f <containerid>   => forcefully
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 ** Docker Hub: To push the image to docker hub or  to the repository
- - each repository in docker hub refers to only one name
- - imagename should be also unique , can be same as repository name created in docker hub
- - tag name is user defined ,we can give any tag name
- -Docker hub preferred image name is <hub_username>/<reponame>:tag
+-> each repository in docker hub refers to only one name
+-> imagename should be also unique , can be same as repository name created in docker hub
+-> tag name is user defined, we can give any tag name
+-> Docker hub preferred image name is <hub_username>/<reponame>:tag
 
 1)We need to authenticate the repository login
 syntax: docker login
@@ -514,45 +495,81 @@ syntax: $$ docker tag <local-image>:<tag> <hub_username>/<reponame>:<tag>   --->
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 Dockerfile instructions
 ------------------------
-FROM <image_name>:<tag>   ----->it used to specify the base image we want to start.
-    -- if we dont specify the tag then automatically latest will be pulled
-  -Ex: centos:7, python:2.7, Ubuntu:latest
+## FROM <image_name>:<tag>   ----->it used to specify the base image we want to start.
+-> if we dont specify the tag then automatically latest will be pulled
+-> Ex: centos:7, python:2.7, Ubuntu:latest
 
-RUN <command>   ----->to run the commands on top of base image
- -it can execute commands in exec form even there is no shell in the base image 
- -the default shell for execution can be changed by using SHELL <COMMAND>
+## RUN <command>   ----->to run the commands on top of base image
+-> It can execute commands in exec form even there is no shell in the base image 
+-> The default shell for execution can be changed by using SHELL <COMMAND>
 
-COPY <src> <destination>
-  -src is always calculated from the Dockerfile location
-  -copies both files and directories from the host machine to the image
+## COPY <src> <destination>
+-> src is always calculated from the Dockerfile location
+-> copies both files and directories from the source (on the host system) to the destination (in the container)
+-> It only supports local file copy and does not perform any extra functionality like extracting compressed files or downloading files from remote URLs.
+$$ COPY ./local-file.txt /container-directory/
 
-ADD <src> <destination>
-   -copies both files and directories from the host machine to the image
-   -of src is an URL , add will download , if its zipped it will be automatically extracted
+## ADD <src> <destination>
+-> copies both files and directories from the host machine to the image and offers additional functionalities
+-> Extract compressed files (e.g., .tar, .gz, .zip), Download files from remote URLs directly into the container
+$$ ADD ./local-file.tar /container-directory/
 
-CMD ["<executable>","<param1>","<param2>",.......]---> It defines default execution point for the image or container
-   - there can be only one CMD in docker file , if we specify multiple CMD then docker will consider last CMD specified in the dockerfile. 
-   -CMD can be overridden.
+** "Both CMD and ENTRYPOINT define how a container should be run when it starts, but they serve different purposes and behave differently"
+ 
+## CMD ["<executable>","<param1>","<param2>", ......]
+$$ CMD ["python", "app.py"]  // CMD python app.py
+-> It defines default execution point for the image or container
+-> There can be only one CMD in docker file , if we specify multiple CMD then docker will consider last CMD specified in the dockerfile. 
+-> If the container is run with an explicit command (e.g., passing an argument at runtime), it overrides the CMD
+-> CMD can be overridden.
 
-ENTRYPOINT ["<executable>","<param1>","<param2>",......]---> Define default execution point for the image or container
-   --ENTRYPOINT  cannot be overridden
-   --if we use multiple ENTRYPOINT then last instruction will be considered.
-   --during run time we can give --entrypoint so that it can be overridden
+## ENTRYPOINT ["<executable>","<param1>","<param2>",......]
+$$ ENTRYPOINT ["python", "app.py"]  // ENTRYPOINT python app.py
+-> Define default execution point/main command for the image or container
+-> ENTRYPOINT  cannot be easily overridden, Any arguments passed during docker run will be treated as arguments to the ENTRYPOINT
+-> if we use multiple ENTRYPOINT then last instruction will be considered.
+-> during run time we can give --entrypoint so that it can be overridden
 
---> what if we use both CMD and ENTRYPOINT in  same dockerfile then ENTRYPOINT has the highest priority, the command or parameters passed to the ENTRYPOINT will be considered as executable commands specified through CMD will be input or prams or default argument to ENTRYPOINT.
+--> what if we use both CMD and ENTRYPOINT in  same dockerfile then "ENTRYPOINT" has the highest priority, the command or parameters passed to the ENTRYPOINT will be considered as executable commands specified through CMD will be input or prams or default argument to ENTRYPOINT.
+-> CMD: Provides default arguments for the command defined in ENTRYPOINT. If no arguments are passed during docker run, the CMD values will be used. If arguments are passed during docker run, those will override CMD and be appended to the ENTRYPOINT.
 
-WORKDIR ---->sets the path/working directory for RUN, CMD, ENTRYPOINT
- --use to define working directory of a docker container at any given time.
+## WORKDIR
+-> sets the path/working directory for RUN, CMD, ENTRYPOINT, COPY, and ADD
+-> use to define working directory of a docker container at any given time.
+-> If the specified directory does not exist, Docker will automatically create it.
 
-ENV <VAR_NAME><VALUE>
-ENV  <VAR_NAME1><VALUE> <VAR_NAME2><VALUE> <VAR_NAME3><VALUE>---> It is used to create environment variables inside the image or container.
-
-EXPOSE 5000		# Expose the port the Flask application will be listening on
-
--> Dockerfile provides a dedicated variable type ENV to create an environment variable. We can access ENV values during the build, as well as once the container runs.
+## ENV <VAR_NAME><VALUE>
+$$ ENV  <VAR_NAME1><VALUE> <VAR_NAME2><VALUE> <VAR_NAME3><VALUE>
+$$ ENV MY_APP_ENV=production MY_APP_VERSION=1.0
+$$ ENV PATH /usr/local/bin:$PATH
+-> It is used to create environment variables inside the image or container.
+-> Environment variables can be used to pass configuration values or settings to your application within the container. For example, setting database connection strings, API keys, or other configuration values.
 -> We use "docker run --env-file [path-toenv-file]" to provide the environment variables to the container from a . env file
-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+## EXPOSE 5000		
+-> Expose the port the Flask application will be listening on
+-> The EXPOSE command only documents the ports used inside the container. It does not publish those ports to the host machine. To make the container’s port accessible from the host, you need to use the -p flag with docker run, like this:
+$$ docker run -p 8080:8080 my-container
+
+--------------------------------------------------------------------------------------------
+## Using CMD and ENTRYPOINT Together
+-> You can use both ENTRYPOINT and CMD together in a Dockerfile to provide more flexibility.
+-> ENTRYPOINT: Specifies the command to run (the main process).
+** CMD: Provides default arguments for the command defined in ENTRYPOINT. If no arguments are passed during docker run, the CMD values will be used. If arguments are passed during docker run, those will override CMD and be appended to the ENTRYPOINT.
+
+Example:
+FROM ubuntu
+ENTRYPOINT ["echo"]
+CMD ["Hello, World!"]
+
+1. If no arguments are provided at runtime, Docker will execute:
+echo Hello, World!
+
+2. If arguments are passed at runtime, for example:
+docker run <image_name> Goodbye!
+echo Goodbye! (Docker will execute)
+
+----------------------------------------------------------------
 Assignemt --->use following instructions and build a docker image and container 
 FROM ubuntu 
 RUN apt-get update 
@@ -578,8 +595,8 @@ EXPOSE 5000
 # ENV MY_ENV_VAR=value
 # Run the Flask application
 CMD ["python", "app.py"]
-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+-----------------------------------------------------------------------------------------
 Sample Dockerfile for tomcat with .war
 --------------------------------------
 FROM ubuntu
@@ -600,45 +617,44 @@ RUN chown -R root:root /tomcat && \
 USER root
 EXPOSE 8080
 CMD /tomcat/apache-tomcat-9.0.53/bin/catalina.sh run
-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-6 Tips to 𝐎𝐩𝐭𝐢𝐦𝐢𝐳𝐞 𝐘𝐨𝐮𝐫 𝐃𝐨𝐜𝐤𝐞𝐫𝐟𝐢𝐥𝐞
-
+-----------------------------------------------------------------------------------
+** Tips to 𝐎𝐩𝐭𝐢𝐦𝐢𝐳𝐞 𝐘𝐨𝐮𝐫 𝐃𝐨𝐜𝐤𝐞𝐫𝐟𝐢𝐥𝐞
 ➡️𝐌𝐢𝐧𝐢𝐦𝐢𝐳𝐞 𝐋𝐚𝐲𝐞𝐫s / Layer 𝐒𝐢𝐳𝐞:
-- Docker creates a new layer for each instruction in the Dockerfile (e.g., RUN, COPY, ADD).
-- Combine multiple "RUN commands" using "&&" to minimize the number of layers.
-- Avoid Using ADD (Unless Needed): COPY is preferred over ADD because ADD has additional functionality (such as unpacking tarballs and supporting remote URLs), which you don’t need in most cases. It's safer and more predictable to use COPY.  [ADD myfile.tar.gz /app ==>> COPY myfile.tar.gz /app]
-- Clean up unnecessary files and dependencies within the same RUN command.
+- > Docker creates a new layer for each instruction in the Dockerfile (e.g., RUN, COPY, ADD).
+- > Combine multiple "RUN commands" using "&&" to minimize the number of layers.
+- > Avoid Using ADD (Unless Needed): COPY is preferred over ADD because ADD has additional functionality (such as unpacking tarballs and supporting remote URLs), which you don’t need in most cases. It's safer and more predictable to use COPY.  [ADD myfile.tar.gz /app ==>> COPY myfile.tar.gz /app]
+-> Clean up unnecessary files and dependencies within the same RUN command.
 Ex: RUN apt-get update && apt-get install -y curl
 
 ➡️𝐋𝐞𝐯𝐞𝐫𝐚𝐠𝐞 .𝐝𝐨𝐜𝐤𝐞𝐫𝐢𝐠𝐧𝐨𝐫𝐞:
-- Exclude unnecessary files and directories from the build context using .dockerignore.
-- This reduces the size of the build context and speeds up the build process by excluding unnecessary files (e.g., node_modules, test directories, or build artifacts)..
-- Keep "COPY . ." in the end as frequently changing instructions to take advantage of Docker's cache.
+-> Exclude unnecessary files and directories from the build context using .dockerignore.
+-> This reduces the size of the build context and speeds up the build process by excluding unnecessary files (e.g., node_modules, test directories, or build artifacts)..
+->  Keep "COPY . ." in the end as frequently changing instructions to take advantage of Docker's cache.
 
 ➡️𝐏𝐫𝐢𝐨𝐫𝐢𝐭𝐢𝐳𝐞 𝐄𝐟𝐟𝐢𝐜𝐢𝐞𝐧𝐭 𝐈𝐦𝐚𝐠𝐞 𝐋𝐚𝐲𝐞𝐫𝐬/ Install Only Required Dependencies: 
-- Place frequently changing dependencies lower in the Dockerfile to leverage Docker's layer caching mechanism.
-- Avoid unnecessary package installations that could bloat the image size.
-- For example, in a production Dockerfile, you should avoid installing development dependencies (e.g., using npm install --production).
+-> Place frequently changing dependencies lower in the Dockerfile to leverage Docker's layer caching mechanism.
+-> Avoid unnecessary package installations that could bloat the image size.
+-> For example, in a production Dockerfile, you should avoid installing development dependencies (e.g., using npm install --production).
 
 ➡️𝐔𝐬𝐞 𝐒𝐩𝐞𝐜𝐢𝐟𝐢𝐜 𝐓𝐚𝐠𝐬 𝐟𝐨𝐫 𝐁𝐚𝐬𝐞 I𝐦𝐚𝐠𝐞𝐬:
-- Specify precise version tags for base images to ensure consistency and avoid unexpected updates.
-- Pinning versions mitigates the risk of breaking changes introduced by newer versions.
+-> Specify precise version tags for base images to ensure consistency and avoid unexpected updates.
+->  Pinning versions mitigates the risk of breaking changes introduced by newer versions.
 
 ➡️𝐎𝐩𝐭𝐢𝐦𝐢𝐳𝐞 𝐈𝐦𝐚𝐠𝐞 𝐒𝐢𝐳𝐞:
-- Use smaller base images like Alpine Linux where possible to reduce the overall size of the image.
-- Remove unnecessary dependencies and files from the final image to make it as lightweight as possible.
-- (e.g., node:alpine, python:alpine), or Node.js, prefer node:alpine over node to save space
+-> Use smaller base images like Alpine Linux where possible to reduce the overall size of the image.
+-> Remove unnecessary dependencies and files from the final image to make it as lightweight as possible.
+-> (e.g., node:alpine, python:alpine), or Node.js, prefer node:alpine over node to save space
 
-➡️USe ENTRYPOINT and CMD Correctly:
-- ENTRYPOINT should define the main process, and CMD should define default arguments to that process. This allows flexibility while ensuring the container runs the intended process.
+➡️ USe ENTRYPOINT and CMD Correctly:
+-> ENTRYPOINT should define the main process, and CMD should define default arguments to that process. This allows flexibility while ensuring the container runs the intended process.
 # Using CMD and ENTRYPOINT together
 ENTRYPOINT ["npm", "run"]
 CMD ["start"]
 
 ➡️𝐔𝐬𝐞 𝐌𝐮𝐥𝐭𝐢𝐬𝐭𝐚𝐠𝐞 𝐁𝐮𝐢𝐥𝐝𝐬:
-- Utilize multiple stages to reduce the size of the final image.
-- Keep the final image lean by copying only necessary artifacts from previous stages.
+-> Utilize multiple stages to reduce the size of the final image.
+-> Keep the final image lean by copying only necessary artifacts from previous stages.
 # Stage 1: Build Stage
 FROM node:alpine as builder
 WORKDIR /app
@@ -652,10 +668,8 @@ COPY --from=builder /app /app
 RUN npm prune --production
 CMD ["npm", "start"]
 
-
 ** Advantages of Alpine Images:
 ------------------------------
-
 1. Small image size (around 5MB).
 2. Faster container builds and pulls.
 3. Lower storage consumption.
@@ -666,7 +680,6 @@ CMD ["npm", "start"]
 
 Disadvantages of Alpine Images:
 ------------------------------
-
 1. Compatibility issues with glibc-based applications.
 2. Limited package availability in Alpine repositories.
 3. Difficulties with debugging (lack of common debugging tools).
@@ -674,7 +687,7 @@ Disadvantages of Alpine Images:
 5. Learning curve with the apk package manager.
 6. More manual configuration required for some tools and libraries.
 
-===================================================================================================================-------------------------------------------------
+=====================================================================================
 There are three types of volumes to consider:
 1. Named volumes: 
 -> Named volumes are managed by Docker, and they are stored in a specific directory on the host system (usually /var/lib/docker/volumes/). 
@@ -736,45 +749,49 @@ $$ docker volume rm <volume name>----> to delete docker volume
 $$ docker volume prune   ---->delete unused volumes
 $$ docker volume inspect <volume name> --->to display the details about volume
 $$ docker run -v <volume name>:<continaer path>  --> attaching volume
---> $$ docker run -it -v vol1:/root/vol1 --name tomcat_ubuntu ubuntu: mount container to the volume, or attach container to volume
-    $$ docker run -it -v vol1:/root/vol1 --name <imagename> ubuntu
+$$ docker run -it -v vol1:/root/vol1 --name tomcat_ubuntu ubuntu: mount container to the volume, or attach container to volume
+$$ docker run -it -v vol1:/root/vol1 --name <imagename> ubuntu
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 Docker networking: 
 -----------------
--> Docker networking allows you to attach a container to as many networks as you like.
 -> Docker networking is primarily used to establish communication between Docker containers and the outside world via  the host machine where the Docker daemon is running.
+
 
 1. Bridge Network:-This is a private network created by docker on the host when we install docker.
 -> All the containers connected to the same bridge can communicate each other by default.
 -> All containers get an internal private Ip and these containers by default under the bridge network.
 -> Whenever we create a container by default without configuring any network it will be created under bridge by name docker0
 -> Remove all unused network Use the "$$ docker network prune" command to remove all unused networks. 
-"$$ docker network prune"
 -> User-defined bridge networks are best when you need multiple containers to communicate on the same Docker host.
 
 -> Default Docker CIDR Range: Bridge network: 172.17.0.0/16
--> This means Docker containers on the default bridge network will be assigned IP addresses in the range 172.17.0.1 to 172.17.255.254
+-> This means Docker containers on the default bridge network will be assigned IP addresses in the range 172.17.0.1 to 172.17.255.255
+-> you have a total of 65,536 possible IP addresses (2^16 = 65536) within this network.
+-> In the case of 172.17.0.0/16, the first 16 bits are allocated to the network part of the address, and the remaining 16 bits can be used for host addresses within that network.
 
 ## create a custom bridge network
-	$$ docker network create --driver bridge <network_name>
+$$ docker network create --driver bridge <network_name>
 ## To create a container in the custom bridge
- 	$$ docker run -dti --network <network_name><imagename:tag>
+$$ docker run -dti --network <network_name><imagename:tag>
 
 ## custom bridge allows us to ping/they can communicate with container name and Ip
 
 ## To connect containers present in different bridge
-	$$ docker network connect <network_name> <container id>
-        $$ docker network disconnect <network_name> <container id>       
+$$ docker network connect <network_name> <container id>
+$$ docker network disconnect <network_name> <container id>       
 
-2. HOST NETWORK:-
+*****************************************************************************************
+2. HOST NETWORK: 
+$$ docker run --network host <image_name>
+$$ docker run -d -it --network host <imagename:tag>
 -> This driver removes the network isolation between the host machine and the docker. The containers are directly connected to host network.
 -> It depends upon us when to use this network as per requirement. 
-   
-	$$ docker run -d -it --network host <imagename:tag>
+-> Shares the same network interfaces as the host, Does not get its own private IP address. Instead, it uses the IP address of the host machine, Can bind to ports on the host machine directly, rather than having to map ports between the host and the container.
 -> Host networks are best when the network stack should not be isolated from the Docker host, but you want other aspects of the container to be isolated.
 
-3. NONE NETWORK:-
+*****************************************************************************************
+3. NONE NETWORK:
 -> Containers are not attached to any network on the host machine
 -> This containers will not have any IP allocated
 -> The services on this containers cannot be accessed by the outside world.
@@ -783,13 +800,26 @@ Docker networking:
 Ex: perform operation (ansible vault) then we can assign none network
 $$ docker run --network none nginx
 
-4. Macvlan NETWORK:-
+*****************************************************************************************
+4. Macvlan NETWORK:
 -> It simplifies the communication process between containers.
 -> This network assigns a MAC address to the Docker container. 
 -> With this Mac address, the Docker daemon routes the network traffic to a router.
 -> It is suitable when a user wants to directly connect the container to the physical network rather than the Docker host.
 -> Macvlan networks are best when you are migrating from a VM setup or need your containers to look like physical hosts on your network, each with a unique MAC address.
 
+docker network create -d macvlan \
+  --subnet=192.168.1.0/24 \
+  --gateway=192.168.1.1 \
+  -o parent=eth0 my_macvlan_network
+
+-d macvlan: Specifies that you are using the macvlan driver.
+--subnet: The subnet for the Macvlan network. In this case, we are using the 192.168.1.0/24 network.
+--gateway: The gateway for the Macvlan network, which is usually the host's IP address on the network.
+-o parent=eth0: Specifies the network interface on the host to use for the Macvlan network. Here eth0 is the host's network interface. You can replace this with the correct interface on your machine.
+my_macvlan_network: The name of the network.
+
+*****************************************************************************************
 5. Overlay Network: Create Internal Private Network
 -> An Overlay network in Docker is a type of network that allows containers on different Docker hosts to communicate with each other. 
 -> This is particularly useful in Docker Swarm or Kubernetes setups, where containers may run on different physical or virtual machines but still need to interact as though they are on the same network. 
@@ -806,7 +836,7 @@ $$ docker run --network none nginx
 3. Used with Docker Swarm: Overlay networks are commonly used in Docker Swarm to enable communication between services on different nodes in a Swarm cluster.
 4. Works with Docker Compose: Overlay networks can also be used with Docker Compose in a multi-host configuration.
 
---> How Overlay Networks Work in Docker:
+** How Overlay Networks Work in Docker:
 -> When using an overlay network, Docker creates a virtual network that spans multiple hosts. 
 -> The containers on each host are connected to this virtual network, and Docker uses an underlying mechanism (such as VXLAN) to route traffic between them.
 
@@ -818,24 +848,24 @@ $$ docker run --network none nginx
 Creating an Overlay Network in Docker:
 1. Initialize Docker Swarm (if not already done):
 docker swarm init
-
 2. Create an Overlay Network: Once Swarm mode is initialized, you can create an overlay network using the following command:
 docker network create --driver overlay my_overlay_network
-
 3. Verify the Network: After creating the network, you can verify its creation with:
 docker network ls
-
 4. Now, you can run containers on this overlay network. However, containers must be running on different hosts (nodes in the Swarm cluster) to see the benefit of an overlay network. Here's how you would start containers using the network:
 docker service create --name my_service --replicas 2 --network my_overlay_network nginx
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------
-EXPOSE: exposing a port is done in dockerfile 
+---------------------------------------------------------------------------------
+## EXPOSE: exposing a port is done in dockerfile 
 	$$ EXPOSE <port_number>
--> allows container to communicate with each other on the exposed port 
--> the service in the container is not accessible from the outside world but can be accessible inside the containers 
--> This is applicable for inter container communication 
+** Purpose: It serves as a documentation tool and a hint to users of the Docker image about which ports the application inside the container will use.
+** Effect: It doesn’t open the port or allow access from outside the container by itself.
+** Usage: You use EXPOSE in the Dockerfile to tell Docker that the application inside the container will listen on the specified port(s). 
+-> EXPOSE doesn't open the port in the host machine or allow external access. It simply marks the container’s internal port to be used in networking contexts.
 
-PUBLISH: 
+
+## PUBLISH: 
+-> When you run a Docker container, you need to make the container's internal ports accessible to the outside world. This is done using the -p (or --publish) flag with the docker run command, which binds a port on the host to a port on the container.
 -> allow containers to talk to each other and  to the outside world 
 	$$ PUBLISH = EXPOSE + PUBLISH 
 -> the service inside the container is accessible from anywhere 
@@ -852,11 +882,14 @@ many to many - if we want to publish range ports then the range must match the n
 one to many : 
 we can specify range of host ports where docker automatically publshes the container port to the one of the available port on host with in the range of host port 
 	$$ docker run -p 8081-8085:8080
-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Docker compose: V2.3.3
+Q. What is depends_on in docker
+-> depends_on is a Docker Compose keyword to set the order in which services must start and stop.
+--------------------------------------------------------------------
+## Docker compose: V2.3.3
 -> Compose is a tool for defining and running multi-container Docker applications. With Compose, you use a YAML file to configure your application’s services.
 -> Then, with a single command, you create and start all the services from your configuration.
+-> With Docker Compose, you can define the services, networks, and volumes that are part of your application, all in one place. Once defined, you can start and manage the entire setup with a single command.
 
 to Install docker compose follow
  https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-22-04
@@ -878,8 +911,7 @@ docker compose down--->If you want to remove the containers, networks, and volum
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 docker-compose.yml  for bringing sonarqube with postgress db
------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+-----------------------------------------------------------------
 version: "3"
 
 services:
@@ -929,54 +961,61 @@ volumes:
 Q. what is the command syntax for retrieving container logs?
 -> The docker logs command instructs Docker to fetch the logs for a running container at the time of execution. 
 -> It only works with containers utilizing the JSON-file or journald logging driver.
--> The command syntax for retrieving container logs is:
-	$$ sudo docker container logs [option] container_id
+$$ docker container logs [option] container_id
 
 Q. How can I see all logs of a docker container?
 -> First of all, to list all running containers, use the docker ps command. Then, with the docker logs command you can list the logs for a particular container. Most of the time you'll end up tailing these logs in real time, or checking the last few logs lines.
    	$$ docker ps -q | xargs -L 1 docker logs
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Logs for container abc123456def
+[output of logs for abc123456def]
 
-** To copy a file from container to local machine.
-sudo docker cp <Container ID>:<Path of file inside the container> <Path in the local machine>
-docker cp 67d47d1ec280:/ram.txt ./
+# Logs for container def456789ghi
+[output of logs for def456789ghi]
 
-** To copy a file from local machine to container
-sudo docker cp <Path in the local machine> <Container ID>:<Path of file inside the container>
-docker cp ./ram.txt 67d47d1ec280:/etc
-------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+--------------------------------------------------------------------------------
 Q. What is a .dockerignore file?
 -> Similar to a .gitignore file, a .Dockerignore files allows you to mention a list of files and/or directories which you might want to ignore while building the image. 
 -> This would definitely reduce the size of the image and also help to speed up the docker build process. 
 -> *.log, *.tmp, *.swp, *.bak, build/, dist/, node_modules/, .next/, target/
 
-
 ======================================================================================
 Q. what is out of memory error in docker?
--> If a container is using an unexpected amount of memory, it runs out of memory without affecting other containers or the host machine. 
+-> An "Out of Memory" (OOM) error in Docker typically occurs when a container exceeds the amount of memory allocated to it, causing the Docker daemon to kill the container due to resource exhaustion. This can happen if the container consumes more memory than what was assigned or what is available on the host system.
 -> Within this setting, if the kernel memory limit is lower than the user memory limit, running out of kernel memory causes the container to experience an OOM error.
 -> However, it would be fine if the root user is used rather than the created user.
 -> On Linux systems, if the kernel detects that there is not enough memory to perform some system task then it throws OOM or out of memory error and starts killing the processes to free up some memory. 
 -> Any process can be killed by kernel. That means it can kill Docker and Docker containers as well. Which can be a high risk if your application is running on  production and suddenly due to out of memory error occurred , your container was killed and your production application faces some down time. So it is very important to understand and control this memory issue by docker.
 
-Q. What we can do? 
-1. We need to perform some analysis to understand the application's memory requirement before deploying it to production.
-2. Make sure you are using a host which has sufficient resources to run your containers and application.
-3. Control your container's behaviour and restrict it's too much memory consumption.
-   $$ sudo docker run -it --memory="[memory_limit]" [docker_image]
--> To limit the maximum amount of memory usage for a container, add the --memory/-m option to the docker run command. 
--> Within the command, specify how much memory you want to dedicate to that specific container. 
-The command should follow the syntax: 
-$$ sudo docker run -it --memory="[memory_limit]" [docker_image]
-$$ sudo docker run -it --memory="512m" nginx
-$$ sudo docker run -it --memory="2g" ubuntu
-$$ sudo docker run -it --memory="1g" --memory-swap="2g" ubuntu
--> You can also set a swap memory limit by using the --memory-swap flag in conjunction with --memory. This sets the total memory plus swap allowed.
+Q. How to Identify and Fix an OOM Error in Docker:
+1. Check the Logs:
+$$ docker logs <container_id>
+$$ journalctl -u docker.service: For Docker Daemon logs (which might also indicate memory issues), you can check the system logs:
 
--> Swap memory is a space on the disk that is used when the RAM (Random Access Memory) is full. When a system runs out of physical RAM, the operating system moves inactive pages of memory to the swap space to free up RAM for active processes.
---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2. Check Docker’s OOM Killer Logs:
+-> Docker uses the kernel's OOM Killer to terminate containers that use too much memory. You can check if the kernel has killed any containers by inspecting the host's dmesg logs:
+$$ dmesg | grep -i "killed process"
+RESULT: Out of memory: Kill process 12345 (docker-container) score 123 or sacrifice child
+
+3. Monitor Memory Usage: To understand if a container is using too much memory, you can monitor its memory usage using:
+$$ docker stats
+
+4. Set Memory Limits: You can set memory limits for containers to prevent them from using too much memory. This can help avoid OOM errors by restricting the amount of memory a container can consume.
+$$ docker run -m 512m my_image
+-> You can also set swap memory limits using the --memory-swap flag:
+$$  docker run -m 512m --memory-swap 1g my_image
+--memory-swap: Defines the total amount of memory (memory + swap) the container can use
+
+5. Increase Available Memory:
+-> If you're running into OOM errors because your host system doesn't have enough memory, you can either:
+-> Add more RAM to the host machine.
+-> Increase the memory limits for containers on the host.
+
+6. Use Docker’s --memory-reservation:
+-> This is a soft limit on memory usage. If a container exceeds this limit, it will not be killed unless it exceeds the hard limit (-m). This helps to manage memory usage more efficiently.
+$$ docker run -m 512m --memory-reservation 256m my_image
+
+------------------------------------------------------------------------------------
 Q. How will you monitor Docker in production?
 -> Docker provides tools like "docker stats" and "docker events" to monitor Docker in production.
 -> We can get reports on important statistics with these commands.
@@ -985,21 +1024,20 @@ $$ Docker stats: When we call docker stats with a container id, we get the CPU, 
 $$ Docker events: Docker events are a command to see the stream of activities that are going on in Docker daemon.
 -> Some of the common Docker events are: attach, commit, die, detach, rename, destroy etc.
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 Q. How Multi-stage Build Works
 -> With multi-stage builds, you use multiple FROM statements in your Dockerfile.
-   Each FROM instruction can use a different base, and each of them begins a new stage of the build.
-   We can selectively copy artifacts from one stage to another, leaving behind everything we don’t want in the final image.
+-> Each FROM instruction can use a different base, and each of them begins a new stage of the build.
+-> We can selectively copy artifacts from one stage to another, leaving behind everything we don’t want in the final image.
 -> In multi-stage build, we pick the tasks of building and running our applications into different stages. Here, we start with a large image that includes all of the necessary dependencies needed to compile the binary executable of our application. 
-   This can be termed as the builder stage.
--> We then took a lightweight image for our run stage which includes only what is needed to run a binary executable. 
-   i.e just having jre in our final stage is sufficient to run our application. This can be termed as the production stage.
+-> This can be termed as the builder stage.
+-> We then took a lightweight image for our run stage which includes only what is needed to run a binary executable. i.e just having jre in our final stage is sufficient to run our application. This can be termed as the production stage.
 
 -> We can use multiple FROM commands combined with AS commands in our Dockerfile where the last FROM command will actually build the image. 
-   All the FROM commands before that, will lead to the creation of intermediate images which are cached regularly.
+-> All the FROM commands before that, will lead to the creation of intermediate images which are cached regularly.
 -> The AS command when used with the FROM command allows us to provide a virtual name for our intermediate images.
 
------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
 Q. How container achieve isolation
 -> Docker containers achieve isolation by leveraging (barrow, use something to maximum advantage) Linux features like "Control groups (commonly abbreviated as cgroups), secure computing mode (seccomp) filters, and kernel namespaces". 
 
@@ -1011,7 +1049,7 @@ Q. What are docker namespace and control groups?
 2. Control group: A Control Group can be used to limit the number of resources that a particular process can use. 
 -> A control group can be used to limit the amount of memory that a process can use the amount of CPU, the amount of hard drive input-output and the amount of network bandwidth as well.
 
-------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
 My Docker Development Workflow: Code, Build, Push, Run
 
 1. Write the code (and test it)
@@ -1019,7 +1057,7 @@ My Docker Development Workflow: Code, Build, Push, Run
 3. Push the image to the server
 4. Restart the application, with the new image
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
 Q. What is monolithic appn and microservices and why are we moving from monolithic to microservices?
 ->  A monolithic application is built as a single unified unit while a microservices architecture is a collection of smaller, independently deployable services.
 -> Because you can detect bugs or performance issues in a gradual fashion.
@@ -1043,7 +1081,6 @@ Q. Is it possible to edit the base image?
 -> If you want to make changes to the base image, you can do so by creating a new image from the existing one using the "docker commit" command. However, this can lead to issues with compatibility and consistency.
 -> A better approach is to use a versioned base image and update your container with the new version of the image. This way you can ensure that the changes made to the base image have been thoroughly tested and validated by the image maintainer.
 
-
 ================================================================================
 Q. Deploying onto host. deploying onto container, which one u will prefer?
 1. Deploying an application onto a host has the advantage of being simple and straightforward, as it does not require any additional infrastructure or configuration. 
@@ -1054,76 +1091,22 @@ Q. Deploying onto host. deploying onto container, which one u will prefer?
 -> This makes it easier to manage the application's dependencies and to ensure compatibility with other applications. 
 -> Additionally, containerization can provide better scalability, portability, and security. 
 -> However, this approach can be more complex and requires additional infrastructure, such as a container orchestration platform, in order to manage the containerized applications.
-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+---------------------------------------------------------------------------------------
 Podman: An open-source tool that is similar to Docker in terms of functionality but does not require a daemon to run. 
-        It is built to be more secure and is compatible with the Docker command-line interface.
+-> It is built to be more secure and is compatible with the Docker command-line interface.
 
 CRI-O: A lightweight container runtime that is specifically designed to be used with Kubernetes. 
-       It is built to integrate well with the Kubernetes API and is designed to be more secure and efficient than Docker.
+-> It is built to integrate well with the Kubernetes API and is designed to be more secure and efficient than Docker.
 
 containerd: An open-source container runtime that is designed to be lightweight and modular. 
-            It is designed to be used as a component of other container orchestration platforms and 
-            is used by projects such as Kubernetes and Docker itself.
+-> It is designed to be used as a component of other container orchestration platforms and is used by projects such as Kubernetes and Docker itself.
 
 rkt: A container runtime that is designed to be more secure and efficient than Docker. 
-     It uses a different approach to container management and is designed to be more lightweight and less resource-intensive than Docker.
+-> It uses a different approach to container management and is designed to be more lightweight and less resource-intensive than Docker.
 
 LXD: A container hypervisor that is similar to a traditional virtual machine hypervisor. 
-     It uses Linux Containers (LXC) to provide isolated, lightweight environments that are similar to virtual machines.
+-> It uses Linux Containers (LXC) to provide isolated, lightweight environments that are similar to virtual machines.
 
 Firecracker: A microVM runtime that is designed to be lightweight and secure. 
-             It is built for running serverless workloads and is used by AWS for its Lambda and Fargate services.
-
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------
-Q. What is depends_on in docker
--> depends_on is a Docker Compose keyword to set the order in which services must start and stop.
-
-Q. How to Import docker container in Kubernetes?
--> you can use the kubectl command-line tool to create a new Kubernetes pod and run the Docker container inside it.
-1. Pull the Docker container image: first need to download the Docker container image from a registry. You can do this using the docker pull command.
-2. Create a Kubernetes pod: Once you have the Docker container image, you can use the kubectl run command to create a new Kubernetes pod 
-   that will run the Docker container. The kubectl run command creates a deployment and a pod, so you don't need to create a deployment and a pod separately.
-3. Specify the Docker container image: When you create the Kubernetes pod, you need to specify the Docker container image that you 
-   want to run. You can do this by using the --image option with the kubectl run command.
-4. Expose the pod: By default, pods in Kubernetes are only accessible from within the cluster. To make the pod accessible from outside the cluster, 
-   you need to expose it using a Kubernetes service. You can use the kubectl expose command to expose the pod as a service.
-5. Verify the pod is running: You can use the kubectl get pods command to verify that the pod is running. You should see the pod in the list of running pods.
-
-Q. What are the containers? which are running?
--> Containers are a form of lightweight, stand-alone, and executable software packages that include everything needed to run a piece of software, including the code, runtime, libraries, environment variables, and config files.
-   $$ docker ps : list the running containers
-------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-Write a Dockerfile in which you have to pull the image from the registry and set hardcoded environment variable and then
-copy some dependices file to filesystem of container and then create a directory to somepath
-and copy projectfile to newly created directory and give read,write and execute permission to newly directory
-and copy another one docker script and make that script executable.
-Dockerfile:
-==========
-# Pull the base image from the registry
-FROM registry-image:latest
-
-# Set an environment variable
-ENV MY_VAR=my_value
-
-# Copy dependencies file to the container filesystem
-COPY dependencies.txt /app/dependencies.txt
-
-# Create a directory and copy project files to it
-RUN mkdir -p /app/project
-COPY projectfile /app/project/projectfile
-
-# Give read, write, and execute permissions to the project directory
-RUN chmod 777 /app/project
-
-# Copy the Docker script to the container filesystem and make it executable
-COPY my_script.sh /app/my_script.sh
-RUN chmod +x /app/my_script.sh
-
-# Set the working directory to the project directory
-WORKDIR /app/project
-
-# Start the container by running the script
-CMD ["/app/my_script.sh"]
+-> It is built for running serverless workloads and is used by AWS for its Lambda and Fargate services.
