@@ -161,7 +161,6 @@ Q. How to monitor k8s cluster?
 -> Using log aggregation and analysis tools: Log aggregation and analysis tools, such as Elasticsearch, Logstash, and Kibana (ELK), can be used to collect and analyze logs from the cluster, providing a centralized view of log data.
 ## kubectl pod: list running nodes and pods along with resource utilization
 
-
 =====================================================================================================================================
 Container Runtimes:
 
@@ -1648,7 +1647,7 @@ spec:
 How to create/schedule pods in a particular worker node?
 	1. Taint and tolerations. 
 	2. Affinity and Anti-Affinity. 
-  3. Node selector.
+        3. Node selector.
 
 1. Taint and Tolerations:
 --------------------------
@@ -1742,6 +1741,8 @@ spec:
 	
 NOTE: The default value for operator is Equal.
 
+-> Their is a chance where pod can be schedule to one of the node which we don't want pod to be scheduled. Because the particular pod will not be scheduled to the nodes which have taint, but the nodes which does not have taint to them our pod can be scheduled. So to overcome we need to provide "NodeSelector" or "Node Affinity".
+
 *******************************************************************************************************
 
 Taints and Tolerations vs Node Affinity:
@@ -1779,9 +1780,6 @@ metadata:
 	image: nginx
       nodeSelector:
 	env: test
-
--> Their is a chance where pod can be schedule to one of the node which we don't want pod to be scheduled. Because the particular pod will not be scheduled to the nodes which have taint, but the nodes which does not have taint to them our pod can be scheduled. So to overcome we need to provide "NodeSelector" or "Node Affinity".
-
 
 *******************************************************************************************************
 
@@ -2354,7 +2352,7 @@ $$ kubectl get configmaps
 $$ kubectl describe configmaps
 
 apiVersion: v1
-kind: ConfiMap
+kind: ConfigMap
 metadata:
   name: app-config
 data:

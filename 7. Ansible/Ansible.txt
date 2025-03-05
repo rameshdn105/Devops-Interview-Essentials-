@@ -51,7 +51,7 @@ Q. What is Variable precedence? How to give that? Where it will go?
 -> Variables can be defined in several places, Ansible uses the one with the highest precedence. 
 -> "Highest to lowest": [Ansible facts (gathered facts) -> Command-line extra-vars (-e) ->  Role variables (vars/main.yml in the role) -> Playbook variables (vars: in the playbook) -> Host variables (host_vars/) -> Group variables (group_vars/) ->  Inventory variables (inventory) -> Role defaults (defaults/main.yml)]
  
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------
 Q. What is notifiers & handlers in Ansible?
 -> In Ansible, Notifiers are a way to send notifications when certain events/play/task occur/completes during the execution of a playbook.
 -> (Email Notifiers, Slack Notifiers, Webhook Notifiers, HipChat Notifiers{send a message to a specified HipChat room}, PagerDuty Notifiers{trigger an incident on PagerDuty})
@@ -70,7 +70,7 @@ Q. What are task controllers in ansible?
 6. delegate_to: Allows you to run a task on a specific host, instead of the host specified in the play.
 7. loop: This task controller allows you to repeat a task multiple times with different input values.
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------  
+-------------------------------------------------------------------------------------------------------------------------------------------
 Q. What is error handling in ansible?
 -> When Ansible receives a failure from a module, by default it stops executing on that host and continues on other hosts. 
 -> However, in some circumstances you may want different behavior. Sometimes a non-zero return code indicates success.
@@ -83,7 +83,6 @@ Q. What is difference between static and dynamic inventory in Ansible?
 -> A dynamic inventory is generated dynamically at runtime, typically by querying a source (like a cloud provider, database, or an API). Ansible can automatically retrieve the list of hosts from external sources like AWS, Google Cloud, Azure, VMware, OpenStack, etc.
 -> Dynamic Inventory is an inventory management solution that provides inventory control and tracking features. It helps users manage and monitor inventory and track the entire process of sales and procurement.
 Ex: Ansible’s AWS EC2 plugin to query AWS for hosts: ansible-playbook -i ec2.py playbook.yml
-
 
 -----------------------------------------------------------------------------------------------------------------------------------------------
 Q. How do you debug Ansible script?

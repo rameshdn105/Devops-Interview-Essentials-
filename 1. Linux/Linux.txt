@@ -1,6 +1,5 @@
 https://meet.google.com/mgi-kwzu-pse
 
-
 java 11		(C, C++)
 git version 2.33	(Git, SVN, Gitlab, Bitbucket )
 apache maven 3.8.6	(Maven, Ant, Gradle)
@@ -92,12 +91,10 @@ Q. What is load average in Linux?
   inactive pages in memory are moved to the swap space. While swap space can help machines with a small amount of RAM, it should not be considered a 
   replacement for more RAM.
 
-** Zombie process: In Linux OS, a zombie process or a defunct process is a finished (dead) process, 
-   but it has still occupied an entry in the process table. 
+** Zombie process: In Linux OS, a zombie process or a defunct process is a finished (dead) process, but it has still occupied an entry in the process table. 
 -> Normally, a child process that has completed its execution will send a SIGCHLD signal to the parent process which has created it.
--> When a process becomes dead, it will free up the memory and other resources allocated to it. 
-   So, a zombie process will not be using any resources at all, other than an entry in the process table. 
-   The problem may start only when a large number of zombie processes exist and system run out of PIDs
+-> When a process becomes dead, it will free up the memory and other resources allocated to it. So, a zombie process will not be using any resources at all, other than an entry in the process table. 
+-> The problem may start only when a large number of zombie processes exist and system run out of PIDs
   
 -> Killing the parent process (  $$ kill -9)
    If the zombie processes are not able to get removed, you should kill the parent process or restart the service 
@@ -107,15 +104,13 @@ Q. What is load average in Linux?
    The parent process can be killed using the ‘kill’ command:
  
 
-* Daemon process: A daemon is also called background processes. It is a UNIX or Linux program that executes 
-  inside the background. Almost every daemon contains names that finish with "d" the letter. 
-  For example, sshd, this manages connections of SSH remote access, or the httpd daemon that manages the Apache server. 
+* Daemon process: A daemon is also called background processes. It is a UNIX or Linux program that executes inside the background. Almost every daemon contains names that finish with "d" the letter. 
+-> For example, sshd, this manages connections of SSH remote access, or the httpd daemon that manages the Apache server. 
   Often, Linux begins daemons at starting time.
 Starting daemon manually:
 $$ nohup your-daemon-command &  # Starts the daemon and runs it in the background
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 Command Prompt (cmd), Batch Files (.bat or .cmd) and Powershell
 1. Using & to Separate Commands: You can use the & operator to execute multiple commands sequentially. Each command will be executed regardless of whether the previous command succeeds or fails.
 ## command1 & command2 & command3
@@ -525,7 +520,6 @@ For eg :
 12. find . -type f -size +1k - It is used to find files which are more than 1KB
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 Netstat : It is used to list listening and non listening ports and also gives statistic info about the network.
 syn : netstat 
 for eg :
@@ -566,7 +560,8 @@ uname -a -> used to check all the info about linux
 who/whoami - used to check how many users logged into system 
 -> (who : Print information about users who are currently logged in. whoami : Print effective username of the user who ran whoami)
 who -r command - to determine a system's run level
-ps -ef -> used to list all the processes which are running in the system
+ps -ef -> list running process
+ps -efl ->shows the process status
 ps -u "ec2-user" -> used to list of process by particlar user
 ps -ef | grep "process name" - used to check particular process is running or not.
 kill -9 processID -to kill the particular process forcefully  (-9 is used for forcefully)
@@ -596,6 +591,21 @@ sudo shutdown now : shutdown within sometime
 NS lookup: name server lookup: useful to getting info from DNS server
 tr command:translating and deleting charecters
 ENV: print environment variables
+
+
+4 stages of process in Linux:
+Waiting- The Linux process is waiting for the resource
+Running- The Linux process is currently running
+Stopped- The Linux process has been stopped after successful execution
+Zombie- The Linux process is still active in the process table, but it has stopped. 
+
+ps -efl: shows the process status
+Here, S in the second column indicates the process state:
+R → Running
+S → Sleeping
+D → Uninterruptible sleep
+T → Stopped
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 1. FTP:       20 - (the file transfer protocol) :port 20 for data transfers

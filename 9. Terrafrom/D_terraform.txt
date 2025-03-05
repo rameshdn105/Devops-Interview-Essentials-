@@ -7,8 +7,8 @@
 -> Ansible is used to management of resources, but we are creating, provisioning cloud resources using terraform.
 -> Used to automate various infrastructure tasks.
  
-** Provisioning: Configuration activities that happen after the resource is created. It may involve some file
-   operations, executing CLI commands, or even executing the script. Once the resource is successfully initialized, it is ready to accept connections.
+** Provisioning: Configuration activities that happen after the resource is created. 
+-> It may involve some file operations, executing CLI commands, or even executing the script. Once the resource is successfully initialized, it is ready to accept connections.
 
 Q. Disadvantages of terraform:
 1. No automatic rollback, at a group it will create and it will delete at a group
@@ -151,7 +151,7 @@ Q. What is the main TF file in Terraform?
 -> variables.tf will contain the variable definitions for your module.
 -> You can also create other configuration files and organize them however makes sense for your project.
 
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------
 Q. What are variables in terraform and types of variables?
 -> variables are used to define and pass values dynamically to configuration files. 
 -> They provide a way to make your Terraform configurations more flexible and reusable. 
@@ -268,8 +268,8 @@ resource "null_resource" "example" {
     command = "echo 'The time is ${timestamp()}'"
   }
 }
----------------------------------------------------------------------------------------
 
+---------------------------------------------------------------------------------------
 ** Backend in terraform?
 -> The "Backend" in Terraform is where the state of your infrastructure is kept and how Terraform interacts with it. 
 -> In Terraform, the backend is responsible for storing the state of the infrastructure and managing how Terraform communicates with various services to execute operations. 
@@ -323,7 +323,7 @@ d. Terraform Cloud or Enterprise for hosted backends.
 -> You need to define the backend configuration inside the terraform block. The backend block tells Terraform where to store the state and how to access it.
 
 -> Example: AWS S3 Backend with DynamoDB for State Locking
--- In this example, we configure a backend using Amazon S3 for state storage and DynamoDB for state locking to avoid race conditions when multiple users are applying changes at the same time.
+-- "We configure a backend using Amazon S3 for state storage and DynamoDB for state locking" to avoid race conditions when multiple users are applying changes at the same time.
 
 ** Create the Necessary AWS Resources (if not already done):
 	S3 Bucket: For storing the state file.
@@ -350,7 +350,6 @@ terraform {
 -> You can verify that the state file is being stored in the remote backend by checking the location of your state (e.g., in the S3 bucket or the Terraform Cloud UI) and confirming that changes made in the Terraform configuration are reflected there.
 
 --------------------------------------------------------------------------------------
-
 Q. Diff between .tf and .tfstate:
 -> .tf files are used to define the desired state of the infrastructure, while .tfstate files are used to store the current state of the infrastructure managed by Terraform. 
 -> The .tf files are the input to Terraform, while the .tfstate files are the output. 
@@ -575,7 +574,6 @@ resource "aws_instance" "my_instance" {
 terraform import aws_instance.my_instance i-0abcd1234efgh5678
 
 -> You will need to run terraform plan to see the differences, and possibly update the configuration to match the imported resource.
-
 
 --------------------------------------------------------------------------------------------------
 ** Tainted resource: The terraform taint command informs Terraform that a particular object has become degraded or damaged. 

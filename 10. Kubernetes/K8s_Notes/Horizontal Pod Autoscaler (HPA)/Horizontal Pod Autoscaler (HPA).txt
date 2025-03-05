@@ -21,7 +21,7 @@
 -> We will create a simple Nginx Deployment and configure the HPA to scale it based on CPU utilization.
 
 ** Step-by-Step Guide:
-1. Create a Simple Nginx Deployment
+1. Create a Simple Nginx Deployment with service 
 -> We will start by deploying an Nginx application. The deployment will have 1 replica initially, and we will set up HPA to scale it based on CPU utilization.
 
 ->  Create a YAML file nginx-deployment.yaml:
@@ -65,4 +65,4 @@ $$ kubectl run -i --tty load-generator --image=busybox /bin/sh
 -> Inside the pod, run a command to create load::
 $$ while true; do echo "stress"; done
 
-
+kubectl run -it --rm load-generator --image=busybox -- /bin/sh -c "while true; do wget -q -O- http://my-app-service.default.svc.cluster.local; done"

@@ -28,16 +28,15 @@ JAR: JaVa archive     war: Web archive
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 Maven:
-Maven is such a build management tool which can do all the things like adding dependencies, managing the classpath to project,
+-> Maven is such a build management tool which can do all the things like adding dependencies, managing the classpath to project,
 generating war and jar file automatically and many other things. 
--> Maven can add all the dependencies required for the project 
-automatically by reading pom file.
+-> Maven can add all the dependencies required for the project automatically by reading pom file.
 
-How Does the Maven Architecture Work?
-*The first step refers to configuring Maven, which is stored in a pom.xml.file
-*The POM file includes all of the configurations that Maven needs. The second step is to download the dependencies defined in pom.xml 
+** How Does the Maven Architecture Work?
+-> The first step refers to configuring Maven, which is stored in a pom.xml.file
+-> The POM file includes all of the configurations that Maven needs. The second step is to download the dependencies defined in pom.xml 
  into the local repository from the central repository
-*After the user starts working in Maven, the tool provides various default settings, so there is no need to add every configuration in the pom.xml
+-> After the user starts working in Maven, the tool provides various default settings, so there is no need to add every configuration in the pom.xml
 
 1. mvn clean: This command cleans the project by deleting the output directories (target directory by default) and any generated files. It ensures a clean build by removing any artifacts from previous builds.
 2. mvn compile: This command compiles the source code of the project. It compiles the Java classes and places the compiled bytecode files in the output directory (target/classes by default).
@@ -46,19 +45,19 @@ How Does the Maven Architecture Work?
 5. mvn install: This command installs the packaged artifact into the local Maven repository (~/.m2/repository by default). The artifact can then be used as a dependency in other projects on the same machine.
 6. mvn deploy: This command deploys the packaged artifact to a remote Maven repository. It requires additional configuration to specify the repository's location, credentials, etc. Deploying artifacts to a remote repository allows other developers to access and use them.
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-Maven Build Life Cycle (https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#:~:text=Maven%20is%20based%20around%20the%20central%20concept%20of,distributing%20a%20particular%20artifact%20%28project%29%20is%20clearly%20defined.)
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+** Maven Build Life Cycle (https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#:~:text=Maven%20is%20based%20around%20the%20central%20concept%20of,distributing%20a%20particular%20artifact%20%28project%29%20is%20clearly%20defined.)
 The Maven build life cycle is a sequence of steps that need to be followed in order to build a project, which eventually helps to execute goals. 
 
 The following are the phases of the build life cycle:
-*Validate: validate the project is correct and all necessary information is available
-*Compile: compile the source code of the project
-*Test: test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed
-*Package: take the compiled code and package it in its distributable format, such as a JAR.
-*Integration-test: runs integration test for projects
-*Verify: run any checks on results of integration tests to ensure quality criteria are met
-*Install: install the package into the local repository, for use as a dependency in other projects locally.
-*Deploy: done in the build environment, copies the final package to the remote repository for sharing with other developers and projects.
+** Validate: validate the project is correct and all necessary information is available
+** Compile: compile the source code of the project
+** Test: test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed
+** Package: take the compiled code and package it in its distributable format, such as a JAR.
+** Integration-test: runs integration test for projects
+** Verify: run any checks on results of integration tests to ensure quality criteria are met
+** Install: install the package into the local repository, for use as a dependency in other projects locally.
+** Deploy: done in the build environment, copies the final package to the remote repository for sharing with other developers and projects.
 
 
 -> Here are the commands to run these lifecycle phases:
@@ -114,12 +113,10 @@ In this section of the introduction to maven tutorial we will learn about the fi
 *Build plugins
 
 1. Project Object Model (POM)
-Project Object Model (POM) refers to the XML files with all the information regarding project and configuration details
-It contains the project description, as well as details regarding the versioning and configuration management of the project
-The XML file is in the project home directory. Maven searches for the POM in the current directory when any given task needs to be executed
+-> It is a fundamental unit of work in Maven. pom.xml file contains all configuration, dependencies, plugin integration and project setup instructions.
+-> The XML file is in the project home directory. Maven searches for the POM in the current directory when any given task needs to be executed
 POM.
-It is a fundamental unit of work in Maven. pom.xml file contains all configuration, dependencies, plugin integration and project setup instructions.
-This is the best way to add any library dependencies into your project. Copying .jar files into your project resource folder is a old way of doing it.
+-> This is the best way to add any library dependencies into your project. Copying .jar files into your project resource folder is a old way of doing it.
 Maven is based on Project Object Model (POM) and focuses on simplification and standardization of the building process.
 
 During the process, Maven takes care of the following elements:

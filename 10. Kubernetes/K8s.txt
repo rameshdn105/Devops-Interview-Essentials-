@@ -90,7 +90,6 @@ Kubernetes Features:
  and the current context (the cluster, user, and namespace that kubectl is currently interacting with).
 -> Usually located in the user's home directory under ~/.kube/config but specified with "KUBECONFIG" environment variable or the --kubeconfig flag.
 
-
 =====================================================================================================================================
 Kubernetes Architecture and Components:
 
@@ -219,19 +218,16 @@ Q. How to monitor k8s cluster?
 -> Using built-in tools: kubectl, kubectl top, and kubectl logs (provide information about resource usage, pod status, and logs)
 -> Using Prometheus and Grafana: Prometheus is an open-source monitoring and alerting system, while Grafana is an open-source visualization tool.
 -> Commercial monitoring tools: Datadog, New Relic, and AppDynamics, provide advanced monitoring and visualization capabilities for Kubernetes clusters.
--> Using log aggregation and analysis tools: Log aggregation and analysis tools, such as Elasticsearch, Logstash, and Kibana (ELK), can be used to collect and analyze logs from the cluster, providing a centralized view of log data.
+-> Using log aggregation and analysis tools: Elasticsearch, Logstash, and Kibana (ELK), can be used to collect and analyze logs from the cluster, providing a centralized view of log data.
 ## kubectl pod: list running nodes and pods along with resource utilization
-
 
 =====================================================================================================================================
 Container Runtimes:
-
 1. containerd is an industry-standard container runtime that is designed to be lightweight and modular, it is used as the default runtime in some Kubernetes distributions like Rancher and OpenShift.
 2. CRI-O is a Kubernetes-specific container runtime that is optimized for Kubernetes, it can work with both containerd and runc.
 3. rkt is an alternative container runtime that is designed to be simple, secure and composable.
 4. K8s: Docker and K8s tightly coupled.
 ** docker engine: where containers are running.
-
 
 =====================================================================================================================================
 
@@ -243,6 +239,16 @@ POD:  [smallest object, ephemeral(self-healing), single/multi container]
 -> The containers are encapsulated into a Kubernetes object known as PODs.
 -> Helper container, that might be doing some kind of supporting task for our web application such as processing a user entered data, processing a file uploaded by the user etc. 
 -> The two containers can also communicate with each other directly by referring to each other as ‘localhost’ since they share the same network namespace. Plus they can easily share the same storage space as well. 
+
+## Sidecar container/Multi container: This pattern is useful for scenarios where you need to add features such as monitoring, logging, proxying, or managing secrets without modifying the main application code.
+1. Logging and Monitoring with a Sidecar
+-> we will use the Fluentd sidecar container to collect logs from the primary application container and send them to an external logging system (like Elasticsearch or Splunk). This approach ensures that logs are collected without modifying the primary application.
+
+2. Multi-Container Pod with Sidecar for Proxying (e.g., with Envoy)
+-> A sidecar container is used to act as a proxy or API gateway for the primary application. Envoy, a popular proxy, can be used as a sidecar to manage network traffic, handle retries, timeouts, circuit breaking, and more.
+
+3. Multi-Container Pod for Application with Caching Sidecar (e.g., Redis)
+-> Use a sidecar to deploy a Redis container within the same pod. This sidecar could provide caching services to the application without needing to manage Redis as a separate service.
 
 Commands:
 -- To create pod: $$ kubectl run nginx --image=nginx 
@@ -275,7 +281,6 @@ spec:
 
 # Connect to Container in a POD
 kubectl exec -it <pod-name> -- /bin/bash
-kubectl exec -it my-first-pod -- /bin/bash
 
 #To Get complete pod definition YAML output
 kubectl get pod <podname> -o yaml 
@@ -310,11 +315,9 @@ Lifecycle of pod phases / status:
 -> when a pod is being deleted.
 -> This status is not one of the pod phases.
 
-
 =====================================================================================================================================
 YAML:
 -----
- 
 -> Kubernetes uses YAML files as input for the creation of objects such as PODs, Replicas, Deployments, Services etc. 
 
 -> Contains 4 top level fields:
@@ -361,9 +364,6 @@ Q. What happens when I create a pod/ Workflow of Kubuernates ?
 10. Kubelet updates the pod status to the API Server.
 11. API Server persists the new state in etcd.
 
-<-->    API server--etcd
-kubectl--API server<-->etcd--Scheduer<-->Kubelet--DockerDaemon (Create container)<-->
-
 =====================================================================================================================================
 1. Replication controller: [High availability, Load balancing & Scaling]
 ----------------------
@@ -380,7 +380,7 @@ Replica Set vs Replication Controller:
    - Replica set requires a "selector definition" and match labels under it.
    - Both are used to create defined replicas of pod at a given point of time.
    - These objects can be used individually.
-   - Deployments always uses Replica Set not Replication Controller.
+   - Deployments always uses Replica Set.
    - Replica Set selects resources with set-based selectors.
    - Replication Controller selects resources with equality based selectors
 	- To check Replication Controller used 
@@ -423,19 +423,16 @@ spec:
 # kubectl get replicationcontroller
 # kubectl get pods
 
-
 ===================================================================================================
-
 2. Replica sets: [High availability, Load balancing & Scaling]
 -----------------
 -> It is very similar to replication controller.
 -> The apiVersion though is a bit different. It is "apps/v1"
-   - If you provide "v1" instead of "apps/v1" you would get "no match for kind replicaset", because the specified Kubernetes api version has no 
-support for ReplicaSet.
+-> If you provide "v1" instead of "apps/v1" you would get "no match for kind replicaset", because the specified Kubernetes api version has no support for ReplicaSet.
 -> one major difference between replication controller and replica set. Replica set requires a "selector definition". The selector section helps the replicaset identify what pods fall under it.
 
-Q.  But why would you have to specify what PODs fall under it, if you have provided the contents of the pod-definition file itself in the template?
-->  It’s because, replica set can also manage pods that were not created as part of the replicaset creation.
+Q. But why would you have to specify what PODs fall under it, if you have provided the contents of the pod-definition file itself in the template?
+-> It’s because, replica set can also manage pods that were not created as part of the replicaset creation.
 -> Say for example, there were pods created before the creation of the ReplicaSet that match the labels specified in the selector, the replica set will also take those pods into consideration when creating the replicas.
 -> The matchLabels selector simply matches the labels specified under it to the labels on the PODs.
 
@@ -474,10 +471,8 @@ $$ kubectl scale --replicas=6 -f replicaset-definition.yaml
 $$ kubectl scale --replicas=6 replicaset myapp-replicaset
 
 ===================================================================================================
-
 LABELS & SELECTORS:
 -------------------
-
 Q. Why do we label our PODs and objects in Kubernetes?
 -> Say we deployed 3 instances of our frontend web application as 3 PODs. We would like to create a replication controller or replica set to ensure that we have 3 active PODs at anytime. And YES that is one of the use cases of replica sets. You CAN use it to monitor existing pods, if you have them already created, as it IS in this example. In case they were not created, the replica set will create them for you. The role of the replicaset is to monitor the pods and if any of them were to fail, deploy new ones. The replica set is in FACT a process that monitors the pods. Now, how does the replicaset KNOW what pods to monitor. There could be 100s of other PODs in the cluster running different application. This is where labelling our PODs during creation comes in handy. We could now provide these labels as a filter for replicaset. Under the selector section we use the match Labels filter and provide the same label that we used while creating the pods. 
 This way the replicaset knows which pods to monitor.
@@ -505,15 +500,15 @@ Update manifest file of replicaset and run : kubectl replace -f replicaset-defin
 
 or 
 
-kubectl scale --replicas=6 -f replicaset-definition.yaml
+$$ kubectl scale --replicas=6 -f replicaset-definition.yaml
 or
-kubectl scale --replicas=6 replicaset myapp-replicaset
+$$kubectl scale --replicas=6 replicaset myapp-replicaset
 
 
 ** To edit running configuration of replicaset:
-kubectl edit -f replicaset myapp-replicaset
+$$ kubectl edit -f replicaset myapp-replicaset
 
-kubectl scale replicaset myapp-replicaset --replicas=2
+$$ kubectl scale replicaset myapp-replicaset --replicas=2
 
 ===================================================================================================
 Labels:
@@ -559,8 +554,8 @@ Selectors:
 		- Three kind of operators in, notin and exists.
 				ex: app in (front-end, back-end)
        kubectl get pods -l 'environment in (production),tier in (frontend)'	(-l:labels)
-=======================================================================================================================================
 
+=======================================================================================================================================
 Kubernetes configuration / desired state 
 apiVersion: v1
 kind: Deployment 
@@ -576,8 +571,6 @@ spec:
 		- name: web
 		  containerPort: 80
 		  protocol: TCP
-		
-	
 
 To create an object from a kubernetes spec file 
 	sudo kubectl create -f <spec_yaml_path>
@@ -595,7 +588,6 @@ To check the details of object
 	sudo kubectl describe <object_type> <object_name>	
 	
 =======================================================================================================================================
-
 Default Controllers of Kubernetes:
 -> When we install Kubernetes we will get some controllers by default and It is used by Kubernetes only.
 -> The Controller Manager runs several controllers, each with a specific job. 
@@ -618,7 +610,6 @@ Different type of Controllers:
 
 Here are a few of the key controllers:
 --------------------------------------
-
 1. Replication Controller (or ReplicaSet):
 -> Ensures that a specified number of replicas of a Pod are running at any given time. If there are too few, it will create more Pods. If there are too many, it will terminate excess Pods.
 
@@ -650,7 +641,6 @@ Here are a few of the key controllers:
 1. Node controller:
 -> Looks for node status and responds to API server when a node is down
 
-  
 ==================================================================================	  
 ** Service Discovery: 
 -> There are 2 ways to discover a service 
@@ -660,12 +650,9 @@ a. DNS (This is recommended method,   DNS: Domain name server)
 b. ENV var 
 -> pod runs on a node, so that the kubernetes adds environment variables for each active service (each pod).
 
-
 =======================================================================================================================================
-
 Rollout and Versioning:
 -----------------------
-
 -> A rollout is the process of gradually deploying or upgrading your application containers. When you first create a deployment, it triggers a "rollout". A new rollout creates a new Deployment "revision". 
 
 $$ kubectl rollout status deployment/myapp-deployment
@@ -695,7 +682,11 @@ Key Concepts of Rolling Update:
 ** maxSurge: Maximum number of Pods that can be created above the desired replicas
 ** maxUnavailable: Maximum number of Pods that can be unavailable during the update
 
+Default Behavior:
+-> maxSurge: The default value is 25% of the desired Pods (if not specified). For example, if you have 3 replicas, the default surge would be 1 (since 25% of 3 is 0.75, rounded up to 1).
+-> maxUnavailable: The default value is also 25% of the desired Pods. For example, with 3 replicas, 25% would be 1.
 
+----------------------------------------------------------------------------------------------------------------------------------------------
 ** Rollback the deployment:
 -> Sometimes, you may want to rollback a Deployment; For example, when the Deployment is not stable, such as crash looping.
 -> By default, all of the Deployment's rollout history is kept in the system so that you can rollback anytime you want.
@@ -707,7 +698,7 @@ Key Concepts of Rolling Update:
 	- Check the old replicas
 	$$ kubectl get rs
 			
-	$$ kubectl descibe deployment (Command)
+	$$ kubectl describe deployment (Command)
 		
 	# To rollout:
 	- First, check the revisions of this Deployment:
@@ -717,7 +708,7 @@ Key Concepts of Rolling Update:
 $$ kubectl rollout history deployment.v1.apps/nginx-deployment --revision=2
 				
 	- Now you've decided to undo the current rollout and rollback to the previous revision:
-	$$ kubectl rollout undo deployment.v1.apps/nginx-deployment
+$$ kubectl rollout undo deployment.v1.apps/nginx-deployment
 				
 	- Alternatively, you can rollback to a specific revision by specifying it with --to-revision:
 $$ kubectl rollout undo deployment.v1.apps/nginx-deployment --to-revision=2
@@ -726,9 +717,7 @@ Q. how do you delete deployment?
 -> $$ kubectl delete deployment <deployment name>
    $$ kubectl delete object <object name>
 
-
 =======================================================================================================================================
-
 1. Deployment:
 -> To create or modify instances of the pods that hold a containerized application.
 -> Deployment can maintain multiple set of pods at a given point of time using ReplicaSet.
@@ -740,15 +729,13 @@ Q. how do you delete deployment?
 -> Rolling and rollback of updates to all pod instances using deployment is easy.
 	
 1. Scaling: 
-	- we can change the value for number of replicas in spec file.
-	- we can also use the below command 
+-> we can change the value for number of replicas in spec file.
+-> we can also use the below command 
 $$ sudo kubectl scale deployment.v1.apps/nginx-deployment --replicas=3
 	
-
 2. Autoscalling (deployment internal autoscaller)
 -> kubernetes can scale deployment automatically based on resource usage.
 $$ sudo kubectl autoscale deployment.v1.apps/nginx-deployment --min=4 --max=20 --cpu-percent=80	
-	
 
 3. Vertical scaling : (Increasing CPU usage/Hardware capacities)
 $$ kubectl set resources deployment <deployment-name> -n <namespace> --containers=<container-name> --requests=cpu=1000m,memory=512Mi --limits=cpu=2000m,memory=1Gi
@@ -782,8 +769,6 @@ spec:
         image: httpd:2.4-alpine
 
 =======================================================================================================================================
-
-
 2. ReplicaSet 
 	- A ReplicaSet is a set of multiple, identical pods with no unique identities. 
         - ReplicaSets were designed to address two requirements:	  
@@ -792,21 +777,20 @@ spec:
 	- A ReplicaSet ensures that a specified number of Pod replicas are running at any given time.
 
 
-
 3. DaemonSet:			
 	- A DaemonSet ensures that a copy of a pod is always running on all the nodes in the cluster.
 	- If a new node is added/removed from cluster then DaemonSet will automatically adds/deletes the pods from that node.	  
 Usage: 
-	1) Monitoring agents: we need a agent called node exporter to be running in every worker node to monitor all the nodes in cluster.
-    2) Logs collection Daemon: If we want to export logs of node and pods running in it we can create that log exporter using DaemonSet.				
+1) Monitoring agents: we need a agent called "Node exporter" to be running in every worker node to monitor all the nodes in cluster.
+2) Logs collection Daemon: If we want to export logs of node and pods running in it we can create that "log exporter" using DaemonSet.				
+
 Limitations:
-		1) it does not automatically run on any node which has taint.
-		Ex: Master, we need to specify the tolerations for it on the pod.
+1) it does not automatically run on any node which has taint.
+Ex: Master, we need to specify the tolerations for it on the pod.
+
 Monitoring tools: Prometheus, Grafana
 
 ==================================================================================
-
-
 4. StatefulSet:
 	- StatefullSets, just like deployment controller, creates the pod according to that manifest and replicas mentioned it in. 
 	- StatefulSet gives the pods with a unique identity and well defined name for the pods to address each other.
@@ -822,6 +806,7 @@ Monitoring tools: Prometheus, Grafana
 5. Jobs	
 	- Jobs creates the pods to carry out short lived workloads which might be performing a single task. 
 	- Once the task assigned to the pod completes it will shut down by itself.
+-> Common use cases include processing background jobs like image processing, data analysis, ETL (Extract, Transform, Load), and database migrations.
 	  
 	- Few tasks these Job Pods do are:
 		a.Running a migration activity
@@ -834,7 +819,7 @@ Monitoring tools: Prometheus, Grafana
 		
 6. CronJobs
 	- CronJobs create the pods to run the jobs in user defined schedule.
-	- The schedule can set using the Cron syntax and every time the requires the job to run a pod wil be created and
+	- The schedule can set using the Cron syntax and every time the requires the job to run a pod will be created and
 	  after the job succeed the pod goes to shutdown state. 
 	- Eg 
 		- Taking back up of any application at a scheduled time everyday.
@@ -853,7 +838,6 @@ Stateless Applications
 	- user session data is never save at the server side.
 	- using a single authentication gateway or client token method to 
 	  validate the users once for multiple microservices.
-
 
 
 ===========================================================================================================================================================
@@ -897,7 +881,6 @@ When to use this pattern ?
 
 Kubernetes Networking :
 ----------------------
-
 -> As a matter of fact, Kubernetes expects US to setup networking to meet certain fundamental requirements.
 
 Pod to pod communication:
@@ -930,7 +913,7 @@ Q. What are type of loadblancing?
 
 1. Internal load balancing: 
 -> This is used to distribute traffic within the cluster. It allows pods within the cluster to access services by their IP addresses, but it does not expose the service to external traffic. 
-> The ClusterIP service type is an example of internal load balancing.
+-> The ClusterIP service type is an example of internal load balancing.
 
 2. External load balancing: 
 -> This is used to distribute traffic from outside the cluster to the pods within the cluster. 
@@ -942,11 +925,10 @@ Services brief:
 2. Node port: to allow my service/application present in clusture to be accessed by outside world. (30000-32767)
 3. Headless service: Here we mention node port as none, so all ips of pods will be listed we can select and run the application, used with Stateful Sets
 4. load balancer: Here user traffic will be taken by loadbalancer and it will equally distribute it on target nodes.
-5. Ingress service
+5. Ingress controller
 6. External Name: DNS  (Domain name server)
 
 *****************************************************************************************************************
-
 1. Cluster IP: Default K8s service (Pod to pod communication)
 -> It is the default type of Kubernetes service which exposes the pod IP to the other pods within the cluster.
 -> This service is accessed using Kubernetes proxy.
@@ -968,7 +950,6 @@ spec:
       port: 80
      
 ****************************************************************************************************
-
 2. NodePort:
 -> A NodePort service is the most primitive way to get the external traffic directed to our service or application running inside our cluster.
 -> The default Load Balancer of Kubernetes is NodePort.
@@ -1006,7 +987,6 @@ Yaml file for multiple pods in a node:
 -> we have multiple similar PODs running our web application. They all have the same labels with a key app set to value myapp. The same label is used as a  selector during the creation of the service. So when the service is created, it looks for matching PODs with the labels and finds 3 of them. The service then automatically selects all the 3 PODs as endpoints to forward the external requests coming from the user. You don’t have to do any additional configuration to make this happen. And if you are wondering what algorithm it uses to balance load, it uses a random  algorithm. Thus the service acts as a built-in load balancer to distribute load across different PODs.
 
 ****************************************************************************************************
-
 Headless services:
 -> when we neither want load-balancing and a single service IP, use headless service.
 -> Headless service lists all the ip's of the pods it is pointing, when a DNS query for headless service is run.	   
@@ -1016,16 +996,16 @@ Headless services:
 		apiVersion: v1 
 		kind: Service 
 		metadata:
-			name: headless
+		  name: headless
 		spec:
-			selector: 
-				app: nginx
-			clusterIP: None
-			ports:
-				- name: http 
-				  port: 30081
-				  targetPort: 80
-				  protocol: TCP
+		  selector: 
+		    app: nginx
+		  clusterIP: None
+		    ports:
+		    - name: http 
+		      port: 30081
+		      targetPort: 80
+		      protocol: TCP
 			
 	 Note: To check the internal working 
 			- Login to one of the pod in the group
@@ -1037,11 +1017,10 @@ LoadBalancer:
 -> A network load balancer with an IP address can be used to access the service. 
 -> This is not a cost effective way of redirecting the traffic to the cluster.
 -> Kubernetes provides a better alternative to this service which is called Ingress Service.
-  
 
 Ingress controller:
 -> Ingress Controller is the actual implementation of the Kubernetes Ingress API. 
--> It covers all layer four to layer seven network services and typically acts as a load balancer by distributing traffic across pods. 
+-> It covers all, layer four to layer seven network services and typically acts as a load balancer by distributing traffic across pods. 
 -> It’s also responsible for processing all Ingress resource information.
 -> In terms of actual implementation, the Ingress Controller is an application hosted inside a Kubernetes cluster that actively manages a load balancer following Ingress Resources and pre-defined Ingress Rules. It works with all load balancers, including software-based, hardware-based, or cloud service balancers.
 
@@ -1049,7 +1028,7 @@ Ingress controller:
 1. 𝐅𝐞𝐚𝐭𝐮𝐫𝐞 𝐒𝐞𝐭: Ensure it supports advanced routing (path-based, host-based, regex), TLS termination, HTTP/2, WebSockets, gRPC, sticky sessions, and URL rewriting.
 2.  𝐏𝐞𝐫𝐟𝐨𝐫𝐦𝐚𝐧𝐜𝐞: Choose controllers optimized for high throughput and low latency (e.g., HAProxy or Envoy-based options).
 3.  𝐂𝐥𝐨𝐮𝐝 𝐂𝐨𝐦𝐩𝐚𝐭𝐢𝐛𝐢𝐥𝐢𝐭𝐲: Use cloud-native controllers like AWS ALB or GCP Load Balancer for managed environments, or flexible options like NGINX for hybrid/on-prem setups.
-4.  𝐄𝐚𝐬𝐞 𝐨𝐟 𝐔𝐬𝐞: Look for simple deployment, automation support, and clear documentation (e.g., Traefik for lightweight clusters).
+4. 𝐄𝐚𝐬𝐞 𝐨𝐟 𝐔𝐬𝐞: Look for simple deployment, automation support, and clear documentation (e.g., Traefik for lightweight clusters).
 5. 𝐒𝐞𝐜𝐮𝐫𝐢𝐭𝐲: Check for HTTPS redirection, TLS passthrough, and integration with WAF/DDoS protection.
 6.𝐎𝐛𝐬𝐞𝐫𝐯𝐚𝐛𝐢𝐥𝐢𝐭𝐲: Ensure support for Prometheus/Grafana metrics, detailed logging, and traffic analytics.
 7.  𝐂𝐨𝐬𝐭 𝐄𝐟𝐟𝐢𝐜𝐢𝐞𝐧𝐜𝐲: Balance resource usage (CPU/memory) with operational expenses for managed or self-hosted options.
@@ -1129,7 +1108,7 @@ spec:
   - host: myapp.example.com  # Replace with your domain
     http:
       paths:
-      - path: /
+      - path: /app1
         pathType: Prefix
         backend:
           service:
@@ -1142,12 +1121,10 @@ spec:
     secretName: myapp-tls-secret  # TLS secret for HTTPS termination
 
 ========================================================================================================================================================================
-
 ExternalName:
 -> Used to define the external DNS (Domain name server) name like cname record or IP address.
--> Maps the Service to the contents of the external Name field (e.g. foo.bar.example.com), 
-	  by returning a CNAME record with its value. No proxy of any kind is set up.
--> Eg 
+-> Maps the Service to the contents of the external Name field (e.g. foo.bar.example.com), by returning a CNAME record with its value. No proxy of any kind is set up.
+Eg 
 		– if the frontend application is hosted within the cluster 
 		and the Database service is hosted externally and in the application
 		if we can define the code to access the application like mangoDB 
@@ -1261,7 +1238,6 @@ Kubernetes automatically restarts the container.
 		
 
 3. Readiness Probe: (appn is ready to accept traffic, when this prob fails traffic will be halted to this pod and when successful the load balancer traffic is allowed to this pod )
- 
 -> A Readiness Probe is used to determine if a application is in a ready state to accept the traffic.
 -> When this probe fails traffic will be halted to this pod and when successful the load balancer traffic is allowed to this pod.	  
 	  
@@ -1443,7 +1419,7 @@ Enforcing a Security Profile on a Namespace: "POD SECURITY"
 -> In Kubernetes, the PodSecurity mechanism is designed to make enforcing security policies at the Pod level easier and more streamlined, replacing the deprecated PodSecurityPolicy (PSP) feature. The PodSecurity feature is implemented through the "PodSecurity Admission Controller".
 
 ** Key Aspects of Kubernetes Pod Security:
--> PodSecurity Admission Controller (PSA): The PodSecurity admission controller is used to enforce security policies on Pods at the namespace level. 
+-> "PodSecurity Admission Controller" (PSA): The PodSecurity admission controller is used to enforce security policies on Pods at the namespace level. 
 -> It is a simpler and more flexible mechanism compared to the older PodSecurityPolicy (PSP) system.
 
 -> Security Profiles: PodSecurity defines three pre-configured security profiles that you can use to enforce policies for your Pods:
@@ -1500,14 +1476,11 @@ Enforcement Modes:
 How to Enable PodSecurity Admission:
 ---------------------------------
 -> PodSecurity admission is available starting from Kubernetes version 1.22 as an alpha feature and became beta in Kubernetes 1.23.
-
 -> To enable PodSecurity admission, ensure that the feature is enabled on your Kubernetes cluster and configure it according to your needs.
-
 -> You can enable the PodSecurity Admission controller in your Kubernetes cluster by configuring it in the apiServer settings (typically done in the kube-apiserver configuration).
 
 -> Here’s an example for enabling PodSecurity Admission:
 $$ --enable-admission-plugins=PodSecurity
-
 
 Q. Can we have 2 applications in a single namespace?
 -> Yes, it is possible to have multiple applications within a single namespace in Kubernetes. A namespace is a logical boundary for resources in a cluster, 
@@ -1528,21 +1501,21 @@ How to create/schedule pods in a particular worker node?
         3. Taint and tolerations.
 
 1. Node selector: 
-	- Node Selector is a way to bind the pod to a particular worker node, whose label 
-		  match the nodeSelector lables.
-	- Logical expresions type of selection cannot be achived by nodeSelector.		
+-> Node Selector is a way to bind the pod to a particular worker node, whose label match the nodeSelector lables.
+-> Logical expresions type of selection cannot be achived by nodeSelector.		
 STEP 1: 		
-	- list nodes 
-		sudo kubectl get nodes 
+-> list nodes 
+$$ sudo kubectl get nodes 
 			
-	- Get details of nodes 
-		sudo kubectl describe nodes 
+-> Get details of nodes 
+$$ sudo kubectl describe nodes 
 			
-	- Get details of particular node / nodes 
-		sudo kubectl describe node <node_name>
+-> Get details of particular node / nodes 
+$$ sudo kubectl describe node <node_name>
 				
-	- list pods with nodes details 
-		sudo kubectl get pods -o wide					
+-> list pods with nodes details 
+$$ sudo kubectl get pods -o wide					
+
 STEP 2: 	
 	- Create a label for the node 
 		sudo kubectl label node <node_name> <label_key>=<label_value>
@@ -1579,29 +1552,6 @@ STEP 4: create the object form STEP 3 and describe the node to check whether the
 a. Node affinity: allows us to schedule the pods to specific nodes with conditional expressions.	
 	- Creating pods accross different availability zones to improve the applicaiton availability (resilience).
 	- Allocating pods to nodes based on memory-intensive mode. Means create pod based on CPU and RAM availability in worker nodes.
-		  
-	- Environment based worker nodes.	
-
-	apiVersion: v1
-	kind: Pod
-	metadata:
-	   name: node-selector
-	   labels:
-		  env: test
-	spec:
-	   containers:
-		  - name: nginx
-			image: nginx
-	   affinity:
-		  nodeAffinity:
-			 requiredDuringSchedulingIgnoredDuringExecution:
-			    nodeSelectorTerms: 
-					- matchExpressions: 
-						- key: env
-						  operator: in 
-						  values:
-							- test
-							- prod
 
 b. Anti-Affinity (Inter-pod affinity)
 	- We can define whether a given Pod should or should not be scheduled onto a particular node based on labels.
@@ -1636,19 +1586,14 @@ spec:
   - name: with-pod-affinity
     image: registry.k8s.io/pause:2.0
 
-This example defines one Pod affinity rule and one Pod anti-affinity rule. 
-The Pod affinity rule uses the "hard" requiredDuringSchedulingIgnoredDuringExecution, 
-while the anti-affinity rule uses the "soft" preferredDuringSchedulingIgnoredDuringExecution.
+-> This example defines one Pod affinity rule and one Pod anti-affinity rule. 
+-> The Pod affinity rule uses the "hard" requiredDuringSchedulingIgnoredDuringExecution, 
+-> while the anti-affinity rule uses the "soft" preferredDuringSchedulingIgnoredDuringExecution.
 
-The affinity rule says that the scheduler can only schedule a Pod onto a node if the node is in the same zone as one or more existing Pods 
-with the label security=S1. 
-More precisely, the scheduler must place the Pod on a node that has the topology.kubernetes.io/zone=V label, 
-as long as there is at least one node in that zone that currently has one or more Pods with the Pod label security=S1.
+-> The affinity rule says that the scheduler can only schedule a Pod onto a node if the node is in the same zone as one or more existing Pods with the label security=S1. 
+-> More precisely, the scheduler must place the Pod on a node that has the topology.kubernetes.io/zone=V label, as long as there is at least one node in that zone that currently has one or more Pods with the Pod label security=S1.
 
-The anti-affinity rule says that the scheduler should try to avoid scheduling the Pod onto a node 
-that is in the same zone as one or more Pods with the label security=S2. More precisely, 
-the scheduler should try to avoid placing the Pod on a node that has the topology.kubernetes.io/zone=R label 
-if there are other nodes in the same zone currently running Pods with the Security=S2 Pod label.
+-> The anti-affinity rule says that the scheduler should try to avoid scheduling the Pod onto a node that is in the same zone as one or more Pods with the label security=S2. More precisely, the scheduler should try to avoid placing the Pod on a node that has the topology.kubernetes.io/zone=R label, if there are other nodes in the same zone currently running Pods with the Security=S2 Pod label.
 
 NOTE: 	
 	Naming convetion of kubernetes objects name ?
@@ -1658,12 +1603,12 @@ NOTE:
 		- end with an alphanumeric character.
 		
 3. Taint and Tolerations:
-	- Taints are used to repel pods from specific nodes.
-	- We apply a taint to node which tells the scheduler to repel pods from that worker node.
-	- Only pods consisting of toleration for that taint will be created in that worker node.
-        - Taint effect defines how nodes with taint react to pods.
+-> Taints are used to repel pods from specific nodes.
+-> We apply a taint to node which tells the scheduler to repel pods from that worker node.
+-> Only pods consisting of toleration for that taint will be created in that worker node.
+-> Taint effect defines how nodes with taint react to pods.
 
-	- The master node is already tainted by:
+-> The master node is already tainted by:
 			taints:
 			  - effect: NoSchedule
 			key: node-role.kubernetes.io/master
@@ -1677,7 +1622,7 @@ NOTE:
 		Note: taint key and value can be anything user defined.
 		      taint_effect is from kubernetes - NoSchedule, PreferNoSchedule, NoExecute. 
 			  1. NoSchedule - Kubernetes will not schedule the pod onto that node.
-			  -> The noschedule taint is the more restrictive of the two. When a node has a noschedule taint, 
+			  -> The "noschedule" taint is the more restrictive of the two. When a node has a noschedule taint, 
                              no pods can be scheduled on that node, regardless of whether they have tolerations for the taint.
 			  2. PreferNoSchedule - Kubernetes will try to not schedule the pod onto the node.
 			  -> The preferNoSchedule taint is less restrictive. When a node has a preferNoSchedule taint, 
@@ -1737,18 +1682,17 @@ Q. how to run pod on particular node?
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 Resource quotas and limitaions:
--> When several users or teams share a cluster with a fixed number of nodes, 
-   there is a concern that one team could use more than its fair share of resources.
+-> When several users or teams share a cluster with a fixed number of nodes, there is a concern that one team could use more than its fair share of resources.
 
 Q. What is control group/ C-group?
 -> It allows for resource management and isolation of processes & to specify limits and constraints on system resources.(CPU, memory, and I/O)
 -> Kubernetes, where it is used to ensure that containers are given the resources they need to run, without overloading the host system. 
-   In this context, each container runs in its own cgroup, and K8s can set limits and constraints on the resources used by the container.
+-> In this context, each container runs in its own cgroup, and K8s can set limits and constraints on the resources used by the container.
 
 The administrator creates one ResourceQuota for each namespace.
-	-Resource quotas are the way of restricting teams to use the resources such CPU, RAM and Disk.
-	-We can also control the number of objects created in namespace using Object count quota.
-        -Resource quotas always works at namespace level.
+-> Resource quotas are the way of restricting teams to use the resources such CPU, RAM and Disk.
+-> We can also control the number of objects created in namespace using Object count quota.
+-> Resource quotas always works at namespace level.
 	
 	To check quotas of a namespace 
 		sudo kubectl describe ns <namespace_name>
@@ -1816,7 +1760,6 @@ Verbs: The rules/operations which we want to do with the resources. ("get", "lis
 			
 2. SERVICE ACCOUNT:
 ------------------- 
-
 -> A Service Account in Kubernetes is an identity that is associated with a set of permissions to interact with the Kubernetes API. 
 -> Service accounts are typically used by applications or workloads running inside the cluster to interact with the Kubernetes control plane (such as accessing the Kubernetes API, creating or modifying resources, etc.).
 
@@ -1915,8 +1858,6 @@ spec:
 
 -> For example, to access the token from within a container, use:
 $$ cat /var/run/secrets/kubernetes.io/serviceaccount/token
-
-
 
 Kubectl create sa <sa-name> -n namespace
 
@@ -2136,7 +2077,7 @@ Q. What is Prometheus and Grapana and how to setup it with k8s?
 
 Setup prometheus on Kubernetes:
 -> Most efficient way to deploy proetheus in k8s is using Helm charts. 
--> We can write manifest file and deploy but not preferred. Most efficient helm charts maintned by helm community. 
+-> We can write manifest file and deploy but not preferred. Most efficient helm charts maintained by helm community. 
    No need to create YAML file helm chart already al required info.
 -> Helm chharts-Prometheus chart: fork this prject hich as prometheus chart to your account.
 -> commands used:
@@ -2149,19 +2090,16 @@ Setup prometheus on Kubernetes:
 -> Grafana, on the other hand, is a data visualization and analytics platform that integrates with Prometheus 
    and other data sources to create dashboards, alerts, and other visualizations for monitoring and analysis.
 
-
 --------------------------------------------------------------------------------------
 Q. what is pdb in k8? PodDisruptionBudget
 -> PDB (PodDisruptionBudget) to ensure that your pods are not terminated or evicted unless it's absolutely necessary. 
 -> A PodDisruptionBudget (PDB) defines the number of replicas of a pod that must be available at any given time for 
    some reason such as upgrades or routine maintenance work on the Kubernetes nodes.
 -> ECK manages a default PDB per Elasticsearch resource.
-* (A Pod Disruption Budget (PDB) allows you to limit the disruption to your application when its pods need to be rescheduled 
-   for some reason such as upgrades or routine maintenance work on the Kubernetes nodes). 
 
 Q. Cordon and drain:
 -> Cordon will mark the node as unschedulable.
--> Drain makes it unschedulable and evicts the pods.Safely evict all of your pods from a node before you perform maintenance
+-> Drain makes it unschedulable and evicts the pods. Safely evict all of your pods from a node before you perform maintenance
    on the node.If any maintenance activity is done on the node then pods cant be evict and moved to another node manually. 
    So drain will be done on the node where it safely evicts the pods to another node, then cordon is used. Make sure there 
    are 2 or 3 nodes available in the cluster with sufficient capacity to maintain the pods.
@@ -2177,7 +2115,6 @@ Q. What is federated clusture in  K8s?
 1. Multi-cloud deployments: You can deploy your applications across multiple cloud providers for better availability and disaster recovery.
 2. Global scale: You can deploy your applications in multiple regions for better performance and availability for your end-users.
 3. Hybrid cloud: You can manage your on-premises and cloud-based clusters as a single entity, allowing you to easily move resources between them.
-
 
 --------------------------------------------------------------------------------------------------
 Q. What are operators in k8s?
@@ -2383,18 +2320,6 @@ Q. Types of errors and how will u troubleshoot them in k8s?
    check the PVC and PV status, check the storage class, check the access modes, check the storage capacity.
 6. Authentication and Authorization errors: These include issues such as "Forbidden" and "Unauthorized". To troubleshoot these errors, 
    check the service account, check the role-based access control, check the authentication and authorization method.
--> It's worth noting that the above steps are general troubleshooting steps and may not apply to every error. Also, many times multiple 
-   issues can happen together, so it's important to look into every possible point.
-
------------------------------------------------------------------------------------------------------------------------------------------------
-Q. Types of controller managers?
--> Types of controller managers are:
- 1) endpoints controller, 
- 2) service accounts controller, 
- 3) node controller, 
- 4) namespace controller,  
- 5) replication controller, 
- 6) token controller.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 Q. How to access the application using kunernetes?

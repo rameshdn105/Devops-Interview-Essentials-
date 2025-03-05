@@ -4,7 +4,7 @@
 *git commit --amend : It is used to edit the commit msg
 *git clean -df : It is used to clean the untracked/unwanted files from workspace.
 *git log --raw command  : To find out which files changed in a given commit. It's the fastest and simplest way to get insight into which files a commit affects
-*git gist  : Gists provide a simple way to share code snippets with others. Every gist is a Git repository, which means that it can be forked and cloned.
+*git gist :Gists provide a simple way to share code snippets with others. Every gist is a Git repository, which means that it can be forked and cloned.
 *Git Reflog — How to recover a deleted branch that was not merged. It can track changes done on 
 *git -rm file: remove files
 *git log --online : Used to check commit history in short form.
@@ -21,14 +21,14 @@ $git gc: It is the process of removing unnecessary data from the local repositor
    or overwritten, as well as stale references to remote branches that no longer exist.
   $$ git gc
 
------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------
 Git 
 -> Git is a Open source Distributed Version Control System and is used to track, manage, and organize their code in the source code.
 
 Git alternatives: GitHub, SVN (Subversion), Bitbucket, Perforce, and Mercurial 
 
-*Git and other version control systems give software developers the power to track, manage, and organize their code.
-*Git helps developers collaborate on code with teammates; combining powerful features like commits and branches with 
+** Git and other version control systems give software developers the power to track, manage, and organize their code.
+** Git helps developers collaborate on code with teammates; combining powerful features like commits and branches with 
  specific principles and strategies helps teams organize code and reduce the time needed to manage versioning.
 
 scenario before Git:
@@ -131,9 +131,9 @@ Branch :
 -> git log --online : Used to check commit history in short form.
 
 Note : Whenever branch is created the entire commit history of the parent branch will be copied to the new branch.
-Note : Irrespective of on which branch a file is created or modified, git only check on which branch file is committed and that file belogs to the committed branch only.
+Note : Irrespective of on which branch a file is created or modified, git only check on which branch file is committed and that file belongs to the committed branch only.
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------
 Merge :
 Merge is nothing but integrating two branches.
 syn : git merge <branch_name>
@@ -153,7 +153,7 @@ syn : git rebase <branch-name>
 -> Where they differ is how it's done. Git rebase moves a feature branch into a master. 
    Git merge adds a new commit, preserving the history.
 
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------
 git commit --amend : It is used to edit the commit msg
 
 Git clone : Clone is used to bring remote repository to the local workspace for the first time.

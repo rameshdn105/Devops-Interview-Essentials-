@@ -120,11 +120,11 @@ Tenancy:
 -> Tenancy in AWS refers to how resources are allocated and isolated in the cloud environment. It's essentially about whether your resources (like EC2 instances) run on shared hardware or dedicated hardware.
 
 -> AWS offers two main types of tenancy:
-2.1. Shared Tenancy (Default)
+1. Shared Tenancy (Default)
 -> In shared tenancy, your AWS resources (like EC2 instances) run on shared hardware with resources from other AWS customers.
 -> AWS manages the isolation between these resources, so you don’t have to worry about them interfering with each other. This is the most common and cost-effective option.
 
-2.2 Dedicated Tenancy
+2 Dedicated Tenancy
 -> In dedicated tenancy, your AWS resources run on hardware that is dedicated only to you.
 -> This means no other customers' resources will be running on the same physical hardware as yours.
 -> It can be useful for regulatory or compliance reasons, where you need more isolation or want to ensure that you’re the only one using specific hardware.
@@ -217,9 +217,7 @@ To help maintain application availability when a single component fails, you can
 -> Using Amazon SQS, you can send, store, and receive messages between software components, without losing messages or requiring other services to be available. 
 -> In Amazon SQS, an application sends messages into a queue. A user or service retrieves a message from the queue, processes it, and then deletes it from the queue.
 
-
 ==========================================================================================
-
 Serverless computing:
 =====================
 -> Earlier in this module, you learned about Amazon EC2, a service that lets you run virtual servers in the cloud. If you have applications that you want to run in Amazon EC2, you must do the following:
@@ -360,8 +358,6 @@ Edge Locations: Amazon CloudFront
 -> To help you get started with using SDKs, AWS provides documentation and sample code for each supported programming language. Supported programming languages include C++, Java, .NET, and more.
 
 ======================================================================================
-
-
 AWS Elastic Beanstalk:
 -----------------------
 -> With AWS Elastic Beanstalk, you provide code and configuration settings, and Elastic Beanstalk deploys the resources necessary to perform the following tasks:
@@ -703,7 +699,6 @@ Example: How Amazon Route 53 and Amazon CloudFront deliver content:
 ===============================================================================================
 Module 5 Introduction: Storage and Databases
 --------------------------------------------
-
 
 1. Instance stores:
 --------------------
