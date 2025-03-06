@@ -10,31 +10,27 @@ $$ sudo apt update && sudo apt install ansible -y
 For example, you can use the "ansible" command to run ad-hoc commands, or the "ansible-playbook" command to run playbooks.
 
 Q. How do u access shell env variables in ansible playbooks?  (lookup plugin)
--> on the local server using the lookup plugin. It lets you access the system data and environment variables.
--> We can use the ansible_env and lookup function to retrieve the environment variables stored. 
-   - name: Ansible playbook to get linux environment variables. 
-   The above playbook retrieves all the environment variables inside the unix os. 
-   Now we need to retrieve the USER env variable.
+-> "lookup('env', 'VAR')" → Fetches variables from the control node, ansible installed (your local machine).
+-> "ansible_env.VAR" → Fetches variables from the remote server.
+-> environment: (in a task), Temporarily in Remote Task, When setting variables for specific commands
 
-Q. What is dry run in ansible?  : 
--> Without applying changes to server running a playbook is the dry run
--> In Ansible, the "dry run" or "check mode" feature allows you to test the behavior of your playbooks and tasks without actually making any changes to the target systems. 
--> It allows you to check if your tasks will run as expected without actually running them, this can be useful for testing and debugging playbooks.
--> You can enable dry run mode by adding the --check or --dry-run flag to your ansible-playbook command. 
-   For example:   $$ ansible-playbook myplaybook.yml --check
+Q. What is dry run in ansible?  : dry run or --check 
+-> A way to simulate the execution of a playbook "without making any actual changes" to the target system. 
+-> This is useful for testing and verifying what actions will be performed before applying them. 
+$$ ansible-playbook myplaybook.yml --check
 
----------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
 Q. Diff between Replace and lineinfile module?  
 1. "replace" module is used to replace all occurrences/instances of a specified string in a file with a new string.
 - name: Replace all instances of 'old_string' with 'new_string' in a file
-  replace:
+  ansible.builtin.replace:
     path: /tmp/sample.txt
     regexp: 'old_string'	(regexp: regular expression)
     replace: 'new_string'
 
 
 2. LineinFile: 
--> The lineinfile module is used to manage individual lines in a file. It ensures a particular line exists in a file (or is absent, depending on configuration). You can use it to add, modify, or remove lines in a file.
+-> The lineinfile module in Ansible ensures that a specific line exists in a file. If the line is not already present, it adds it by default at the end of the file.
 
 - name: Ensure a specific line is present in the file
   ansible.builtin.lineinfile:
@@ -42,26 +38,59 @@ Q. Diff between Replace and lineinfile module?
     line: "ServerAddress=192.168.1.100"
     create: yes
 
--> This will ensure the line my_config_option=enabled is present in the file. If the line doesn't exist, it will be added; if it already exists, it will be unchanged.
+-> you can control its placement using:
+insertbefore → Insert before a matching line
+insertafter → Insert after a matching line
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+-----------------------------------------------------------------------------------
 Q. What is Variable precedence? How to give that? Where it will go? 
 -> The order in which variables are evaluated and used in playbooks.
 -> Variables can be defined in several places, Ansible uses the one with the highest precedence. 
--> "Highest to lowest": [Ansible facts (gathered facts) -> Command-line extra-vars (-e) ->  Role variables (vars/main.yml in the role) -> Playbook variables (vars: in the playbook) -> Host variables (host_vars/) -> Group variables (group_vars/) ->  Inventory variables (inventory) -> Role defaults (defaults/main.yml)]
+-> "Highest to lowest": [Ansible facts (gathered facts) -> Command-line extra-vars (-e) ->  Role variables (vars/main.yml in the role) -> Playbook variables (vars: in the playbook) -> Inventory variables [ Host variables (host_vars/) -> Group variables (group_vars/)] -> Role defaults (defaults/main.yml)]
  
---------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 Q. What is notifiers & handlers in Ansible?
--> In Ansible, Notifiers are a way to send notifications when certain events/play/task occur/completes during the execution of a playbook.
--> (Email Notifiers, Slack Notifiers, Webhook Notifiers, HipChat Notifiers{send a message to a specified HipChat room}, PagerDuty Notifiers{trigger an incident on PagerDuty})
+-> A notifier is a part of a regular task that tells a handler to execute.
+-> Handlers are special tasks that are executed only when notified by another task. Notifiers are the triggers that signal handlers to run.
+-> Handlers are used to perform actions such as "restarting services, reloading configurations, or clearing caches".
 
--> Handler is like a task but will only run when called by a notifier in another task. 
--> This feature is important because your requirements for running a task may depend on the state of a service, existence of a file or a follow up tasks when state changed.
-** Handlers: used to service start, restart, stop, reload on target nodes
+-> If your goal is to send notifications to users, you need to use notification modules like:
+✅ mail → Send an email
+✅ slack → Send a Slack message
+✅ twilio → Send an SMS
+✅ debug → Display a message in the Ansible output
+
+- name: Update Apache config
+  ansible.builtin.template:
+    src: apache.conf.j2
+    dest: /etc/apache2/apache2.conf
+  notify: restart_apache  # Notifying handler
+
+handlers:
+  - name: Restart Apache
+    ansible.builtin.service:
+      name: apache2
+      state: restarted
+    listen: restart_apache
+    notify: send_email  # Notify another handler
+
+  - name: Send Email Notification
+    mail:
+      host: smtp.example.com
+      port: 25
+      to: admin@example.com
+      subject: "Apache Restarted"
+      body: "Apache was restarted on {{ inventory_hostname }}"
+    listen: send_email
+
+📌 How it works? 1️⃣ If the Apache config changes, it notifies restart_apache.
+2️⃣ The restart_apache handler restarts Apache and then notifies send_email.
+3️⃣ The send_email handler sends an email notification.
+
 
 Q. What are task controllers in ansible?
--> In Ansible, task controllers are used to control the execution of tasks. There are several types of task controllers that can be used in playbooks, including:
+-> In Ansible, task controllers are used to control the execution flow of tasks. 
+-> There are several types of task controllers that can be used in playbooks, including:
 1. when: Allows you to specify a condition for a task to run. The task will only run if the condition is true.
 2. register: Allows you to assign the result of a task to a variable, which can be used in subsequent tasks.
 3. include: Allows you to include a file with tasks that can be reused across multiple playbooks.
@@ -69,67 +98,112 @@ Q. What are task controllers in ansible?
 5. local_action: Allows you to run a task on the local machine, instead of on a remote host.
 6. delegate_to: Allows you to run a task on a specific host, instead of the host specified in the play.
 7. loop: This task controller allows you to repeat a task multiple times with different input values.
+8. until → Retry a Task Until Success
 
--------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 Q. What is error handling in ansible?
 -> When Ansible receives a failure from a module, by default it stops executing on that host and continues on other hosts. 
--> However, in some circumstances you may want different behavior. Sometimes a non-zero return code indicates success.
-
+-> You can ignore errors, define custom failure conditions, retry tasks, or execute fallback actions when something goes wrong.
+1️⃣ ignore_errors → Continue Even If a Task Fails
+2️⃣ failed_when → Define Custom Failure Conditions  [failed_when: disk_usage.stdout|int > 90  # Fail only if usage > 90%]
+3️⃣ changed_when → Avoid False Positives [ changed_when: false  # Even if this succeeds, Ansible won’t mark it as "changed"]
+4️⃣ until → Retry a Task Until It Succeeds
+5️⃣ block, rescue, and always → Structured Error Handling
+✔️ block → Contains the main set of tasks.
+✔️ rescue → Runs if any task in block fails.
+✔️ always → Executes no matter what (like a cleanup action).
 
 Q. What is difference between static and dynamic inventory in Ansible? 
--> A static inventory file is a plain text file containing a list of managed hosts or remote nodes whose numbers and IP addresses remain fairly constant. On the other hand, a dynamic host file keeps changing as you add new hosts or decommission old ones.
--> The default location for inventory is a file called /etc/ansible/hosts.  (Ansible inventory stored)
+-> The default location for inventory stored is a file called "/etc/ansible/hosts".
+-> A static inventory file is a plain text file containing a list of managed hosts or remote nodes whose numbers and IP addresses remain fairly constant. 
+-> A static inventory is a manually defined file (usually in INI or YAML format) that lists hosts and groups.
 
--> A dynamic inventory is generated dynamically at runtime, typically by querying a source (like a cloud provider, database, or an API). Ansible can automatically retrieve the list of hosts from external sources like AWS, Google Cloud, Azure, VMware, OpenStack, etc.
--> Dynamic Inventory is an inventory management solution that provides inventory control and tracking features. It helps users manage and monitor inventory and track the entire process of sales and procurement.
-Ex: Ansible’s AWS EC2 plugin to query AWS for hosts: ansible-playbook -i ec2.py playbook.yml
+-> A dynamic host file keeps changing as you add new hosts or decommission old ones.
+-> A dynamic inventory is generated automatically by pulling host information from external sources like cloud providers, databases, or APIs.
+  
+Step 1: Use the AWS Inventory Plugin
+plugin: amazon.aws.aws_ec2
+regions:
+  - us-east-1
+keyed_groups:
+  - key: tags.Name
+    prefix: instance
 
------------------------------------------------------------------------------------------------------------------------------------------------
-Q. How do you debug Ansible script?
+Step 2: Run an Ad-Hoc Command
+$$ ansible -i aws_ec2.yml all --list-hosts
+
+-----------------------------------------------------------------------------------
 -> Debugging an Ansible script (or playbook) is essential for troubleshooting issues and ensuring that tasks are executed correctly. 
 1. Running journalctl -f on the Target System: monitor live logs from the target system where your Ansible playbook is running
 2. Use -v, -vv, -vvv, or -vvvv for Increased Verbosity
-3. Use ansible-playbook --check (Dry Run)
-4. Check for Syntax Issues Using ansible-playbook --syntax-chec
+3. Run ansible-playbook --check (Dry Run)
+4. Check for Syntax Issues Using ansible-playbook --syntax-check
+5. Use debug Module to Print Variables or Enable Task Tracing with strategy: debug
 
-5. $$ ansible-playbook my-playbook.yml
+6. $$ ansible-playbook my-playbook.yml
 echo $?
+
 
 Q. How to run ansible playbook in debug mode?
 -> You can do this at the play level, in ansible. cfg, or with the environment variable ANSIBLE_STRATEGY=debug .
 
 Q. Parameters used in debug module?
 -> The debug module in Ansible is used to print variables and expressions to the Ansible log. It has several parameters that can be used to customize its behavior, including:
-1. msg: This parameter is used to specify the message that should be printed to the Ansible log. It can be a string or a variable.
-2. var: specify a variable that should be printed to the Ansible log.
-3. verbosity: This parameter is used to specify the level of verbosity for the debug message. The default is 0, and higher numbers will increase the verbosity.
-4. log_level: This parameter is used to specify the log level for the debug message. The default is "debug" and can be one of the following: "debug", "info", "warning", "error", "critical"
-5. log_file : This parameter is used to specify the file name in which the log should be stored.
-6. log_path : This parameter is used to specify the path of the log file
+1. msg: Print Custom Messages
+2. var: Print the Value of a Variable
+3. verbosity: Control When Debug Messages Are Shown, verbosity level (-v, -vv, -vvv)
+4. log_level: To specify the log level for the debug message. The default is "debug" and can be one of the following: "debug", "info", "warning", "error", "critical"
+5. log_file : To specify the file name in which the log should be stored.
+6. log_path : To specify the path of the log file
+7. pretty : Print JSON-like Structured Data
 
------------------------------------------------------------------------------------------------------------------------------------------------
-*Synchronous = happens at the same time. Asynchronous = doesn't happen at the same time.
-*run playbook only in linux or ubuntu: writing/assigning variables
-*what is Meta in ansible: like versioning, data will be stored in it.
-*The "become=yes" option will run  all subsequent commands under it using 'su' or super-user previlages or root.
+-------------------------------------------------------------------------------
+✅ Synchronous Execution (Default): Ansible waits for each task to complete before moving to the next task, Tasks run sequentially on each host.
+📌 Ansible waits for this task to finish before moving on.
+
+✅ Asynchronous Execution (async Mode): Starts a task and periodically checks its status, Ansible ensures completion before moving on [register: async_task][poll: 10]
+📌 Ansible starts the script and checks its status every 10 seconds.
+
+✅Fire-and-Forget (No Waiting): Starts a task and moves on immediately,  Ansible does NOT check if the task completed successfully
+📌 Use case: When the task is independent and doesn’t affect other tasks.
+
+------------------------------------------------------------------------------------
+Q. what is Meta in ansible?
+-> The meta module in Ansible is used for controlling playbook execution at a higher level. It allows you to manage roles, task execution, and playbook behavior dynamically.
+meta: flush_handlers	Immediately run all queued handlers
+meta: end_play	Stop execution of the current play for all hosts
+meta: end_host	Stop execution for the current host but continue for others
+meta: refresh_inventory	Reload the inventory during playbook execution
+meta: clear_facts	Clear cached facts for the current host
+meta: noop	No operation (useful for conditional playbook control)
 
 Q. What are namespace in ansible?
--> In Ansible, a namespace refers to a logical grouping or categorization used for organizing various resources such as modules, plugins, roles, and variables. The use of namespaces helps to avoid naming conflicts and provides clarity when referencing various components.
+-> A namespace in Ansible is a way to organize and group related components (like modules, filters, plugins, or collections) to avoid conflicts between different versions or third-party extensions.
 -> Ansible roles and collections are associated with a Galaxy namespace. In other words, a role is imported into a namespace, and a collection is uploaded or published to a namespace. When referencing a role or collection for download and install the namespace becomes part of the reference in the form namespace. [role | collection]_name.
+✔ Avoid conflicts between core and custom modules
+✔ Ensure correct module execution (e.g., ansible.builtin.file vs. a third-party file module)
+✔ Enable modular Ansible playbooks with collections
+✔ Improve code clarity and maintainability
+
 
 Q. What is ansible galaxy?
--> Ansible Galaxy is essentially a large public repository of Ansible roles. Roles ship with READMEs detailing the role's use and available variables. 
--> Galaxy contains a large number of roles that are constantly evolving and increasing. Galaxy can use git to add other role sources, such as GitHub.
+-> Ansible Galaxy is essentially a large public repository of Ansible roles. 
+-> Roles ship with READMEs detailing the role's use and available variables. 
+-> It serves as a hub for pre-built automation content, helping users to reuse existing roles instead of writing everything from scratch.
+🔹 Searching for Roles & Collections: $$ ansible-galaxy search nginx
 
 Q. Ansible-galaxy init /etc/ansible/roles/filpkart --offline  why above path?
+📌 It creates a new role named flipkart inside /etc/ansible/roles/
 -> The directory /etc/ansible/roles is a common location for storing Ansible roles on Linux systems. 
 -> This location is often used because it is a standard location for storing configuration files and it keeps the roles separate from the rest of the system.
 -> The --offline flag indicates that the command should not connect to the internet to download any dependencies, it will use only the files already present in the local machine.
 
--------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
 Q. What are facts in ansible?
--> In Ansible, facts are pieces of information about the systems (hosts) being managed. They provide detailed data about the system's environment, hardware, operating system, network interfaces, and more.
--> They are stored as variables and can be used throughout your playbook to make decisions or configure systems dynamically based on the information about the host.
+-> Facts are pieces of information about the systems (hosts) being managed. 
+-> They provide detailed data about the system's environment, hardware, operating system, network interfaces, CPU, memory, disk, and more.
+📌 Facts help make playbooks dynamic and adaptable by adjusting configurations based on a host’s attributes.
+🔹 Disabling Automatic Fact Gathering:  gather_facts: no
 -> Examples of facts include:
 1. Operating System Information:
 ansible_facts['os_family']: Determines the family of the OS (e.g., RedHat, Debian).
@@ -161,22 +235,17 @@ ansible_facts['group']: Current user group.
 ansible_facts['memtotal_mb']: Total memory in MB.
 ansible_facts['memfree_mb']: Free memory in MB.
 
----------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 Ansible ( Important)
-	- It is a simple open source IT engine which automate application deployment, infra service orchestration, cloud provisioning and many other IT tools. 
-        - It is known as *configuration management tool*.
-	- Ansible is easy to deploy, because it *doesn't use any agent* or custom security infrastructure.
-	- Ansible uses playbook to describe automation jobs and uses very simple language i.e YAML. It is human readable. 
-	- connect through ssh, us
-    - base architecture, usage python language
-	- It is easy to configure your data storage
-	- It is easy to maintain big amount of data.
-	- Ansible pushes small programs called as "Ansible Modules". Ansible will run these modules on the node and removes once finished.
-	  Ex: 
-		- name: Shell command to install git
-		  shell: sudo yum install git -y
+-> It is a simple open source IT engine which automate application deployment, infra service orchestration, cloud provisioning and many other IT tools. 
+✔ Agentless: No need to install software on remote machines 🎯
+✔ Uses YAML Playbooks: Easy-to-read automation scripts 📜
+✔ Idempotent: Ensures tasks only run if changes are needed ✅
+✔ Scalable: Manages thousands of servers efficiently 📈
+✔ Secure: Uses SSH for communication 🔒
+✔ It is easy to maintain big amount of data.
 
-*Pre-requisites to Install Ansible : Ubuntu/Linux, Python, SSHv2 protocol library which is python native, A inclusive library of client python
+🔹Pre-requisites to Install Ansible : Ubuntu/Linux, Python, SSHv2 protocol library which is python native, A inclusive library of client python
 1 Install the latest release with your OS package manager (for Red Hat Enterprise Linux (TM), CentOS, Fedora, Debian, or Ubuntu). 
 2 Install with pip (the Python package manager). 
 3 Install from source to access the development (devel) version to develop or test the latest features.
@@ -184,7 +253,7 @@ Ansible ( Important)
 Q. What are the main use cases of Ansible?
 -> Ansible has various use cases in Provisioning, Configuration Management, Application Deployment, Continuous Deployment, Automation, and Orchestration.
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------
 ** What is configuration Management:
 -> In terms of Ansible, it maintains configuration of the product performance by keeping a record and updating detailed information which describes an enterprise's hardware and software.
 
@@ -204,13 +273,11 @@ Q. What are the main use cases of Ansible?
 9. Tag:- It is a name set to task can be used later on to debug any issues related to specific task.
 
 -> Ansible has three main files that you need to consider:
-* Host/inventory file: Contains the entry of the nodes that need to be managed.
-* Ansible.cfg file: Located by default at /etc/ansible/ansible.cfg, it has the necessary privilege escalation options and the location of the inventory file
-* Main file: A playbook that has modules that perform various tasks on a host listed in an inventory or host file
+✔ Host/inventory file: Contains the entry of the nodes that need to be managed./etc/ansible/hosts
+✔ Ansible.cfg file: Located by default at /etc/ansible/ansible.cfg, it has the necessary privilege escalation options and the location of the inventory file
+✔ Main file: A playbook that has modules that perform various tasks on a host listed in an inventory or host file
 
----------------------------------------------------------------------------------------------------------------------------------
-*Ansible Architecture:
-
+-------------------------------------------------------------------------------------
 -> Ansible orchestration engine:- It will interact with a user who is writing the ansible playbook to execute ansible orchestration and also interacts with service of private and public cloud and database.
 -> Inventory:- It is list of nodes and hosts having IP address, databases, servers etc which needs be managed.
 -> ApI's:- The ansible API's works as the transport for the public and private cloud services.
@@ -226,21 +293,24 @@ $ ansible-doc -l for a list of modules  $ansible-doc <modulename> for informatio
 
 -> Ansible plugin: Plugins extend Ansible’s core functionality. Most plugin types execute on the control node within the "/usr/bin/ansible" process. 
 -> Plugins offer options and extensions for the core features of Ansible: transforming data, logging output, connecting to inventory, and more.
----------------------------------------------------------------------------------------------------------------------------------------------------------
-Architecture-> 
+
+------------------------------------------------------------------------------------
+🔹 Ansible Architecture
+1️⃣ Control Node: The system where Ansible is installed and executed
+2️⃣ Managed Nodes: The remote servers being configured
+3️⃣ Inventory: A list of target machines
+4️⃣ Playbooks: YAML scripts that define tasks
+5️⃣ Modules: Pre-built functions for automation
+
 [Database, webserver, production]--->INVENTORY \
 				     PLAYBOOK---CONTROLLER----->Servers [Database, Webserver, Production of created servers]
 [Actions:services,httpd,cp,mv,ping]  MODULE   /
 
-*controller machine(Instance1)->  machine where ansible will be installed
-*webserver(Instance2)-> 
-*Production(Instance3)->  
--> Need to deploy all public keys to all agents then only it will communicate to controller.
 
 *Best 8 Ansible Alternatives : Rudder, SaltStack, Puppet enterprise, Chef, Gitlab CI, CF engine
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------
-** Playbook Structure:
+---------------------------------------------------------------------------------
+📜 Ansible Playbook Structure
 -> An Ansible Playbook is a YAML file that defines a set of tasks to be executed on managed nodes (hosts). It allows automation of configuration management, deployment, and orchestration
 -> Each playbook is an aggregation of one or more plays in it. Playbook are structured using plays. There can be more than one play in the playbook.
 -> Structure: [hosts, become, vars, tasks, handlers, roles]
@@ -259,7 +329,7 @@ Example:
         state: present  # Ensure Apache is installed
 
 
-** Ansible variables:
+🔹 Ansible Variables: Managing Data in Playbooks
 -> Variables in playbook are very similar to using in any programming language. It helps you to use and assign a value to a variable and use that variable anywhere in the playbook.
 -> Example:
 	  var:
@@ -273,10 +343,17 @@ There are 2 ways to define your variable
 
 Tasks: surf for a simple playbook that installs maven and tomcat?
 
----------------------------------------------------------------------------------------------------------------------------------------------------
-** Ansible-vault:
--> Ansible vault is a feature of ansible that allow you to keep sensitive data such as passwords or keys in encrypted file, these vaults can then be distributed or placed in source control.
+--------------------------------------------------------------------------------
+🔐 Ansible Vault: Secure Secrets in Playbooks
+-> Ansible Vault is used to encrypt sensitive data like passwords, API keys, and SSH credentials in Ansible playbooks. 
+-> This ensures that sensitive information is secure while still being usable in automation.
 	
+🔹 Why Use Ansible Vault?
+✔ Encrypt passwords and credentials 🔒
+✔ Store secrets inside playbooks safely ✅
+✔ Share playbooks without exposing secrets 👥
+✔ Decrypt on-the-fly when needed 🔄
+
 1. Create : ansible-vault create vault.yml
    output : new vault password:******
    confirm new vault password:*****
@@ -297,18 +374,16 @@ Tasks: surf for a simple playbook that installs maven and tomcat?
 6 Reset the password for encrypted file: ansible-vault rekey vault.yml
   Output: password:*******
 
-------------------------------------------------------------------------------------------------------------------------------------------------------				
-** Ansible Role ( Very important )
+---------------------------------------------------------------------------------------	
+📜 Ansible Roles: Organizing Playbooks for Reusability 🚀
 -> A role is a set of tasks, variables, files, templates, and handlers grouped together, which can be reused and shared.
 -> Each role is limited to a particular functionality or desired output.
--> Ansible Roles are a way to organize and reuse Ansible playbook code.
--> They are like predefined sets of instructions or tasks that can be applied to multiple machines or environments.
--> In ansible, the role is the primary mechanism for breaking a playbook into multiple files. 
+-> Ansible Roles are a way to organize and reuse Ansible playbook code. 
 -> This will simplify writing complex playbooks, and it will make easier to reuse the playbook.
 
 *To install tree: $sudo apt-get install tree
 	
-   Syntax: ansible-galaxy init <dir_name>/<role_name>
+Syntax: ansible-galaxy init <dir_name>/<role_name>
 	
 -> Example : ansible-galaxy init /etc/ansible/roles/filpkart -- offline :to initiate ansible roles
 		
@@ -348,8 +423,8 @@ Using the Role in a Playbook:
   roles:
     - apache
 
---------------------------------------------------------------------------------------------------------------------------------------------------------
-** Ansible tags:
+-------------------------------------------------------------------------------------
+🔹 Ansible Tags: Selective Task Execution
 -> If you have a large playbook, tag will help you to run specific part of the playbook rather than running everything in the playbook. 
 	
 ---
@@ -357,45 +432,52 @@ Using the Role in a Playbook:
   hosts: localhost
   tasks:
     - name: Install Apache
-      apt:
+      ansible.builtin.apt:
         name: apache2
         state: present
-      tags:
-        - webserver
-    
-    - name: Install Nginx
-      apt:
-        name: nginx
-        state: present
-      tags:
-        - webserver
+      tags: install
+
+    - name: Deploy Website
+      ansible.builtin.copy:
+        content: "<h1>Welcome to Ansible Web Server</h1>"
+        dest: /var/www/html/index.html
+      tags: deploy
+
+    - name: Restart Apache
+      ansible.builtin.service:
+        name: apache2
+        state: restarted
+      tags: restart
 
 	 
-ansible-playbook copy-playbook.yml --skip-tags "java"  : this will skip java step.
-ansible-playbook copy-playbook.yml --skip-tags "copy" : this will skip copy step.
+ansible-playbook copy-playbook.yml --skip-tags "deploy"  : this will skip java step.
 ansible-playbook xyz.yml --tags "copy,maven,tomcat" : This will run all the tags which are mentioned.
 
 Task: 1. Run the role, paste the default folder structure in group.
 	  2. surf for Adhoc commands in ansible
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-*Ansible Tower: (Important) (automation controller )
--> It is the enterprise version that will give us below features, (enterprise version means owned by company for paying its license)
+----------------------------------------------------------------------------------
+🔹 Ansible Tower (Now Ansible Automation Platform)
+-> Ansible Tower (now part of Red Hat Ansible Automation Platform) is a web-based UI and REST API that helps manage, schedule, and control Ansible automation tasks. It provides a centralized way to manage playbooks, credentials, and inventory.
 -> Ansible tower dashboard, it will display everything which is going on in ansible environment such as inventory status, recent job activity, hosts etc..
--> It is developed and maintained by Red Hat
--> Multi-playbook workflow: it will allow to chain any number of playbooks, any ways of usage of different inventory.
--> Real-time job updates, ansible can automate complete infrastructure. Also, can see real-time job updates.
--> Scale capacity with cluster: you can connect with multiple ansible tower nodes into a ansible cluster, it will allow scaling across the enterprise.
--> Schedule ansible jobs: It will schedule different kind of jobs such as playbook run, cloud inventory updates, also source control updates to run according to the need.
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+🔹 Key Features of Ansible Tower
+Web UI:		User-friendly dashboard to run and monitor Ansible jobs
+Role-Based Access Control (RBAC):	Assign permissions to different users/groups
+Job Scheduling:		Automate playbook execution at specific times
+Real-time Monitoring:	View live job status and logs
+REST API:	Integrate Ansible automation with other tools
+Multi-Playbook Workflows:	Chain multiple playbooks together
+Credential Management:	Store SSH keys, cloud credentials securely
+
+-------------------------------------------------------------------------------------
 To install tomcat with multiple server
 we need 3 server
 1- master
 2- nodes
 Step1: install ansible in master
 Step2: We should make password less between master and one node
-ste3: While connecting we are in root, after connection done, we should exit and should be in user(ec2/ubuntu)
+step3: While connecting we are in root, after connection done, we should exit and should be in user(ec2/ubuntu)
 step4: add both node ips to hosts (/etc/ansible , vi hosts) (Below webservers give all Ip addresses of nodes)
 Step5: create a playbook in /user/local/playbooks (Playbooks folder we have created to keep all playbooks) 
 vi maven.yml
@@ -403,8 +485,8 @@ run (using ec2/ubuntu)  ansible-playbook maven.yml
 
 Using node ip run in chrome node1i:8080
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------	  
-*Adhoc Command:
+-------------------------------------------------------------------------------------  
+🔹 Ansible Ad-Hoc Commands
 -> You can run a single, one-time command instead of running a complete playbook.
 -> Ad hoc commands are used in Ansible to perform tasks or operations that are needed on an immediate basis, or only once, based upon the requirement.
 -> An Ansible ad-hoc command uses the /usr/bin/ansiblecommand-line tool to automate a single task on one or more managed nodes. 
@@ -424,7 +506,7 @@ $$ ansible app -m file -a "path=/tmp/testfile state=touch mode=0755"
 1. Write a playbook to install maven and execute it. after execution check the version of maven and paste the screenshot?
 2. list out 20 ansible Adhoc commands?
 
--------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
 Ansible-Adhoc commands-> 
 https-> //www.youtube.com/watch?v=ZE1kV3XbvWI
 
@@ -438,9 +520,9 @@ to edit get in as root i.e., sudo
 in the end create tag->  
 [Production]->  take all production server private ip and add it below it.
 [webserver]->  add all pvtip address below it.
-------------------------------------------------------------------------------------------------------
 
-** Ansible Module:
+---------------------------------------------------------------------------------------
+🔹 Ansible Modules
 -> Ansible modules are pieces of code that define the tasks to be executed on managed nodes (remote systems) by the Ansible controller (where Ansible is run).
 -> Modules in Ansible are typically written in Python and are used to perform specific actions like installing software, managing files, configuring services, etc.
 -> Ansible modules are executed on the target hosts over SSH, WinRM, or other remote connection methods.
@@ -486,9 +568,9 @@ command module:
 # ansible production -m shell -a "cat /proc/meminfo|head -2" --become  ->to get physical memory allocated to the host
 # ansible multi -m shell -a "cat /etc/passwd|grep -i vagrant" -b -K    ->(-b: become, it becomes root user,   -k:to ask for sudo password)
 
-# ansible production -m user -a "name=Ram password=sita" --become                      -> create user in production server
-# ansible production -m file -a 'dest=/home/file1.txt state=touch mode=755 owner=root group=root' --become	->to create file with 755 perm
-# ansible production -m file -a "dest=/home/ram.txt state=absent" --become	        ->to delet text file ram.txt
+# ansible production -m user -a "name=Ram password=sita" --become       -> create user in production server
+# ansible production -m file -a 'dest=/home/file1.txt state=touch mode=755 owner=root group=root' --become	-> to create file with 755 perm
+# ansible production -m file -a "dest=/home/ram.txt state=absent" --become    ->to delet text file ram.txt
 # ansible production -m file -a "dest=/home/dir1 state=directory mode=777" --become	->to create directory
 # ansible production -m copy -a "src=/tmp/index.html dest=/var/ftp/pub" --become        ->to copy file from src to dest
 # ansible production -m file -a "path=/opt/oracle/binaries state=directory mode=0755" -b – become-user=weblogic   ->create new file inside a directory /opt/oracle which is owned by weblogic user, we have given the username we want to switch to using --become-user=weblogic option
@@ -533,11 +615,6 @@ Here: all - target hosts
       -a – additional parameter to the reboot module to set the timeout to 3600 seconds
       -u – remote SSH user
       -i – inventory file
-     
-
-Q. What is Ansible Module?
--> Ansible modules are standalone scripts that can be used inside an Ansible playbook. 
-   You can use these modules to run whatever commands it needs to get its job done.
 
 ------------------------------------------------------------------------------------------------------------------------------------------
  Modules 				Module Categories 
@@ -767,7 +844,7 @@ Playbook: A single YAML file.
  - name: Play1						Server1.domain.com
    hosts: local host					Server2.domain.com
    tasks:						
-      - name: Eecute command "date"			[Web]
+      - name: Execute command "date"			[Web]
         command: date					Server3.domain.com
 							Server4.domain.com
       - name: Execute script on server

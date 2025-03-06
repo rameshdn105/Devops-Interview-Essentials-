@@ -163,27 +163,47 @@ CLI/UI-->API-->(API server::SCHEDULER::CONTROLLERS::KEY VALUE STORE-etcd)
 
 The main responsibilities of kubelet are:
 	- Run/create the pod with container runtime.
-	- Always reports the status of pods to API server.
+	- Always reports the status of pods to API server using a tool called cAdvisor.
 	- Reports the current status of worker node and pods to API server
 
 -> cAdvisor is an open-source agent integrated into the kubelet binary that monitors resource usage and analyzes the performance of containers. 
 -> It collects statistics about the CPU, memory, file, and network usage for all containers running on a given node. (it does not operate at the pod level).
 
 			
-2. kube-proxy / Service Proxy: (expose pod to external world we can use kube-proxy, or we can set network rules)
+2. kube-proxy / Service Proxy: (expose pod to external world we can use kube-proxy, or we can set network rules)[Service Discovery, Load Balancing, Network traffic forwarding, Node port services]
 -> kube-proxy is a network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept.
--> Is responsible for watching the Kubernetes API server on master for changes on service and pod network configuration.
--> These rules allow the pods, nodes and pods in different nodes of cluster to communicate with each other.  
+-> It ensures that network traffic is properly routed to the correct pod within a cluster.
+-> It implements Kubernetes service discovery and load balancing at the node level.  
 -> This monitors the assignment of IP address to pods.
 -> Entire network configuration is maintained by service proxy.	
+
+Modes of Operation: kube-proxy supports different modes to manage traffic routing:
+1. iptables Mode (Default): 
+-- Uses iptables rules to forward traffic to the correct pod 
+-- Scales well because packets are handled at the kernel level
+-- Load balances traffic across pods.
+2. IPVS Mode (Recommended for Large Clusters)
+-- Uses IP Virtual Server (IPVS) for more efficient load balancing.
+-- Supports advanced scheduling algorithms (e.g., round-robin, least connections).
+-- Better performance than iptables for high-traffic workloads.
+3. Userspace Mode (Legacy, Not Recommended)
+-- Uses a user-space proxy to forward traffic.
+-- Slower than iptables and IPVS because traffic goes through an additional hop.
 
 			
 3. Container runtime: 
 -> Software that is responsible for running containers.
--> Docker: default runtime when no other runtime is specified. (provides a robust and well-documented container runtime)
+-> containerd (default): Lightweight, designed for Kubernetes, used by Docker & CRI-O.
+-> Kubernetes does not run containers directly—instead, it delegates container execution to a Container Runtime Interface (CRI)-compliant runtime.
 -> Kubernetes support several container runtime: Docker, containerD, CRI-O (Container Runtime Interface for OpenShift)
 -> In our company we are using Docker as containerization technology.
 	
+** What is a Container Runtime?
+-> A container runtime is responsible for:
+✅ Pulling container images from a registry (e.g., Docker Hub, ECR, GCR).
+✅ Creating and managing containers.
+✅ Handling networking and storage for containers.
+✅ Enforcing resource limits (CPU, memory).
 	
 =====================================================================================================================================
 ** Alternatives:
@@ -219,7 +239,6 @@ Q. How to monitor k8s cluster?
 -> Using Prometheus and Grafana: Prometheus is an open-source monitoring and alerting system, while Grafana is an open-source visualization tool.
 -> Commercial monitoring tools: Datadog, New Relic, and AppDynamics, provide advanced monitoring and visualization capabilities for Kubernetes clusters.
 -> Using log aggregation and analysis tools: Elasticsearch, Logstash, and Kibana (ELK), can be used to collect and analyze logs from the cluster, providing a centralized view of log data.
-## kubectl pod: list running nodes and pods along with resource utilization
 
 =====================================================================================================================================
 Container Runtimes:
@@ -388,8 +407,6 @@ Replica Set vs Replication Controller:
 	- To check Replica Set used 
 			kubectl get rs
 
--> The major difference between a replication controller and replica set is that the rolling-update command works with Replication Controllers, 
-but won't work with a Replica Set.  This is because Replica Sets are meant to be used as the backend for Deployments.
 
 Q. So what is a replica and why do we need a replication controller? What if for some reason, our application crashes and the POD fails?
 -> High availability: Users will no longer be able to access our application. To prevent users from losing access to our application, we would like to have more than one instance or POD running at the same time.
@@ -434,7 +451,7 @@ spec:
 Q. But why would you have to specify what PODs fall under it, if you have provided the contents of the pod-definition file itself in the template?
 -> It’s because, replica set can also manage pods that were not created as part of the replicaset creation.
 -> Say for example, there were pods created before the creation of the ReplicaSet that match the labels specified in the selector, the replica set will also take those pods into consideration when creating the replicas.
--> The matchLabels selector simply matches the labels specified under it to the labels on the PODs.
+-> The match Labels selector simply matches the labels specified under it to the labels on the PODs.
 
 apiVersion: app/v1
 kind: ReplicaSet
@@ -839,6 +856,22 @@ Stateless Applications
 	- using a single authentication gateway or client token method to 
 	  validate the users once for multiple microservices.
 
+Feature				Deployment						StatefulSet
+Use Case	Stateless applications (e.g., web servers, APIs)	Stateful applications (e.g., databases, message queues)
+Pod Identity	Pods are interchangeable (identical)			Each pod has a unique, persistent identity
+Pod Naming	Randomly assigned names (e.g., nginx-abc123)		Sequential, stable names (e.g., db-0, db-1, db-2)
+Scaling		Adds/removes pods without order				Pods are added/removed in a controlled sequence
+Storage		Uses ephemeral storage (deleted when pod terminates)	Uses Persistent Volume Claims (PVCs), which persist across restarts
+Network Identity	No stable DNS name for each pod			Each pod gets a stable network identity (e.g., db-0.svc.cluster.local)
+Rolling Updates		Supports rolling updates and rollbacks easily	Updates must be carefully managed (pods are updated one by one)
+
+4. When to Use Which?
+Scenario			Use Deployment?	   Use StatefulSet?
+Stateless Web Applications	✅			❌
+APIs or Microservices		✅			❌
+Databases (MySQL, PostgreSQL)	❌			✅
+Distributed Systems (Kafka, Zookeeper)	❌		✅
+Cache (Redis, Memcached)	✅ (for stateless) / 	✅ StatefulSet (if persistence needed)	✅ (for master-slave setup)
 
 ===========================================================================================================================================================
 Pod patterns / Container types 	
@@ -847,7 +880,7 @@ Pod patterns / Container types
 	  before the startup of the main container. (application container)
 	- It provides a sperate lifecycle at initialization point.
 	- can have multiple init containers. init containers always run to completion. 
-          each init container must complete succesfuly before the next one starts.
+          each init container must complete successfully before the next one starts.
 When to use this pattern ?
 		- when our main container needs some prerequisites such as 
 		  installing some supportive software, database setup, seeding the DB,
@@ -864,7 +897,7 @@ When to use this pattern ?
 			  name: dump
 
 2. Sidecar containers: 
-	- These are the containers that will run along with the main conateiner.
+	- These are the containers that will run along with the main container.
 	- We have a pod with a main container which is working very well but 
 	  If we want to extend the functionality without changing the existing 
 	  main container then better option is to use sidecar container.
@@ -1195,8 +1228,7 @@ Pod Probes:
 
 Liveness Probe: (Health of application, if a container is still running and responsive, if it fails container will be restarted)
 ----------------
--> A Liviness Probe in Kubernetes checks if a container is still running and responsive. If the liveness probe fails, 
-Kubernetes automatically restarts the container.
+-> A Liviness Probe in Kubernetes checks if a container is still running and responsive. If the liveness probe fails, Kubernetes automatically restarts the container.
 -> The livenessProbe is used to determine the health of the applicaiton running inside the pod.
 -> If livenessProbe fails the container will be restarted.
 -> Ex: Due to some reason like memory leaks in applicaiton or due to high CPU/RAM usage the applicaiton is not responding to our requests, Then in this situation livenessProbe will fail and it will restart the pod.
@@ -1354,7 +1386,7 @@ Types of default namespaces
 	4. kube-node-lease:
 		- This namespace for the lease objects associated with each node which improves the performance 
                   of the node heartbeats as the cluster scales.
-        - This namespace holds Lease objects associated with each node. Node leases allow the kubelet to send 
+       	        - This namespace holds Lease objects associated with each node. Node leases allow the kubelet to send 
 		  heartbeats so that the control plane can detect node failure.
 		- In Kubernetes, a kube-node-lease is a Lease object that is created by the kubelet on each node. 
 		  The kube-node-lease is used to indicate that a node is still "alive" and responsive. The kube-node-lease 
@@ -1415,8 +1447,9 @@ Namespaces can also be created and attached to pod through config file
 
 Enforcing a Security Profile on a Namespace: "POD SECURITY"
 ========================================================
--> Pod Security in Kubernetes refers to the set of controls and policies that govern the security settings for "Pods" within the cluster. These controls help ensure that Pods adhere to certain security standards, minimizing the risk of security vulnerabilities, misconfigurations, or malicious activity.
--> In Kubernetes, the PodSecurity mechanism is designed to make enforcing security policies at the Pod level easier and more streamlined, replacing the deprecated PodSecurityPolicy (PSP) feature. The PodSecurity feature is implemented through the "PodSecurity Admission Controller".
+-> Pod Security in Kubernetes refers to the set of controls and policies that govern the security settings for "Pods" within the cluster. 
+-> These controls help ensure that Pods adhere to certain security standards, minimizing the risk of security vulnerabilities, misconfigurations, or malicious activity.
+-> PodSecurity mechanism is designed to make enforcing security policies at the Pod level easier and more streamlined, replacing the deprecated PodSecurityPolicy (PSP) feature. The PodSecurity feature is implemented through the "PodSecurity Admission Controller".
 
 ** Key Aspects of Kubernetes Pod Security:
 -> "PodSecurity Admission Controller" (PSA): The PodSecurity admission controller is used to enforce security policies on Pods at the namespace level. 
@@ -1424,17 +1457,12 @@ Enforcing a Security Profile on a Namespace: "POD SECURITY"
 
 -> Security Profiles: PodSecurity defines three pre-configured security profiles that you can use to enforce policies for your Pods:
 
-1. Restricted: The most stringent security profile. It enforces strict settings that disallow any privileged operations or use of host resources. This is designed to provide a high level of security for your workloads.
-
-2. Baseline: A more relaxed profile that allows some flexibility in the security configurations while still enforcing the basics of Pod security.
-
-3. Privileged: This profile allows Pods to run with fewer restrictions and more flexibility. It is mostly used for workloads that need to run with elevated privileges or access to host resources (e.g., privileged containers).
-
 PodSecurity Profiles:
 ====================
 -> Each profile defines the security requirements for Pods in a Kubernetes cluster and specifies what actions or configurations are allowed or disallowed.
 
 1. restricted profile:
+-> The most stringent security profile. It enforces strict settings that disallow any privileged operations or use of host resources. This is designed to provide a high level of security for your workloads.
 -- Disallows running privileged containers.
 -- Disallows the use of host network, host PID, and host IPC.
 -- Disallows the use of certain unsafe capabilities.
@@ -1442,11 +1470,13 @@ PodSecurity Profiles:
 -- Disallows mounting sensitive files like /etc/passwd or /etc/shadow.
 
 2. baseline profile:
+-> A more relaxed profile that allows some flexibility in the security configurations while still enforcing the basics of Pod security.
 -- Allows some flexibility, but still limits potentially dangerous operations.
 -- Allows non-privileged containers with some limited access to host resources.
 -- Allows the use of a host network and other settings for certain workloads if needed.
 
 3. privileged profile:
+-> This profile allows Pods to run with fewer restrictions and more flexibility. It is mostly used for workloads that need to run with elevated privileges or access to host resources (e.g., privileged containers).
 -- Contains no restrictions. This is the most permissive profile.
 -- Allows running containers with any privileges, including privileged containers, host networking, host PID, and access to all host resources.
 

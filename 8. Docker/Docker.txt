@@ -90,9 +90,8 @@ $$ docker compose down--->If you want to remove the containers, networks, and vo
 $$ docker system df: Disk usage summary
 $$ docker system df -v: Disk usage summary all container, all images, including cache etc
 $$ docker stats: Monitor container resource usage, real-time statistics for running containers, including CPU usage, memory usage, network I/O, and disk I/O
-$$ docker inspect <container_id_or_name>: detailed information about containers, images, volumes, and networks. You can use it to review security settings for a container (e.g., capabilities, mount points, network settings).
+$$ docker inspect <container_id_or_name>: detailed information about containers, images, volumes, and networks. You can use it to review security settings for a container (e.g., capabilities, mount points, network settings). provides detailed information on constructs controlled by Docker, render results in a JSON array
 $$ docker scan <image_name>:  is used to scan Docker images for known vulnerabilities, It integrates with Snyk, a tool that helps to identify and fix security vulnerabilities in your images.
-$$ docker inspect <container_id_or_name>: detailed information about containers, images, volumes, and networks. provides detailed information on constructs controlled by Docker, render results in a JSON array
 $$ docker exec -it <container_id_or_name> <command>
 $$ docker info: provides general information about the Docker daemon and its configuration, including security-related settings such as: Cgroup driver, Security options (AppArmor, SELinux, etc.), User namespaces, Docker daemon and client version
 $$ docker info --security: This shows security configurations related to the Docker daemon, which is useful for auditing and ensuring that best practices are followed for container security.
@@ -165,7 +164,34 @@ Q. docker layer
 -> the fundamental building blocks for creating, deploying, and scaling systems.
 -> Docker stores all caches in /var/lib/docker/<driver> , where <driver> is the storage driver overlay2 again
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q. How To Leverage Docker Cache for Optimizing Build Speeds?
+-> Leveraging Docker cache can significantly speed up your builds by reusing layers from previous builds.
+
+** How the Docker Build Cache Works
+-> Docker images are built in layers, where each instruction in the Dockerfile creates a new layer. For example, instructions like FROM, RUN, COPY, and ADD each create a new layer in the resulting image.
+-> Docker uses a "content-addressable storage mechanism" to manage image layers. 
+-> Each layer is identified by a unique hash that Docker calculates based on the contents of the layer. Docker compares these hashes to determine if it can reuse a layer from the cache.
+
+-> When Docker builds an image, it goes through each instruction in the Dockerfile and performs a cache lookup to see if it can reuse a previously built layer.
+
+Note: Changes to Dockerfile application code etc. invalidate the cache. All subsequent layers should be rebuilt.
+
+** Understanding Cache Invalidation
+-> Certain changes can invalidate the cache, causing Docker to rebuild the layer from scratch:
+1. Modification in the Dockerfile: If an instruction in the Dockerfile changes, Docker invalidates the cache for that instruction and all subsequent instructions.
+2. Changes in source files: If files or directories involved in `COPY` or `ADD` instructions change, Docker invalidates the cache for these layers and subsequent layers.
+
+** To sum up, here’s what you need to know about docker build cache:
+-> Docker builds images layer by layer. If a layer hasn’t changed, Docker can reuse the cached version of that layer.
+-> If a layer changes, all subsequent layers are rebuilt. Therefore, putting instructions that do not change often (such as the base image, dependency installations, initialization scripts) much earlier in the Dockerfile can help maximize cache hits.
+
+** Best Practices to Leverage Docker’s Build Cache
+-> To take advantage of the Docker build cache, you can structure your Dockerfile in a way that maximizes cache hits. Here are some tips:
+1. Order instructions by frequency of change: Place instructions that change less frequently higher up in the Dockerfile. And place frequently changing instructions, such as COPY or ADD of application code towards the end of the Dockerfile.
+2. Separate dependencies from application code: Separate instructions that install dependencies from those that copy the source code. This way, dependencies are only reinstalled if they change.
+
+-----------------------------------------------------------------------------------------
 ** Assignment- Dangling images and how to delete them.
 -> Simply an unused image that’s got no name and tag. You can easily spot dangling images when you run the $$ docker images command because they show up as <none>:<none>.
 
@@ -187,16 +213,16 @@ $$ docker tag abc123def456 myapp:v1.0
 
 ** Cleaning Up Dangling Images
 -> You can delete a single dangling image using the docker rmi command, just like any other image. 
-   Because the image won’t be tagged, you’ll need to identify it by its ID.
+-> Because the image won’t be tagged, you’ll need to identify it by its ID.
 $$ docker image prune :Remove all dangling images.
------------------------------------------------------------------------------------------------------------------------------------------------------
 
+---------------------------------------------------------------------------------------
 Why Docker
 ----------------
 Suppose there are four developers in a team working on a single project.
 Meanwhile, one is having a Windows system, the second is owning a Linux system, and the third & fourth ones are working with macOS. Now, as you see, they are using the distinct environments for creating a single application or software they will be required to carry on the things in accordance with their respective machines such as the installation of different libraries & files for their system, etc. And such situations, especially on an organizational or larger level, often cause numerous conflicts and problems throughout the entire software development life cycle. However, the containerization tools such as Docker eliminates this problem.
 
---------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
 ** Tomcat: Tomcat is widely used by web developers when working on web application development. 
 -> From a high-level perspective, apache tomcat is responsible to provide a run-time environment for the servlets. 
 -> It provides an environment in which one could run their java code.
@@ -211,22 +237,20 @@ Meanwhile, one is having a Windows system, the second is owning a Linux system, 
 
 ** Start up.sh: Located in the /base/scripts directory, the startup script (startup.sh) is run by the system boot process. 
 ** Near the end of startup.sh is a list of services that will be run upon startup.
-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+----------------------------------------------------------------------------------------
 Docker (Docker --Version: 20.10.12): 
 -> Docker is a tool designed to make it easier to create, deploy, and run applications by using containers. 
--> Containers allow a developer to package up an application with all of the parts it needs, such as 
-   libraries and other dependencies, and ship it all out as one package.
+-> Containers allow a developer to package up an application with all of the parts it needs, such as libraries and other dependencies, and ship it all out as one package.
 
 ** Pre-requisite for docker: Ubuntu server setup with non sudo root user & a firewall, docker hub account
-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+-------------------------------------------------------------------------------------
 Containerization and virtualization:
--> Virtualization aims to run multiple OS instances on a single server, whereas containerization runs a single OS instance, with multiple user spaces 
-   to isolate processes from one another.
+-> Virtualization aims to run multiple OS instances on a single server, whereas containerization runs a single OS instance, with multiple user spaces to isolate processes from one another.
 -> This means containerization makes sense for one AWS cloud user that plans to run multiple processes simultaneously.
-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+---------------------------------------------------------------------------------------
 Diffrence between VM and container.
 The key differentiator between containers and virtual machines is that virtual machines virtualize an entire machine down to the hardware layers
 and containers only virtualize software layers above the operating system level.
@@ -242,8 +266,8 @@ Deployment		Deploying is easy as only a single image, 			Deployment is comparati
 Types:
 1. Type 1 (Bare metal) : acts like a lightweight operating system and runs directly on the host's hardware
 2. Type 2 (Hosted) :  runs as a software layer on an operating system, like other computer programs.
-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+----------------------------------------------------------------------------------------
 Docker architecture:
 https://docs.docker.com/get-started/overview/
 
@@ -254,17 +278,16 @@ Docker uses a client-server architecture.
 ** Another Docker client is Docker Compose, that lets you work with applications consisting of a set of containers.
 
 The Docker client: 
--> The Docker client (docker) is the primary way that many Docker users interact with Docker. When you use commands such as 
-   docker run, the client sends these commands to dockerd, which carries them out. The docker command uses the Docker API. 
-   The Docker client can communicate with more than one daemon.
+-> The Docker client (docker) is the primary way that many Docker users interact with Docker. 
+-> When you use commands such as docker run, the client sends these commands to dockerd, which carries them out. The docker command uses the Docker API. 
+-> The Docker client can communicate with more than one daemon.
 
 The Docker daemon: 
 -> The Docker daemon (dockerd) listens for Docker API requests and manages Docker objects such as images, containers, networks, and volumes. 
 -> A daemon can also communicate with other daemons to manage Docker services.
 
 Docker Desktop:
--> Docker Desktop is an easy-to-install application for your Mac, Windows or Linux environment that enables you to build and 
-   share containerized applications and microservices. 
+-> Docker Desktop is an easy-to-install application for your Mac, Windows or Linux environment that enables you to build and share containerized applications and microservices. 
 -> Docker Desktop includes the Docker daemon (dockerd), the Docker client (docker), Docker Compose, Docker Content Trust, Kubernetes, and Credential Helper. 
 
 Docker registries:
@@ -272,32 +295,32 @@ Docker registries:
 -> When you use the docker pull or docker run commands, the required images are pulled from your configured registry. 
 -> When you use the docker push command, your image is pushed to your configured registry. (To push we login to Dockerhub)
 -> Private registry: Amazon ECS(Elastic container service), Docker enterprise, Azure Kubernetes service, Google Kubernetes Engine (GKE)
--> Other registries: Google Container Registry, Amazon Elastic Container Registry, Azure Container Registry, GitLab Container Registry, 
-   JFrog Container Registry, Quay, Harbor.
+-> Other registries: Google Container Registry, Amazon Elastic Container Registry, Azure Container Registry, GitLab Container Registry, JFrog Container Registry, Quay, Harbor.
 
 Docker Engine overview:
 -> Docker Engine is an open source containerization technology for building and containerizing your applications. 
-   Docker Engine acts as a client-server application with:
+-> Docker Engine acts as a client-server application with:
 ** A server with a long-running daemon process dockerd.
 ** APIs which specify interfaces that programs can use to talk to and instruct the Docker daemon.
 ** A command line interface (CLI) client docker.
 
 Docker container vs image:
-Docker image:
-1. A Docker image is a read-only template used to create containers.
-2. It serves as a blueprint for creating containers. (You can think of it like a class in object-oriented programming, while the container is an instance of that class.)
-3. Images are stored on disk or in a Docker registry (like Docker Hub or private registries).
-4. Immutability: Once an image is created, it is immutable. You cannot change it directly. If you need a different version, you'd have to build a new image.
-5. Example: The official Ubuntu image or Nginx image available on Docker Hub (ubuntu:20.04 or nginx:latest).
-
-Docker Container:
+--------------------------
+1. Docker Container:
 -> A Docker container is a runnable instance of a Docker image. It is a lightweight, isolated environment where the application defined in the image runs.
 -> Containers provide the actual environment where applications are executed. They are created based on images but have a writable layer, allowing them to store temporary data during execution.
 -> Runtime: Containers run in isolated environments and are created from images, meaning each container is an instance of a particular image.
 -> Mutable: Unlike images, containers are mutable. They can store data in their writable layer (e.g., files created during the container’s runtime).
 -> Lifecycle: A container starts when you run it, and it can be stopped or removed. The container can be restarted from the same image, but once deleted, its state is lost unless data is persisted in volumes.
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------
+2. Docker image:
+1. A Docker image is a read-only template used to create containers.
+2. It serves as a blueprint for creating containers. (You can think of it like a class in object-oriented programming, while the container is an instance of that class.)
+3. Images are stored on disk or in a Docker registry (like Docker Hub or private registries).
+4. Immutability: Once an image is created, it is immutable. You cannot change it directly. If you need a different version, you'd have to build a new image.
+5. Example: The official Ubuntu image or Nginx image available on Docker Hub (ubuntu:20.04 or nginx:latest).
+
+--------------------------------------------------------------------------------------
 Docker Container Lifecycle Management or stages of container:
 1. Created state : docker create --name <name-of-container> <docker-image-name>
 2. Running state : docker run <container-id or container-name> 
@@ -326,9 +349,7 @@ Docker Container Lifecycle Management or stages of container:
 -- Resources are released immediately after kill
 -- Emergency force stop when the container is unresponsive
 
----------------------------------------------------------------------------------------------------------------------------------------------------
-Install docker
---------------------------------------------
+----------------------------------------------------------------------------------------
 https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-22-04
 to run without sudo user use-
 
@@ -340,7 +361,7 @@ it: interactive terminal
 
 *Assignment install sonarqube using docker--->https://techexpert.tips/sonarqube/sonarqube-docker-installation/
 
----------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 Docker commands:
 ** docker stats [OPTIONS] [CONTAINER...]  -->Display a live stream of container(s) resource usage statistics.
 ** docker info --> displays system wide information regarding the Docker installation (kernel version, number of containers and images)
@@ -390,7 +411,7 @@ Loaded image: image_two:tag2
 -> Suppress Output During Loading: command is used to suppress output during the process of loading a Docker image from a tarball file. 
 -> When you load an image with docker load, by default, Docker displays output related to the image being loaded (e.g., the image ID, repository, and tag). The --quiet flag will prevent this output, making the process silent.
 
----------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
 Best way To delete all the running containers
 -> stop all running containers
 ** docker stop $(docker ps -q)
@@ -419,8 +440,8 @@ bin  boot  dev  etc  home  lib  lib.usr-is-merged  lib64  media  mnt  opt  proc 
 
 Q)how to safe exit from the container
 <ctrl> +q+p
-------------------------------------------------------------------------------------------------------------------------------------------------------
 
+----------------------------------------------------------------------------------------
 Docker images:
 ---------------
 -> In Docker, an image is a lightweight, standalone, and executable package that contains everything needed to run a piece of software, including the application code, runtime, libraries, dependencies, and settings. 
@@ -446,13 +467,13 @@ Docker images:
 -> These images are built using a Dockerfile to specify how the image should be constructed.
 -> Example: A custom web server image with preconfigured settings.
 
------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
 Docker file:
 -> A Dockerfile is a text file that contains instructions for building a Docker image. 
 -> It acts as a blueprint, specifying all the steps, configurations, and dependencies required to assemble an image. 
 -> Sample way to build custom image and run container.
 
------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 mkdir docker-images
 cd docker-images
 mkdir apache 
@@ -470,7 +491,7 @@ $$ docker run -d -p 9090:80 apache_centos:v1
 
 $$ docker build -t <imagename>:<imagetag> <path of the Dockerfile>
 $$ docker run -d -p 9090:80 <imagename:tag>   => Running a container
-$$ docker tag <local-image>:<tag> <hub_username>/<reponame>:<tag>   --->before pushing the image we need to tag the image properly
+$$ docker tag imagename:<tag> <hub_username>/<reponame>:<tag>   --->before pushing the image we need to tag the image properly
 $$ docker push <hub_username>/<repo_name>:<tag>		(login required)
 
 $$ docker pull <hub_username>/<repo_name>
@@ -479,7 +500,7 @@ $$ docker commit <container id> <imagename>:<tagname>   => To create a image fro
 $$ docker rm <containerid>  => to remove container
 $$ docker rm -f <containerid>   => forcefully
 
---------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
 ** Docker Hub: To push the image to docker hub or  to the repository
 -> each repository in docker hub refers to only one name
 -> imagename should be also unique , can be same as repository name created in docker hub
@@ -492,7 +513,7 @@ syntax: docker login
 syntax: $$ docker tag <local-image>:<tag> <hub_username>/<reponame>:<tag>   --->before pushing the image we need to tag the image properly
         $$ docker push <hub_username>/<repo_name>:<tag>		(login required)
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 Dockerfile instructions
 ------------------------
 ## FROM <image_name>:<tag>   ----->it used to specify the base image we want to start.
@@ -551,7 +572,7 @@ $$ ENV PATH /usr/local/bin:$PATH
 -> The EXPOSE command only documents the ports used inside the container. It does not publish those ports to the host machine. To make the container’s port accessible from the host, you need to use the -p flag with docker run, like this:
 $$ docker run -p 8080:8080 my-container
 
---------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
 ## Using CMD and ENTRYPOINT Together
 -> You can use both ENTRYPOINT and CMD together in a Dockerfile to provide more flexibility.
 -> ENTRYPOINT: Specifies the command to run (the main process).
@@ -755,8 +776,7 @@ $$ docker run -it -v vol1:/root/vol1 --name <imagename> ubuntu
 --------------------------------------------------------------------------
 Docker networking: 
 -----------------
--> Docker networking is primarily used to establish communication between Docker containers and the outside world via  the host machine where the Docker daemon is running.
-
+-> Docker networking is primarily used to establish communication between Docker containers and the outside world via the host machine where the Docker daemon is running.
 
 1. Bridge Network:-This is a private network created by docker on the host when we install docker.
 -> All the containers connected to the same bridge can communicate each other by default.
