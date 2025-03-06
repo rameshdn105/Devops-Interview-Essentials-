@@ -1372,7 +1372,7 @@ No Requests -> Limits
 Requests -> Limits
 Requests -> No limits
 
-Lets say two pods are competing for memory resources, without request and limit set one pod can consume all the memory resources on the node and prevent other to prevent from having resources. this is not a ideal case. 
+** Lets say two pods are competing for memory resources, without request and limit set one pod can consume all the memory resources on the node and prevent other to prevent from having resources. this is not a ideal case. 
 -> Lets look at the case where we have no requests specified, but we have limits specified, K8s will automatically sets request to the same as limits. 
 -> Next one is where requests and limits are assumed to be three gigabytes, and each pod is guaranteed 3Gi, and no more as limits is also the same. So pod can reach the limit not more than that.
 -> Requests are set, so each pod is guaranteed 1Gi, however because limits are not set when available, any pod can consume as much memory as available.
