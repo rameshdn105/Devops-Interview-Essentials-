@@ -27,8 +27,15 @@ spec:
           matchLabels:
             app: example-app
       containers:
-      - name: nginx
+      - name: example-container
         image: nginx:1.21.6
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
 
 # maxSkew:The maximum difference in the number of pods allowed between the most and least loaded domains.
 # Example: If maxSkew=1, the difference between the number of pods in any two domains must not exceed 1.

@@ -54,15 +54,3 @@ Policy scope		Namespace-scoped (only affects pods in same namespace unless names
 ✅ Command to Check NetworkPolicies
 $$ kubectl get networkpolicies -n <namespace>
 $$ kubectl describe networkpolicy <policy-name> -n <namespace>
-
-
-
-
-
-
-
-
-
-
-
-

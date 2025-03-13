@@ -15,3 +15,13 @@ spec:
         configMapKeyRef:
           name: app-config
           key: APP_COLOR
+    
+    volumeMounts:
+      - name: config-volume
+        mountPath: "/etc/config"
+
+    volumes:
+    - name: config-volume
+      configMap:
+        name: my-config
+

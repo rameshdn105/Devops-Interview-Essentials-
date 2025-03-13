@@ -1147,7 +1147,6 @@ $$ kubectl rollout history deployment/myapp-deployment
 
 Deployment Strategy:
 -------------------
-
 1. Recreate strategy: Old deployment will be deleted and create again
 -> In Recreate, Kubernetes deletes all old Pods first, then creates new Pods. 
 -> Meaning first, destroy the 5 running instances and then deploy 5 new instances of the new application version.
@@ -1222,6 +1221,16 @@ Switch back Traffic --> Blue (v1)
 -- Gradual rollout with real traffic exposure.
 -- Safe testing in production without affecting all users.
 
+Step 1: 
+90% traffic --> v1 (Stable)
+10% traffic --> v2 (Canary)
+
+Step 2 (if OK):
+50% --> v1
+50% --> v2
+
+Step 3 (Fully rolled out):
+100% --> v2
 
 ------------------------------------------------------------------------------------
 ✅ Rollback the deployment:
@@ -1253,6 +1262,66 @@ $$ kubectl rollout undo deployment.v1.apps/nginx-deployment --to-revision=2
 Q. how do you delete deployment?      
 -> $$ kubectl delete deployment <deployment name>
    $$ kubectl delete object <object name>
+
+---------------------------------------------------------------------------
+✅ Advanced Strategies (via other tools like ArgoCD/Flux/CD tools)
+-> Although Kubernetes natively supports RollingUpdate and Recreate, advanced strategies like Blue-Green Deployments and Canary Deployments can be achieved using:
+1. Argo Rollouts
+2. Flagger
+3. Service Mesh (e.g., Istio)
+
+✅ Istio/Service Mesh: (managing microservices)
+-----------------------------------------------
+💡 Istio is an open-source service mesh that provides a dedicated infrastructure layer for managing service-to-service communication within a Kubernetes cluster (or across multiple clusters).
+-> It provides a set of features for managing and securing microservices applications. 
+-> It is built on top of the Kubernetes platform and is designed to work seamlessly with it.
+
+✅ Key Responsibilities of Istio:
+1. Traffic Management — Fine-grained control of traffic routing (e.g., canary deployments, blue-green, A/B testing), Routing rules (path, headers, version-based), Retries, timeouts, fault injection, Load balancing, mirroring (traffic shadowing).
+2. Observability — Telemetry, tracing, and monitoring of service communication.
+-- Metrics via Prometheus, dashboards in Grafana
+-- Distributed tracing via Jaeger or Zipkin, Access logs.
+3. Security — Automatic, mTLS (Mutual TLS), RBAC  [authentication, authorization], and traffic encryption, Identity and credential management.
+4. Policy Enforcement — Rate limiting, quotas, and access controls, External authorization integrations.
+5. Resiliency — Fault injection, retries, circuit breaking, timeouts.
+
+✅ How Does Istio Work?
+-> Istio uses a sidecar proxy pattern to manage communication between microservices. 
+-> It automatically injects a sidecar proxy (Envoy) alongside each application Pod.
+
+⚙️ Architecture Overview:
+1. Control Plane (Istiod):
+-> Handles configuration and management of the proxies.
+-> Manages certificates for mTLS.
+-> Distributes policies and traffic management rules.
+
+2. Data Plane (Envoy Proxies):
+-> Sidecar proxies injected into each Pod.
+-> Intercept and manage all inbound and outbound traffic.
+-> Enforce security, collect telemetry, and apply traffic rules.
+
+✅ Visual Diagram:
++------------------+       +------------------+
+|  Service A Pod   | <---> |  Service B Pod   |
+| +--------------+ |       | +--------------+ |
+| | App Container| |       | | App Container| |
+| +--------------+ |       | +--------------+ |
+| | Envoy Proxy  | | <----> | Envoy Proxy  | |
+| +--------------+ |       | +--------------+ |
++------------------+       +------------------+
+
+          |
+          v
+
+       Istiod (Control Plane)
+
+✅ Core Istio Components:
+Component			Purpose
+Istiod		Control plane — configuration, policy distribution, certificate authority.
+Envoy Proxy	Sidecar data plane proxy for traffic interception and control.
+Ingress Gateway	Manage inbound traffic to services.
+Egress Gateway	Manage outbound traffic to external services.
+Mixer (deprecated)	Policy and telemetry (older Istio versions).
 
 ==========================================================================================
 Kubernetes Networking :
@@ -1715,6 +1784,19 @@ $$ kubectl create namespace dev
 
 
 **********************************************************************************************************
+Best Practices for Securing Kubernetes Clusters:
+================================================
+1. Keep Kubernetes and Components Updated: Regularly apply security patches and updates.
+2. Use Network Policies: Restrict traffic between Pods and namespaces.
+3. Enable RBAC: Implement fine-grained access control.
+4. Use Pod Security Standards: Enforce security standards on Pods using the PodSecurity admission controller.
+5. Enable Audit Logs: Track and monitor API activity with audit logs.
+6. Use Secrets Management: Encrypt secrets and avoid hardcoding sensitive information.
+7. Monitor and Alert: Implement monitoring and alerting for unusual behavior (e.g., unauthorized access or privilege escalation).
+8. Limit Privileges: Run containers with the least privileges necessary and disable unnecessary capabilities.
+
+
+4. Use Pod Security Standards: Enforce security standards on Pods using the PodSecurity admission controller.
 
 Enforcing a Security Profile on a Namespace: "POD SECURITY" : "PodSecurity Admission Controller"
 ====================================================================================
@@ -1824,8 +1906,7 @@ Rollback: $$ kubectl rollout undo deployment/myapp-deployment
 Q. Up to how many PODs can be down for upgrade at a time. Consider the current strategy settings and number of PODs - 4
 -> Look at the Max Unavailable value under RollingUpdateStrategy in deployment details
 
-**************************************************************************************
-
+*************************************************************************************
 CONFIGURE APPLICATIONS: 
 -----------------------
 -> Configuring applications comprises understanding the following concepts:
@@ -2100,7 +2181,6 @@ Note on Secrets:
 -> Consider third-party secrets store provider. [AWS provider, Azure provider, GCP Provider, Vault provider]
 
 *************************************************************************
-
 Enabling Encryption data at rest:
 ---------------------------------	
 -> By default, the API server stores plain-text representations of resources into etcd, with no at-rest encryption.
@@ -2152,19 +2232,7 @@ https://kubernetes.io/docs/concepts/configuration/secret/#protections
 https://kubernetes.io/docs/concepts/configuration/secret/#risks
 -> Having said that, there are other better ways of handling sensitive data like passwords in Kubernetes, such as using tools like Helm Secrets, and HashiCorp Vault.
 
-==============================================================================
-Istio mesh: (managing microservices)
--> It provides a set of features for managing and securing microservices applications. 
--> It is built on top of the Kubernetes platform and is designed to work seamlessly with it.
--> An Istio service mesh is a configurable infrastructure layer for microservices application that makes communication flexible, reliable, and fast.
-## It provides a number of key features, including:
-1. Traffic management: controls flow of traffic between microservices, including features such as load balancing, traffic shaping, and fault injection.
-2. Service discovery: provides a service discovery mechanism to easily discover and communicate with each other.
-3. Security: provides built-in security features, such as mutual Transport Layer Security (TLS) and access control, to help secure communication between microservices.
-4. Observability: provides a set of tools for monitoring and troubleshooting microservices, including metrics, logging, and tracing.
-5. Configurable: control plane allows to configure and manage the service mesh, and to automate many tasks such as traffic management, security, and observability.
-
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+======================================================================================
 Self Healing Applications
 -------------------------
 -> Kubernetes supports self-healing applications through ReplicaSets and Replication Controllers. 
@@ -2339,9 +2407,11 @@ Type of http status codes
 -> 504 Gateway Timeout, which indicates that a gateway or proxy server did not receive a timely response from an upstream server.
 
 =======================================================================================================================================
+POD SCHEDULING TO WORKER NODE:
+------------------------------
+
 MULTIPLE SCHEDULERS:
 --------------------
-
 -> Default scheduler has an algorithm that distributes pods across node evenly, as well as takes into consideration we specify through taints and tolerations and node affinity etc.
 
 Q. What if none of these satisfy your condition?
