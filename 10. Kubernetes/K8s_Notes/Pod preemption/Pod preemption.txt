@@ -1,22 +1,30 @@
-In Kubernetes, Pod preemption is a process that allows the scheduler to evict lower-priority pods to make room for higher-priority pods when resources are scarce. This is especially useful in clusters with Resource Requests and Limits where you need to ensure that higher-priority workloads can run, even if it means evicting other, lower-priority pods.
+-> Pod preemption is a process that allows the scheduler to evict lower-priority pods to make room for higher-priority pods when resources are scarce. 
+-> This is especially useful in clusters with Resource Requests and Limits where you need to ensure that higher-priority workloads can run, even if it means evicting other, lower-priority pods.
 
-Key Concepts of Pod Preemption
-Priority: Kubernetes allows you to set a priority for each pod, which is a numerical value. Pods with higher priority are more likely to be scheduled compared to those with lower priority. If there is not enough space for a high-priority pod, lower-priority pods may be preempted (evicted) to free up resources.
+** Key Concepts of Pod Preemption
+---------------------------------
+1. Priority: Kubernetes allows you to set a priority for each pod, which is a numerical value. 
+-> Pods with higher priority are more likely to be scheduled compared to those with lower priority. 
+-> If there is not enough space for a high-priority pod, lower-priority pods may be preempted (evicted) to free up resources.
 
-PriorityClass: Kubernetes defines a PriorityClass object that assigns a priority to a pod. The higher the priority value, the higher the priority of the pod.
+2. PriorityClass: Kubernetes defines a PriorityClass object that assigns a priority to a pod. 
+-> The higher the priority value, the higher the priority of the pod.
 
-Preemption: If a higher-priority pod cannot be scheduled due to resource constraints, Kubernetes will preempt (evict) one or more lower-priority pods to free up resources for the higher-priority pod.
+3. Preemption: If a higher-priority pod cannot be scheduled due to resource constraints, Kubernetes will preempt (evict) one or more lower-priority pods to free up resources for the higher-priority pod.
 
-How Pod Preemption Works
-When a pod with a higher priority is being scheduled and the node doesn't have sufficient resources, Kubernetes compares the priority of the pending pod with the pods currently running on the node. If the pod to be scheduled has a higher priority than the existing pods, Kubernetes will:
-
-Preempt the lower-priority pods: It will evict the lower-priority pods to make room for the higher-priority pod.
-Evict Pods Based on Priority: The pod preemption process ensures that higher-priority pods get scheduled, even if that means evicting lower-priority pods.
+How Pod Preemption Works:
+-------------------------
+-> When a pod with a higher priority is being scheduled and the node doesn't have sufficient resources, Kubernetes compares the priority of the pending pod with the pods currently running on the node. 
+-> If the pod to be scheduled has a higher priority than the existing pods, Kubernetes will:
+a. Preempt the lower-priority pods: It will evict the lower-priority pods to make room for the higher-priority pod.
+b. Evict Pods Based on Priority: The pod preemption process ensures that higher-priority pods get scheduled, even if that means evicting lower-priority pods.
 Note: Only pods that are eligible for eviction (i.e., not part of a DaemonSet or have the NoEviction taint) will be preempted.
 
 Steps to Enable Pod Preemption
+-------------------------------
 1. Define a PriorityClass
-To enable pod preemption, you need to define a PriorityClass for your pods. The PriorityClass defines a priority value and optionally specifies whether preemption should be allowed.
+-> To enable pod preemption, you need to define a PriorityClass for your pods. 
+-> The PriorityClass defines a priority value and optionally specifies whether preemption should be allowed.
 
 Example: Create a PriorityClass
 
@@ -32,13 +40,13 @@ description: "This priority class is for high-priority workloads"
 value: Defines the priority value. Higher values indicate higher priority.
 preemptionPolicy: Specifies whether the pod can preempt lower-priority pods. PreemptLowerPriority allows the pod to preempt lower-priority pods, and Never prevents preemption.
 globalDefault: If true, this class will be used by default for pods without an explicitly defined priorityClassName. In most cases, you would leave this as false.
-To create the PriorityClass:
 
+To create the PriorityClass:
 $$ kubectl apply -f priorityclass.yaml
 
 
 2. Assign the PriorityClass to Pods
-Once the PriorityClass is created, you can assign it to your pods by specifying the priorityClassName field in the pod specification.
+-> Once the PriorityClass is created, you can assign it to your pods by specifying the priorityClassName field in the pod specification.
 
 Example: Pod Using High PriorityClass:
 apiVersion: v1
@@ -58,7 +66,7 @@ $$ kubectl apply -f high-priority-pod.yaml
 
 
 3. Preemption in Action
-If there are lower-priority pods already running on the node and there isn't enough resource capacity to run the high-priority pod, Kubernetes will evict the lower-priority pods to make room for the new pod. The preempted pods will have a status of Evicted:
+-> If there are lower-priority pods already running on the node and there isn't enough resource capacity to run the high-priority pod, Kubernetes will evict the lower-priority pods to make room for the new pod. The preempted pods will have a status of Evicted:
 $$ kubectl get pods
 
 Output might show the preempted pods::
@@ -69,8 +77,9 @@ low-priority-pod2         0/1     Evicted   0          20m
 
 
 
-Preemption Policy Options
-The preemptionPolicy field in the PriorityClass can be set to one of the following:
+** Preemption Policy Options
+------------------------------
+-> The preemptionPolicy field in the PriorityClass can be set to one of the following:
 
 PreemptLowerPriority (default): This is the default behavior where higher-priority pods can preempt lower-priority pods.
 Never: With this setting, the pod will not preempt any lower-priority pods, even if resources are limited.

@@ -140,7 +140,7 @@ if (Test-Path "file.txt") {
 -- Insert mode: is for typing and editing content.
 -- extend mode: (Command-line mode) is for executing more complex commands related to file management and search/replace operations.(:w, :q, :wq!, :q!, :% s/old/new/g )
 
-*tar cvf file.tar *.c  : This command creates a tar file called file.tar which is the Archive of all .c files in current directory. 
+*tar cvf file.tar filename  : This command creates a tar file called file.tar which is the Archive of all .c files in current directory. 
 *tar xvf file.tar : This command extracts files from Archives. 
     -c : Creates Archive 
     -x : Extract the archive 
@@ -367,15 +367,18 @@ free: to check free memory   - -k
 
 wget and curl : These both commands are used to download the data to a server via some supported protocols such as FTP, HTTP, SCP etc
 
-1. wget: Primarily designed for downloading files from the web. It supports HTTP, HTTPS, and FTP protocols, and is most commonly used for downloading files and recursively retrieving content (e.g., websites).
+1. wget: Primarily designed for downloading files from the web. 
+-- It supports HTTP, HTTPS, and FTP protocols, and 
+-- is most commonly used for downloading files and recursively retrieving content (e.g., websites).
 
-2. curl: A more versatile tool that can both download and upload data. It supports a broader range of protocols, including HTTP, HTTPS, FTP, SCP, SFTP, LDAP, and many others. It is commonly used for testing APIs and interacting with web services.
+2. curl: A more versatile tool that can both download and upload data. 
+-- It supports a broader range of protocols, including HTTP, HTTPS, FTP, SCP, SFTP, LDAP, and many others. 
+-- It is commonly used for testing APIs and interacting with web services.
 -> Download: $$ curl -O http://example.com/file.zip
 -> Upload File: curl -X POST -F "file=@path/to/file" http://example.com/upload
    Upload data: curl -X PUT -d "@file.txt" http://example.com/upload
 
 ======================================================================================
-
 To login as root
 1. sudo
 2. sudo bash
@@ -458,7 +461,6 @@ Supported for		Works for both files and directories		Only supported for files, n
 Assignment : Explore Bashrc and Bash-profile
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 Cut: Cut out sections of a specified file or piped data and print the result of std output.
 -> useful tool for extracting sections from lines of input, often used with text files or data streams. It allows you to cut out specific fields or characters from the data.
 $$ cut -b -1 filename
@@ -487,8 +489,8 @@ For eg :
 
 To print 1st column and row:
 Syn: head -1 tx1 && awk -F " " '{print $1}' tx1
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Password-less connection between 2 servers
 Step 1 - create 2 servers 
 step 2 - Run ssh-keygen -t rsa on server1
@@ -540,8 +542,8 @@ Q. What is a bash alias?
 -> In Bash, an alias is a shorthand name or abbreviation for a command or set of commands. It allows you to define your own 
    custom commands that can be used in place of longer or more complex commands.
    $$ alias ll='ls -l'
-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------
 du -sh : Used to find disk usage of file
 syn : du -sh
 du -sh * : used to find disk usage of particular file
@@ -607,7 +609,6 @@ D → Uninterruptible sleep
 T → Stopped
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 1. FTP:       20 - (the file transfer protocol) :port 20 for data transfers
    FTP :      21 - to issue commands and to control the FTP session
 2. SSh:       22 - is dedicated to SSH, or secure shell login

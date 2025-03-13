@@ -1,0 +1,81 @@
+🔐 Limiting privileges in Kubernetes (K8s) is a critical part of hardening your cluster and reducing the blast radius in case of compromise. By applying least privilege principles, you ensure that workloads, users, and components only have access to what they truly need — nothing more.
+
+
+🚨 Why Limit Privileges in Kubernetes?
+Problem					Solution
+Over-permissioned service accounts	Use RBAC to assign only necessary roles
+Containers running as root		Use Pod Security Standards (PSS) or PSA to enforce non-root containers
+Host path mounts exposing sensitive data	Restrict volumes and mounts
+Broad network access between pods	Enforce Network Policies
+Excessive Kubernetes API access		Fine-grained RBAC policies
+
+
+✅ Key Techniques to Limit Privileges in Kubernetes
+1. Use RBAC to Control API Access (Role, ClusterRole, RoleBinding)
+2. Use Pod Security Standards (PSS) to Enforce Pod-Level Restrictions
+3. Use Network Policies to Limit Pod-to-Pod and Pod-to-Internet Traffic
+
+4. Avoid Privileged Containers & Escalated Rights
+-> Do not run as privileged unless absolutely necessary.
+-> Use securityContext to drop unnecessary Linux capabilities.
+Example: Drop all capabilities, non-root
+securityContext:
+  runAsNonRoot: true
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop: ["ALL"]
+
+5. Restrict Service Account Tokens (Prevent API Abuse)
+-> Do not auto-mount service account tokens unless needed.
+-> Example: Prevent mounting of service account tokens
+automountServiceAccountToken: false
+
+6. Minimize Host Path and Host Network Usage
+-> Avoid hostPath volumes unless needed for specific cases.
+-> Avoid hostNetwork, hostPID, hostIPC unless explicitly needed
+-> Example: Avoid this unless mandatory:
+volumes:
+- name: host-volume
+  hostPath:
+    path: /etc
+    type: Directory
+
+7. Limit Sensitive Volume Mounts and Environment Variables [Secrets, ConfigMaps]
+8. Apply Admission Controllers to Enforce Policies
+
+
+
+⚙️ Bonus: Tools to Audit and Enforce Least Privilege
+Tool			Purpose
+OPA/Gatekeeper	Policy-as-Code enforcement for Kubernetes
+Kyverno		Kubernetes-native policy engine (easier than OPA)
+Kube-bench	CIS Benchmark checks (RBAC, Pod Security, etc.)
+Kubesec		Scan YAML manifests for security issues
+Trivy / Kube-hunter	Container image and K8s cluster vulnerability scans
+
+
+✅ Summary: Kubernetes Least Privilege Checklist
+Control				Action/Example
+API access (RBAC)		Fine-grained Role/ClusterRole with RoleBinding
+Pod privilege			PodSecurity: restricted profile
+Network communication		NetworkPolicy to control traffic
+Run containers as non-root	runAsNonRoot: true, drop capabilities
+Avoid service account tokens	automountServiceAccountToken: false
+Host resources			Avoid hostPath, hostNetwork, hostPID
+Volume and secret usage		Minimal exposure, only where needed
+Admission controllers		Use PodSecurity, NodeRestriction, Webhooks
+Regular audits			Use tools like Kyverno, Gatekeeper, kube-bench
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -7,6 +7,9 @@ subjects:
 - kind: ServiceAccount
   name: my-service-account  # Name of the Service Account
   namespace: default
+- kind: User
+  name: alice        # User to bind
+  apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
   name: pod-reader  # The Role being bound

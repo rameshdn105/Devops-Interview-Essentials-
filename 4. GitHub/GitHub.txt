@@ -67,7 +67,7 @@ Paid plan details      Free to use, requires a dedicated administrator	Both free
 
 -----------------------------------------------------------------------
 ** The components of GitHub Actions: 
-          GitHub Actions workflow to be triggered when an event occurs in your repository, such as a pull request being opened or an issue being created. 
+-> GitHub Actions workflow to be triggered when an event occurs in your repository, such as a pull request being opened or an issue being created. 
 ** Your workflow contains one or more jobs which can run in sequential order or in parallel. 
 ** Each job will run inside its own virtual machine runner, or inside a container, and has one or more steps that either run a script that you define or run an action, which is a reusable extension that can simplify your workflow.
 
@@ -119,7 +119,8 @@ on:
 
 
 4. Actions: An action is a custom application for the GitHub Actions platform that performs a complex but frequently repeated task. 
--- Use an action to help reduce the amount of repetitive code that you write in your workflow files. An action can pull your Git repository from GitHub, set up the correct toolchain for your build environment, or set up the authentication to your cloud provider.
+-- Use an action to help reduce the amount of repetitive code that you write in your workflow files. 
+-- An action can pull your Git repository from GitHub, set up the correct toolchain for your build environment, or set up the authentication to your cloud provider.
 
 
 5. Runners: A runner is a server that runs your workflows when they're triggered. Each runner can run a single job at a time. GitHub provides Ubuntu Linux, Microsoft Windows, and macOS runners to run your workflows. Each workflow run executes in a fresh, newly-provisioned virtual machine.
@@ -555,16 +556,13 @@ Sequential vs. Parallel Execution: By default, jobs in a workflow run in paralle
 Jobs have additional configuration options for more advanced use cases:
 
 1. timeout-minutes: Set a timeout for how long a job is allowed to run before being automatically canceled.
-yaml
 timeout-minutes: 30
 
 2. container: Run jobs inside a Docker container.
-yaml
 container:
   image: node:14
 
 3. strategy: Configure matrix builds to run jobs with different configurations (e.g., different Node.js versions).
-yaml
 strategy:
   matrix:
     node-version: [12, 14, 16]
@@ -645,10 +643,6 @@ Q. What are the credential types supported by Jenkins?
 5. Deploy Keys: For SSH access to repositories.
 6. Service Account Credentials: For accessing external services for authenticating and authorizing access to cloud services or external systems.
 7. Environment Variables: For passing configuration and runtime values.
-
-
----------------------------------------------------------------------------
-
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 What is post build step?

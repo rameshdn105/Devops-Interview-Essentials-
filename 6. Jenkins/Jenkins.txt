@@ -540,13 +540,13 @@ maven comipler plugin
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 20. What is the Blue Ocean?
 Ans: Blue Ocean is the redefined user experience for Jenkins. Designed from the ground up for Jenkins Pipeline, it is still compatible with freestyle jobs, Blue Ocean reduces clutter and increases clarity. 
-* Blue Ocean rethinks the Jenkins user experience. Designed from the ground up for Jenkins Pipeline and compatible with Freestyle jobs
-Blue Ocean’s main features include -
--Sophisticated visualizations of CD pipelines for fast and intuitive comprehension of software pipeline status.
--Pipeline editor that makes automating CD pipelines approachable by guiding the user through an intuitive and visual process to create a pipeline.
--Personalization of the Jenkins UI to suit the role-based needs of each member of the DevOps team.
--Pinpoint precision when intervention is needed and/or issues arise. The Blue Ocean UI shows where in the pipeline attention is needed, facilitating exception handling and increasing productivity.
--Native integration for branch and pull requests enables maximum developer productivity when collaborating on code with others in GitHub and Bitbucket.
+** Blue Ocean rethinks the Jenkins user experience. Designed from the ground up for Jenkins Pipeline and compatible with Freestyle jobs
+** Blue Ocean’s main features include -
+-- Sophisticated visualizations of CD pipelines for fast and intuitive comprehension of software pipeline status.
+-- Pipeline editor that makes automating CD pipelines approachable by guiding the user through an intuitive and visual process to create a pipeline.
+-- Personalization of the Jenkins UI to suit the role-based needs of each member of the DevOps team.
+-- Pinpoint precision when intervention is needed and/or issues arise. The Blue Ocean UI shows where in the pipeline attention is needed, facilitating exception handling and increasing productivity.
+-- Native integration for branch and pull requests enables maximum developer productivity when collaborating on code with others in GitHub and Bitbucket.
 
 ------------------------------------------------------------------------------------------------------------------------------------
 Q. How can we stop a scheduled job from being executed temporarily?
@@ -612,7 +612,7 @@ confg.xml  & restart jenkins.
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
 16. What is a Jenkins Shared Library and how it is useful?
-Ans: As an organization starts using more and more pipeline jobs, there is a chance for more and more code being duplicated in every pipeline job, since a part of the build/automation processes will be the same for most of the jobs. In such a situation, every other new upcoming job should also duplicate the same piece of code. To avoid duplications, the Jenkins project brought in the concept of Shared Libraries, to code - DRY - Don't Repeat Yourself.
+-> As an organization starts using more and more pipeline jobs, there is a chance for more and more code being duplicated in every pipeline job, since a part of the build/automation processes will be the same for most of the jobs. In such a situation, every other new upcoming job should also duplicate the same piece of code. To avoid duplications, the Jenkins project brought in the concept of Shared Libraries, to code - DRY - Don't Repeat Yourself.
 ** Shared libraries are a set of code that can be common for more than one pipeline job and can be maintained separately. Such libraries improve the maintenance, modularity & readability of the pipeline code. And it also speeds up the automation for new jobs.
 
 *Why Use Jenkins Shared Library?
@@ -629,8 +629,9 @@ E.g.
 #!/urs/bin/env groovy
 @Library('fs_jenkins_shared_library@v2.0.7')_
 
---------------------------------------------------------------------------------------------------------------------------------------------------19. What happens when a Jenkins agent is offline and what is the best practice in that situation?
-Ans: When a job is tied to a specific agent on a specific node, the job can only be run on that agent and no other agents can fulfill the job request. If the target node is offline or all the agents on that particular node are busy building other jobs, then the triggered job has to wait until the node comes online or an agent from that node becomes available to execute the triggered build request.
+--------------------------------------------------------------------------------------------------------------------------------------------------
+19. What happens when a Jenkins agent is offline and what is the best practice in that situation?
+-> When a job is tied to a specific agent on a specific node, the job can only be run on that agent and no other agents can fulfill the job request. If the target node is offline or all the agents on that particular node are busy building other jobs, then the triggered job has to wait until the node comes online or an agent from that node becomes available to execute the triggered build request.
 -> As a result, a triggered job may sometimes wait indefinitely without knowing that the target node is offline. So, it is always the best practice to tie the jobs to a group of nodes & agents, referred to with a 'Label'. Once a job is tied to a Label, instead of a specific node/agent, any of the nodes/agents falling under the label can fulfill a build request, when a job is triggered. This way we can reduce the overall turn-around time of the builds.
 Even then if a job is waiting for more time for the nodes/agents, then it is time to consider adding more nodes/agents.
 
