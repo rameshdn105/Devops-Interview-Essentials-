@@ -1,15 +1,19 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: myclaim
+  name: my-app-pvc
+  namespace: production
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: google-storage #from storage class, it would create PV automatically
+    - ReadWriteOnce # Single node access, can be changed to RWO/ROX/RWX depending on need
+  storageClassName: gp2-sc
   resources:
     requests:
-      storage: 500Mi
-# host path is not used in production environment so we followe below method
+      storage: 20Gi # Size of volume
 
-# kubectl create -f pv-defiantion.yaml
-# kubectl get persistentvolumeclaim
+# Notes:
+# Adjust accessModes based on application requirement:
+# ReadWriteOnce (RWO): Mounted as read-write by a single node.
+# ReadOnlyMany (ROX): Mounted as read-only by many nodes.
+# ReadWriteMany (RWX): Mounted as read-write by many nodes (e.g., NFS, EFS).
+# Make sure namespace is aligned with application deployment.

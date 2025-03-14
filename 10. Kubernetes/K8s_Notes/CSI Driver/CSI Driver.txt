@@ -1,7 +1,8 @@
 ✅ CSI (Container Storage Interface) Driver:
 ---------------------------------------------
 
--> CSI is an industry-standard interface developed to decouple Kubernetes from specific storage vendors. It allows Kubernetes (and other orchestrators) to use storage solutions without needing custom code for each vendor in Kubernetes core.
+-> CSI is an industry-standard interface developed to decouple Kubernetes from specific storage vendors. 
+-> It allows Kubernetes (and other orchestrators) to use storage solutions without needing custom code for each vendor in Kubernetes core.
 
 🔑 Goal: Provide a standard mechanism for storage vendors to expose storage systems to containerized workloads.
 
@@ -39,6 +40,7 @@ Controller Plugin	Handles provisioning, attaching volumes (runs as StatefulSet/D
 Example flow when a Pod requests a volume:
 User --> PVC --> StorageClass --> CSI Provisioner --> Storage Backend
                                           ↳ (e.g., AWS EBS, Azure Disk)
+
 -> Step-by-Step Flow:
 1. User creates PVC (PersistentVolumeClaim).
 2. Kubernetes/PVC looks at the StorageClass, identifies CSI provisioner.
@@ -73,7 +75,23 @@ csi-aws-controller-xxxx               2/2     Running  # Controller plugin
 external-snapshotter-xxxx             1/1     Running  # Snapshot manager
 
 
-
+✅ Flow of Dynamic PV Provisioning using StorageClass + CSI:
+1. User creates a PersistentVolumeClaim (PVC)
+        │
+        ▼
+2. Kubernetes looks up the StorageClass attached to PVC
+        │
+        ▼
+3. StorageClass has provisioner field (e.g., ebs.csi.aws.com)
+        │
+        ▼
+4. CSI plugin (driver) gets triggered to create an actual volume on cloud/storage backend
+        │
+        ▼
+5. CSI plugin provisions volume, returns PV to Kubernetes
+        │
+        ▼
+6. Pod can now use PVC (backed by PV)
 
 
 

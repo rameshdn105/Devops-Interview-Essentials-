@@ -139,7 +139,45 @@ CLI/UI-->API-->(API server::SCHEDULER::CONTROLLERS::KEY VALUE STORE-etcd)
 -> ETCD is responsible for implementing locks within the cluster to ensure there are no conflicts between the Masters.
 -> When it comes to locks within the cluster, ETCD ensures that only one master (or component) performs an action at a time to avoid conflicts.
 
+**********************************************************
+** etcd lock:
+-> A distributed locking mechanism provided by etcd to ensure exclusive access to resources in a distributed system.
+-> Prevents race conditions when multiple clients need to modify the same resource.
+-> Etcd locks are distributed, lease-based locking mechanisms used in Kubernetes for leader election and coordination, ensuring that critical operations are performed safely without race conditions. They are automatically released on client failure to avoid deadlocks.
 
+** Why Are etcd Locks Used in Kubernetes?
+-> Leader election among controllers (e.g., kube-controller-manager, scheduler) — ensures only one active leader to avoid duplicate actions.
+-> Used for coordination in distributed Kubernetes components.
+-> Ensures consistent state changes and resource updates.
+-> Job scheduling and avoiding duplicate processing by multiple pods.
+
+** How Does etcd Lock Work (Mechanism)?
+-> Uses key + lease:
+-- Lease is a time-bound ownership.
+-- The lock is a key tied to the lease.
+-> If a client disconnects or fails, lease expires, and lock is released (fail-safe).
+-> Other clients waiting for the lock will automatically get the lock once it's released.
+
+** How to Acquire and Release an etcd Lock?
+1. Acquire:
+-- Client requests lock.
+-- etcd creates a key under a unique path, attached to a lease.
+2. Release:
+-- Manually: Client deletes the key.
+-- Automatically: Lease expires when client fails or does not renew it.
+
+** Real Example in Kubernetes (Leader Election):
+-> Controllers use etcd locks via client-go's leaderelection library.
+Example: $$ kube-controller-manager --leader-elect=true
+-> Ensures only one controller is acting as a leader by acquiring the lock in etcd.
+
+** What is a Lease? Why is it Important?
+-> Lease = Time-bound session attached to a lock.
+-> Prevents deadlocks: if client holding lock dies, the lease expires, and others can take over.
+-> Lease renewal required to hold lock continuously.
+
+
+**********************************************************
 3. Scheduler: (Decides where our container will be running on which node)
 -> The scheduler is the one which decides which pod should be created on which worker node.
 -> Responsible for distributing work or containers across multiple nodes.
@@ -273,16 +311,6 @@ POD:  [smallest object, ephemeral(self-healing), single/multi container]
 -> Helper container, that might be doing some kind of supporting task for our web application such as processing a user entered data, processing a file uploaded by the user etc. 
 -> The two containers can also communicate with each other directly by referring to each other as ‘localhost’ since they share the same network namespace. Plus they can easily share the same storage space as well. 
 
-## Sidecar container/Multi container: This pattern is useful for scenarios where you need to add features such as monitoring, logging, proxying, or managing secrets without modifying the main application code.
-1. Logging and Monitoring with a Sidecar
--> we will use the Fluentd sidecar container to collect logs from the primary application container and send them to an external logging system (like Elasticsearch or Splunk). This approach ensures that logs are collected without modifying the primary application.
-
-2. Multi-Container Pod with Sidecar for Proxying (e.g., with Envoy)
--> A sidecar container is used to act as a proxy or API gateway for the primary application. Envoy, a popular proxy, can be used as a sidecar to manage network traffic, handle retries, timeouts, circuit breaking, and more.
-
-3. Multi-Container Pod for Application with Caching Sidecar (e.g., Redis)
--> Use a sidecar to deploy a Redis container within the same pod. This sidecar could provide caching services to the application without needing to manage Redis as a separate service.
-
 Commands:
 -- To create pod: $$ kubectl run nginx --image=nginx 
 -- To list pods: $$ kubectl get pods
@@ -401,6 +429,17 @@ $$ kubectl get pod orange -o yaml > /root/orange.yaml
 -> We have a pod with a main container which is working very well but If we want to extend the functionality without changing the existing main container then better option is to use sidecar conateiner.
 -> To take the copy of file or data from main container we can use sidecar conateiner.
 
+## Sidecar container/Multi container: This pattern is useful for scenarios where you need to add features such as monitoring, logging, proxying, or managing secrets without modifying the main application code.
+1. Logging and Monitoring with a Sidecar
+-> we will use the Fluentd sidecar container to collect logs from the primary application container and send them to an external logging system (like Elasticsearch or Splunk). This approach ensures that logs are collected without modifying the primary application.
+
+2. Multi-Container Pod with Sidecar for Proxying (e.g., with Envoy)
+-> A sidecar container is used to act as a proxy or API gateway for the primary application. Envoy, a popular proxy, can be used as a sidecar to manage network traffic, handle retries, timeouts, circuit breaking, and more.
+
+3. Multi-Container Pod for Application with Caching Sidecar (e.g., Redis)
+-> Use a sidecar to deploy a Redis container within the same pod. This sidecar could provide caching services to the application without needing to manage Redis as a separate service.
+
+*****************************************************************************
 3. Single Container per Pod:
 -> Description: A Pod with only one container is the simplest and most common pattern in Kubernetes. It represents a single containerized application that runs by itself.
 -> Use Case: Ideal for stateless applications, microservices, and when you need the full resources of the Pod allocated to a single container.
@@ -524,6 +563,9 @@ CSIStorageCapacity            storage.k8s.io/v1
 ============================  ====================
 FlowSchema                    flowcontrol.apiserver.k8s.io/v1beta3
 PriorityLevelConfiguration    flowcontrol.apiserver.k8s.io/v1beta3
+============================
+PodDisruptionBudget		policy/v1
+
 
 =========================================================================================
 Port forwarding in Kubernetes
@@ -4936,10 +4978,20 @@ Setup prometheus on Kubernetes:
 
 --------------------------------------------------------------------------------------
 Q. what is pdb in k8? PodDisruptionBudget
--> PDB (PodDisruptionBudget) to ensure that your pods are not terminated or evicted unless it's absolutely necessary. 
 -> A PodDisruptionBudget (PDB) defines the number of replicas of a pod that must be available at any given time for 
    some reason such as upgrades or routine maintenance work on the Kubernetes nodes.
+-> PDB (PodDisruptionBudget) to ensure that your pods are not terminated or evicted unless it's absolutely necessary. 
 -> ECK manages a default PDB per Elasticsearch resource.
+
+** A Pod Disruption Budget (PDB) ensures that a minimum number of pods remain available during voluntary disruptions like:
+-- Node maintenance/drain (e.g., kubectl drain)
+-- Rolling updates
+-- Cluster upgrades
+-- Pod eviction during deployments or scaling events.
+-> PDB prevents too many pods from being evicted simultaneously, ensuring high availability of critical applications.
+
+⚠️ Note:
+-> PDB does NOT protect against involuntary disruptions (e.g., node crashes, out-of-memory kills).
 
 Q. Cordon and drain:
 -> Cordon will mark the node as unschedulable.

@@ -37,9 +37,9 @@ preemptionPolicy: PreemptLowerPriority
 globalDefault: false
 description: "This priority class is for high-priority workloads"
 
-value: Defines the priority value. Higher values indicate higher priority.
-preemptionPolicy: Specifies whether the pod can preempt lower-priority pods. PreemptLowerPriority allows the pod to preempt lower-priority pods, and Never prevents preemption.
-globalDefault: If true, this class will be used by default for pods without an explicitly defined priorityClassName. In most cases, you would leave this as false.
+-- value: Defines the priority value. Higher values indicate higher priority.
+-- preemptionPolicy: Specifies whether the pod can preempt lower-priority pods. PreemptLowerPriority allows the pod to preempt lower-priority pods, and Never prevents preemption.
+-- globalDefault: If true, this class will be used by default for pods without an explicitly defined priorityClassName. In most cases, you would leave this as false.
 
 To create the PriorityClass:
 $$ kubectl apply -f priorityclass.yaml
@@ -81,8 +81,8 @@ low-priority-pod2         0/1     Evicted   0          20m
 ------------------------------
 -> The preemptionPolicy field in the PriorityClass can be set to one of the following:
 
-PreemptLowerPriority (default): This is the default behavior where higher-priority pods can preempt lower-priority pods.
-Never: With this setting, the pod will not preempt any lower-priority pods, even if resources are limited.
+1. PreemptLowerPriority (default): This is the default behavior where higher-priority pods can preempt lower-priority pods.
+2. Never: With this setting, the pod will not preempt any lower-priority pods, even if resources are limited.
 Example: PriorityClass with preemptionPolicy: Never
 
 apiVersion: scheduling.k8s.io/v1
@@ -94,20 +94,25 @@ preemptionPolicy: Never
 globalDefault: false
 description: "Pods with this priority will not preempt other pods."
 
-In this case, even if a pod with no-preemption priority is scheduled, it will not preempt any lower-priority pods, even if resources are constrained.
+-> In this case, even if a pod with no-preemption priority is scheduled, it will not preempt any lower-priority pods, even if resources are constrained.
 
-How Pod Preemption Works with Node Affinity, Taints, and Tolerations
-Pod preemption works in conjunction with Node Affinity, Taints, and Tolerations. For example:
-
-If a pod has a taint on the node (e.g., NoSchedule), a lower-priority pod will not be evicted unless it can tolerate the taint.
-Node Affinity rules can also affect whether or not a pod can be scheduled or preempted on a specific node.
-You must ensure that preemption is compatible with your node scheduling constraints to avoid unexpected behavior.
+Q. How Pod Preemption Works with Node Affinity, Taints, and Tolerations?
+-> Pod preemption works in conjunction with Node Affinity, Taints, and Tolerations. For example:
+1. If a pod has a taint on the node (e.g., NoSchedule), a lower-priority pod will not be evicted unless it can tolerate the taint.
+2. Node Affinity rules can also affect whether or not a pod can be scheduled or preempted on a specific node.
+-- You must ensure that preemption is compatible with your node scheduling constraints to avoid unexpected behavior.
 
 Considerations and Best Practices
-Eviction Grace Period: Preempted pods are evicted, and the scheduler tries to reschedule them based on the available resources. However, the eviction grace period can be configured to allow the preempted pods to gracefully terminate.
+1. Eviction Grace Period: 
+-> Preempted pods are evicted, and the scheduler tries to reschedule them based on the available resources. 
+-> However, the eviction grace period can be configured to allow the preempted pods to gracefully terminate.
 
-Preemption vs. Resource Requests: Pods with higher priorities do not always get scheduled immediately if the required resources aren't available. Preemption only works if lower-priority pods are consuming the resources that the higher-priority pod needs.
+2. Preemption vs. Resource Requests: 
+-> Pods with higher priorities do not always get scheduled immediately if the required resources aren't available. 
+-> Preemption only works if lower-priority pods are consuming the resources that the higher-priority pod needs.
 
-Use Preemption Carefully: Although preemption can ensure that critical workloads are prioritized, it can lead to interruptions for less critical workloads. It's a good practice to carefully define priority levels for workloads and use Resource Requests and Limits to ensure fair resource distribution.
+3. Use Preemption Carefully: 
+-> Although preemption can ensure that critical workloads are prioritized, it can lead to interruptions for less critical workloads. 
+-> It's a good practice to carefully define priority levels for workloads and use Resource Requests and Limits to ensure fair resource distribution.
 
-Cluster Autoscaling: Preemption may be less relevant if you are using Cluster Autoscaler, as the autoscaler can add more nodes to accommodate additional workloads instead of preempting pods.
+4. Cluster Autoscaling: Preemption may be less relevant if you are using Cluster Autoscaler, as the autoscaler can add more nodes to accommodate additional workloads instead of preempting pods.
