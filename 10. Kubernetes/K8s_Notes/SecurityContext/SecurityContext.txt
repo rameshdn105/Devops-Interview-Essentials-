@@ -1,0 +1,34 @@
+✅ SecurityContext in Kubernetes — Quick Guide
+🔑 What is SecurityContext?
+-> SecurityContext defines security settings for Pods and containers, including:
+-- User/Group IDs to run as.
+-- Filesystem permissions.
+-- Privilege control.
+-- Linux capabilities.
+
+🔐 SecurityContext at Two Levels:
+1. Pod-level: Affects all containers in the pod.
+2. Container-level: Affects individual container, overrides Pod-level if set.
+
+📄 Key Fields in SecurityContext
+runAsUser: Run container as this UID — Example: runAsUser: 1000
+runAsGroup: GID for the container — Example: runAsGroup: 3000
+runAsNonRoot: Ensure the container runs as non-root — Example: runAsNonRoot: true
+fsGroup: GID for shared volume access — Example: fsGroup: 2000
+privileged: Run in privileged mode (root access) — Example: privileged: false
+readOnlyRootFilesystem: Make root filesystem read-only — Example: readOnlyRootFilesystem: true
+allowPrivilegeEscalation: Prevent privilege escalation — Example: allowPrivilegeEscalation: false
+capabilities: Add/drop Linux capabilities — Example: capabilities: { drop: ["ALL"] }
+
+🔐 Best Practices:
+Always use runAsNonRoot: true when possible.
+Set readOnlyRootFilesystem: true for immutable filesystem.
+Drop all unnecessary capabilities (drop: ["ALL"]).
+Avoid privileged containers unless absolutely required.
+Use PodSecurityPolicies (deprecated, replaced by OPA/Gatekeeper/PSA) to enforce security policies.
+
+🚨 Important SecurityContext for Production:
+User & Group: runAsUser, runAsGroup.
+Root FS Protection: readOnlyRootFilesystem.
+Capability Control: capabilities.
+Privilege Restriction: allowPrivilegeEscalation, privileged.

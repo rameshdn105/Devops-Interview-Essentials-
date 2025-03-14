@@ -6,7 +6,7 @@
 
 ✅ Istio/Service Mesh: (managing microservices)
 -----------------------------------------------
-💡 Istio is an open-source service mesh that provides a dedicated infrastructure layer for managing service-to-service communication within a Kubernetes cluster (or across multiple clusters).
+💡 Istio is an open-source service mesh that provides a "Dedicated infrastructure layer for managing service-to-service communication" within a Kubernetes cluster (or across multiple clusters).
 -> It provides a set of features for managing and securing microservices applications. 
 -> It is built on top of the Kubernetes platform and is designed to work seamlessly with it.
 
@@ -49,10 +49,10 @@
        Istiod (Control Plane)
 
 ✅ Core Istio Components:
-Component			Purpose
-Istiod		Control plane — configuration, policy distribution, certificate authority.
-Envoy Proxy	Sidecar data plane proxy for traffic interception and control.
-Ingress Gateway	Manage inbound traffic to services.
-Egress Gateway	Manage outbound traffic to external services.
+Component				Purpose
+Istiod			Control plane — configuration, policy distribution, certificate authority.
+Envoy Proxy		Sidecar data plane proxy for traffic interception and control.
+Ingress Gateway		Manage inbound traffic to services.
+Egress Gateway		Manage outbound traffic to external services.
 Mixer (deprecated)	Policy and telemetry (older Istio versions).
 
