@@ -1,3 +1,24 @@
+✅ Image Scanning (Trivy, Clair, ECR scanning)
+📌 Why Image Scanning is Critical?
+-- Prevents vulnerable images from running in production.
+-- Finds CVEs (vulnerabilities), misconfigurations, secrets inside images.
+
+🎯 Popular Tools:
+1. Trivy: Lightweight, fast vulnerability scanner (by Aqua Security).
+2. Clair: CoreOS (Red Hat) static analysis of vulnerabilities.
+3. ECR native scanning: AWS Elastic Container Registry vulnerability scanning
+
+$$ trivy image nginx:latest
+✅ Output Example:
+nginx:latest (alpine 3.14)
+===========================
+Total: 15 (CRITICAL: 2, HIGH: 5, MEDIUM: 4, LOW: 4)
+
+CRITICAL:
+- CVE-2021-30139
+- CVE-2021-30142
+
+----------------------------------------------------------------------------------
 Docker Commands:
 
 1. $$ docker –version    : This command is used to get the currently installed version of docker

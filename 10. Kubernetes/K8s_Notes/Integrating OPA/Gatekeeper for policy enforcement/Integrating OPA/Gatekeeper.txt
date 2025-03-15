@@ -1,0 +1,16 @@
+✅ 1. Integrating OPA/Gatekeeper for Policy Enforcement
+📌 What is OPA/Gatekeeper?
+-> OPA (Open Policy Agent) is a policy engine to enforce fine-grained policies (security, compliance, best practices) in K8s.
+-> Gatekeeper is an OPA controller for Kubernetes — it allows admission control using OPA policies (Rego).
+
+🎯 What kind of policies can be enforced?
+-- Disallow privileged pods.
+-- Block containers running without resource limits.
+-- Enforce labeling/naming standards.
+-- Prevent hostPath mounts or usage of hostNetwork.
+
+🔑 Basic Setup Steps:
+1. Install Gatekeeper:
+$$ kubectl apply -f https://raw.githubusercontent.com/open-policy-agent/gatekeeper/master/deploy/gatekeeper.yaml
+
+

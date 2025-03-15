@@ -2443,8 +2443,7 @@ Type of http status codes
    issue wit firewall, debug these errors, memory exceeded this type of error is coming,delete cookies.
 -> 500 Internal Server Error, which indicates that an unexpected error occurred on the server while processing the request. 
    This can occur if there is a bug in the server code, or if there is an issue with the server's infrastructure.
--> 503 Service Unavailable, which indicates that the server is temporarily unable to handle the request due to high traffic 
-   or maintenance. This can occur if the server is overloaded or if it is undergoing maintenance.   
+-> 503 Service Unavailable, which indicates that the server is temporarily unable to handle the request due to high traffic or maintenance. This can occur if the server is overloaded or if it is undergoing maintenance.   
 -> 502 Bad Gateway, which indicates that there was an issue with a gateway or proxy server.
 -> 504 Gateway Timeout, which indicates that a gateway or proxy server did not receive a timely response from an upstream server.
 
