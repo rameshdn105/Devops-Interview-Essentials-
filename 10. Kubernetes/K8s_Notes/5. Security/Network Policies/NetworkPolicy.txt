@@ -14,13 +14,13 @@
 -> Control egress traffic (e.g., only allow pods to connect to specific IPs or domains).
 
 🔑 Key Components of a NetworkPolicy
-Field			Purpose
-podSelector	Selects the pods to which this policy applies
-policyTypes	Whether it controls Ingress, Egress, or both
-ingress		Rules for incoming traffic
-egress		Rules for outgoing traffic
+Field			        Purpose
+podSelector 	Selects the pods to which this policy applies
+policyTypes 	Whether it controls Ingress, Egress, or both
+ingress		    Rules for incoming traffic
+egress		    Rules for outgoing traffic
 namespaceSelector	Selects pods in other namespaces
-ipBlock		CIDR ranges to allow/deny
+ipBlock		    CIDR ranges to allow/deny
 
 
 ✅ Basic Example: Allow traffic to specific pods (Ingress)

@@ -1,0 +1,69 @@
+TLS/SSL AUTHENTICATION
+
+-> TLS (Transport layer security) / SSL ( secure socket layer ) are the most popularly used encryption algorithms for sensitive/personal data that's transmitted over the internet.
+
+It depends on:-
+1. Asymmetric Key Encryption 
+2. Public key Infrastructure ( PKI )
+3. Certificate Authority ( CA )
+4. Server/ Client Certificates
+
+TLS /SSL Authentication flow:
+1. Application registers it PUBLIC key with Certificate Authority by issuing and Certificate Signing request to CA with Domain details.
+2. Certificate Authority issues the server certificate after it with it PRIVATE KEY 
+3. Client initiates a connection with the Application through it Public Domain DNS Address 
+4. Client presents the Certificate to the Client 
+5. Client decrypts the certificate using Certificate Authorities Public Key
+6. The client sends a message to the Application to initiate the session, encrypting it with the application's PUBLIC KEY.
+7. The application generates a session key and sends it back to the client.
+8. Session is established.
+
+
+SSL/TLS Termination in Nginx :-
+-> SSL/TLS termination means that Nginx handles the encryption and decryption of HTTPS traffic before passing it to the backend servers. This improves performance by offloading cryptographic processing from the application servers.
+
+How It Works :-
+1. Client Request: A client (browser or app) sends an HTTPS request to Nginx.
+2. SSL Handshake: Nginx responds with an SSL certificate and establishes a secure connection.
+3. Decryption: Nginx decrypts the request.
+4. Forwarding: The decrypted request is forwarded to the backend application server over HTTP.
+5. Backend Response: The application processes the request and sends the response to Nginx.
+6. Encryption: Nginx encrypts the response and sends it back to the client.
+
+Nginx Configuration for SSL/TLS Termination :-
+-> Basic SSL Termination Configuration :-
+
+server {
+ listen 443 ssl;
+ server_name example.com;
+
+ ssl_certificate /etc/nginx/ssl/example.com.crt;
+ ssl_certificate_key /etc/nginx/ssl/example.com.key;
+
+ ssl_protocols TLSv1.2 TLSv1.3;
+ ssl_ciphers HIGH:!aNULL:!MD5;
+
+ location / {
+ proxy_pass http://backend_server;
+ proxy_set_header Host $host;
+ proxy_set_header X-Real-IP $remote_addr;
+ proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+ }
+}
+
+server {
+ listen 80;
+ server_name example.com;
+ return 301 https://$host$request_uri;
+}
+
+
+Explanation of Configuration :-
+listen 443 ssl; → Enables SSL on port 443.
+server_name example.com; → Defines the domain name.
+ssl_certificate & ssl_certificate_key → Path to the SSL certificate and private key.
+ssl_protocols TLSv1.2 TLSv1.3; → Specifies supported TLS versions.
+ssl_ciphers → Defines secure ciphers to use.
+proxy_pass http://backend_server; → Forwards requests to an internal backend.
+proxy_set_header → Passes client headers to the backend.
+The second server block (listen 80;) redirects all HTTP traffic to HTTPS.

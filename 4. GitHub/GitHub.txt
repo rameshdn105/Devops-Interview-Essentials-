@@ -69,12 +69,12 @@ Paid plan details      Free to use, requires a dedicated administrator	Both free
 
 -- GitHub provides Linux, Windows, and macOS virtual machines to run your workflows, or you can host your own self-hosted runners in your own data center or cloud infrastructure.
 
-GitHub Actions is a CI/CD & workflow automation tool integrated into GitHub that enables event-driven automation for repositories. It allows you to:
+-- GitHub Actions is a CI/CD & workflow automation tool integrated into GitHub that enables event-driven automation for repositories. It allows you to:
+1. Automate testing, building, and deploying applications.
+2. Orchestrate workflows for infrastructure as code (Terraform, Ansible, Kubernetes, AWS, Azure, GCP).
+3. Integrate security scanning and compliance checks into the pipeline.
+4. Run jobs on GitHub-hosted or self-hosted runners.
 
-Automate testing, building, and deploying applications.
-Orchestrate workflows for infrastructure as code (Terraform, Ansible, Kubernetes, AWS, Azure, GCP).
-Integrate security scanning and compliance checks into the pipeline.
-Run jobs on GitHub-hosted or self-hosted runners.
 📌 Why GitHub Actions?
 ✔️ Native GitHub Integration (No need for external CI/CD tools like Jenkins).
 ✔️ Event-Driven (Triggers based on push, PR, schedule, etc.).
@@ -88,7 +88,6 @@ Run jobs on GitHub-hosted or self-hosted runners.
 -> GitHub Actions workflow to be triggered when an event occurs in your repository, such as a pull request being opened or an issue being created. 
 ** Your workflow contains one or more jobs which can run in sequential order or in parallel. 
 ** Each job will run inside its own virtual machine runner, or inside a container, and has one or more steps that either run a script that you define or run an action, which is a reusable extension that can simplify your workflow.
-
 
 🔹 Workflows: A workflow is a configurable automated process that will run one or more jobs. 
 -- Workflows are defined by a YAML file checked in to your repository and will run when triggered by an event in your repository, or they can be triggered manually, or at a defined schedule.
@@ -124,16 +123,15 @@ on:
 │ │ │ │ │
 * * * * *
 
--- For a complete list of events that can be used to trigger workflows, see Events that trigger workflows.
-
-
 🔹 Jobs: A job is a set of steps in a workflow that is executed on the same runner. Each step is either a shell script that will be executed, or an action that will be run. 
 -- Steps are executed in order and are dependent on each other. Since each step is executed on the same runner, you can share data from one step to another. 
 -- For example, you can have a step that builds your application followed by a step that tests the application that was built.
 
--- You can configure a job's dependencies with other jobs; by default, jobs have no dependencies and run in parallel. When a job takes a dependency on another job, it waits for the dependent job to complete before running.
+-- You can configure a job's dependencies with other jobs; by default, jobs have no dependencies and run in parallel. 
+-- When a job takes a dependency on another job, it waits for the dependent job to complete before running.
 
--- For example, you might configure multiple build jobs for different architectures without any job dependencies and a packaging job that depends on those builds. The build jobs run in parallel, and once they complete successfully, the packaging job runs.
+-- For example, you might configure multiple build jobs for different architectures without any job dependencies and a packaging job that depends on those builds. 
+-- The build jobs run in parallel, and once they complete successfully, the packaging job runs.
 
 
 🔹 Step → A command or action executed in a job.
@@ -143,7 +141,9 @@ on:
 -- An action can pull your Git repository from GitHub, set up the correct toolchain for your build environment, or set up the authentication to your cloud provider.
 
 
-🔹 Runners: A runner is a server that runs your workflows when they're triggered. Each runner can run a single job at a time. GitHub provides Ubuntu Linux, Microsoft Windows, and macOS runners to run your workflows. Each workflow run executes in a fresh, newly-provisioned virtual machine.
+🔹 Runners: A runner is a server that runs your workflows when they're triggered. 
+-- Each runner can run a single job at a time. 
+-- GitHub provides Ubuntu Linux, Microsoft Windows, and macOS runners to run your workflows. Each workflow run executes in a fresh, newly-provisioned virtual machine.
 
 -- GitHub also offers larger runners, which are available in larger configurations.
 
@@ -153,7 +153,6 @@ on:
 -- Self-hosted runners: A self-hosted runner is a system that you deploy and manage to execute jobs from GitHub Actions on GitHub.com.
 
 -- A self-hosted runner is automatically removed from GitHub if it has not connected to GitHub Actions for more than 14 days. An ephemeral self-hosted runner is automatically removed from GitHub if it has not connected to GitHub Actions for more than 1 day.
-
 
 ---------------------------------------------------------------------------
 ** GitHub's architecture:
@@ -169,7 +168,8 @@ Here’s an overview of GitHub’s architecture:
 -- Git Database: At the core of GitHub is the Git database, which stores the actual source code, commits, branches, and tags. Git repositories are distributed and use a distributed version control system (DVCS) model.
 
 3. Database Systems
--- Primary Databases: GitHub uses a combination of SQL (PostgreSQL) and NoSQL (Cassandra) databases to handle different types of data. PostgreSQL is used for transactional data and relational data, while Cassandra is used for scalable and high-throughput data needs.
+-- Primary Databases: GitHub uses a combination of SQL (PostgreSQL) and NoSQL (Cassandra) databases to handle different types of data. 
+   -- PostgreSQL is used for transactional data and relational data, while Cassandra is used for scalable and high-throughput data needs.
 -- Caching: GitHub employs caching systems like Redis to speed up data retrieval and reduce database load.
 
 4. Search and Indexing
@@ -205,23 +205,22 @@ Here’s an overview of GitHub’s architecture:
 # Use free minutes on your GitHub plan, with per-minute rates applied after surpassing the free minutes.
 
 2. Self-hosted runners:
-# Receive automatic updates for the self-hosted runner application only, though you may disable automatic updates of the runner. For more information about controlling runner software updates on self-hosted runners, see "Autoscaling with self-hosted runners." You are responsible for updating the operating system and all other software.
+# Receive automatic updates for the self-hosted runner application only, though you may disable automatic updates of the runner. 
+-- For more information about controlling runner software updates on self-hosted runners, see "Autoscaling with self-hosted runners." You are responsible for updating the operating system and all other software.
 # Can use cloud services or local machines that you already pay for.
 # Are customizable to your hardware, operating system, software, and security requirements.
 # Don't need to have a clean instance for every job execution.
 # Are free to use with GitHub Actions, but you are responsible for the cost of maintaining your runner machines.
 
-Setting up Self-Hosted Runners:
-Organization level self-hosted runners:
- 
+** Setting up Self-Hosted Runners:
+-> Organization level self-hosted runners:
 Step1: Go to organization - Actions - Runner Groups - New Runner
- 
 Step2: New Self-Hosted runner - Select Linux, X64 ->
  
 Run below commands on your EC2 Machine:
- 
 1. Download
-We recommend configuring the runner under "\actions-runner". This will help avoid issues related to service identity folder permissions and long path restrictions on Windows.
+-- We recommend configuring the runner under "\actions-runner". 
+-- This will help avoid issues related to service identity folder permissions and long path restrictions on Windows.
  
 # Create a folder under the drive root
 $ mkdir actions-runner; cd actions-runner
@@ -246,20 +245,25 @@ runs-on: self-hosted
 ✅ Communication between self-hosted runners and GitHub:
 --------------------------------------------------------
 -- The self-hosted runner connects to GitHub to receive job assignments and to download new versions of the runner application. 
--- The self-hosted runner uses an "HTTPS long poll" that opens a connection to GitHub for 50 seconds, and if no response is received, it then times out and creates a new long poll. The application must be running on the machine to accept and run GitHub Actions jobs.
+-- The self-hosted runner uses an "HTTPS long poll" that opens a connection to GitHub for 50 seconds, and if no response is received, it then times out and creates a new long poll. 
+-- The application must be running on the machine to accept and run GitHub Actions jobs.
 
 -- The connection between self-hosted runners and GitHub is over HTTPS (port 443).
 -- Since the self-hosted runner opens a connection to GitHub.com, you do not need to allow GitHub to make inbound connections to your self-hosted runner.
 -- Self-hosted runners send heartbeat signals to GitHub to indicate that they are active and available.
--- When you add a self-hosted runner to your GitHub repository or organization, it registers itself with GitHub. This involves:
+-- When you add a self-hosted runner to your GitHub repository or organization, it registers itself with GitHub. 
+-- This involves:
 	@ Token Exchange: The runner obtains a registration token from GitHub during the setup process.
 	@ Runner Configuration: The runner is configured to connect to GitHub using this token.
--- You must ensure that the machine has the appropriate network access with at least 70 kilobits per second upload and download speed to communicate with the GitHub hosts listed below. Some hosts are required for essential runner operations, while other hosts are only required for certain functionality.
--- You can use the REST API to get meta information about GitHub, including the IP addresses of GitHub services. For more information about the domains and IP addresses used, see "REST API endpoints for meta data."
+-- You must ensure that the machine has the appropriate network access with at least 70 kilobits per second upload and download speed to communicate with the GitHub hosts listed below. 
+-- Some hosts are required for essential runner operations, while other hosts are only required for certain functionality.
+-- You can use the REST API to get meta information about GitHub, including the IP addresses of GitHub services. 
+-- For more information about the domains and IP addresses used, see "REST API endpoints for meta data."
 
 
 ** Self-hosted runner security
--- We recommend that you only use self-hosted runners with private repositories. This is because forks of your public repository can potentially run dangerous code on your self-hosted runner machine by creating a pull request that executes the code in a workflow.
+-- We recommend that you only use self-hosted runners with private repositories. 
+-- This is because forks of your public repository can potentially run dangerous code on your self-hosted runner machine by creating a pull request that executes the code in a workflow.
 
 -- This is not an issue with GitHub-hosted runners because each GitHub-hosted runner is always a clean isolated virtual machine, and it is destroyed at the end of the job execution.
 
@@ -277,21 +281,23 @@ runs-on: self-hosted
 ** Access to reusable workflows:  A reusable workflow can be used by another workflow if any of the following is true:
 	a. Both workflows are in the same repository.
 	b. The called workflow is stored in a public repository, and your organization allows you to use public reusable workflows.
-	c. The called workflow is stored in a private repository and the settings for that repository allow it to be accessed. For more information, see "Sharing actions and workflows with your organization" and "Sharing actions and workflows from your private repository."
+	c. The called workflow is stored in a private repository and the settings for that repository allow it to be accessed. 
+	--- For more information, see "Sharing actions and workflows with your organization" and "Sharing actions and workflows from your private repository."
 
 
 ** Limitations
 1. You can connect up to four levels of workflows. For more information, see "Nesting reusable workflows."
 2. You can call a maximum of 20 unique reusable workflows from a single workflow file. This limit includes any trees of nested reusable workflows that may be called starting from your top-level caller workflow file.
 -- For example, top-level-caller-workflow.yml → called-workflow-1.yml → called-workflow-2.yml counts as 2 reusable workflows.
-3. Any environment variables set in an env context defined at the workflow level in the caller workflow are not propagated to the called workflow. For more information, see "Store information in variables" and "Accessing contextual information about workflow runs."
-4. Similarly, environment variables set in the env context, defined in the called workflow, are not accessible in the env context of the caller workflow. Instead, you must use outputs of the reusable workflow. For more information, see "Using outputs from a reusable workflow."
-5. To reuse variables in multiple workflows, set them at the organization, repository, or environment levels and reference them using the vars context. For more information see "Store information in variables" and "Accessing contextual information about workflow runs."
+3. Any environment variables set in an env context defined at the workflow level in the caller workflow are not propagated to the called workflow. 
+4. Similarly, environment variables set in the env context, defined in the called workflow, are not accessible in the env context of the caller workflow. Instead, you must use outputs of the reusable workflow. 
+5. To reuse variables in multiple workflows, set them at the organization, repository, or environment levels and reference them using the vars context. 
 6. Reusable workflows are called directly within a job, and not from within a job step. You cannot, therefore, use GITHUB_ENV to pass values to job steps in the caller workflow.
 
 
 ** Calling a reusable workflow
-- You call a reusable workflow by using the uses keyword. Unlike when you are using actions within a workflow, you call reusable workflows directly within a job, and not from within job steps.
+-- You call a reusable workflow by using the uses keyword. 
+-- Unlike when you are using actions within a workflow, you call reusable workflows directly within a job, and not from within job steps.
 
 jobs.<job_id>.uses
 
@@ -312,7 +318,8 @@ jobs:
 
 ----------------------------------------------------------------------------------
 ✅ Passing inputs and secrets to a reusable workflow
-- To pass named inputs to a called workflow, use the "with" keyword in a job. Use the "secrets" keyword to pass named secrets. For inputs, the data type of the input value must match the type specified in the called workflow (either boolean, number, or string).
+-- To pass named inputs to a called workflow, use the "with" keyword in a job. 
+-- Use the "secrets" keyword to pass named secrets. For inputs, the data type of the input value must match the type specified in the called workflow (either boolean, number, or string).
 
 jobs:
   call-workflow-passing-data:
@@ -353,57 +360,57 @@ Q. The errors or bugs in GitHub and GitHub actions and how to troubleshoot it?
 -> Common Errors in GitHub
 1. Authentication Issues
 Error: “Permission denied” or “Authentication failed.”
-Troubleshooting:
-Verify Credentials: Ensure your SSH keys or personal access tokens (PAT) are correctly configured.
-Token Scope: Make sure your PAT has the correct permissions.
-SSH Configuration: Check your SSH key settings in your GitHub account and ensure your local SSH configuration is correct.
-Cache Issues: Clear your credential cache or try using the git credential helper.
+-> Troubleshooting:
+-- Verify Credentials: Ensure your SSH keys or personal access tokens (PAT) are correctly configured.
+-- Token Scope: Make sure your PAT has the correct permissions.
+-- SSH Configuration: Check your SSH key settings in your GitHub account and ensure your local SSH configuration is correct.
+-- Cache Issues: Clear your credential cache or try using the git credential helper.
 
 2. Repository Access Issues
 Error: “Repository not found” or “You don’t have permission.”
-Troubleshooting:
-Check Repository URL: Ensure the URL you’re using is correct.
-Permissions: Verify that you have the necessary access rights to the repository.
-Organization Settings: For organization-owned repositories, ensure that the repository visibility and membership are configured properly.
+-> Troubleshooting:
+-- Check Repository URL: Ensure the URL you’re using is correct.
+-- Permissions: Verify that you have the necessary access rights to the repository.
+-- Organization Settings: For organization-owned repositories, ensure that the repository visibility and membership are configured properly.
 
 3 Merge Conflicts
 Error: Conflicts when merging branches.
-Troubleshooting:
-Resolve Conflicts: Manually resolve conflicts in your local repository and commit the changes.
-Rebase: Alternatively, you can rebase your branch on top of the target branch to resolve conflicts.
+-> Troubleshooting:
+-- Resolve Conflicts: Manually resolve conflicts in your local repository and commit the changes.
+-- Rebase: Alternatively, you can rebase your branch on top of the target branch to resolve conflicts.
 
 4. File Size Limits
 Error: “File size exceeds the maximum allowed size.”
-Troubleshooting:
-Git LFS: Use Git Large File Storage (LFS) for managing large files.
-Check File Size: Avoid committing files that exceed GitHub’s size limits.
+-> Troubleshooting:
+-- Git LFS: Use Git Large File Storage (LFS) for managing large files.
+-- Check File Size: Avoid committing files that exceed GitHub’s size limits.
 
 -- Common Errors in GitHub Actions
 1. . Workflow Failures
 Error: “Workflow run failed” or specific step failures.
-Troubleshooting:
-Check Logs: Review the logs provided by GitHub Actions to identify where the failure occurred.
-Syntax Errors: Verify the syntax of your workflow YAML files.
-Action Versions: Ensure that you’re using compatible versions of actions.
-Secrets and Environment Variables: Make sure that required secrets and environment variables are correctly set.
+-> Troubleshooting:
+-- Check Logs: Review the logs provided by GitHub Actions to identify where the failure occurred.
+-- Syntax Errors: Verify the syntax of your workflow YAML files.
+-- Action Versions: Ensure that you’re using compatible versions of actions.
+-- Secrets and Environment Variables: Make sure that required secrets and environment variables are correctly set.
 
 2. Action Not Found
 Error: “Action not found” or “Invalid action.”
-Troubleshooting:
-Action Repository: Ensure the action’s repository is available and the URL is correct.
-Version: Verify that you’re using a valid version of the action.
+-> Troubleshooting:
+-- Action Repository: Ensure the action’s repository is available and the URL is correct.
+-- Version: Verify that you’re using a valid version of the action.
 
 3. Quota Limits
 Error: “Usage limits exceeded” or similar messages.
-Troubleshooting:
-Check Usage: Monitor your GitHub Actions usage and limits in the GitHub billing and usage section.
-Optimize Workflows: Review and optimize your workflows to reduce unnecessary runs or use caching.
+-> Troubleshooting:
+-- Check Usage: Monitor your GitHub Actions usage and limits in the GitHub billing and usage section.
+-- Optimize Workflows: Review and optimize your workflows to reduce unnecessary runs or use caching.
 
 4. Cache Issues
 Error: “Cache miss” or outdated cached data.
-Troubleshooting:
-Invalidate Cache: Use cache keys to ensure that the cache is updated correctly or manually clear the cache if necessary.
-Check Cache Key: Ensure your cache key patterns are correctly defined.
+-> Troubleshooting:
+-- Invalidate Cache: Use cache keys to ensure that the cache is updated correctly or manually clear the cache if necessary.
+-- Check Cache Key: Ensure your cache key patterns are correctly defined.
 
 
 ---------------------------------------------------------------------------
@@ -425,6 +432,12 @@ on:
   pull_request:
     branches:
       - main
+  workflow_call:
+    inputs:
+      db_database_name: 
+        required: true
+        type: string
+        description: DB name
 
 jobs:
   build:
@@ -551,13 +564,24 @@ on:
 
 ------------------------------------------------------------------------
 Q. How do you store credentials in GitHub securely?
--> GitHub Secrets is a built-in feature for storing sensitive information like API keys, passwords, and other credentials that your workflows or applications need. Secrets are encrypted and can be used in GitHub Actions workflows without exposing them in the code.
+-> GitHub Secrets is a built-in feature for storing sensitive information like API keys, passwords, and other credentials that your workflows or applications need. 
+-> Secrets are encrypted and can be used in GitHub Actions workflows without exposing them in the code.
 
 Go to Settings > Secrets and variables > Actions
 1. Repository Secrets:: Click New repository secret
 2. Organization Secrets:: New organization secret
 3. Environment Secrets:: Settings > Environments  :: Add secret under the environment’s secrets section
 
+1. Actions secrets and variables
+-> Secrets and variables allow you to manage reusable configuration data. Secrets are encrypted and are used for sensitive data.
+-> Variables are shown as plain text and are used for non-sensitive data.
+-> Anyone with collaborator access to this repository can use these secrets and variables for actions. 
+-> They are not passed to workflows that are triggered by a pull request from a fork.
+
+2. Codespaces secrets: Development environment secrets are environment variables that are encrypted. Secrets are not passed to forks.
+
+3. Dependabot secrets: Secrets are credentials that are encrypted. Anyone with collaborator access to this repository can use these secrets for Dependabot.
+-> Secrets are not passed to forks.
 
 ---------------------------------------------------------------------------
 3. What are the common use cases GitHub actions is used for?
@@ -573,10 +597,14 @@ Go to Settings > Secrets and variables > Actions
 
 ---------------------------------------------------------------------------
 5. What is a GitHub Actions job?
--> In GitHub Actions, a job is a fundamental unit of work in a workflow. Jobs define a series of steps that are executed in a specific order, and they can be used to perform tasks such as building code, running tests, or deploying applications. Each job runs on a specific runner and can have its own environment and configuration.
+-> In GitHub Actions, a job is a fundamental unit of work in a workflow. 
+-> Jobs define a series of steps that are executed in a specific order, and they can be used to perform tasks such as building code, running tests, or deploying applications. 
+-> Each job runs on a specific runner and can have its own environment and configuration.
 
 -- Job Execution
-Sequential vs. Parallel Execution: By default, jobs in a workflow run in parallel. However, you can control the order of execution by specifying dependencies using the "needs" keyword. Jobs that do not depend on each other will run simultaneously, while jobs that have dependencies will wait for the required jobs to complete before starting.
+Sequential vs. Parallel Execution: 
+-- By default, jobs in a workflow run in parallel. However, you can control the order of execution by specifying dependencies using the "needs" keyword. 
+-- Jobs that do not depend on each other will run simultaneously, while jobs that have dependencies will wait for the required jobs to complete before starting.
 
 -- Job Configuration Options
 Jobs have additional configuration options for more advanced use cases:
@@ -674,7 +702,9 @@ Q. What are the credential types supported by Jenkins?
 ------------------------------------------------------------------------------------------
 Q. Branch Protection Policies vs. Rulesets:
 -> Branch protection policies and rulesets both offer frameworks for implementing governance controls, but they cater to different needs:
-1. Branch Protection Policies are specific to individual branches within a repository, allowing for granular control over how code is reviewed, tested, and merged. They are ideal for projects requiring specific safeguards on critical branches.
+1. Branch Protection Policies are specific to individual branches within a repository, allowing for granular control over how code is reviewed, tested, and merged. 
+-> They are ideal for projects requiring specific safeguards on critical branches.
+
 2. Rulesets, on the other hand, can be applied at a more macro level, such as across an entire organization or repository. They offer a broader, more standardized approach to governance that can be consistently applied. 
 
 ✅ How to Set Up Branch Protection Rules?
@@ -705,7 +735,8 @@ protection:
   required_status_checks:
     contexts: ["CI Tests", "Lint Check"]
     strict: true
-2.1 Require branches to be up to date before merging: This ensures pull requests targeting a matching branch have been tested with the latest code. This setting will not take effect unless at least one status check is enabled (see below).
+2.1 Require branches to be up to date before merging: This ensures pull requests targeting a matching branch have been tested with the latest code. 
+-- This setting will not take effect unless at least one status check is enabled (see below).
 
 
 3. 🔹Require conversation resolution before merging

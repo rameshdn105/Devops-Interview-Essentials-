@@ -48,7 +48,7 @@ $$ opa eval --input request.json --data deny-privileged-containers.rego "data.ku
 ✅ OPA in Kubernetes - Integrating with Gatekeeper
 ===================================================
 
-✅ What is Gatekeeper?
+📌 What is Gatekeeper?
 -> OPA Gatekeeper is a Kubernetes admission controller that integrates with OPA to enforce policies at the API level before resources are created in the cluster.
 
 🔹 Key Features of Gatekeeper:
@@ -81,14 +81,14 @@ $$ opa eval --input request.json --data deny-privileged-containers.rego "data.ku
 3. Validates the request against policies written in Rego.
 4. Allows or denies the request based on the policy.
 
-✅ Installing Gatekeeper
+🔑 Basic Setup Steps: Installing Gatekeeper
 -------------------------
 -> To install Gatekeeper in an existing Kubernetes cluster, use Helm:
 $$ helm repo add gatekeeper https://open-policy-agent.github.io/gatekeeper/charts
 $$ helm install gatekeeper/gatekeeper --generate-name
 
 
-Real-World Use Cases of OPA & Gatekeeper
+🎯 Real-World Use Cases of OPA & Gatekeeper
 --------------------------------------
 ✅ Prevent Privileged Pods from running in Kubernetes.
 ✅ Enforce Labeling Rules – Ensure all resources have specific labels.
