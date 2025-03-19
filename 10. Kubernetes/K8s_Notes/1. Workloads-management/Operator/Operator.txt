@@ -16,10 +16,10 @@
 --------------------------------------------------------------------------
 
 ** Kubernetes Operator vs. Helm vs. Controller
-Method			When to use
-1. Operator	For deploying or managing highly complex applications or resources.
-2. Helm		For deploying standard applications using packages.
-3. Deployment controller	For deploying standard applications that require just Pods and simple configuration parameters.
+
+1. Operator: For deploying or managing highly complex applications or resources.
+2. Helm: For deploying standard applications using packages.
+3. Deployment controller: For deploying standard applications that require just Pods and simple configuration parameters.
 
 ✅ Operator samples:
 1. Istio, the open source service mesh.
