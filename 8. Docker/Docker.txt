@@ -1,3 +1,27 @@
+🚀 How Multi-Stage Build Reduces Size:
+1. Builder Stage (golang:1.21-alpine — ~190 MB)
+This stage uses a full Go SDK image based on Alpine.
+It has everything needed to compile and build Go binaries:
+Go compiler
+Build tools
+Headers and libraries
+Debugging tools (sometimes)
+⚙️ But these tools are only needed for building, NOT for running the app.
+2. Final Stage (alpine:latest — ~5-6 MB base)
+After building, only the compiled binary (myapp) is copied into this minimal Alpine runtime image.
+Alpine Linux is a super lightweight Linux distribution, ~5-6 MB in size!
+You don't need Go compiler, tools, or SDK at runtime — just the app binary and its dependencies (if any).
+📦 Size Breakdown Example:
+Stage	Approximate Size	Contents
+golang:1.21-alpine (build stage)	~190 MB	Go SDK, compilers, libraries, tools
+alpine:latest (final runtime)	~5-6 MB	Minimal OS + your compiled static binary (myapp)
+⚙️ The compiled Go binary (if statically compiled) may be around 10-20 MB. So total runtime image ≈ 20-30 MB in most cases.
+
+👉 Compared to a 190 MB build image, the runtime image is much smaller and faster to pull, deploy, and run.
+
+
+
+
 ✅ Image Scanning (Trivy, Clair, ECR scanning)
 📌 Why Image Scanning is Critical?
 -- Prevents vulnerable images from running in production.
@@ -18,6 +42,11 @@ CRITICAL:
 - CVE-2021-30139
 - CVE-2021-30142
 
+1. Basic image scan: $$ trivy image nginx:latest
+2. Scan for vulnerabilities only: $$ trivy image --scanners vuln nginx:latest
+3. Ignore low/unknown vulnerabilities: $$ trivy image --severity MEDIUM,HIGH,CRITICAL nginx:latest
+4. Output as JSON (for automation tools like CI/CD): $$ trivy image --format json nginx:latest
+
 ----------------------------------------------------------------------------------
 Docker Commands:
 
@@ -32,7 +61,7 @@ Docker Commands:
    $$ docker commit <container id> <imagename>:<tag>
 5. docker run: This command is used to run a container from an image
    $$ docker run -it -d <image name>:tag
-6. docker attach: get into container /login to container
+6. docker attach: get into container /login to container [You want to check running logs directly from a container]
    $$ docker attach <container id>
 7. docker exec: used to access/login the running container (in order to run in the session of bin bash )
    $$ docker exec -it <container ID> /bin/bash
@@ -163,7 +192,7 @@ Q. Difference between Docker kill and Docker stop:
 -> To terminate a container, Docker provides the docker stop and docker kill commands. 
 "Docker stop" commands issue the SIGTERM signal to the main process running
 "Docker kill" commands sends the SIGKILL signal to the process.
--> ‘docker stop’ gives the container time to shutdown gracefully, in situations when it is taking too much time for getting the container to stop, one can opt to kill it
+-> ‘docker stop’ gives the container time to shutdown gracefully, in situations when it is taking too much time for getting the container to stop, one can opt to kill it.
 
 Q. The three primary differences between the Dockerfile and docker-compose are:
 -> The Dockerfile is used to build images while the docker-compose.yaml file is used to run images.
@@ -186,6 +215,7 @@ Q. docker layer
 -> Docker stores all caches in /var/lib/docker/<driver> , where <driver> is the storage driver overlay2 again
 
 
+---------------------------------------------------------------------------
 Q. How To Leverage Docker Cache for Optimizing Build Speeds?
 -> Leveraging Docker cache can significantly speed up your builds by reusing layers from previous builds.
 
@@ -213,7 +243,7 @@ Note: Changes to Dockerfile application code etc. invalidate the cache. All subs
 2. Separate dependencies from application code: Separate instructions that install dependencies from those that copy the source code. This way, dependencies are only reinstalled if they change.
 
 -----------------------------------------------------------------------------------------
-** Assignment- Dangling images and how to delete them.
+** Dangling images and how to delete them.
 -> Simply an unused image that’s got no name and tag. You can easily spot dangling images when you run the $$ docker images command because they show up as <none>:<none>.
 
 $$ docker image prune :Remove all dangling images. If -a is specified, will also remove all images not referenced by any container.
@@ -239,7 +269,7 @@ $$ docker image prune :Remove all dangling images.
 
 ---------------------------------------------------------------------------------------
 Why Docker
-----------------
+----------
 Suppose there are four developers in a team working on a single project.
 Meanwhile, one is having a Windows system, the second is owning a Linux system, and the third & fourth ones are working with macOS. Now, as you see, they are using the distinct environments for creating a single application or software they will be required to carry on the things in accordance with their respective machines such as the installation of different libraries & files for their system, etc. And such situations, especially on an organizational or larger level, often cause numerous conflicts and problems throughout the entire software development life cycle. However, the containerization tools such as Docker eliminates this problem.
 
@@ -662,10 +692,10 @@ CMD /tomcat/apache-tomcat-9.0.53/bin/catalina.sh run
 
 -----------------------------------------------------------------------------------
 ** Tips to 𝐎𝐩𝐭𝐢𝐦𝐢𝐳𝐞 𝐘𝐨𝐮𝐫 𝐃𝐨𝐜𝐤𝐞𝐫𝐟𝐢𝐥𝐞
-➡️𝐌𝐢𝐧𝐢𝐦𝐢𝐳𝐞 𝐋𝐚𝐲𝐞𝐫s / Layer 𝐒𝐢𝐳𝐞:
-- > Docker creates a new layer for each instruction in the Dockerfile (e.g., RUN, COPY, ADD).
-- > Combine multiple "RUN commands" using "&&" to minimize the number of layers.
-- > Avoid Using ADD (Unless Needed): COPY is preferred over ADD because ADD has additional functionality (such as unpacking tarballs and supporting remote URLs), which you don’t need in most cases. It's safer and more predictable to use COPY.  [ADD myfile.tar.gz /app ==>> COPY myfile.tar.gz /app]
+➡️ 𝐌𝐢𝐧𝐢𝐦𝐢𝐳𝐞 𝐋𝐚𝐲𝐞𝐫s / Layer 𝐒𝐢𝐳𝐞:
+-> Docker creates a new layer for each instruction in the Dockerfile (e.g., RUN, COPY, ADD).
+-> Combine multiple "RUN commands" using "&&" to minimize the number of layers.
+-> Avoid Using ADD (Unless Needed): COPY is preferred over ADD because ADD has additional functionality (such as unpacking tarballs and supporting remote URLs), which you don’t need in most cases. It's safer and more predictable to use COPY.  [ADD myfile.tar.gz /app ==>> COPY myfile.tar.gz /app]
 -> Clean up unnecessary files and dependencies within the same RUN command.
 Ex: RUN apt-get update && apt-get install -y curl
 
@@ -729,6 +759,28 @@ Disadvantages of Alpine Images:
 5. Learning curve with the apk package manager.
 6. More manual configuration required for some tools and libraries.
 
+🚀 What is Distroless?
+========================
+-> Distroless is a minimal base image for containers that does NOT include an operating system package manager, shell, or standard utilities.
+-> Unlike traditional base images (like ubuntu, alpine), Distroless only contains your application and its runtime dependencies.
+
+⚙️ Created and maintained by Google to improve container security, reduce image size, and minimize attack surface.
+
+✅ Key Characteristics of Distroless:
+-- No Shell (sh, bash) — You cannot "exec" into the container to troubleshoot.
+-- No Package Manager (apt, yum) — Can't install packages in runtime.
+-- Minimal runtime-only dependencies — Only what's necessary to run the app.
+-- Small attack surface — Reduces vulnerabilities.
+-- Language-specific variants — Supports Java, Python, Node.js, Go, C++, etc.
+-- Secure by design — Used widely in production for secure microservices.
+
+⚙️ Why Use Distroless?
+1. Security: Fewer components mean fewer vulnerabilities.
+2. Reduced Image Size: Lightweight, contains only what's needed.
+3. Immutable: Prevents unauthorized changes — no package installation at runtime.
+4. Compliance: Easier to pass security audits, as attack vectors are minimized.
+5. Performance: Faster container startup, fewer runtime dependencies.
+
 =====================================================================================
 There are three types of volumes to consider:
 1. Named volumes: 
@@ -771,8 +823,8 @@ Bind Mounts:
 -> Typically faster, as it's a direct link to the host filesystem
 -> They may even be important system files or directories. 
 -> Non-Docker processes on the Docker host or a Docker container can modify them at any time.
-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------
 Volumes Advantages:
 -------------------
 -> volumes are managed by docker itself. Default location for docker volumes is /var/lib/docker/volumes.
@@ -794,6 +846,77 @@ $$ docker run -v <volume name>:<continaer path>  --> attaching volume
 $$ docker run -it -v vol1:/root/vol1 --name tomcat_ubuntu ubuntu: mount container to the volume, or attach container to volume
 $$ docker run -it -v vol1:/root/vol1 --name <imagename> ubuntu
 
+-----------------------------------------------------------------------------------
+1. What is CIDR?
+-> CIDR (Classless Inter-Domain Routing) is a way of representing IP addresses and their associated routing prefix using this format:
+<IP Address>/<Prefix Length>
+-> 172.17.0.0/16
+-- 172.17.0.0 → Network address
+-- /16 → Number of bits in the subnet mask (Network bits)
+
+2. Understanding Docker Bridge Network CIDR: 172.17.0.0/16
+-> This is the default subnet for Docker's bridge network.
+-> It provides a private IP range for containers to communicate internally on a host.
+✅ CIDR Breakdown of 172.17.0.0/16:
+Field		Value
+Network		172.17.0.0
+Subnet Mask	255.255.0.0
+Total IPs	65,536 (2^16 addresses)
+Usable IPs	~65,534 (excluding network and broadcast addresses)
+
+3. How is this CIDR Allocated?
+-> Docker daemon creates a default bridge network when it starts.
+-> By default, this bridge network is assigned 172.17.0.0/16.
+-> When you run containers, Docker assigns them IPs within this subnet.
+
+4. IP Address Allocation Example:
+-> If CIDR is 172.17.0.0/16:
+1. Possible IP range: 172.17.0.1 to 172.17.255.254
+2. Network address: 172.17.0.0
+3. Broadcast address: 172.17.255.255
+
+5. CIDR Calculation
+✅ Step-by-step explanation of /16 CIDR:
+-> IP address: 172.17.0.0 (32 bits total)
+-> Subnet mask: /16 means 16 bits for network, 16 bits for hosts
+Subnet mask in decimal: 255.255.0.0
+Binary form: 11111111.11111111.00000000.00000000 
+-- First 16 bits = Network part (172.17)
+-- Last 16 bits = Host part (range 0.0 to 255.255)
+
+6. Why Docker uses 172.17.0.0/16?
+-> Large enough to accommodate thousands of containers on the host.
+-> Private range (RFC 1918), no overlap with public IPs.
+
+7. Calculating Number of Hosts:
+-> Formula = 2^(32 - subnet bits) - 2
+For /16:
+-> = 2^(32-16) - 2
+= 2^16 - 2
+= 65536 - 2
+= 65534 usable IP addresses
+
+
+🔑 Understanding Subnet Mask and Binary Representation
+1. Binary to Decimal Mapping
+-> Each octet in IP/subnet mask = 8 bits.
+-> The value 255 in decimal is represented as 11111111 in binary. 
+
+2. Given Binary:
+11111111.11111111.00000000.00000000
+First octet: 11111111 → 255
+Second octet: 11111111 → 255
+Third octet: 00000000 → 0
+Fourth octet: 00000000 → 0
+So, together: 255.255.0.0
+
+⚙️ Summary for Notes:
+Binary: 11111111.11111111.00000000.00000000
+Decimal: 255.255.0.0
+Reason for 255: Each '11111111' is 8 bits all set to 1, equals 255 in decimal.
+Subnet mask defines network and host portions of IP.
+
+
 --------------------------------------------------------------------------
 Docker networking: 
 -----------------
@@ -811,6 +934,14 @@ Docker networking:
 -> you have a total of 65,536 possible IP addresses (2^16 = 65536) within this network.
 -> In the case of 172.17.0.0/16, the first 16 bits are allocated to the network part of the address, and the remaining 16 bits can be used for host addresses within that network.
 
+Change Default Docker Bridge CIDR (Optional):
+-> If you want to avoid conflicts:
+-> Edit /etc/docker/daemon.json:
+{
+  "bip": "192.168.100.1/24"
+}
+Restart Docker:  sudo systemctl restart docker
+     
 ## create a custom bridge network
 $$ docker network create --driver bridge <network_name>
 ## To create a container in the custom bridge
@@ -820,7 +951,7 @@ $$ docker run -dti --network <network_name><imagename:tag>
 
 ## To connect containers present in different bridge
 $$ docker network connect <network_name> <container id>
-$$ docker network disconnect <network_name> <container id>       
+$$ docker network disconnect <network_name> <container id> 
 
 *****************************************************************************************
 2. HOST NETWORK: 
@@ -838,16 +969,45 @@ $$ docker run -d -it --network host <imagename:tag>
 -> The services on this containers cannot be accessed by the outside world.
 -> This option is used when a user wants to disable the networking access to a container.
 -> In simple terms, None is called a loopback interface, which means it has no external network interfaces. 
+-> Only loopback interface (127.0.0.1) is available inside the container.
 Ex: perform operation (ansible vault) then we can assign none network
 $$ docker run --network none nginx
 
+✅ When to Use none Network?
+1. Full Isolation (Security/Testing):
+-- When you want to fully isolate a container.
+-- No inbound/outbound network traffic.
+-- Good for security-sensitive operations where network access is not needed.
+Example:
+-> Running containers that only do internal computation without needing to talk to anything outside.
+Example: A container doing CPU-bound processing without needing network
+
+2. Container with Only Volume Access (Data Processing):
+3. Debugging and Analysis (Networking Tests):
+4. Custom Network Stacks (Manual Network Configuration):
+
+🧠 Summary for Notes:
+Docker 'none' network:
+- No network access; only loopback (127.0.0.1).
+- Used for security, isolation, data processing without networking.
+- Useful in debugging, manual networking setups.
+- Run with: docker run --network none <image>
+
+
 *****************************************************************************************
 4. Macvlan NETWORK:
--> It simplifies the communication process between containers.
--> This network assigns a MAC address to the Docker container. 
--> With this Mac address, the Docker daemon routes the network traffic to a router.
--> It is suitable when a user wants to directly connect the container to the physical network rather than the Docker host.
--> Macvlan networks are best when you are migrating from a VM setup or need your containers to look like physical hosts on your network, each with a unique MAC address.
+-> Macvlan is a Docker network driver that assigns a unique MAC address and IP to a container, making it appear like a physical device on the LAN.
+-> Containers behave like independent machines on the same physical network as the host.
+-> Bypasses the NAT (Network Address Translation) used in bridge networks — containers are directly accessible from the LAN.
+-> Useful for network isolation, IP assignment, and low-level network access.
+
+🔑 Key Characteristics of Macvlan Network:
+-- Containers get direct IP from your network (LAN) — not shared with Docker host.
+-- Supports multiple MAC addresses per physical network interface.
+-- Useful when containerized apps need to be directly accessible on the network.
+-- Allows legacy apps that require direct Layer 2 (Ethernet) network access.
+-- Useful when working with special protocols that don't work well with NAT.
+
 
 docker network create -d macvlan \
   --subnet=192.168.1.0/24 \
@@ -859,6 +1019,14 @@ docker network create -d macvlan \
 --gateway: The gateway for the Macvlan network, which is usually the host's IP address on the network.
 -o parent=eth0: Specifies the network interface on the host to use for the Macvlan network. Here eth0 is the host's network interface. You can replace this with the correct interface on your machine.
 my_macvlan_network: The name of the network.
+
+⚠️ Important Notes:
+1. Host can't directly talk to containers on Macvlan unless you create a macvlan in bridge mode.
+2. You may need to create a dummy interface to allow host-container communication:
+ip link add macvlan-shim link eth0 type macvlan mode bridge
+ip addr add 192.168.1.200/24 dev macvlan-shim
+ip link set macvlan-shim up
+
 
 *****************************************************************************************
 5. Overlay Network: Create Internal Private Network

@@ -2,8 +2,8 @@ SHELL SCRIPTING
 -> Any file where you put series of Linux commands that can be called as shell script.
 
 With logics and conditions.
--Shell script has an extention ".sh"
--Shell script is used to automate the manual and repetitive tasks.
+-- Shell script has an extention ".sh"
+-- Shell script is used to automate the manual and repetitive tasks.
 
 SHELL: Shell interacts as a interface between user and kernel (linux OS)
 Shebang:
@@ -35,13 +35,22 @@ echo "The result is $result"
    The result is then stored in the local variable result and returned using the echo command. 
 
 Q. super block in shell script?
--> Superblock: It is a record of the characteristics of a filesystem. It includes information about size, block size, 
-   empty and the filled blocks. Linux also maintains a copy of its superblock in memory. If you are unable to mount 
-   your device, this can be due to a Corrupted superblock.
+-> In Linux filesystems, a superblock is an important data structure that contains metadata about the filesystem.
+-> It is a record of the characteristics of a filesystem. It includes information about size, block size, empty, Free blocks, inodes, Mount status and the filled blocks. Linux also maintains a copy of its superblock in memory. 
+-> If you are unable to mount your device, this can be due to a Corrupted superblock.
    
----------------------------------------------------------------------------------------------------------------------
+1️⃣ Find Superblock Information
+$$ sudo dumpe2fs /dev/sdX | grep -i superblock
+
+2️⃣ Recover a Corrupt Superblock
+$$ sudo fsck -b 32768 /dev/sdX
+
+3️⃣ Mounting a Filesystem Using a Backup Superblock
+$$ sudo mount -o sb=32768 /dev/sdX /mnt
+
+-----------------------------------------------------------------------------------------
 Example:
-1.	Sample.sh
+1. Sample.sh
 #!/bin/bash
 Echo  “hi this is devops class”
 Pwd
@@ -99,15 +108,15 @@ echo "i am from $place"
 
 Special charecters:
 --------------------------
---------------------------
+
 These have special meaning to a shell. They are
 
-$0-->Name of the file itself.
-$#-->The total number of arguments passed to the script.
-$*-->All arguments passed to the script.
-$@-->All arguments passed to the script stored in script in array format.
-$$-->Process id of current running process
-$!-->It gives process id of the last command went into background.
+$0--> Name of the file itself.
+$#--> The total number of arguments passed to the script.
+$*--> All arguments passed to the script.
+$@--> All arguments passed to the script stored in script in array format.
+$$--> Process id of current running process
+$!--> It gives process id of the last command went into background.
 $?--> Status of last executed command. Zero(0)means success and non-zero means failure.
 
 Nohup: No hang up : Keep processes running even after exiting the shell/terminal.
@@ -118,7 +127,7 @@ From: shellscript.sh/variables2.html ,The variable $@ is all parameters $1 .. wh
 
 Numeric:  functions of shell script
 -----------------
------------------
+
 -eq--> equals
 -gt--> greater than
 -lt--> less than
@@ -127,7 +136,6 @@ Numeric:  functions of shell script
 -ne--> not equal to
 
 -----------------------------
-
 maths functions
 maths.sh
 #!/bin/bash
@@ -454,6 +462,7 @@ ________________________________________________________________________________
 
 ls -l /home/ubuntu/given_dir_name/given_file_name
 
+ls -l probe.yaml
 if [ $? -eq 0 ]; then
         echo "file exists"
 else
@@ -474,7 +483,7 @@ else
 fi
 ---------------------------------------------
 
-#CRONTAB:The crontab is a list of commands that you want to run on a regular schedule, 
+** CRONTAB: The crontab is a list of commands that you want to run on a regular schedule, 
 and also the name of the command used to manage that list.
 =========
 
@@ -545,7 +554,7 @@ Note:
 _______________________
 
 swap numbers
-# !/bin/bash
+#!/bin/bash
    
 # Program to swap two numbers
    
@@ -603,7 +612,7 @@ reversed_string="$reversed_string${str:$i:1}"
 done
 echo "$reversed_string"
 
-----------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 1. Automated data backups to S3: A shell script can be created to automate the process of backing up data, 
    such as databases or important files. This script can be scheduled to run regularly using a cron job. 
    The script can compress the data and transfer it to a remote server or backup location. 
@@ -637,7 +646,7 @@ passwd $USERNAME
 chown $USERNAME:$USERNAME /home/$USERNAME
 chmod 700 /home/$USERNAME
 
-=================================================================================================
+==========================================================================================
 3.  Disk Space Monitoring: A shell script can be created to monitor system resources, such as disk space or CPU usage. 
    This script can be scheduled to run regularly using a cron job and alert the administrator if thresholds are exceeded. 
    Here's an example of a disk space monitoring script:
@@ -649,7 +658,7 @@ if [ "$CURRENT_PERCENT" -gt "$ALERT_PERCENT" ]; then
   echo "Disk usage exceeded $ALERT_PERCENT% on $(hostname) at $(date)" | mail -s "Disk Space Alert" admin@example.com
 fi
 
-=======================================================================================================
+==========================================================================================
 4. To check the disk size. If the memory reaches 10% it should send email notification saying that the memory reached 10%
 ______
 #!/bin/bash

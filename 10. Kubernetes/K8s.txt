@@ -1,3 +1,27 @@
+Considerations for large clusters:
+==================================
+-> A cluster is a set of nodes (physical or virtual machines) running Kubernetes agents, managed by the control plane. Kubernetes v1.32 supports clusters with up to 5,000 nodes. 
+1. No more than 110 pods per node
+2. No more than 5,000 nodes
+3. No more than 150,000 total pods
+4. No more than 300,000 total containers
+
+========================================================================================
+Cloud provider resource quotas
+------------------------------
+-> To avoid running into cloud provider quota issues, when creating a cluster with many nodes, consider:
+-> Requesting a quota increase for cloud resources such as:
+1. Computer instances
+2. CPUs
+3. Storage volumes
+4. In-use IP addresses
+5. Packet filtering rule sets
+6. Number of load balancers
+7. Network subnets
+8. Log streams
+-> Gating the cluster scaling actions to bring up new nodes in batches, with a pause between batches, because some cloud providers rate limit the creation of new instances.
+
+========================================================================================
 Q. What is monolithic appn and microservices and why are we moving from monolithic to microservices?
 -> Monolithic application: Single, unified unit while a microservices architecture is a collection of smaller, independently deployable services.
 -> Because you can detect bugs or performance issues in a gradual fashion.
@@ -129,7 +153,7 @@ CLI/UI-->API-->(API server::SCHEDULER::CONTROLLERS::KEY VALUE STORE-etcd)
 	   	
 2. Key-Value Store (etcd):  (It stores the current information)
 -> By default, etcd data is stored in folder /var/lib/etcd , which is most likely stored on the root file system.
--> etcd is a distributed, consistent key-value store which stores the configuration data of the complete Kubernetes cluster.
+-> etcd is a distributed, highly-available, consistent key-value store which stores the configuration data of the complete Kubernetes cluster.
 -> Configuration data represent the desired state of the cluster Ex:-
 	- which nodes exist in the cluster
 	- what are the pods running, and on which node they are ruuning on 

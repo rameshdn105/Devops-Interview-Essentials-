@@ -21,7 +21,7 @@
 ➤ Types of SQS Queues:
 -> Queue Type	            Purpose
 1. Standard Queue	    Best-effort ordering, high throughput, possible duplicates.
-2. FIFO Queue	        First-In-First-Out, exactly-once processing, ordered delivery.
+2. FIFO Queue	       First-In-First-Out, exactly-once processing, ordered delivery.
 
 1. Standard Queue
 -> Standard queue this queue messages are delivered randomly. Also, a message can be delivered multiple times. So you shouldn’t rely on order and only one-time delivery in this type of queues.

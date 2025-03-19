@@ -1,27 +1,25 @@
-*SubGit is a tool for migrating Subversion(SVN) to Git
-*Git squash: It is a technique that helps you to take a series of commits and condense it to a few commits.  git rebase -i HEAD~3
-*git rebase --skip   : it skips a commit
-*git commit --amend : It is used to edit the commit msg
-*git clean -df : It is used to clean the untracked/unwanted files from workspace.
-*git log --raw command  : To find out which files changed in a given commit. It's the fastest and simplest way to get insight into which files a commit affects
-*git gist :Gists provide a simple way to share code snippets with others. Every gist is a Git repository, which means that it can be forked and cloned.
-*Git Reflog — How to recover a deleted branch that was not merged. It can track changes done on 
-*git -rm file: remove files
-*git log --online : Used to check commit history in short form.
-*Git Remote: a Git repository that's hosted on the Internet or another network, This is useful for developers creating a local copy of a central repository, since it provides an easy way to pull upstream changes or publish local commits.
-*git pull --rebase: current status of the repository is pulled to local machine. whatever the changes done at repository, 
-                   all aligned in local machine,  new changes will be pulled to local machine 
-*git pull origin main  -- pulling from main branch(files/date) to local machine.
+🔹 SubGit is a tool for migrating Subversion(SVN) to Git
+🔹 Git squash: It is a technique that helps you to take a series of commits and condense it to a few commits.  git rebase -i HEAD~3
+🔹 git rebase --skip   : it skips a commit
+🔹 git commit --amend : It is used to edit the commit msg
+🔹 git clean -df : It is used to clean the untracked/unwanted files from workspace.
+🔹 git log --raw command  : To find out which files changed in a given commit. It's the fastest and simplest way to get insight into which files a commit affects
+🔹 git gist :Gists provide a simple way to share code snippets with others. Every gist is a Git repository, which means that it can be forked and cloned.
+🔹 Git Reflog — How to recover a deleted branch that was not merged. It can track changes done on 
+🔹 git -rm file: remove files
+🔹 git log --online : Used to check commit history in short form.
+🔹 Git Remote: a Git repository that's hosted on the Internet or another network, This is useful for developers creating a local copy of a central repository, since it provides an easy way to pull upstream changes or publish local commits.
+🔹 git pull --rebase: current status of the repository is pulled to local machine. whatever the changes done at repository, all aligned in local machine,  new changes will be pulled to local machine 
+🔹 git pull origin main  -- pulling from main branch(files/date) to local machine.
 
-$git branch -v: To see the last commit on each branch
-$git branch --no-merged		: to check which branches are not merged when you are in master branch
-$git branch --merged		: to check merged brances
-$git gc: It is the process of removing unnecessary data from the local repository. 
-   This data can include unreachable objects, such as old versions of files that have been deleted 
-   or overwritten, as well as stale references to remote branches that no longer exist.
+$$ git branch -v: To see the last commit on each branch
+$$ git branch --no-merged		: to check which branches are not merged when you are in master branch
+$$ git branch --merged		: to check merged brances
+$$ git gc: It is the process of removing unnecessary data from the local repository. 
+   This data can include unreachable objects, such as old versions of files that have been deleted or overwritten, as well as stale references to remote branches that no longer exist.
   $$ git gc
 
-------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 Git 
 -> Git is a Open source Distributed Version Control System and is used to track, manage, and organize their code in the source code.
 
@@ -136,6 +134,7 @@ Note : Irrespective of on which branch a file is created or modified, git only c
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 Merge :
 Merge is nothing but integrating two branches.
+When my feature branch is updated and master is behind, we will do merge with master to update it.
 syn : git merge <branch_name>
 Note : When you try to merge source branch to a destination branch you should be inside destination branch.
 
@@ -147,13 +146,14 @@ If i don't know whose changes should i take in the merge, I contact developers w
 decide and give new change. After that i will commit that to a file and continue with merge.
 
 Rebase :
-Rebase is also nothing but merge here one branch will get added to the tip of another branch
+-> Rebase is also nothing but merge here one branch will get added to the tip of another branch
+-> When my branch is very behind from master then I will do rebase and pull latest changes to my feature branch.
 syn : git rebase <branch-name>
 
 -> Where they differ is how it's done. Git rebase moves a feature branch into a master. 
    Git merge adds a new commit, preserving the history.
 
---------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
 git commit --amend : It is used to edit the commit msg
 
 Git clone : Clone is used to bring remote repository to the local workspace for the first time.
@@ -173,7 +173,7 @@ syn : git cherry-pick <commit id>
 To merge multiple commits 
 syn : git cherry-pick <c1> <c2> <c3>....so on
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 There are 2 types of repository
 1. Bare repository
 2. Non bare repository
@@ -198,10 +198,9 @@ to download dependencies. This repository works the same as the central reposito
 Whenever anything is required from the remote repository, it is first downloaded to the local repository, and then used.
 
 3. Central Repository:
-Central repository refers to the Maven community that comes into action when there is a need for dependencies, 
-and those dependencies cannot be found in the local repository. Maven downloads the dependencies from here whenever needed.
+Central repository refers to the Maven community that comes into action when there is a need for dependencies, and those dependencies cannot be found in the local repository. Maven downloads the dependencies from here whenever needed.
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 Git revert and reset
 Git revert :
 It is used to undo the committed changes, here history will not be removed. we can track that reverted changes in the 
@@ -220,7 +219,8 @@ syn : git reset --mixed <commitid>/HEAD
                 the changes, hard reset will remove the files from git repo, staging area, & from workspace.
 syn : git reset --hard <commitid>/HEAD
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------git clean -df : It is used to clean the unwanted files from workspace.
+------------------------------------------------------------------------------------------
+git clean -df : It is used to clean the unwanted files from workspace.
 git log --raw command  : To find out which files changed in a given commit. It's the fastest and simplest way to get insight into which files a commit affects
 git gist  : Gists provide a simple way to share code snippets with others. Every gist is a Git repository, which means that it can be forked and cloned.
 
@@ -241,7 +241,7 @@ syn :
 
 6. git stash -p : to stash particular file
 
-----------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 Branching strategy
 
 -> Devlopers creates feature branch for their own purpose and merge it to the dev branch.
@@ -256,7 +256,7 @@ Parallelly development will be going on the dev branch for the 2nd release, once
 on the dev branch we create release 2 branch from the dev branch and make 2nd release from the release2 branch.
 Here release 2 branch will act as maintenance branch and so on...
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 What are some common Git branching strategies?
 GitFlow
 GitHub Flow
@@ -267,7 +267,8 @@ GitFlow:
 Considered to be a bit complicated and advanced for many of today’s projects, GitFlow enables parallel development 
 where developers can work separately from the master branch on features where a feature branch is created from the master branch.
 
-Git Flow Branch Strategy
+Git Flow Branch Strategy:
+------------------------
 The main idea behind the Git flow branching strategy is to isolate your work into different types of branches. 
 There are five different branch types in total:
 
@@ -309,7 +310,7 @@ Trunk-based development
 -Consequently, trunk-based development is a key enabler of continuous integration (CI) and continuous delivery (CD)  
  since changes are done more frequently to the trunk, often multiple times a day (CI) which allows features to be released much faster (CD).
 
---------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 Git squash: It is a technique that helps you to take a series of commits and condense it to a few commits.
 For example, assume that you have a series of n commits. By squashing you can make all the n-commits to a single commit.
 syn: git rebase -i HEAD~3
@@ -332,7 +333,7 @@ git bisect start
 git bisect good
 git bisect bad
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 No.   Git									GitHub
 1.    Git is a software.	 					GitHub is a service.
 2.    Git is a command-line tool					GitHub is a graphical user interface
@@ -341,7 +342,7 @@ No.   Git									GitHub
 5.    Git is focused on version control and code sharing.		GitHub is focused on centralized source code hosting.
 6.    Git is a version control system to manage source code history.    GitHub is a hosting service for Git repositories.
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 Absolute path: An absolute path is defined as specifying the location of a file or directory from the root directory(/). In other words,
 we can say that an absolute path is a complete path from start of actual file system from / directory.
 
@@ -371,7 +372,7 @@ to a commit, and it can be updated to point at a different commit freely.
 Git Reflog — How to recover a deleted branch that was not merged. It can track changes done on 
 git -rm file: remove files
 
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 Q. What is Branch Protection?
 -> The world of software development can be chaotic. You’ve got many developers – and now code GPTs – contributing in parallel to a project, all with their own changes.
 -> Branch protection facilitates a structured workflow for developers, where code contributions are scrutinized and tested, ensuring that only code that meets the team's standards is merged. This is particularly important in "inner sourcing" models, where everyone has "write" access to the source code repositories, but branches that are deployed to higher environments are protected. 
@@ -401,65 +402,35 @@ Q. Branch Protection Contribution to DevSecOps Governance:
 Q. Branch Protection Policies vs. Rulesets:
 -> Branch protection policies and rulesets both offer frameworks for implementing governance controls, but they cater to different needs:
 1. Branch Protection Policies are specific to individual branches within a repository, allowing for granular control over how code is reviewed, tested, and merged. They are ideal for projects requiring specific safeguards on critical branches.
-2. Rulesets, on the other hand, can be applied at a more macro level, such as across an entire organization or repository. They offer a broader, more standardized approach to governance that can be consistently applied.  
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2. Rulesets, on the other hand, can be applied at a more macro level, such as across an entire organization or repository. They offer a broader, more standardized approach to governance that can be consistently applied. 
+ 
+------------------------------------------------------------------------------------------
+Q. how do u restrict committing/modifying by reviewers, after PR is raised?
+-> To restrict committing or modifying code by reviewers after a pull request (PR) is raised in a version control system like GitHub, GitLab or Bitbucket, you can use the following approaches:
+1. Use branch protection rules: Most version control systems have branch protection rules that allow you to restrict who can push commits to a branch. You can configure the branch protection rules to only allow the repository owner or a specific group of collaborators to push commits to the branch after a PR is raised.
+2. Use code review processes: Many version control systems have code review processes that allow you to review and approve code changes before they are merged into the main branch. This process can be used to ensure that only approved changes are merged into the main branch after a PR is raised.
+3. Use merge approvals: Some version control systems have merge approvals feature, it allows repository maintainers to require a specific number of approvals from designated reviewers before a pull request can be merged.
+4. Use pull request templates: You can use pull request templates to instruct reviewers on how to review the code and what to look for. This can help ensure that code changes are reviewed consistently and that reviewers are aware of any specific requirements or restrictions.
 
-Q. how do u restrict commiting/modifying by reiewers, after PR is raised?
--> To restrict committing or modifying code by reviewers after a pull request (PR) is raised in a version 
-   control system like GitHub, GitLab or Bitbucket, you can use the following approaches:
-1. Use branch protection rules: Most version control systems have branch protection rules that allow you 
-   to restrict who can push commits to a branch. You can configure the branch protection rules to only 
-   allow the repository owner or a specific group of collaborators to push commits to the branch after 
-   a PR is raised.
-2. Use code review processes: Many version control systems have code review processes that allow you to 
-   review and approve code changes before they are merged into the main branch. This process can be used  
-   to ensure that only approved changes are merged into the main branch after a PR is raised.
-3. Use merge approvals: Some version control systems have merge approvals feature, it allows repository 
-   maintainers to require a specific number of approvals from designated reviewers before a pull request can be merged.
-4. Use pull request templates: You can use pull request templates to instruct reviewers on how to review the code 
-   and what to look for. This can help ensure that code changes are reviewed consistently and that reviewers 
-   are aware of any specific requirements or restrictions.
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 Q. Diff between registry and repository?
--> A registry is a centralized storage location for images, packages, or other software artifacts. The registry is responsible 
-   for storing and distributing these artifacts to users who request them. Examples of popular software registries include 
-   Docker Hub, Amazon Elastic Container Registry (ECR), and Google Container Registry (GCR).
--> A repository, on the other hand, is a specific collection of software artifacts within a registry. A repository can contain 
-   one or more images, packages, or other software artifacts, and is used to organize and manage these artifacts. 
-   In the context of Docker images, for example, a repository can contain multiple versions of a single image, or multiple images 
-   related to a specific application or service.
-   
-------------------------------------------------------------------------------------------------------------------------------------------
-Q. PR process? PR(pull request) based webhook/githook, how to enable PR based
--> The Pull Request (PR) process is a commonly used workflow for code review and collaboration in Git-based source control systems. 
-   The basic idea behind the PR process is that changes to the code are proposed in the form of a pull request, which is then 
-   reviewed by one or more members of the development team before being merged into the main branch. Here is a general outline of the PR process:
-1. Fork the repository: The first step in the PR process is to fork the repository, which creates a personal copy of the repository that 
-   you can modify and use for your development work.
-2. Clone the repository: After forking the repository, clone the repository to your local machine, which will allow you to make changes 
-   to the code and test them locally.
-3. Create a new branch: Once you have cloned the repository, create a new branch for your changes. This branch should be used to 
-   track the changes you are proposing, and it should be kept separate from the main branch.
-4. Make changes to the code: On the new branch, make the changes to the code that you want to propose. Test the changes 
-   locally and make sure they work as expected.
-5. Commit changes: Once you are satisfied with your changes, commit them to the branch. This will save your changes in the branch and make them available for review.
-6. Push changes to the repository: After committing your changes, push the branch to the repository. This will make your changes 
-   available in the repository and allow others to see and review them.
-7. Create a pull request: In the repository, create a pull request to propose your changes. The pull request should describe the 
-   changes you have made and why they are necessary. It should also include any relevant information about the changes, such as screenshots or test results.
-8. Review and feedback: Once the pull request has been created, one or more members of the development team will review the changes 
-   and provide feedback. This may involve commenting on specific lines of code or suggesting alternative approaches.
-9. Merge changes: If the changes are approved, they can be merged into the main branch. This will make the changes part of the 
-   main codebase and available to everyone.
+✅ 1. What is a Registry?
+-- A Registry is a centralized storage system for managing multiple repositories that store container images.
+-- Think of it as a hub that hosts multiple repositories.
+-- Provides authentication, access control, versioning, and image distribution.
+-- Examples: Docker Hub, AWS ECR, Azure Container Registry (ACR), GitHub Container Registry (GHCR), Google Artifact Registry (GAR).
 
+✅ 2. What is a Repository?
+-- A Repository is a collection of related container images stored inside a registry.
+-- Each repository contains different versions (tags) of an image (e.g., nginx:1.20, nginx:latest).
+-- Used to store and organize application images, infrastructure images, or custom-built images.
+   
+-----------------------------------------------------------------------------------------
 Q. What are 2 types of PR?
-1. Non-Fast-Forward Pull Requests: These are used when you want to propose changes to a branch that someone else has pushed 
-   to the central repository. In this type of pull request, you're proposing that your changes be merged into the main branch, 
-   and the repository owner will have to review and merge your changes manually.
+1. Non-Fast-Forward Pull Requests: These are used when you want to propose changes to a branch that someone else has pushed to the central repository. 
+-> In this type of pull request, you're proposing that your changes be merged into the main branch, and the repository owner will have to review and merge your changes manually.
 2. Fast-Forward Pull Requests: These are used when you want to bring the latest changes from the main branch into your own branch. 
-   This type of pull request is automatically merged, as the changes are simply being added to your branch and there are no conflicts 
-   with the existing code.
+-> This type of pull request is automatically merged, as the changes are simply being added to your branch and there are no conflicts with the existing code.
 
 Project-Project settings-Repos-Security
 branches why?, developer, tester, admin, devops engineer
