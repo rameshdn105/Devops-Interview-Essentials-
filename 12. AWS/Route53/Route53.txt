@@ -1,4 +1,6 @@
--> Amazon Route 53 is a highly scalable and cost-effective Domain Name System (DNS) web service offered by AWS. It is designed to route end users to various types of resources such as websites, web applications, and resources hosted on AWS or on-premises. Route 53 is designed to be simple to use while providing advanced features such as health checking, routing policies, and domain registration.
+-> Amazon Route 53 is a highly scalable and cost-effective Domain Name System (DNS) web service offered by AWS. 
+-> It is designed to route end users to various types of resources such as websites, web applications, and resources hosted on AWS or on-premises. 
+-> Route 53 is designed to be simple to use while providing advanced features such as health checking, routing policies, and domain registration.
 
 Here’s a comprehensive overview of Amazon Route 53:
 
@@ -22,7 +24,8 @@ T-- XT	    Stores arbitrary text (used for domain verification, email validation
 
 
 2. Domain Registration
--> Route 53 allows you to register domain names directly with AWS. This is useful because you can manage both your DNS settings and domain registration in one place. 
+-> Route 53 allows you to register domain names directly with AWS. 
+-> This is useful because you can manage both your DNS settings and domain registration in one place. 
 -> Route 53 supports a wide range of top-level domains (TLDs) such as .com, .org, .net, and many more.
 
 -> Domain Registration Features:
@@ -33,8 +36,8 @@ T-- XT	    Stores arbitrary text (used for domain verification, email validation
 
 
 3. Routing Policies
--> Route 53 allows you to define multiple routing policies to control how DNS queries are resolved based on different conditions. Common routing policies include:
-
+-> Route 53 allows you to define multiple routing policies to control how DNS queries are resolved based on different conditions. 
+-> Common routing policies include:
 -- Simple routing: Route 53 returns a single record when queried. It’s the default policy.
 -- Weighted routing: Allows you to assign weights to different resources. This helps balance the traffic between different resources based on specified weights.
 -- Latency-based routing: Routes traffic to the resource with the lowest latency based on the user’s location.

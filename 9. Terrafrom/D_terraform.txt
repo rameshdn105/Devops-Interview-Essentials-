@@ -53,7 +53,8 @@ Q. Stages of terraform cycle in terraform/ Terraform workflow:
 1. Init/Write - Author infrastructure as code
 -> Used to initialize a Terraform configuration in a directory. 
 -> When you start working on a new Terraform project or if you update the providers or backend configurations in your existing project, you need to run terraform init to set up the necessary plugins and backend settings.
--> During initialization, Terraform downloads the required providers (plugins that interact with cloud providers like AWS, Azure, Google Cloud, etc.) and sets up the backend configuration for state storage. 
+-> During initialization, Terraform downloads the required providers (plugins that interact with cloud providers like AWS, Azure, Google Cloud, etc.) 
+-> And sets up the backend configuration for state storage. 
 -> The backend is where Terraform stores the state file, which is crucial for keeping track of the actual state of your infrastructure.
 
 2. Plan - Preview changes before applying.
@@ -645,7 +646,7 @@ terraform {
 }
 
 
-Q. Is provider is mandatory to give in .tf file? if u give/dont give provider what will happen ?
+Q. Is provider mandatory to give in .tf file? if u give/dont give provider what will happen ?
 -> A provider configuration block is required in every Terraform configuration.
 ** A provider in Terraform is a plugin that enables interaction with an API. 
 
