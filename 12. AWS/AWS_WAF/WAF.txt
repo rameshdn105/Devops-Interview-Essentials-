@@ -9,7 +9,8 @@ AWS WAF (Web Application Firewall): Overview
 ** Three things make Amazon WAF work – "Access control lists (ACL), Rules, and Rule Groups".
 ** Amazon WAF manages Web ACL capacity units (WCU) for rules, rule groups, and web ACLs.
 
--- A Web ACL (Access Control List) Capacity Unit (WCU) is a metric used to represent the computational resources needed to evaluate and process rules in your Web ACL. It reflects the cost of inspecting web requests based on the number of rules and conditions within the Web ACL.
+-- A Web ACL (Access Control List) Capacity Unit (WCU) is a metric used to represent the computational resources needed to evaluate and process rules in your Web ACL. 
+-> It reflects the cost of inspecting web requests based on the number of rules and conditions within the Web ACL.
 -- Each WCU represents the amount of processing power required to evaluate one web request against the rules and conditions in your Web ACL. The more complex your rules and conditions are, the higher the WCU consumption will be.
 
 ** Amazon WAF includes a full-featured API that you can use to automate the creation, deployment, and maintenance of security rules.
