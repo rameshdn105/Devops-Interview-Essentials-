@@ -2,7 +2,7 @@
 
 But when we try to acces them using load balancer DNS, we were getting "502 BAD GATEWAY" error.
 
-When we connected one of EC@ and try to access server:
+When we connected one of EC2 and try to access server:
 curl http://localhost:80
 curl: (7) Failed to connect to localhost port 80 after 0 ms: Couldn't connect to server
 
