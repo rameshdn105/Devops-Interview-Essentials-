@@ -83,9 +83,10 @@ handlers:
       body: "Apache was restarted on {{ inventory_hostname }}"
     listen: send_email
 
-📌 How it works? 1️⃣ If the Apache config changes, it notifies restart_apache.
-2️⃣ The restart_apache handler restarts Apache and then notifies send_email.
-3️⃣ The send_email handler sends an email notification.
+📌 How it works? 
+1. If the Apache config changes, it notifies restart_apache.
+2. The restart_apache handler restarts Apache and then notifies send_email.
+3. The send_email handler sends an email notification.
 
 
 Q. What are task controllers in ansible?
@@ -104,11 +105,11 @@ Q. What are task controllers in ansible?
 Q. What is error handling in ansible?
 -> When Ansible receives a failure from a module, by default it stops executing on that host and continues on other hosts. 
 -> You can ignore errors, define custom failure conditions, retry tasks, or execute fallback actions when something goes wrong.
-1️⃣ ignore_errors → Continue Even If a Task Fails
-2️⃣ failed_when → Define Custom Failure Conditions  [failed_when: disk_usage.stdout|int > 90  # Fail only if usage > 90%]
-3️⃣ changed_when → Avoid False Positives [ changed_when: false  # Even if this succeeds, Ansible won’t mark it as "changed"]
-4️⃣ until → Retry a Task Until It Succeeds
-5️⃣ block, rescue, and always → Structured Error Handling
+1. ignore_errors → Continue Even If a Task Fails
+3. failed_when → Define Custom Failure Conditions  [failed_when: disk_usage.stdout|int > 90  # Fail only if usage > 90%]
+2. changed_when → Avoid False Positives [ changed_when: false  # Even if this succeeds, Ansible won’t mark it as "changed"]
+4. until → Retry a Task Until It Succeeds
+5. block, rescue, and always → Structured Error Handling
 ✔️ block → Contains the main set of tasks.
 ✔️ rescue → Runs if any task in block fails.
 ✔️ always → Executes no matter what (like a cleanup action).
@@ -282,7 +283,7 @@ Q. What are the main use cases of Ansible?
 -> Inventory:- It is list of nodes and hosts having IP address, databases, servers etc which needs be managed.
 -> ApI's:- The ansible API's works as the transport for the public and private cloud services.
 -> Modules:- Ansible connect nodes and spread out the ansible modules. Ansible will execute modules and remove them once finished.   
-$ ansible-doc -l for a list of modules  $ansible-doc <modulename> for information about module options
+$$ ansible-doc -l for a list of modules  $ansible-doc <modulename> for information about module options
 -> Plugins:- It is a piece of code that expands the core functionality of ansible. There are many plugins and also we can write our own plugin. (Module Plugin, Inventory Script Plugin, Action Plugin, Lookup Plugin, )
 -> Playbook:- It consists of code, and they are written YAML format which describes the tasks and executes through ansible. 
 -> Task: ( Find out how ansible playbook launches tasks synchronously and asynchronously).
@@ -296,11 +297,11 @@ $ ansible-doc -l for a list of modules  $ansible-doc <modulename> for informatio
 
 ------------------------------------------------------------------------------------
 🔹 Ansible Architecture
-1️⃣ Control Node: The system where Ansible is installed and executed
-2️⃣ Managed Nodes: The remote servers being configured
-3️⃣ Inventory: A list of target machines
-4️⃣ Playbooks: YAML scripts that define tasks
-5️⃣ Modules: Pre-built functions for automation
+1. Control Node: The system where Ansible is installed and executed
+2. Managed Nodes: The remote servers being configured
+3. Inventory: A list of target machines
+4. Playbooks: YAML scripts that define tasks
+5. Modules: Pre-built functions for automation
 
 [Database, webserver, production]--->INVENTORY \
 				     PLAYBOOK---CONTROLLER----->Servers [Database, Webserver, Production of created servers]
@@ -311,7 +312,8 @@ $ ansible-doc -l for a list of modules  $ansible-doc <modulename> for informatio
 
 ---------------------------------------------------------------------------------
 📜 Ansible Playbook Structure
--> An Ansible Playbook is a YAML file that defines a set of tasks to be executed on managed nodes (hosts). It allows automation of configuration management, deployment, and orchestration
+-> An Ansible Playbook is a YAML file that defines a set of tasks to be executed on managed nodes (hosts). 
+-> It allows automation of configuration management, deployment, and orchestration
 -> Each playbook is an aggregation of one or more plays in it. Playbook are structured using plays. There can be more than one play in the playbook.
 -> Structure: [hosts, become, vars, tasks, handlers, roles]
 
@@ -458,7 +460,8 @@ Task: 1. Run the role, paste the default folder structure in group.
 
 ----------------------------------------------------------------------------------
 🔹 Ansible Tower (Now Ansible Automation Platform)
--> Ansible Tower (now part of Red Hat Ansible Automation Platform) is a web-based UI and REST API that helps manage, schedule, and control Ansible automation tasks. It provides a centralized way to manage playbooks, credentials, and inventory.
+-> Ansible Tower (now part of Red Hat Ansible Automation Platform) is a web-based UI and REST API that helps manage, schedule, and control Ansible automation tasks. 
+-> It provides a centralized way to manage playbooks, credentials, and inventory.
 -> Ansible tower dashboard, it will display everything which is going on in ansible environment such as inventory status, recent job activity, hosts etc..
 
 🔹 Key Features of Ansible Tower

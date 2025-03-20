@@ -15,6 +15,7 @@
 $$ git branch -v: To see the last commit on each branch
 $$ git branch --no-merged		: to check which branches are not merged when you are in master branch
 $$ git branch --merged		: to check merged brances
+
 $$ git gc: It is the process of removing unnecessary data from the local repository. 
    This data can include unreachable objects, such as old versions of files that have been deleted or overwritten, as well as stale references to remote branches that no longer exist.
   $$ git gc
@@ -133,8 +134,8 @@ Note : Irrespective of on which branch a file is created or modified, git only c
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 Merge :
-Merge is nothing but integrating two branches.
-When my feature branch is updated and master is behind, we will do merge with master to update it.
+-> Merge is nothing but integrating two branches.
+-> When my feature branch is updated and master is behind, we will do merge with master to update it.
 syn : git merge <branch_name>
 Note : When you try to merge source branch to a destination branch you should be inside destination branch.
 
@@ -189,28 +190,28 @@ syn : git init
 Types of Non-bare repositories:
 There are three types of repositories:
 1. Local Repository:
-Local repository refers to the developer’s machine, which is where all the project material is saved. 
-This repository contains all the dependency jars.
+-> Local repository refers to the developer’s machine, which is where all the project material is saved. 
+-> This repository contains all the dependency jars.
 
 2. Remote Repository:
-The remote repository refers to the repository present on a web server, which is used when Maven needs 
-to download dependencies. This repository works the same as the central repository. 
-Whenever anything is required from the remote repository, it is first downloaded to the local repository, and then used.
+-> The remote repository refers to the repository present on a web server, which is used when Maven needs to download dependencies. 
+-> This repository works the same as the central repository. 
+-> Whenever anything is required from the remote repository, it is first downloaded to the local repository, and then used.
 
 3. Central Repository:
-Central repository refers to the Maven community that comes into action when there is a need for dependencies, and those dependencies cannot be found in the local repository. Maven downloads the dependencies from here whenever needed.
+-> Central repository refers to the Maven community that comes into action when there is a need for dependencies, and those dependencies cannot be found in the local repository. Maven downloads the dependencies from here whenever needed.
 
 ------------------------------------------------------------------------------------------
 Git revert and reset
-Git revert :
-It is used to undo the committed changes, here history will not be removed. we can track that reverted changes in the 
+1. Git revert :
+-> It is used to undo the committed changes, here history will not be removed. we can track that reverted changes in the 
 git log.
 syn : git revert HEAD
       git revert <commitid>
 	  
-Git reset :
-It is used to undo the committed changes, here history will be removed.
-There are 3 types of resets.
+2. Git reset :
+-> It is used to undo the committed changes, here history will be removed.
+-- There are 3 types of resets.
 1. Soft reset : It is used to move the files from git repo to the staging area.
 syn : git reset --soft <commitid>/HEAD
 2. Mixed reset : It is used to move files from staging area to workspace.
@@ -225,7 +226,7 @@ git log --raw command  : To find out which files changed in a given commit. It's
 git gist  : Gists provide a simple way to share code snippets with others. Every gist is a Git repository, which means that it can be forked and cloned.
 
 Git stash : 
-If I am working on one branch and suppose if i get some critical work on other branch which needs to be fixed 
+-> If I am working on one branch and suppose if i get some critical work on other branch which needs to be fixed 
 immediately, before switching to other branch i need to stash the current branch by using git stash command, which
 stores the local files on the temp location. Once i switch to a current branch after completing the critical work
 i can bring back the changes using git stash pop.
@@ -244,7 +245,7 @@ syn :
 ------------------------------------------------------------------------------------------
 Branching strategy
 
--> Devlopers creates feature branch for their own purpose and merge it to the dev branch.
+-> Developers creates feature branch for their own purpose and merge it to the dev branch.
 -> DevOps team creates release branch and merge them to the dev branch.
 -> Developers can pull the changes from master branch but they cannot push the changes to the master.
 
@@ -319,10 +320,11 @@ Git diff: In order to compare two branches easily, you have to use the “git di
 dots. Using this command, Git will compare the tip of both branches (also called the HEAD) and display a “diff” recap that you can 
 use to see modifications.
 
-* Pull request: Pull request knocks the repository owner and tells that "I have made some changes, please merge these changes
+** Pull request: Pull request knocks the repository owner and tells that "I have made some changes, please merge these changes
               to your repository if you like it".
-* Fork request: On the other hand, changes made on the local machine (cloned repository) can be pushed to the upstream repository directly. For this, the user must have the write access to the repository otherwise this is not possible. If the user does not have write access, the only way to go is through the forked request.
-* Push request: A "push request" would be the target repository requesting you to push your changes.
+** Fork request: On the other hand, changes made on the local machine (cloned repository) can be pushed to the upstream repository directly. 
+-- For this, the user must have the write access to the repository otherwise this is not possible. If the user does not have write access, the only way to go is through the forked request.
+** Push request: A "push request" would be the target repository requesting you to push your changes.
 
 
 Git bisect: You use it by first telling it a "bad" commit that is known to contain the bug, and a "good" commit that is known to 
@@ -365,9 +367,10 @@ a different branch called styles, the HEAD reference will be updated to the styl
 You can view your repository’s heads in the path .git/refs/heads/. In this path you will find one file for each branch, 
 and the content in each file will be the commit ID of the tip (most recent commit) of that branch.
 
-Git Tag Vs Branch: Tags are a fundamental building block in git; branches aren't. Git performs checks to make sure tags 
-remain constant, never change, once created pointing at a commit. A branch on the other hand is a mere reference or pointer 
-to a commit, and it can be updated to point at a different commit freely.
+Git Tag Vs Branch: 
+1. Tags are a fundamental building block in git; branches aren't. 
+2. Git performs checks to make sure tags remain constant, never change, once created pointing at a commit. 
+3. A branch on the other hand is a mere reference or pointer to a commit, and it can be updated to point at a different commit freely.
 
 Git Reflog — How to recover a deleted branch that was not merged. It can track changes done on 
 git -rm file: remove files
@@ -378,7 +381,9 @@ Q. What is Branch Protection?
 -> Branch protection facilitates a structured workflow for developers, where code contributions are scrutinized and tested, ensuring that only code that meets the team's standards is merged. This is particularly important in "inner sourcing" models, where everyone has "write" access to the source code repositories, but branches that are deployed to higher environments are protected. 
 
 Q. What is “Inner sourcing” and how does it work?
--> In an "inner sourcing" model, while all developers have the ability to contribute code, not all contributions are treated equally. For instance, branches destined for production deployment are shielded by branch protection rules. This means that although developers can freely contribute to the codebase, their changes must undergo a rigorous review and testing process before being deployed to more sensitive environments. Inner sourcing leverages the collective expertise and creativity of the entire team while ensuring that the deployed code is secure, reliable, and aligned with organizational standards.
+-> In an "inner sourcing" model, while all developers have the ability to contribute code, not all contributions are treated equally. For instance, branches destined for production deployment are shielded by branch protection rules. 
+-- This means that although developers can freely contribute to the codebase, their changes must undergo a rigorous review and testing process before being deployed to more sensitive environments. 
+-- Inner sourcing leverages the collective expertise and creativity of the entire team while ensuring that the deployed code is secure, reliable, and aligned with organizational standards.
 
 
 Q. Branch Protection Contribution to DevOps Governance:

@@ -353,12 +353,11 @@ enter – scroll down one line
 
 -- Less: One of the reasons why less was introduced was to allow backward movement line by line. 
 -  It has a lot of commands that are similar to the vi text editor’s commands, and it supports horizontal scrolling, live monitoring, and more.
-*less supports other file formats such as jar, war, zip, pdf, tar.gz, gif, png, tiff, tif, and rar.
+** less supports other file formats such as jar, war, zip, pdf, tar.gz, gif, png, tiff, tif, and rar.
 
 -- most: most allows us to view multiple files simultaneously and switch between them. It’s very useful for viewing large data sets because most does not wrap lines that have more characters than the terminal page. Instead, it truncates them and offers column-by-column horizontal scrolling.   
 
 ======================================================================================
-
 tree : It is used to show the tree structure of files and directories.
 syn : tree
 *To install tree: $ sudo apt-get install tree
@@ -446,7 +445,7 @@ syn : ln -s filename(fullpath) linkname
 and if we delete original file then hard link will work because it points to a inode of a file.
 syn : ln filename(fullpath) linkname
 
-where inode is a unique identification number which indicates memory address of a file.
+-> where inode is a unique identification number which indicates memory address of a file.
 
 ** Use the ls -i command to view the inode number. Files that are hard-linked together share the same inode number. 
 The shared inode number is 2730074, meaning these files are identical data

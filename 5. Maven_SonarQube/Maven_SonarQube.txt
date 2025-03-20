@@ -131,12 +131,12 @@ Maven pom.xml file with additional elements
 Here, we are going to add other elements in pom.xml file such as:
 
 Element	Description
-*packagig: defines packaging type such as jar, war etc.
-*name: defines name of the maven project.
-*url: defines url of the project.
-*dependencies: defines dependencies for this project.
-*dependency: defines a dependency. It is used inside dependencies.
-*scope: defines scope for this maven project. It can be compile, provided, runtime, test and system.
+** packagig: defines packaging type such as jar, war etc.
+** name: defines name of the maven project.
+** url: defines url of the project.
+** dependencies: defines dependencies for this project.
+** dependency: defines a dependency. It is used inside dependencies.
+** scope: defines scope for this maven project. It can be compile, provided, runtime, test and system.
 
 2. Dependencies And Repositories
 Dependencies refer to the Java libraries required for the project. Repositories refer to the directories of packaged JAR files.
@@ -203,10 +203,10 @@ A build tool does the following tasks:
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 Maven Available Plugins
-Maven is - at its heart - a plugin execution framework; all work is done by plugins. Looking for a specific goal to execute? 
-This page lists the core plugins and others. There are the build and the reporting plugins:
-*Build plugins will be executed during the build and they should be configured in the <build/> element from the POM.
-*Reporting plugins will be executed during the site generation and they should be configured in the <reporting/> element from the POM. 
+-> Maven is - at its heart - a plugin execution framework; all work is done by plugins. Looking for a specific goal to execute? 
+-> This page lists the core plugins and others. There are the build and the reporting plugins:
+** Build plugins will be executed during the build and they should be configured in the <build/> element from the POM.
+** Reporting plugins will be executed during the site generation and they should be configured in the <reporting/> element from the POM. 
 Because the result of a Reporting plugin is part of the generated site, Reporting plugins should be both internationalized and localized. 
 You can read more about the localization of our plugins and how you can help.
 
