@@ -1,16 +1,16 @@
 🚀 How Multi-Stage Build Reduces Size:
 1. Builder Stage (golang:1.21-alpine — ~190 MB)
-This stage uses a full Go SDK image based on Alpine.
-It has everything needed to compile and build Go binaries:
-Go compiler
-Build tools
-Headers and libraries
-Debugging tools (sometimes)
+-- This stage uses a full Go SDK image based on Alpine.
+-- It has everything needed to compile and build Go binaries:
+-- Go compiler
+-- Build tools
+-- Headers and libraries
+-- Debugging tools (sometimes)
 ⚙️ But these tools are only needed for building, NOT for running the app.
 2. Final Stage (alpine:latest — ~5-6 MB base)
-After building, only the compiled binary (myapp) is copied into this minimal Alpine runtime image.
-Alpine Linux is a super lightweight Linux distribution, ~5-6 MB in size!
-You don't need Go compiler, tools, or SDK at runtime — just the app binary and its dependencies (if any).
+-- After building, only the compiled binary (myapp) is copied into this minimal Alpine runtime image.
+-- Alpine Linux is a super lightweight Linux distribution, ~5-6 MB in size!
+-- You don't need Go compiler, tools, or SDK at runtime — just the app binary and its dependencies (if any).
 📦 Size Breakdown Example:
 Stage	Approximate Size	Contents
 golang:1.21-alpine (build stage)	~190 MB	Go SDK, compilers, libraries, tools
@@ -18,9 +18,6 @@ alpine:latest (final runtime)	~5-6 MB	Minimal OS + your compiled static binary (
 ⚙️ The compiled Go binary (if statically compiled) may be around 10-20 MB. So total runtime image ≈ 20-30 MB in most cases.
 
 👉 Compared to a 190 MB build image, the runtime image is much smaller and faster to pull, deploy, and run.
-
-
-
 
 ✅ Image Scanning (Trivy, Clair, ECR scanning)
 📌 Why Image Scanning is Critical?
