@@ -571,18 +571,18 @@ Q. What are the credential types supported by Jenkins?
 Ans: In Jenkins, credentials are a set of information used for authentication with internal/external services to accomplish an action. 
      Jenkins credentials are provisioned & managed by a built-in plugin called - Credentials Binding - plugin. Jenkins can handle different 
      credentials as follows -
-*Secret text - A token such as an API token, JSON token, etc.
-*Username and password - Basic Authentication can be stored as a credential as well.
-*Secret file - A secret file used to authenticate some secure data services & security handshakes.
-*SSH Username with a private key - An SSH public/private key pair for Machine to Machine authentication.
-*Certificate - a PKCS#12 certificate file and an optional password.
-*Git username and password
-*Docker Host Certificate Authentication credentials.
-And as we can guess, this can be extended to several other extensible credential types like - AWS credential, Azure secrets, etc. using 
+** Secret text - A token such as an API token, JSON token, etc.
+** Username and password - Basic Authentication can be stored as a credential as well.
+** Secret file - A secret file used to authenticate some secure data services & security handshakes.
+** SSH Username with a private key - An SSH public/private key pair for Machine to Machine authentication.
+** Certificate - a PKCS#12 certificate file and an optional password.
+** Git username and password
+** Docker Host Certificate Authentication credentials.
+-- And as we can guess, this can be extended to several other extensible credential types like - AWS credential, Azure secrets, etc. using 
     commonly available plugins.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Q. *What is a trigger? Give an example of how the repository is pulled when a new commit is detected.
+Q. What is a trigger? Give an example of how the repository is pulled when a new commit is detected.
 Ans: Triggers are used to define when and how pipelines should be executed. 
 -> When Jenkins is integrated with an SCM tool, for example, Git, the repository can be pulled every time there is a commit.
 
@@ -614,7 +614,7 @@ Ans: Jenkins credentials can be of one of the two scopes - Global & System
 ** Global - the credential will be usable across all the jobs configured in the Jenkins instance (i.e. for all jobs). This is more suited for user Jobs (i.e. for the freestyle, pipeline, or other jobs) to authenticate itself with target services/infrastructures to accomplish the purpose of the job)
 ** System - This is a special scope that will allow the Jenkins itself (i.e. the core Jenkins functionalities & some installed plugins) to authenticate itself to external services/infrastructures to perform some defined tasks. E.g. sending emails, etc.
 
--> Reset password in jenkins: How to give security permission to new user?
+-> Reset password in Jenkins: How to give security permission to new user?
 ** Navigate to "Manage Jenkins" -> "Security" -> "Configure Global Security" -> "Authentication"
 ** Select the "Security Realm" (e.g. "Jenkins’ own user database") and click on "Save"
 ** Go to "People" -> Click on a username for which you want to change the 
@@ -629,10 +629,10 @@ confg.xml  & restart jenkins.
 -> As an organization starts using more and more pipeline jobs, there is a chance for more and more code being duplicated in every pipeline job, since a part of the build/automation processes will be the same for most of the jobs. In such a situation, every other new upcoming job should also duplicate the same piece of code. To avoid duplications, the Jenkins project brought in the concept of Shared Libraries, to code - DRY - Don't Repeat Yourself.
 ** Shared libraries are a set of code that can be common for more than one pipeline job and can be maintained separately. Such libraries improve the maintenance, modularity & readability of the pipeline code. And it also speeds up the automation for new jobs.
 
-*Why Use Jenkins Shared Library?
+** Why Use Jenkins Shared Library?
 -> Let’s say we have five different Spring Boot applications in our Microservice architecture. All of them need to be built using Maven, run Unit & Integration tests to ensure the integrity of code, packed as a JAR/WAR file & pushed to the artifactory.
-Typically, all five applications need their own Jenkinsfile, but the content of the Jenkinsfiles is going to be mostly the same. 
-Jenkins Shared Library avoids this repetition of pipeline code by creating a shared library.
+-> Typically, all five applications need their own Jenkinsfile, but the content of the Jenkinsfiles is going to be mostly the same. 
+-> Jenkins Shared Library avoids this repetition of pipeline code by creating a shared library.
 
 ** How to create and use the shared library?
 -> Create a separate git repo for the Jenkins pipeline library & push the shared library code to that repo.
@@ -647,7 +647,7 @@ E.g.
 19. What happens when a Jenkins agent is offline and what is the best practice in that situation?
 -> When a job is tied to a specific agent on a specific node, the job can only be run on that agent and no other agents can fulfill the job request. If the target node is offline or all the agents on that particular node are busy building other jobs, then the triggered job has to wait until the node comes online or an agent from that node becomes available to execute the triggered build request.
 -> As a result, a triggered job may sometimes wait indefinitely without knowing that the target node is offline. So, it is always the best practice to tie the jobs to a group of nodes & agents, referred to with a 'Label'. Once a job is tied to a Label, instead of a specific node/agent, any of the nodes/agents falling under the label can fulfill a build request, when a job is triggered. This way we can reduce the overall turn-around time of the builds.
-Even then if a job is waiting for more time for the nodes/agents, then it is time to consider adding more nodes/agents.
+-> Even then if a job is waiting for more time for the nodes/agents, then it is time to consider adding more nodes/agents.
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 Q. How to do Global Tools Configuration in Jenkins?
@@ -670,11 +670,11 @@ A: If you want to modify home folder, log folder, port configuration. You need t
 1. Click on the Manage Jenkins button on your Jenkins dashboard:
 2. Click on Manage Plugins.
 3. In the Plugins Page
-Select the GIT Plugin
-Click on Install without restart. The plugin will take a few moments to finish downloading depending on your internet 
+-- Select the GIT Plugin
+-- Click on Install without restart. The plugin will take a few moments to finish downloading depending on your internet 
 connection, and will be installed automatically.
-You can also select the option Download now and Install after restart.
-You will now see a “No updates available” message if you already have the Git plugin installed.
+-- You can also select the option Download now and Install after restart.
+-- You will now see a “No updates available” message if you already have the Git plugin installed.
 4. Once you install the plugins , go to Manage Jenkins on your Jenkins dashboard. You will see your plugins listed among the rest.
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -753,7 +753,7 @@ Once you resolve the authentication issues, make sure that you re-enable Jenkins
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Q) How to secure Jenkins?
 Ans: We used matrix based security it will allow to give required permission for a user by checking the checkboxes.
-*One more security option we have called as LDAP (Lightweight Directory Access Protocol). So if we want to access Jenkins with LDAP credentials we need to install LDAP plugin.
+** One more security option we have called as LDAP (Lightweight Directory Access Protocol). So if we want to access Jenkins with LDAP credentials we need to install LDAP plugin.
 manage jenkins -> confg global securty -> select LDAP Security realm -> fill server details & test LDAP setting -> save
 
 manage jenkins->setup security button->enable security checkbox->allow users->see details in NavBar
@@ -764,8 +764,8 @@ The 2 best options preferred are
 a) Matrix-based security & 
 b) Project-base authorization strategy.
 c) LDAP (Lightweight Directory Access Protocol) 
-*Save the form. Logout and login again.
-*A login page will be displayed and login with the created account.
+** Save the form. Logout and login again.
+** A login page will be displayed and login with the created account.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ** How do I Jenkins permission on a per job basis or give security permission to access Jenkins?
@@ -828,6 +828,22 @@ Q) How do I parameterized a Jenkins file?
 Then after chossing parameter go to build section & select execute shell & run
 echo $SHELL
 
+-> Go to Jenkins → Your Job → Configure
+-> Check "This project is parameterized"
+-> Click "Add Parameter" and choose String, Boolean, Choice, or other parameter types
+
+pipeline {
+    agent any
+    parameters {
+        string(name: 'APP_VERSION', defaultValue: '1.0', description: 'Application version')
+        booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'Run tests?')
+        choice(name: 'ENV', choices: ['DEV', 'QA', 'PROD'], description: 'Select environment')
+    }
+    stages {
+        stage('Build') {
+            steps {
+                echo "Building version: ${params.APP_VERSION}"
+
 Q: How do you use parameters in jenkins?
 A: jenkins UI-->new item-->select typeofproject-->general-->select ths project is parameterised. it prompt users one or more inputs that willbe passed into the buuld.
 type of project can be: free style, maven, pipeline, multi branch pipeline, folder, multi-confiration pipeline.
@@ -840,7 +856,8 @@ Ans: We can give agent as none in pipeline script. Where agent none indicates th
 
 -----------------------------------------------------------------------------------------------------------------------------------------------
 23. What is Artifact Archival & how to do it in Pipelines?
-Ans: Artifacts are the exportable/storable/archivable results of a specific job build. This can be configured using a plugin called - Copy artifact Plugin. Based on the configured pattern, the files/directories matching the configured patterns will be archived for a Jenkins build, which can be used for future references. In the pipeline, it can be configured as follows -
+Ans: Artifact Archival is the process of saving important build outputs (artifacts) like binaries, JARs, WARs, logs, reports, or configurations after a Jenkins pipeline execution. 
+-> Artifacts are the exportable/storable/archivable results of a specific job build. This can be configured using a plugin called - Copy artifact Plugin. Based on the configured pattern, the files/directories matching the configured patterns will be archived for a Jenkins build, which can be used for future references. In the pipeline, it can be configured as follows -
     For e.g.
 archiveArtifacts artifacts: 'output/*.txt', excludes: 'output/specific_file.txt'
 The above command will archive all the text files from the output folder except specific_file.txt
@@ -869,7 +886,7 @@ There are multiple methods to back up the Jenkins configurations such as:
 
 
 Method 1: Using thin backup
--- Install the ThinBackup Plugin: Manage Jenkins ->manage plugins -> click on available ->select “Thin Backup”->install without start.
+-- Install the ThinBackup Plugin: Manage Jenkins -> manage plugins -> click on available ->select “Thin Backup”->install without start.
 -- Configure ThinBackup Plugin: Manage Jenkins → ThinBackup, 
 -> Go to System Global setting, under them you will have Thinkbacup, their you give backup folder name, schedule back to happen
 1. Backup Directory: /path/to/backup/directory

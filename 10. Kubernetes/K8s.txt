@@ -1946,14 +1946,16 @@ kubectl create -f service-definition.yaml
 kubectl get services
 kubectl describe svc <servicename>
 	  
-Yaml file for multiple pods in a node:
+-- Yaml file for multiple pods in a node:
 -> With label provided, it will filter pods and apply to all pods having the same label.
--> we have multiple similar PODs running our web application. They all have the same labels with a key app set to value myapp. The same label is used as a  selector during the creation of the service. So when the service is created, it looks for matching PODs with the labels and finds 3 of them. The service then automatically selects all the 3 PODs as endpoints to forward the external requests coming from the user. You don’t have to do any additional configuration to make this happen. And if you are wondering what algorithm it uses to balance load, it uses a random  algorithm. Thus the service acts as a built-in load balancer to distribute load across different PODs.
+-> we have multiple similar PODs running our web application. They all have the same labels with a key app set to value myapp. The same label is used as a  selector during the creation of the service. So when the service is created, it looks for matching PODs with the labels and finds 3 of them. 
+-> The service then automatically selects all the 3 PODs as endpoints to forward the external requests coming from the user. You don’t have to do any additional configuration to make this happen. And if you are wondering what algorithm it uses to balance load, it uses a random  algorithm. Thus the service acts as a built-in load balancer to distribute load across different PODs.
 
 ******************************************************************************************************************************
 Headless services:
 ------------------
--> A Kubernetes headless service is a form of service that doesn't allocate a cluster IP to represent a set of pods. Instead of load-balancing traffic across a group of pods, a headless service allows DNS queries for the service to go back to the individual IP addresses of all the pods associated with it.
+-> A Kubernetes headless service is a form of service that doesn't allocate a cluster IP to represent a set of pods. 
+-> Instead of load-balancing traffic across a group of pods, a headless service allows DNS queries for the service to go back to the individual IP addresses of all the pods associated with it.
 -> Headless service lists all the ip's of the pods it is pointing, when a DNS query for headless service is run.	   
 -> We can create a headless service by specifying none for the clusterIP.
 -> Headless service is used with StatefulSets where name of the pods are fixed.
@@ -2104,7 +2106,7 @@ Ingress controller:
 
 								   Pod
 								  /
-clinet---Ingress-managed---->*Ingress*----routing rule--->service
+client---Ingress-managed---->*Ingress*----routing rule--->service
           load balancer			  			  \
 								   Pod
 -> Ingress controllers are typically implemented as a reverse proxy, such as Nginx, Traefik, HAProxy, and Istio.
@@ -2116,12 +2118,12 @@ clinet---Ingress-managed---->*Ingress*----routing rule--->service
 
 -> Selecting the right Kubernetes Ingress Controller depends on our requirements which can be based on the following:
 1. 𝐅𝐞𝐚𝐭𝐮𝐫𝐞 𝐒𝐞𝐭: Ensure it supports advanced routing (path-based, host-based, regex), TLS termination, HTTP/2, WebSockets, gRPC, sticky sessions, and URL rewriting.
-2.  𝐏𝐞𝐫𝐟𝐨𝐫𝐦𝐚𝐧𝐜𝐞: Choose controllers optimized for high throughput and low latency (e.g., HAProxy or Envoy-based options).
-3.  𝐂𝐥𝐨𝐮𝐝 𝐂𝐨𝐦𝐩𝐚𝐭𝐢𝐛𝐢𝐥𝐢𝐭𝐲: Use cloud-native controllers like AWS ALB or GCP Load Balancer for managed environments, or flexible options like NGINX for hybrid/on-prem setups.
+2. 𝐏𝐞𝐫𝐟𝐨𝐫𝐦𝐚𝐧𝐜𝐞: Choose controllers optimized for high throughput and low latency (e.g., HAProxy or Envoy-based options).
+3. 𝐂𝐥𝐨𝐮𝐝 𝐂𝐨𝐦𝐩𝐚𝐭𝐢𝐛𝐢𝐥𝐢𝐭𝐲: Use cloud-native controllers like AWS ALB or GCP Load Balancer for managed environments, or flexible options like NGINX for hybrid/on-prem setups.
 4. 𝐄𝐚𝐬𝐞 𝐨𝐟 𝐔𝐬𝐞: Look for simple deployment, automation support, and clear documentation (e.g., Traefik for lightweight clusters).
 5. 𝐒𝐞𝐜𝐮𝐫𝐢𝐭𝐲: Check for HTTPS redirection, TLS passthrough, and integration with WAF/DDoS protection.
-6.𝐎𝐛𝐬𝐞𝐫𝐯𝐚𝐛𝐢𝐥𝐢𝐭𝐲: Ensure support for Prometheus/Grafana metrics, detailed logging, and traffic analytics.
-7.  𝐂𝐨𝐬𝐭 𝐄𝐟𝐟𝐢𝐜𝐢𝐞𝐧𝐜𝐲: Balance resource usage (CPU/memory) with operational expenses for managed or self-hosted options.
+6. 𝐎𝐛𝐬𝐞𝐫𝐯𝐚𝐛𝐢𝐥𝐢𝐭𝐲: Ensure support for Prometheus/Grafana metrics, detailed logging, and traffic analytics.
+7. 𝐂𝐨𝐬𝐭 𝐄𝐟𝐟𝐢𝐜𝐢𝐞𝐧𝐜𝐲: Balance resource usage (CPU/memory) with operational expenses for managed or self-hosted options.
 
 -> NGINX is versatile for most use cases, Traefik for simplicity, and cloud-specific controllers for native setups.
 
@@ -2222,9 +2224,9 @@ Key Points about ExternalName Services:
 4.  Simple DNS Forwarding: It’s a simple way to expose an external resource without dealing with load balancers, ingress controllers, or other complex solutions.
 
 ✅ Clarification: What Exactly Does ExternalName Do?
-Feature				Explanation
+Feature							Explanation
 DNS CNAME resolution only		It maps a Kubernetes service DNS name to an external DNS name (CNAME).
-No IP assigned			No ClusterIP or external IP is allocated.
+No IP assigned				No ClusterIP or external IP is allocated.
 No kube-proxy involvement		Traffic does NOT flow through kube-proxy or Kubernetes network.
 No internal routing or load balancing	It only helps your pod resolve a name, not route traffic.
 Direct connection from Pod to external service	After DNS resolves, the pod directly connects to the external endpoint.
@@ -2434,7 +2436,7 @@ Q. What is control group/ C-group?
 
 Namespaces: [Isolation]
 --------------------
-->  Kubernetes namespace is an abstraction to support multiple virtual clusters of k8s objects on the same physical cluster.  
+-> Kubernetes namespace is an abstraction to support multiple virtual clusters of k8s objects on the same physical cluster.  
 -> Each namespace has its own set of resources, such as pods and services, and can be used to isolate resources within a cluster. 
 -> Namespaces can also be used to control access to resources, by assigning different roles and permissions to users and groups within each namespace.
 	
@@ -2458,7 +2460,7 @@ Namespaces: [Isolation]
 $$ kubectl get pods --namespace=kube-system
 
 -> To permanently move to other namespace than defult:
-$$ kubectl config set-context $(kubectl config current-context) --namespace=dev
+$$ kubectl config set-context --namespace=dev
 
 $$ kubectl create namespace <name_of_namespace>
 $$ kubectl get ns  (or)  sudo kubectl get namespace
@@ -2503,7 +2505,7 @@ Resource quotas and limitaions:
 ===============================
 -> When several users or teams share a cluster with a fixed number of nodes, there is a concern that one team could use more than its fair share of resources.
 
-->  Resource-Quotas are used to limit the total amount of resources that can be consumed by all the objects (like Pods, Services, etc.) within a particular namespace. 
+-> Resource-Quotas are used to limit the total amount of resources that can be consumed by all the objects (like Pods, Services, etc.) within a particular namespace. 
 -> This helps administrators ensure that no single namespace consumes more resources than the cluster can handle and helps manage resource usage within the cluster.
 
 -> A Resource-Quota defines constraints on the amount of CPU, memory, number of Pods, and other resources that a namespace can use. It can be applied to various resource types, such as:
@@ -2535,7 +2537,7 @@ spec:
 -> If any object (such as a Pod, Deployment, or Service) in that namespace exceeds the defined limits, the Kubernetes API server will reject the creation or modification of those objects.
 
 ** Viewing ResourceQuota Usage:
-kubectl get resourcequota -n my-namespace
+$$ kubectl get resourcequota -n my-namespace
 
 output:
 NAME                      HARD            		USED
@@ -2703,6 +2705,13 @@ Pod Security Standards (PSS) / PodSecurity Profiles:
 -- Contains no restrictions. This is the most permissive profile.
 -- Allows running containers with any privileges, including privileged containers, host networking, host PID, and access to all host resources.
 
+Enforcement Modes:
+-----------------
+1. Enforce: Actively enforces the security policies, meaning Pods that do not meet the criteria are rejected.
+2. Warn: Issuing a warning for Pods that do not meet security policies, but not blocking them.
+3. Audit: Records violations of the policy but does not block or warn users.
+
+
 ** How to Enforce Pod Security Policies Using PodSecurity Admission:
 --------------------------------------------------------------------
 -> In Kubernetes, you can configure PodSecurity at the namespace level to enforce security profiles on your Pods. These settings can be applied using annotations in your Namespace resources.
@@ -2723,11 +2732,6 @@ metadata:
 -> pod-security.kubernetes.io/warn: If set, Kubernetes will issue warnings if Pods in this namespace do not meet the security standards.
 -> pod-security.kubernetes.io/audit: Specifies that Pods will be audited but not necessarily blocked or warned.
 
-Enforcement Modes:
------------------
-1. Enforce: Actively enforces the security policies, meaning Pods that do not meet the criteria are rejected.
-2. Warn: Issuing a warning for Pods that do not meet security policies, but not blocking them.
-3. Audit: Records violations of the policy but does not block or warn users.
 
 How to Enable PodSecurity Admission:
 ---------------------------------
@@ -3054,7 +3058,7 @@ Enabling Encryption data at rest:
 -> The contents of that file, if you specify one, control how Kubernetes API data is encrypted in etcd. If you are running the kube-apiserver without the --encryption-provider-config command line argument, you do not have encryption at rest enabled.
 
 -> apt-get install etcd-client
-->To check: etcdctl
+-> To check: etcdctl
 
 
 1. Check whether Encryption data at rest is enabled or not
