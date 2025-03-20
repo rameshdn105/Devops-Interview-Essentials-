@@ -6,7 +6,8 @@ Idempotency: It refers to the property of an operation where performing the oper
 
 Q. The errors or bugs in jenkins and how to troubleshoot it?
 -> There are many potential errors or bugs that can occur in Jenkins. Here are a few common issues that you might encounter:
-1. Build failures: One of the most common issues in Jenkins is build failures. This can occur for a variety of reasons, such as code issues, configuration errors, or problems with dependencies. 
+1. Build failures: One of the most common issues in Jenkins is build failures. 
+-> This can occur for a variety of reasons, such as code issues, configuration errors, or problems with dependencies. 
 2. Plugin conflicts: Jenkins relies heavily on plugins to extend its functionality. However, sometimes plugin conflicts can occur, which can cause issues such as broken builds or problems with job execution.
 3. Resource constraints: Depending on the size and complexity of your Jenkins setup, you may encounter resource constraints, such as CPU or memory limitations, that can affect performance and lead to errors.
 4. Security vulnerabilities: As with any software, there is always the risk of security vulnerabilities in Jenkins. 
@@ -108,7 +109,7 @@ For starters,
 -If Jenkinsfile starts with the word pipeline, then it’s a Declarative pipeline.
 -It is recommended using Declarative Pipeline as it offers more advantages over Scripted Pipeline.
 
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 Jenkins Architecture?
 -> The Jenkins CI server checks the repository at regular intervals and pulls any newly available code. The Build Server 
    builds the code into an executable file. In case the build fails, feedback is sent to the developers. Jenkins deploys the 
@@ -154,15 +155,16 @@ Setting Up EC2 instance  as worker node:
 
 1. Install Amazon EC2 plugin (Manage Jenkins-plugin-Amazon EC2)
 2. Setting up worker node: (Manage Jenkins-Cloud-New cloud-Cloud NAme{Demo}-Type{EC2})
-3. 
+
 
 
 ** What are the ways to configure Jenkins node agent to communicate with Jenkins master?
    There are 2 ways to start the node agent –
--> Browser – if Jenkins node agent is launched from a browser, a JNLP (Java Web Start) file is downloaded.   
-   This file launches a new process on the client machine to run jobs.
--> Command-line – to start the node agent using the command line, the client needs the executable agent.jar file.  
-   When this file is run, it simply launches a process on the client to communicate with the Jenkins master to run build jobs.
+1. Browser – if Jenkins node agent is launched from a browser, a JNLP (Java Web Start) file is downloaded.   
+-> This file launches a new process on the client machine to run jobs.
+
+2. Command-line – to start the node agent using the command line, the client needs the executable agent.jar file.  
+-> When this file is run, it simply launches a process on the client to communicate with the Jenkins master to run build jobs.
 
 ** What is the use of JENKINS HOME directory?
 -> All the settings, logs and configurations are stored in the JENKINS_HOME directory.
@@ -228,9 +230,10 @@ CODE -> BUILD -> INTEGRATE -> RELEASE -> DEPLOY
 <- - - - -    CONTINUOUS DEPLOYMENT   - - - ->
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Q. How to secure jenkins?
+Q. How to secure Jenkins?
+
 1. Authentication: who can access it
-	a. LDAP (Lightweight Directory Access Protocol): who can do operation
+a. LDAP (Lightweight Directory Access Protocol): who can do operation
 *  So if we want to access jenkins with LDAP credentials we need to install LDAP plugin.
    ## manage jenkins -> confg global securty -> select LDAP Security realm -> fill server details & test LDAP setting -> save
 
@@ -241,7 +244,7 @@ Q. How to secure jenkins?
 
 3. Enable CSRF Protection: Cross-Site Request Forgery
 -> Cross-Site Request Forgery (CSRF) protection should be enabled to prevent unauthorized commands being executed on behalf of authenticated users. This is   usually enabled by default in recent Jenkins versions.
--> Cross-Site Request Forgery (CSRF): also known as "one-click attack" or "session riding," is a type of web security vulnerability that allows an attacker   to execute unauthorized actions on behalf of an authenticated user. It occurs when a user unknowingly performs actions on a web application without their consent.
+-> Cross-Site Request Forgery (CSRF): also known as "one-click attack" or "session riding," is a type of web security vulnerability that allows an attacker to execute unauthorized actions on behalf of an authenticated user. It occurs when a user unknowingly performs actions on a web application without their consent.
 
 4. Secure Jenkins Home Directory:
 -> Restrict access to the Jenkins home directory (usually located at /var/lib/jenkins) to authorized users and processes.
@@ -340,6 +343,18 @@ For starters,
 - If Jenkinsfile starts with the word node, then it’s a Scripted pipeline.
 - If Jenkinsfile starts with the word pipeline, then it’s a Declarative pipeline.
 - It is recommended using Declarative Pipeline as it offers more advantages over Scripted Pipeline.
+
+
+1. Definition: Scripted uses Groovy scripting (flexible), while Declarative uses a YAML-like syntax (readable).
+2. Syntax Style: Scripted is imperative (step-by-step), while Declarative is structured.
+3. Complexity: Scripted is more complex but flexible, Declarative is simpler with a predefined structure.
+4. Control Flow: Scripted allows full control (loops, conditions, etc.), Declarative has limited flow control.
+5. Best For: Scripted is ideal for advanced custom logic, while Declarative is for standard CI/CD.
+6. Example: Scripted → node { stage('Build') { ... } }, Declarative → pipeline { agent any; stages { stage('Build') { ... } } }.
+7. Error Handling: Scripted requires manual try-catch, while Declarative has built-in error handling (post).
+8. Extensibility: Scripted supports complex Groovy scripting, Declarative limits Groovy inside script blocks.
+9. Learning Curve: Scripted is harder (needs Groovy knowledge), while Declarative is easier for beginners.
+
 
 1. Scripted Pipeline: It uses the Groovy (JVM-based) language to create a pipeline as code. Some software developers prefer 
    this pipeline because the use of Groovy code paves the way for making numerous APIs available. As a result, developers 
@@ -457,10 +472,10 @@ Q. where is agent in jenkins:
 5. Agent parallel: It run stages parallelly at a time.
 
 Stage: Defines particular stage (Build/test/deploy) of our job.
--At least one stage has to be there,
--Name will display on jenkins dashboard.
+-> At least one stage has to be there,
+-> Name will display on jenkins dashboard.
 Step: we need to write steps inside the stage directive.
--Steps contains commands/scripts that use in the build.
+-> Steps contains commands/scripts that use in the build.
 
 *Hello world pipeline
 pipeline {
@@ -501,8 +516,7 @@ Jenkins Plugins and Features: Installation Feature
 * Jira Plugin: Jenkins Jira Integration is to create a free, easy, and secure way to connect the servers running behind the firewall.
             ->  project management and issue tracking tool developed by Atlassian
 * Slack Notification Plugin: This integration will post build notifications to a channel in Slack. It makes it easy to contact your colleagues – you can message anyone inside or outside your organisation and collaborate just as you would in person
-* Maven Plugin: Maven is a project management and build tool that is driven by a pom.xml file. It has made the build process simple, easy, and consistent. It provides the capabilities to configure, build, and run Maven-based projects in Jenkins. This is a must 
-             pre-requisite for the integration of Maven with Jenkins.
+* Maven Plugin: Maven is a project management and build tool that is driven by a pom.xml file. It has made the build process simple, easy, and consistent. It provides the capabilities to configure, build, and run Maven-based projects in Jenkins. This is a must pre-requisite for the integration of Maven with Jenkins.
 * Amazon EC2 Plugin: If Jenkins notices that your build cluster is overloaded, it'll start instances using the EC2 API and 
              automatically connect them as Jenkins agents. When the load goes down, excess EC2 instances will be terminated.
 * JUnit Plugin: Jenkins can provide useful information about test results, such as historical test result trends, a web UI 
@@ -518,9 +532,9 @@ Jenkins Plugins and Features: Installation Feature
 * Gearman Plugin: This plugin uses Gearman to support multiple Jenkins controllers, designed to support extra slaves, allow load balancing of build jobs, and provide redundancy.
 * Job Import plugin: In Jenkins, the Job Import Plugin allows us to migrate jobs from one server to another server.
 * Credentials Binding - plugin: which stores different types of credentials like - Username with a password, SSH username with the private key, AWS Credentials, Jenkins Build Token, Secret File/Text, X509 & other certificates, Vault related credentials securely with proper encryption & decryption as and when required.
-*JaCoCo, CodeCov: code coverage is measured/tracked using Jenkins in a CI environment
-*Parameterized Trigger Plugin: This plugin lets you trigger new builds when your build has completed, with various ways of specifying parameters for the new build.
-*DSL plugin: The Job DSL(Domain Specific Language) plugin is in principle a generator for these XML files, translating the DSL code into XML. If a configuration option is not available in the high-level DSL, it is possible to generate the XML directly using a Configure Block. Use the Job DSL Playground to create and test your configure blocks.
+* JaCoCo, CodeCov: code coverage is measured/tracked using Jenkins in a CI environment
+* Parameterized Trigger Plugin: This plugin lets you trigger new builds when your build has completed, with various ways of specifying parameters for the new build.
+* DSL plugin: The Job DSL(Domain Specific Language) plugin is in principle a generator for these XML files, translating the DSL code into XML. If a configuration option is not available in the high-level DSL, it is possible to generate the XML directly using a Configure Block. Use the Job DSL Playground to create and test your configure blocks.
 
 -> Jenkins job DSL is a plugin that allows us to define jobs in programmatic form with minimal effort.
 build timeout

@@ -14,6 +14,44 @@ jobs:
         env:
           ACTIONS_RUNNER_DEBUG: "true"
 
+🔹 RBAC Components in GitHub
+1️⃣ Organization-Level RBAC
+-> At the organization level, GitHub provides these roles:
+Role	Description
+Owner	Full access, can manage repositories, teams, billing, and security.
+Member	Standard role with limited access based on repository/team permissions.
+
+🔹 Assigning Organization Roles:
+-- Go to Organization Settings → People → Manage Role.
+
+2️⃣ Repository-Level RBAC
+-> At the repository level, GitHub offers fine-grained permissions:
+-> Role	Permissions
+Admin	Full control over repo, including settings & access management.
+Maintain	Manage repo without admin settings (e.g., branch protection).
+Write	Push code, manage issues, and approve PRs.
+Triage	Manage issues, PRs, and discussions, but cannot push code.
+Read	View code, clone repo, and comment on issues & PRs.
+
+-> Assigning Repository Roles:
+Go to Repo Settings → Manage Access → Invite Team/User → Assign Role.
+
+3️⃣ Team-Based RBAC (For Organizations)
+-> GitHub Teams allow grouping multiple users and managing access centrally.
+-> Teams can be assigned repo-level permissions (e.g., "Developers" team gets Write access).
+🔹 Managing Team Permissions:
+-- Go to Organization Settings → Teams → Select Team → Manage Access.
+
+4️⃣ Fine-Grained Personal Access Token (PAT) Permissions
+-> Instead of broad OAuth scopes, GitHub now allows fine-grained PATs where you can define specific repo access (read/write).
+Example:
+-- Read access to issues
+-- Write access to workflows
+
+🔹 How RBAC is Enforced in GitHub Actions & API?
+1️⃣ RBAC in GitHub Actions (Rulesets & Protected Branches)
+-- You can restrict workflows from running without specific approvals.
+-- Branch protection ensures that only authorized users can push to main.
 ------------------------------------------------------------------------------------------
 Difference between Jenkins and GitHub Actions: 
 
@@ -829,7 +867,21 @@ Rulesets:
 ==========
 -> Rulesets define whether collaborators can delete or force push and set requirements for any pushes, such as passing status checks or a linear commit history.
 
+** GitHub Rulesets provide advanced repository-wide governance by enforcing:
+-> Branch & Tag Protection: Restrict changes to multiple branches/tags at scale.
+-> Pull Request Policies: Require approvals, status checks, or linear history before merging.
+-> Commit Restrictions: Block force pushes, deletions, and unauthorized commits.
+-> Access Controls: Restrict rules to specific teams, actors, or repository roles.
+-> Enforcement Scope: Apply rules across multiple repositories, ensuring consistency. 🚀
 
+
+Branch Protection vs. Rulesets in GitHub
+========================================
+1. Scope: Branch Protection applies to a specific branch (e.g., main, develop), while Rulesets apply to multiple branches and repositories.
+2. Granularity: Branch Protection enforces basic restrictions (reviews, status checks, merge rules), whereas Rulesets offer advanced, customizable rules across repositories.
+3. Flexibility: Branch Protection is limited to predefined settings per branch, but Rulesets allow broader policies for branches, PRs, and repositories.
+4. Use Case: Branch Protection ensures security and consistency on key branches, while Rulesets define governance policies at scale.
+5. Example: Branch Protection requires 2 approvals before merging into main, while Rulesets block force pushes across all feature/* branches. 🚀
 
 
 

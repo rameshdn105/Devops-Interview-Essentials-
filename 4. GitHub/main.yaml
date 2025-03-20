@@ -3,6 +3,9 @@ on:
   push:
     branches:
         - master
+  pull_request:
+    branches:
+      - main
   workflow_call:
     inputs:
       db_database_name: 

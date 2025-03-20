@@ -376,8 +376,8 @@ kubectl get pods -o wide
 ==========================================================================================
 MULTICONATINER PODS:
 -------------------
-
--> These containers share the same life cycle, which means they are created together and destroyed together. They share same network space, which means they can refer to each other as local host, and they have access to the same storage volumes.
+-> These containers share the same life cycle, which means they are created together and destroyed together. 
+-> They share same network space, which means they can refer to each other as local host, and they have access to the same storage volumes.
 
 kubectl -n elastic-stack logs kibana
 
@@ -388,8 +388,8 @@ $$ kubectl -n elastic-stack exec -it app -- cat /log/app.log
 
 Multi-container Pods Design Patterns
 ====================================
-
--> There are 3 common patterns when it comes to designing multi-container PODs. The first, and what we just saw with the logging service example, is known as a sidecar pattern. The others are the adapter and the ambassador pattern.
+-> There are 3 common patterns when it comes to designing multi-container PODs. 
+-> The first, and what we just saw with the logging service example, is known as a sidecar pattern. The others are the adapter and the ambassador pattern.
 -> However, these fall under the CKAD curriculum and are not required for the CKA exam. So, we will discuss these in more detail in the CKAD course.
 
 	 Events				Process		Write
@@ -444,14 +444,13 @@ spec:
 2. name: init-myservice image: busybox:1.28 command: ['sh', '-c', 'until nslookup myservice; do echo waiting for myservice; sleep 2; done;']
 3. name: init-mydb image: busybox:1.28 command: ['sh', '-c', 'until nslookup mydb; do echo waiting for mydb; sleep 2; done;']
 
-
 $$ kubectl get pod orange -o yaml > /root/orange.yaml
 
 *****************************************************************************
 2. Sidecar containers/Multi-Container Pod: 
 -> These are the containers that will run along with the main container.
--> We have a pod with a main container which is working very well but If we want to extend the functionality without changing the existing main container then better option is to use sidecar conateiner.
--> To take the copy of file or data from main container we can use sidecar conateiner.
+-> We have a pod with a main container which is working very well but If we want to extend the functionality without changing the existing main container then better option is to use sidecar container.
+-> To take the copy of file or data from main container we can use sidecar container.
 
 ## Sidecar container/Multi container: This pattern is useful for scenarios where you need to add features such as monitoring, logging, proxying, or managing secrets without modifying the main application code.
 1. Logging and Monitoring with a Sidecar
@@ -489,11 +488,12 @@ STATIC POD:
 -> We don't have any apiServer to provide pod definition.
 -> We can configure kubelet to read pod definition file from a folder and create pod and ensure pod should be alive. If pod fails it should replace and a manifest file removed pod should be deleted.
 -> kubelet works at pod level that is why it can able to create.
--> Designated location for manifest file could be any directory on the host. And the location of the directory is passed in to the kubelet as a option while running the service.
+
+1. Designated location for manifest file could be any directory on the host. And the location of the directory is passed in to the kubelet as a option while running the service.
 -> The option named as "manifest path" and here it is set to "/etc/Kubernetes/manifests "
 -- pod-manifest-path=/etc/Kubernetes/manifests\\
 
--> Another way is to specifying the option directly in the Kubernetes.service file, you could provide a path to another config file using config option, and define directory path as staticPodPath in that file. Cluster setup by kubeadmin tool uses this approach.
+2. Another way is to specifying the option directly in the Kubernetes.service file, you could provide a path to another config file using config option, and define directory path as staticPodPath in that file. Cluster setup by kubeadmin tool uses this approach.
 -- config=kubeconfig.yaml
 staticPodPath: /etc/Kubernetes/manifests
 
@@ -516,9 +516,9 @@ Q. Why static pods?
 -> Place the definition files in the designated manifests folder. and kubelet takes care of deploying the control plane components themselves as PODs on the cluster.
 -> This way you don't have to download the binaries configure services or worry about so the service is crashing. If any of these services were to crash since its a static pod it will automatically be restarted by kubelet. Neat and Simple. That's how kubeadmin tool sets up K8s cluster. Which is why when you list the pods in the kube-system namespace, you see the control plane components as PODs in a cluster setup by the kubeadmin tool. 
 
-Static pod				Daemonset
-Created by kubelet 			Created by kube-api server (Daemonset controller)
-Deploy control plane comp as static pods Deploy monitoring agents, logging agents on nodes
+Static pod						Daemonset
+Created by kubelet 				Created by kube-api server (Daemonset controller)
+Deploy control plane comp as static pods 	Deploy monitoring agents, logging agents on nodes
 
 Q. How many static pods exist in this cluster in all namespaces?
 -> kubectl get pods --all-namespaces (Look for with -controlplane)
@@ -1345,13 +1345,7 @@ Stages:
 
 4. Binding: This is where a pod is finally bound to a node with the highest score. All these operations are achieved with certain plugins.
 
--> Above all stages will be achieved using plugins.
-Scheduling: PrioritySort plugin
-Filtering: NodeResourceFit or NodeName or NodeUnschedulable
-Scoring: NodeResourceFit or ImageLocality
-Binding: DefaultBinder
-
--> Extension Points: 
+-> Above all stages will be achieved using plugins/ Extension Points: 
 Scheduling: PrioritySort plugin: queueSort
 Filtering: NodeResourceFit or NodeName or NodeUnschedulable: prefilter or filter or postfilter or preScore
 Scoring: NodeResourceFit or ImageLocality: score or reserve
