@@ -50,7 +50,6 @@ msbuild MyCppProject.sln /p:Configuration=Release /p:Platform=x64 /m
 MyCppProjectTests.exe --gtest_output=xml:test_results.xml
 
 
-
 🔹 .NET Application - Build & Test using MSBuild & NuGet
 1️⃣ Restore NuGet Packages
 nuget restore MyDotNetApp.sln

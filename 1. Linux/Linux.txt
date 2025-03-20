@@ -1,6 +1,6 @@
 https://meet.google.com/mgi-kwzu-pse
 
-java 11		(C, C++)
+java 11			(C, C++)
 git version 2.33	(Git, SVN, Gitlab, Bitbucket )
 apache maven 3.8.6	(Maven, Ant, Gradle)
 Jenkins 2.412
