@@ -43,7 +43,7 @@ Criteria
 
 ------------------------------------------------------------------------------
 ✅ Why QoS Class is important for HA?
-Scenario				Eviction Order
+Scenario				                Eviction Order
 1. Node under Memory/CPU pressure	BestEffort pods evicted first, then Burstable, Guaranteed last
 2. Pod survival under resource limits	Guaranteed pods stay longest, ensuring app uptime
 

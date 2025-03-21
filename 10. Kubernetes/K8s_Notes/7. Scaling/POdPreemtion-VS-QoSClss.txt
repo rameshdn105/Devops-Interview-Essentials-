@@ -3,9 +3,9 @@ Pod Preemption vs QoS Classes
 -> Both Pod Preemption and QoS Classes are about deciding which pods to evict when there are not enough resources — but they are different mechanisms and serve different purposes in Kubernetes scheduling. 
 
 ✅ What is common?
-Both are involved in evicting pods.
-Both help ensure high availability for important workloads.
-Both are related to resource shortage scenarios.
+-- Both are involved in evicting pods.
+-- Both help ensure high availability for important workloads.
+-- Both are related to resource shortage scenarios.
 
 🔑 Key Difference between Pod Preemption and QoS Class:
 

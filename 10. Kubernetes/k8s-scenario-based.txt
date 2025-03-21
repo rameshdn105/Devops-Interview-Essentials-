@@ -27,3 +27,4 @@
 
 10. What happens if your cluster's certificate authority expires?
 -> Complete cluster failure. All component communications fail with TLS errors. API server rejects connections, kubectl stops working, and the entire cluster becomes unusable.
+

@@ -613,27 +613,19 @@ done
 echo "$reversed_string"
 
 ------------------------------------------------------------------------------------------
-1. Automated data backups to S3: A shell script can be created to automate the process of backing up data, 
-   such as databases or important files. This script can be scheduled to run regularly using a cron job. 
-   The script can compress the data and transfer it to a remote server or backup location. 
-   Here's an example of a backup script using the tar command:
+1. Automated data backups to S3: files modified in last 24 hrs
    
 #!/bin/bash
-NOW=$(date +"%Y-%m-%d")
-BACKUP_DIR="/path/to/backup/dir"
-SOURCE_DIR="/path/to/data"
-BACKUP_FILE="backup-$NOW.tar.gz"
 
-cd $SOURCE_DIR
-tar -czvf $BACKUP_DIR/$BACKUP_FILE .
+BACKUP_FROM="/home/ubuntu/Ram/csi-demo"
+BACKUP_TO="s3://demo123ramesh/demo/"
+DATE=$(date +%Y-%m-%d)
 
-#!/bin/bash
-BACKUP_DIR="/path/to/important/files"
-DATE=$(date +%Y%m%d)
-BACKUP_FILE="backup_$DATE.tar.gz"
-tar -czf /tmp/$BACKUP_FILE $BACKUP_DIR
-aws s3 cp /tmp/$BACKUP_FILE s3://your-bucket-name/backups/$BACKUP_FILE
+# Create a tar archive of only modified files
+find "$BACKUP_FROM" -type f -mtime -1 -print | tar -cvf demo-$DATE.tar -T -
 
+# Upload the tar file to S3
+aws s3 cp demo-$DATE.tar "$BACKUP_TO/demo-$DATE.tar"
 ====================================================================================
 
 2. User account creation: A shell script can be created to automate the process of creating user accounts. 

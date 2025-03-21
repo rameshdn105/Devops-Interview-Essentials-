@@ -2,12 +2,12 @@
 
 
 🚨 Why Limit Privileges in Kubernetes?
-Problem					Solution
-Over-permissioned service accounts	Use RBAC to assign only necessary roles
-Containers running as root		Use Pod Security Standards (PSS) or PSA to enforce non-root containers
+Problem					                            Solution
+Over-permissioned service accounts	  Use RBAC to assign only necessary roles
+Containers running as root		        Use Pod Security Standards (PSS) or PSA to enforce non-root containers
 Host path mounts exposing sensitive data	Restrict volumes and mounts
-Broad network access between pods	Enforce Network Policies
-Excessive Kubernetes API access		Fine-grained RBAC policies
+Broad network access between pods	    Enforce Network Policies
+Excessive Kubernetes API access		    Fine-grained RBAC policies
 
 
 ✅ Key Techniques to Limit Privileges in Kubernetes
@@ -48,9 +48,9 @@ volumes:
 ⚙️ Bonus: Tools to Audit and Enforce Least Privilege
 Tool			Purpose
 OPA/Gatekeeper	Policy-as-Code enforcement for Kubernetes
-Kyverno		Kubernetes-native policy engine (easier than OPA)
-Kube-bench	CIS Benchmark checks (RBAC, Pod Security, etc.)
-Kubesec		Scan YAML manifests for security issues
+Kyverno		    Kubernetes-native policy engine (easier than OPA)
+Kube-bench	  CIS Benchmark checks (RBAC, Pod Security, etc.)
+Kubesec		    Scan YAML manifests for security issues
 Trivy / Kube-hunter	Container image and K8s cluster vulnerability scans
 
 
