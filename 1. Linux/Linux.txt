@@ -556,11 +556,13 @@ free -m, vmstat, top, htop
    that is completely unused or free on a running system. Even if memory is not being actively used by an application, 
    the Linux kernel may be using it for various purposes such as caching data or buffering input/output operations.
 
-uname - used to check the os
-uname -a -> used to check all the info about linux
+cat /etc/passwd | awk -F ':' '{print $1}' :list all users
 who/whoami - used to check how many users logged into system 
 -> (who : Print information about users who are currently logged in. whoami : Print effective username of the user who ran whoami)
 who -r command - to determine a system's run level
+
+uname - used to check the os
+uname -a -> used to check all the info about linux
 ps -ef -> list running process
 ps -efl ->shows the process status
 ps -u "ec2-user" -> used to list of process by particlar user
@@ -639,23 +641,19 @@ TLS/SSL
 -> TLS (Transport Layer Security) and SSL (Secure Sockets Layer) are both protocols used to provide secure communication over the internet. They are cryptographic protocols that provide security for communication between clients and servers over a network.
 -> SSL was developed by Netscape in the mid-1990s and was widely used for secure communication on the internet until the mid-2000s when it was replaced by TLS. 
 -> TLS is an improved version of SSL and is now widely used for secure communication on the internet.
--> Both SSL and TLS use a combination of public-key and symmetric-key encryption to provide confidentiality, 
-   integrity, and authenticity. When a client connects to a server using SSL/TLS, the server presents a digital 
-   certificate that contains its public key. The client uses this public key to establish a secure connection with 
-   the server and negotiate the symmetric keys used for encryption.
+-> Both SSL and TLS use a combination of public-key and symmetric-key encryption to provide confidentiality, integrity, and authenticity. 
+-> When a client connects to a server using SSL/TLS, the server presents a digital certificate that contains its public key. The client uses this public key to establish a secure connection with the server and negotiate the symmetric keys used for encryption.
 -> TLS is used for a variety of purposes including secure web browsing (HTTPS), email, FTP, and other applications that 
    require secure communication over a network. The latest version of TLS is TLS 1.3, which was released in 2018 and provides 
    improved security and performance compared to previous versions.
 
 
 ** HTTP, the hypertext transfer protocol, uses port 80 to deliver web pages
--> HTTP stands for Hyper Text Transfer Protocol. WWW is about communication between web clients and servers. Communication between 
-   client computers and web servers is done by sending HTTP Requests and receiving HTTP Responses.
--> An HTTP Proxy serves two intermediary roles as an "HTTP Client" and a "HTTP Server" for security, management, and caching 
-   functionality. The HTTP Proxy routes HTTP Client requests from a Web browser to the Internet, while supporting the caching of Internet data.
+-> HTTP stands for Hyper Text Transfer Protocol. WWW is about communication between web clients and servers. 
+-> Communication between client computers and web servers is done by sending HTTP Requests and receiving HTTP Responses.
+-> An HTTP Proxy serves two intermediary roles as an "HTTP Client" and a "HTTP Server" for security, management, and caching functionality. The HTTP Proxy routes HTTP Client requests from a Web browser to the Internet, while supporting the caching of Internet data.
 ** HTTPS: Port 443 is dedicated to HTTPS, the secure version of HTTP delivered over TLS/SSL
-->  HTTPS uses an encryption protocol to encrypt communications. The protocol is called Transport Layer Security (TLS), although formerly it was known as 
-    Secure Sockets Layer (SSL). This protocol secures communications by using what's known as an asymmetric public key infrastructure.
+->  HTTPS uses an encryption protocol to encrypt communications. The protocol is called Transport Layer Security (TLS), although formerly it was known as Secure Sockets Layer (SSL). This protocol secures communications by using what's known as an asymmetric public key infrastructure.
 
 
 Q. how http and https works?
@@ -673,9 +671,7 @@ Q. how http and https works?
 4. The server receives the symmetric key and decrypts it using its private key. The symmetric key is then used to encrypt all subsequent communication between the client and the server.
 5. The server sends an HTTPS response to the client, which is encrypted using the symmetric key.
 6. The client receives the encrypted HTTPS response and decrypts it using the symmetric key.
--> In summary, both HTTP and HTTPS protocols are used to transfer data between a client and a server, but HTTPS 
-   provides a more secure connection by using SSL/TLS protocols to encrypt the data being transferred. 
-  This helps to prevent unauthorized access to the data and ensure the privacy and security of the user's data.
+-> In summary, both HTTP and HTTPS protocols are used to transfer data between a client and a server, but HTTPS provides a more secure connection by using SSL/TLS protocols to encrypt the data being transferred. This helps to prevent unauthorized access to the data and ensure the privacy and security of the user's data.
 
 
 ** Tcp Ip protocol and working mechanism
@@ -770,8 +766,8 @@ It doesn’t use any pointing devices.					GUI uses pointing devices to select a
 It doesn’t help avoid spelling mistakes and typing errors				The spelling mistakes and typing errors can be avoided while using GUI.
 
 --------------------------------------------------------------------------------------------------------------
-   Linux Filesystem Hierarchy Standard (FHS)
-   -----------------------------------------
+Linux Filesystem Hierarchy Standard (FHS
+-----------------------------------------
 ** Linux Directories
 -> We have categorize the directories according to the type of file as given below:
 -> Directory type:				Types of files stored
@@ -782,7 +778,7 @@ It doesn’t help avoid spelling mistakes and typing errors				The spelling mist
 5. Usr (Unix System Resources): Contains sharable, read only data, eg, /usr/bin, /usr/lib, etc.
 6. var (variable directory): Contains larger size data, eg, /var/log, /var/cache, etc.
 7. Non-standard directories: Directories which do not come under standard FHS, eg, lost+found, /run, etc.
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Q. Which difference have between public and private SSH key?
 -> private keys can be used for both encryption and decryption, while Public keys are used only for the 
@@ -896,8 +892,7 @@ Q. Describe the linux boot process with as much detail as possible, starting fro
    graphical login prompt, the user will be presented with a graphical interface to log in. If the system is 
    configured for a text-based login prompt, the user will be presented with a command-line interface to log in.
    
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---------------------------------------------------------------------------  
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Q. What Are Linux Namespaces and What Are They Used for?
 -> When you’re running many different processes and applications on a single server, as is the case with deployment 
    tools like Kubernetes, it’s important to have each process isolated, mostly for security.

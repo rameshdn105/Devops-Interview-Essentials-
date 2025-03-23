@@ -273,11 +273,19 @@ Git Flow Branch Strategy:
 The main idea behind the Git flow branching strategy is to isolate your work into different types of branches. 
 There are five different branch types in total:
 
-1) Main/Master
-2) Develop
-3) Feature
-4) Release
-5) Hotfix
+Branch		Purpose	Branch 			From		Merge Into
+main		Production-ready code		release or hotfix	-
+develop		Integration branch		main		release
+feature/*	New features			develop		develop
+release/*	Preparing for release		develop      main & develop
+hotfix/*	Urgent production fixes		main	     main & develop
+
+-- Use feature/* branches for developing new features.
+-- Merge features into develop, which acts as the main integration branch.
+-- When ready for release, create a release/* branch and stabilize the code.
+-- Merge release/* into main when it's production-ready.
+-- For urgent production bugs, use hotfix/*, and merge back to both main & develop.
+
 
 The two primary branches in Git flow are main/Master and develop, with an infinite lifetime, while the rest are supporting 
 branches that are meant to aid parallel development among developers, usually short-lived
@@ -292,6 +300,8 @@ There are three types of supporting branches with different intended purposes: f
 -When the release branch is done it is merged into develop and main. 
 -If an issue in main/master is detected a hotfix branch is created from main/master.
 
+
+======================================================================================
 GitHub Flow: Unlike GitFlow, this model doesn’t have release branches. You start off with the main branch then developers create branches, 
 feature branches that stem directly from the master, to isolate their work which are then merged back into main. The feature branch is then deleted.
 -The main idea behind this model is keeping the master code in a constant deployable state and hence can support continuous integration and continuous delivery processes.

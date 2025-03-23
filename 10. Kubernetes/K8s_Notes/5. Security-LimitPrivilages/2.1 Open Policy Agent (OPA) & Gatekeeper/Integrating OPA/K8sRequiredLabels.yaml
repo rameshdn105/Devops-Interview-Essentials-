@@ -19,3 +19,14 @@ spec:
         count(missing) > 0
         msg := sprintf("Missing required labels: %v", [missing])
       }
+
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredLabels
+metadata:
+  name: must-have-app-and-env-labels
+spec:
+  match:
+    kinds:
+    - apiGroups: [""]
+      kinds: ["Pod"]
