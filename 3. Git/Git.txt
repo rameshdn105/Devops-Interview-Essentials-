@@ -1,25 +1,32 @@
 🔹 SubGit is a tool for migrating Subversion(SVN) to Git
 🔹 Git squash: It is a technique that helps you to take a series of commits and condense it to a few commits.  git rebase -i HEAD~3
-🔹 git rebase --skip   : it skips a commit
+🔹 git rebase --skip: Skip a Conflicting Commit in Rebase
+-- When performing a Git rebase, you might encounter conflicts. If you want to skip the current commit (i.e., ignore it and move forward)
+
 🔹 git commit --amend : It is used to edit the commit msg
 🔹 git clean -df : It is used to clean the untracked/unwanted files from workspace.
 🔹 git log --raw command  : To find out which files changed in a given commit. It's the fastest and simplest way to get insight into which files a commit affects
-🔹 git gist :Gists provide a simple way to share code snippets with others. Every gist is a Git repository, which means that it can be forked and cloned.
-🔹 Git Reflog — How to recover a deleted branch that was not merged. It can track changes done on 
+🔹 git gist :Gist provide a simple way to share code snippets with others. Every gist is a Git repository, which means that it can be forked and cloned.
+🔹 Git Reflog — Recover Lost Commits & Track History
+
 🔹 git -rm file: remove files
 🔹 git log --online : Used to check commit history in short form.
 🔹 Git Remote: a Git repository that's hosted on the Internet or another network, This is useful for developers creating a local copy of a central repository, since it provides an easy way to pull upstream changes or publish local commits.
 🔹 git pull --rebase: current status of the repository is pulled to local machine. whatever the changes done at repository, all aligned in local machine,  new changes will be pulled to local machine 
 🔹 git pull origin main  -- pulling from main branch(files/date) to local machine.
 
-$$ git branch -v: To see the last commit on each branch
-$$ git branch --no-merged		: to check which branches are not merged when you are in master branch
-$$ git branch --merged		: to check merged brances
+🔹 git branch -v: To see the last commit on each branch
+🔹 git branch --no-merged :to check which branches are not merged when you are in master branch
+🔹 git branch --merged	:to check merged branches
 
-$$ git gc: It is the process of removing unnecessary data from the local repository. 
-   This data can include unreachable objects, such as old versions of files that have been deleted or overwritten, as well as stale references to remote branches that no longer exist.
+🔹 git gc: It is the process of removing unnecessary data from the local repository. 
+This data can include unreachable objects, such as old versions of files that have been deleted or overwritten, as well as stale references to remote branches that no longer exist.
   $$ git gc
 
+🔹 git clean (Removing Untracked Files)
+-- git gc (Garbage Collection) → Optimizes the repository by compressing data and removing unreachable objects → Cleans up internal Git files (old commits, loose objects, pack files).
+
+-- git clean → Removes untracked files and directories from the working directory → Deletes files that Git is not tracking (use with caution).
 ------------------------------------------------------------------------------------------
 Git 
 -> Git is a Open source Distributed Version Control System and is used to track, manage, and organize their code in the source code.
@@ -58,7 +65,7 @@ SVN (Subversion):
 2. If i want to go to previous versions of a code, then i need to checkout that previous  version from central repo.
 3. It does not have any direct commands.
 
---------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 Git installation on ubuntu
 sudo apt-get update
 sudo apt-get install -y git
@@ -80,13 +87,13 @@ cd git_repo
 git init
 ls -al - to make sure .git is present
 
----------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 Git workflow
 
 1. Workspace : It is a directory where we modify the project related files. files present in workspace are called untracked files.
-               "git add" command is used to move files from workspace to staging area.
+-- "git add" command is used to move files from workspace to staging area.
 2. Staging area/Index area : Here we save the changes. If we run "git commit" it will be committed to git repo.
-                             The commit id will get created here. And the files present here are called as index files.
+-- The commit id will get created here. And the files present here are called as index files.
 3. Local repo/ git repo : It is the location where versioning happens and files present here are called as committed files.
 
 How do we commit files to the repo ? 
@@ -102,7 +109,7 @@ How to check history of this repo ?
 -> git log -2 : It shows latest 2 commits of any file.
 -> git log -2 <filename> : It shows latest 2 commits of particular file.
 
---------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 Tags :
 -> Tag is a name given to a set of versions of files and directories.
 -> It indicates milestone of a project
@@ -115,8 +122,8 @@ Tags :
 -> git checkout tag : Used to switch to the different tag.
 
 Git supports two types of tags: lightweight and annotated. 
-A lightweight tag is very much like a branch that doesn't change — it's just a pointer to a specific commit. 
-Annotated tags, however, are stored as full objects in the Git database.
+1. A lightweight tag is very much like a branch that doesn't change — it's just a pointer to a specific commit. 
+2. Annotated tags, however, are stored as full objects in the Git database.
 
 Branch :
 -> Branch is used for parallel development.
@@ -132,7 +139,7 @@ Branch :
 Note : Whenever branch is created the entire commit history of the parent branch will be copied to the new branch.
 Note : Irrespective of on which branch a file is created or modified, git only check on which branch file is committed and that file belongs to the committed branch only.
 
----------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 Merge :
 -> Merge is nothing but integrating two branches.
 -> When my feature branch is updated and master is behind, we will do merge with master to update it.
@@ -140,11 +147,11 @@ syn : git merge <branch_name>
 Note : When you try to merge source branch to a destination branch you should be inside destination branch.
 
 Merge conflicts:
-Merge conflict occurs if the same line of code is modified on the same file on two different branches and when we try to 
-merge those 2 branches, we will get merge conflicts.
-Resolution:
-If i don't know whose changes should i take in the merge, I contact developers who modified file on branch1 and branch2 then they will
-decide and give new change. After that i will commit that to a file and continue with merge.
+================
+-- Merge conflict occurs if the same line of code is modified on the same file on two different branches and when we try to merge those 2 branches, we will get merge conflicts.
+
+-> Resolution:
+If i don't know whose changes should i take in the merge, I contact developers who modified file on branch1 and branch2 then they will decide and give new change. After that I will commit that to a file and continue with merge.
 
 Rebase :
 -> Rebase is also nothing but merge here one branch will get added to the tip of another branch
@@ -154,20 +161,60 @@ syn : git rebase <branch-name>
 -> Where they differ is how it's done. Git rebase moves a feature branch into a master. 
    Git merge adds a new commit, preserving the history.
 
------------------------------------------------------------------------------------------
-git commit --amend : It is used to edit the commit msg
 
-Git clone : Clone is used to bring remote repository to the local workspace for the first time.
+🔹 Scenario 1: Fast-Forward Merge (No New Local Commits)
+✅ If your local branch does not have new commits, git pull performs a fast-forward merge, simply moving the branch pointer forward.
+
+# Before `git pull`
+origin/main: A --- B --- C
+local/main:  A --- B 
+
+# After `git pull`
+local/main:  A --- B --- C  (Fast-forwarded)
+🔹 No extra merge commit is created. The commit history remains linear.
+
+🔹 Scenario 2: Merge Commit (Local and Remote Have Different Commits)
+✅ If you have local commits that do not exist on the remote, git pull creates a merge commit to combine both histories.
+
+📌 Example:
+# Before `git pull`
+origin/main: A --- B --- C
+local/main:  A --- B --- D
+
+# After `git pull`
+local/main:  A --- B --- D --- M (Merge Commit)
+                         \--- C
+🔹 A merge commit (M) is added to preserve both commit histories.
+
+🔹 Scenario 3: Rebase Instead of Merge (git pull --rebase)
+✅ If you use git pull --rebase, instead of creating a merge commit, Git reapplies your local commits on top of the latest remote commits.
+
+📌 Example:
+# Before `git pull --rebase`
+origin/main: A --- B --- C
+local/main:  A --- B --- D
+
+# After `git pull --rebase`
+local/main:  A --- B --- C --- D
+🔹 No merge commit is created. The commit history remains clean and linear.
+
+
+-----------------------------------------------------------------------------------------
+🔹 git commit --amend : It is used to edit the commit msg
+
+🔹 Git clone : Clone is used to bring remote repository to the local workspace for the first time.
 syn : git clone url
-git push : git push is used to push the changes to the remote repository.
+
+🔹 git push : git push is used to push the changes to the remote repository.
 syn : git push origin branchname
-git pull : Git pull is used to pull the changes from remote repo and merge it to the local repo automatically.
+
+🔹 git pull : Git pull is used to pull the changes from remote repo and merge it to the local repo automatically.
 syn : git pull origin branchname
-git fetch : Git fetch is used to bring the changes from remote repo and store it in a separate branch called FETCH_HEAD, so that 
-            we can review the changes and merge if necessary.
+
+🔹 git fetch : Git fetch is used to bring the changes from remote repo and store it in a separate branch called FETCH_HEAD, so that we can review the changes and merge if necessary.
 syn : git fetch origin branchname
 
-Git cherry-pick : 
+🔹 Git cherry-pick : 
 -> It is used to merge specific commit to a branch and also used to pick a particular change in a branch.
 syn : git cherry-pick <commit id>
 
@@ -183,8 +230,7 @@ There are 2 types of repository
 & we can't perform or do any git operations.
 syn : git init --bare
 
-2. Non bare repository : It acts as a local repo/git repo, here we can modify the files and push to a remote repo, and 
-we can run all the git commands here.
+2. Non bare repository : It acts as a local repo/git repo, here we can modify the files and push to a remote repo, and we can run all the git commands here.
 syn : git init
 
 Types of Non-bare repositories:
@@ -216,13 +262,43 @@ syn : git revert HEAD
 syn : git reset --soft <commitid>/HEAD
 2. Mixed reset : It is used to move files from staging area to workspace.
 syn : git reset --mixed <commitid>/HEAD
-3. Hard reset : It is used to reset the previous committed changes and there will be no clue that you have committed 
-                the changes, hard reset will remove the files from git repo, staging area, & from workspace.
+3. Hard reset : It is used to reset the previous committed changes and there will be no clue that you have committed the changes, hard reset will remove the files from git repo, staging area, & from workspace.
 syn : git reset --hard <commitid>/HEAD
 
 ------------------------------------------------------------------------------------------
-git clean -df : It is used to clean the unwanted files from workspace.
-git log --raw command  : To find out which files changed in a given commit. It's the fastest and simplest way to get insight into which files a commit affects
+🔹 git clean -df : It is used to clean the unwanted files from workspace.
+🚨 Warning: Be Careful!
+-- This command permanently deletes files.
+-- Does not affect committed or staged files, only untracked ones.
+-- To see what will be deleted before running, use:
+$$ git clean -dfn  # Dry run (shows what will be removed)
+
+-> If you also want to remove ignored files (from .gitignore), use:
+-- git clean -dfx
+
+git clean -df	Deletes untracked files & directories.
+git clean -dfn	Shows what will be deleted (safe preview).
+git clean -dfx	Deletes untracked + ignored files.
+
+
+🔹 git log --raw :It provides a detailed view of file changes in a commit, displaying the exact files modified, added, or deleted. It's a quick way to inspect changes without diving into the full diff.
+
+commit 1a2b3c4d5e6f7g8h9i0j
+Author: DevOps Engineer <dev@example.com>
+Date:   Fri Mar 21 12:00:00 2025 +0000
+
+:100644 100644 1234567... 89abcdef... M  src/main.py
+:100644 000000 9876543... 00000000... D  logs/debug.log
+:000000 100644 0000000... abcdef12... A  docs/README.md
+
+Symbol	Meaning
+M	Modified (File was changed).
+A	Added (New file was created).
+D	Deleted (File was removed).
+R	Renamed (File was renamed).
+C	Copied (File was copied).
+
+-------------------------------------------------------------------------------------
 git gist  : Gists provide a simple way to share code snippets with others. Every gist is a Git repository, which means that it can be forked and cloned.
 
 Git stash : 

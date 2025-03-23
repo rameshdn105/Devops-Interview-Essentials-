@@ -9,6 +9,8 @@
 💡 Istio is an open-source service mesh that provides a "Dedicated infrastructure layer for managing service-to-service communication" within a Kubernetes cluster (or across multiple clusters).
 -> It provides a set of features for managing and securing microservices applications. 
 -> It is built on top of the Kubernetes platform and is designed to work seamlessly with it.
+-> It is a mesh of proxy components that run alongside your application (most likely as a sidecar in Kubernetes) that offloads a lot of the networking responsibilities to the proxy. 
+
 
 ✅ Key Responsibilities of Istio:
 1. Traffic Management — Fine-grained control of traffic routing (e.g., canary deployments, blue-green, A/B testing), Routing rules (path, headers, version-based), Retries, timeouts, fault injection, Load balancing, mirroring (traffic shadowing).
@@ -56,3 +58,9 @@ Ingress Gateway		Manage inbound traffic to services.
 Egress Gateway		Manage outbound traffic to external services.
 Mixer (deprecated)	Policy and telemetry (older Istio versions).
 
+
+Q. If Kubernetes already provides automatic service discovery and routing via kube-proxy, you may be wondering why a service mesh is needed.?
+-> As you add in more services, managing how those services talk to one another seamlessly starts to become challenging. In fact, there’s a lot of “stuff” that needs to happen to make sure everything “works”. These things include:
+1. Security: encrypting messages in transit (e.g., mTLS), access control (i.e. service-to-service authorization)
+2. Traffic Management: load balancing, routing, retries, timeouts, traffic splitting, etc
+3. Observability: tracking latencies/errors/saturation, visualizing service topology, etc

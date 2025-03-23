@@ -171,7 +171,7 @@ $$ kubectl describe pod <pod-name> -n <namespace>
 -- Look for Evicted reason.
 -- Adjust resource limits and requests.
 -- Add more nodes or optimize workloads.
-	Set PodDisruptionBudgets to prevent critical pods from eviction.
+-- Set PodDisruptionBudgets to prevent critical pods from eviction.
 
 
 ************************************************************************
@@ -318,7 +318,8 @@ Troubleshoot: No action needed.
 
 
 **********************************************************************************
-3. Redirects ( 300 – 399): make sure that the endpoint that the probe is trying to access is correct and that there are no issues with the DNS.
+3. Redirects ( 300 – 399): 
+-- Make sure that the endpoint that the probe is trying to access is correct and that there are no issues with the DNS.
 
 
 **********************************************************************************

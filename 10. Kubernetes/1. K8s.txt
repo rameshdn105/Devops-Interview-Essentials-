@@ -200,6 +200,30 @@ Example: $$ kube-controller-manager --leader-elect=true
 -> Prevents deadlocks: if client holding lock dies, the lease expires, and others can take over.
 -> Lease renewal required to hold lock continuously.
 
+BACK UP ETCD
+============
+$$ ETCDCTL_API=3 etcdctl --endpoints=https://[127.0.0.1]:2379 \
+--cacert=/etc/kubernetes/pki/etcd/ca.crt \
+--cert=/etc/kubernetes/pki/etcd/server.crt \
+--key=/etc/kubernetes/pki/etcd/server.key \
+snapshot save /opt/snapshot-pre-boot.db
+
+-- Snapshot saved at /opt/snapshot-pre-boot.db
+
+Q. Restore the original state of the cluster using the backup file.?
+$$ ETCDCTL_API=3 etcdctl  --data-dir /var/lib/etcd-from-backup \
+snapshot restore /opt/snapshot-pre-boot.db
+
+2022-03-25 09:19:27.175043 I | mvcc: restore compact to 2552
+2022-03-25 09:19:27.266709 I | etcdserver/membership: added member 8e9e05c52164694d [http://localhost:2380] to cluster cdf818194e3a8c32
+
+-> Note: In this case, we are restoring the snapshot to a different directory but in the same server where we took the backup (the controlplane node) As a result, the only required option for the restore command is the --data-dir.
+-> Next, update the /etc/kubernetes/manifests/etcd.yaml: change the hostPath for the volume called etcd-data from old directory (/var/lib/etcd) to the new directory (/var/lib/etcd-from-backup).
+
+✅ Velero (With etcd Snapshots):
+-> Stores Kubernetes objects and persistent volume snapshots, Does not back up etcd directly, but can store etcd snapshots
+$$ aws s3 cp /var/lib/etcd/etcd-snapshot.db s3://velero-backups/etcd/
+
 
 **********************************************************
 3. Scheduler: (Decides where our container will be running on which node)
@@ -4538,10 +4562,8 @@ Restore - ETCD:
 - Stop kube-apiServer service: 
 
 
-
 WORKING WITH ETCDCTL
 --------------------
-
 -- etcdctl is a command line client for etcd.
 -> In all our Kubernetes Hands-on labs, the ETCD key-value database is deployed as a static pod on the master. The version used is v3.
 -> To make use of etcdctl for tasks such as back up and restore, make sure that you set the ETCDCTL_API to 3.
@@ -4570,8 +4592,6 @@ API version: 3.3
 
 –key       :identify secure client using this TLS key file
 
-For a detailed explanation on how to make use of the etcdctl command line tool and work with the -h flags, check out the solution video for the Backup and Restore Lab.
-
 
 Q. What is the version of ETCD running on the cluster? Check the ETCD Pod or Process
 -> Look at the ETCD Logs using the command:
@@ -4589,12 +4609,11 @@ kubeadm upgrade plan v1.31.0
 kubeadm upgrade apply v1.31.0
 
 
-
 BACK UP METHOD1:
 ===============
 
 Q. The master node in our cluster is planned for a regular maintenance reboot tonight. While we do not anticipate anything to go wrong, we are required to take the necessary backups. Take a snapshot of the ETCD database using the built-in snapshot functionality? 
-Store the backup file at location /opt/snapshot-pre-boot.db
+-> Store the backup file at location /opt/snapshot-pre-boot.db
 -> Use the "etcdctl snapshot save" command. You will have to make use of additional flags to connect to the ETCD server.
 --endpoints: Optional Flag, points to the address where ETCD is running (127.0.0.1:2379)
 
@@ -4688,8 +4707,6 @@ $$ ps -ef | grep etcd
 
 Q. What is the IP address of the External ETCD datastore used in cluster2?
 -> 
-
-
 
 References:
 https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#backing-up-an-etcd-cluster https://github.com/etcd-io/website/blob/main/content/en/docs/v3.5/op-guide/recovery.md https://www.youtube.com/watch?v=qRPNuT080Hk
