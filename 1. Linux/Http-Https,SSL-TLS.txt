@@ -82,7 +82,6 @@ The second server block (listen 80;) redirects all HTTP traffic to HTTPS.
 
 
 ===========================================================================================================================
-
 ** HTTP, the hypertext transfer protocol, uses port 80 to deliver web pages
 -> HTTP stands for Hyper Text Transfer Protocol. WWW is about communication between web clients and servers. 
 -> Communication between client computers and web servers is done by sending HTTP Requests and receiving HTTP Responses.
@@ -105,7 +104,7 @@ How http and https works?
 2. HTTPS, on the other hand, uses a combination of HTTP and SSL/TLS (Secure Sockets Layer/Transport Layer Security) protocols to provide a secure connection between the client and the server. 
 -> The SSL/TLS protocols use a combination of symmetric and asymmetric encryption to encrypt the data being transferred between the client and the server, making it difficult for anyone to intercept or eavesdrop on the data.
 
--> The following are the key steps involved in how HTTPS works:
+-> HTTPS working Mechanism:
 1. The client sends a request to the server using the HTTPS protocol. The request is encrypted using SSL/TLS.
 2. The server receives the request and generates a public key and a private key. The public key is sent back to the client as part of the SSL/TLS handshake.
 3. The client receives the public key and uses it to encrypt a symmetric key. The symmetric key is sent back to the server using SSL/TLS.

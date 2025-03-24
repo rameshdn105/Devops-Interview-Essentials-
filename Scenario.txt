@@ -21,8 +21,7 @@ Here's how he resolved it
 While using terraform force-unlock can resolve locked state issues, it is not advisable to force-unlock the state unless you are certain the lock was caused by your actions (e.g., canceling a pipeline or Terraform process).
 Forcing an unlock while another process is genuinely using the state can lead to state corruption or inconsistent infrastructure changes. Always double-check that no active Terraform processes are running.
 
-===========================================================================================================================================================================
-
+=====================================================================
 #Scenario 2
 ** A large organization manages multiple AWS accounts and VPCs across several regions, each supporting a different business unit. The company’s .#Cloud & .#DevOps teams frequently provision new VPCs and subnets for application deployments, but they are running into overlapping IP addresses, causing routing conflicts and connectivity issues. The teams also lack visibility into the IP address usage across different accounts, leading to inefficient IP allocation, potential security risks, and costly reconfiguration.
 
@@ -40,7 +39,7 @@ AWS IP Address Manager (.#IPAM) can streamline the organization’s IP managemen
 
 Using AWS IPAM improves visibility and control over IP address allocation, preventing conflicts, enhancing security, and simplifying network management across a complex, multi-account AWS environment.
 
-====================================================================
+================================================================
 #Terraform is a powerful .#IAC tool for provisioning infrastructure, but there’s a lot going on under the hood every time you hit 𝐚𝐩𝐩𝐥𝐲
 
 📜 Step 1: Parses and validates the .tf configurations, checking for syntax, variable correctness, and dependencies.
@@ -101,7 +100,7 @@ In the world of .#Dev & .#DevOps, .𝐢𝐠𝐧𝐨𝐫𝐞 files are often over
 𝒈𝒊𝒕-𝒂𝒏𝒕𝒉𝒐𝒏𝒚 press enter to activate the "𝐚𝐧𝐭𝐡𝐨𝐧𝐲" profile.
 
 
-==========================================================================================================================
+================================================================
 As a Cloud and Devops engineer, imagine you are tasked to run your microservices on AWS ECS. The microservice architecture needs service to service communication for the whole system to work like serviceA needs to communicate with ServiceB and there are more services likewise. So, Let’s look at some of the methods along with their complications so that it will easier for you to choose the best one based on your requirements.
 
 1.𝐄𝐥𝐚𝐬𝐭𝐢𝐜 𝐋𝐨𝐚𝐝 𝐁𝐚𝐥𝐚𝐧𝐜𝐢𝐧𝐠
@@ -120,8 +119,7 @@ It provides a powerful layer for managing service-to-service communication. They
 It offers a streamlined way to manage communication between services natively within ECS. It automates service registration and connection, making inter-service communication straightforward. This method also provides built-in load balancing and simplifies configurations, ensuring that services connect and communicate efficiently without extensive manual setup.
 𝐂𝐨𝐦𝐩𝐥𝐢𝐜𝐚𝐭𝐢𝐨𝐧𝐬: Limited advanced features compared to service meshes. It is relatively a new method compared to others.
 
-==================================================================================================================================
-
+================================================================
 .#Scenario
 You're a DevOps engineer managing a microservices application on a Production Kubernetes cluster. One day, your `auth-service`, which handles user authentication, starts crashing and experiencing delays. You try looking at logs and metrics but can’t pinpoint the root cause. The issue seems tied to the container's environment and isn’t easy to reproduce.
 
