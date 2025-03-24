@@ -157,7 +157,6 @@ Setting Up EC2 instance  as worker node:
 2. Setting up worker node: (Manage Jenkins-Cloud-New cloud-Cloud NAme{Demo}-Type{EC2})
 
 
-
 ** What are the ways to configure Jenkins node agent to communicate with Jenkins master?
    There are 2 ways to start the node agent –
 1. Browser – if Jenkins node agent is launched from a browser, a JNLP (Java Web Start) file is downloaded.   
@@ -359,7 +358,7 @@ For starters,
 1. Scripted Pipeline: It uses the Groovy (JVM-based) language to create a pipeline as code. Some software developers prefer 
    this pipeline because the use of Groovy code paves the way for making numerous APIs available. As a result, developers 
    can orchestrate rather complex CD pipelines.
-*  here node will be there, code defined in node block
+*  Uses a node block to define execution.
 *  the steps/stages can be custom-defined & used using a groovy syntax which provides better control & fine-tuned execution levels.
 *  For creating scripted pipelines in Jenkins, developers must include a pipeline code within the UI(User Interface) and save it. 
 *  if u install everything in single instance, Jenkins will crash.
@@ -553,8 +552,9 @@ maven comipler plugin
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 20. What is the Blue Ocean?
-Ans: Blue Ocean is the redefined user experience for Jenkins. Designed from the ground up for Jenkins Pipeline, it is still compatible with freestyle jobs, Blue Ocean reduces clutter and increases clarity. 
-** Blue Ocean rethinks the Jenkins user experience. Designed from the ground up for Jenkins Pipeline and compatible with Freestyle jobs
+Ans: Blue Ocean is the redefined user experience for Jenkins. 
+-> Designed from the ground up for Jenkins Pipeline, it is still compatible with freestyle jobs, Blue Ocean reduces clutter and increases clarity. 
+
 ** Blue Ocean’s main features include -
 -- Sophisticated visualizations of CD pipelines for fast and intuitive comprehension of software pipeline status.
 -- Pipeline editor that makes automating CD pipelines approachable by guiding the user through an intuitive and visual process to create a pipeline.
@@ -564,7 +564,8 @@ Ans: Blue Ocean is the redefined user experience for Jenkins. Designed from the 
 
 ------------------------------------------------------------------------------------------------------------------------------------
 Q. How can we stop a scheduled job from being executed temporarily?
-Ans: Disable the job from the job details page to temporarily stop all scheduled executions & other factors/events from triggering the job and enable it back to resume the job schedules/triggers. If a job is not required permanently, we can delete the job from the jobs list view page.
+Ans: Disable the job from the job details page to temporarily stop all scheduled executions & other factors/events from triggering the job and enable it back to resume the job schedules/triggers. 
+-> If a job is not required permanently, we can delete the job from the jobs list view page.
 
 -----------------------------------------------------------------------------------------------------------------------------------------------
 Q. What are the credential types supported by Jenkins?
@@ -611,8 +612,11 @@ Ans: Jenkins master will have the cron entries set up for the jobs as per the sc
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 15. What are the Scopes of Jenkins Credentials?
 Ans: Jenkins credentials can be of one of the two scopes - Global & System
-** Global - the credential will be usable across all the jobs configured in the Jenkins instance (i.e. for all jobs). This is more suited for user Jobs (i.e. for the freestyle, pipeline, or other jobs) to authenticate itself with target services/infrastructures to accomplish the purpose of the job)
+** Global - the credential will be usable across all the jobs configured in the Jenkins instance (i.e. for all jobs). 
+-> This is more suited for user Jobs (i.e. for the freestyle, pipeline, or other jobs) to authenticate itself with target services/infrastructures to accomplish the purpose of the job)
+
 ** System - This is a special scope that will allow the Jenkins itself (i.e. the core Jenkins functionalities & some installed plugins) to authenticate itself to external services/infrastructures to perform some defined tasks. E.g. sending emails, etc.
+
 
 -> Reset password in Jenkins: How to give security permission to new user?
 ** Navigate to "Manage Jenkins" -> "Security" -> "Configure Global Security" -> "Authentication"
