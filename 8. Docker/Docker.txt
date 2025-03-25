@@ -149,7 +149,8 @@ $$ du -sh /var/lib/docker/ (Check Docker disk usage on the host)
 Q. daemon login and container login
 1. A Daemon Login is a type of login in which a user is granted access to the computer as a daemon process, allowing them to run specific tasks in the background. 
 -> This type of login is typically used by system administrators to perform administrative tasks, such as starting and stopping services or running scripts.
-2. Container Login: A Container Login is the process of logging into a container to access its environment and run commands or make changes. This is typically done by using a command line interface (CLI) such as Docker or Kubernetes. 
+2. Container Login: A Container Login is the process of logging into a container to access its environment and run commands or make changes. 
+-> This is typically done by using a command line interface (CLI) such as Docker or Kubernetes. 
 
 Q. restart policies for docker container with example?
 -> It tells Docker how to handle restart a container that has stopped.
@@ -217,9 +218,11 @@ Q. How To Leverage Docker Cache for Optimizing Build Speeds?
 -> Leveraging Docker cache can significantly speed up your builds by reusing layers from previous builds.
 
 ** How the Docker Build Cache Works
--> Docker images are built in layers, where each instruction in the Dockerfile creates a new layer. For example, instructions like FROM, RUN, COPY, and ADD each create a new layer in the resulting image.
+-> Docker images are built in layers, where each instruction in the Dockerfile creates a new layer. 
+-- For example, instructions like FROM, RUN, COPY, and ADD each create a new layer in the resulting image.
 -> Docker uses a "content-addressable storage mechanism" to manage image layers. 
--> Each layer is identified by a unique hash that Docker calculates based on the contents of the layer. Docker compares these hashes to determine if it can reuse a layer from the cache.
+-> Each layer is identified by a unique hash that Docker calculates based on the contents of the layer. 
+-> Docker compares these hashes to determine if it can reuse a layer from the cache.
 
 -> When Docker builds an image, it goes through each instruction in the Dockerfile and performs a cache lookup to see if it can reuse a previously built layer.
 

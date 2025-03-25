@@ -465,13 +465,13 @@ Task: 1. Run the role, paste the default folder structure in group.
 -> Ansible tower dashboard, it will display everything which is going on in ansible environment such as inventory status, recent job activity, hosts etc..
 
 🔹 Key Features of Ansible Tower
-Web UI:		User-friendly dashboard to run and monitor Ansible jobs
-Role-Based Access Control (RBAC):	Assign permissions to different users/groups
-Job Scheduling:		Automate playbook execution at specific times
-Real-time Monitoring:	View live job status and logs
-REST API:	Integrate Ansible automation with other tools
-Multi-Playbook Workflows:	Chain multiple playbooks together
-Credential Management:	Store SSH keys, cloud credentials securely
+1. Web UI: User-friendly dashboard to run and monitor Ansible jobs
+2. Role-Based Access Control (RBAC): Assign permissions to different users/groups
+3. Job Scheduling: Automate playbook execution at specific times
+4. Real-time Monitoring: View live job status and logs
+5. REST API: Integrate Ansible automation with other tools
+6. Multi-Playbook Workflows: Chain multiple playbooks together
+7. Credential Management: Store SSH keys, cloud credentials securely
 
 -------------------------------------------------------------------------------------
 To install tomcat with multiple server

@@ -608,9 +608,8 @@ Ans: There are many ways we can trigger a job in Jenkins. Some of the common way
 Ans: Build Cause is a text attribute that represents what made a job's build to be triggered, say it could be a Jenkins User (from UI), Timer for Scheduled jobs, Upstream jobs for a job which was triggered by upstream job, etc. This is mainly used to identify the nature of the builds - be it nightly, manual, automated, etc.
 
 13. How Jenkins knows when to execute a Scheduled job/pipeline and how it is triggered?
-Ans: Jenkins master will have the cron entries set up for the jobs as per the scheduled Job's configurations. As and when the time 
-    for a particular job comes, it commands agents (based on the configuration of the job) to execute the job with required
-    configurations.
+Ans: Jenkins master will have the cron entries set up for the jobs as per the scheduled Job's configurations. 
+-> As and when the time for a particular job comes, it commands agents (based on the configuration of the job) to execute the job with required configurations.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 15. What are the Scopes of Jenkins Credentials?

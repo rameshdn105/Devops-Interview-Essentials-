@@ -47,7 +47,7 @@ Q. Workspace: The place where we execute terraform command.
 Usage: terraform workspace
 $$ terraform workspace show
   new, list, show, select and delete Terraform workspaces.
-ubuntu@ip-172-31-27-248:~/terraform/s3$
+
 
 Q. Stages of terraform cycle in terraform/ Terraform workflow:
 1. Init/Write - Author infrastructure as code
@@ -75,7 +75,7 @@ terraform apply -auto-approve
 
 COMMANDS USED IN TERRAFORM:
 ---------------------------
--> terraform state mv [options] SOURCE DESTINATION: merge two state Moving resources from one to the other using
+-> terraform state mv [options] SOURCE DESTINATION: [renaming resources]command moves an existing resource in the Terraform state from one address (SOURCE) to another (DESTINATION).
 👉 Why? 
 1. Renaming Resources in State: If you change the resource name in your configuration file, Terraform will think it's a new resource and try to recreate it. To prevent this, you can move the existing resource in the state to the new name.
 2. Moving Resources Between Modules: If you refactor your Terraform code and move a resource inside or outside of a module, terraform state mv helps retain its state without destroying and recreating it.
@@ -122,6 +122,7 @@ $$ terraform show tfplan: Shows details of a saved execution plan
 -> terraform init -upgarde: to update plugins in terraform  
 -> terraform state: Provides information about the "current state of the infrastructure resources" managed by Terraform.
 -> terraform output: displays the output values of the infrastructure resources created by Terraform.
+
 -> terraform import: imports existing infrastructure resources into Terraform state so that they can be managed using Terraform.
 -> terraform workspace: to create and manage multiple workspaces, which are isolated environments for managing infrastructure resources.
 
@@ -412,7 +413,6 @@ output "stored_data" {
 ---------------------------------------------------------------------------------------
 🔹 Backend in Terraform
 -> The "Backend" in Terraform is where the state of your infrastructure is kept and how Terraform interacts with it. 
--> In Terraform, the backend is responsible for storing the state of the infrastructure and managing how Terraform communicates with various services to execute operations. 
 
 ✅ Benefits of Backends:
 -> State Locking (Prevents conflicts in team environments)
@@ -730,7 +730,7 @@ resource "aws_instance" "example" {
 -> Its value should be an unquoted <PROVIDER>.
 -> Ex: [depends_on, count, for_each, lifecycle, provider, provider_meta, timeouts]
 
-1. lifecycle
+1. lifecycle (Manage Resource Lifecycle)
 -> The lifecycle meta-argument allows you to customize how Terraform manages the lifecycle of a resource. It includes several sub-arguments, such as:
 1. create_before_destroy: Ensures that resources are created before old ones are destroyed during updates.
 2. prevent_destroy: Prevents the resource from being destroyed, even if the configuration changes.

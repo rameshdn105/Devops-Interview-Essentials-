@@ -87,11 +87,11 @@ Kubernetes Overview: {K8S-Container orchestration tool}
 -> K8s, is written primarily in the "Go" open source programming language or "Golang". It is known for its simplicity, speed, and efficient memory management. 
 -> It groups containers that make up an application into logical units for easy management and discovery.
 -> Daemon service: 100% of service is available.
--> Monitor K8S: -> Prometheus, Grafana, Fludentd, Elasticsearch, Kiabana, Stackdriver, New Relic, Datadog.
+-> Monitor K8S: Prometheus, Grafana, Fludentd, Elasticsearch, Kiabana, Stackdriver, New Relic, Datadog.
 
 Kubernetes Features:
 --------------------
-1. Self-healing: Restarts containers that fail, replaces and reschedules containers when nodes die, kills containers that don't respond to your user-     defined health check, and doesn't advertise them to clients until they are ready to serve. (Probe)
+1. Self-healing: Restarts containers that fail, replaces and reschedules containers when nodes die, kills containers that don't respond to your user-defined health check, and doesn't advertise them to clients until they are ready to serve. (Probe)
 
 2. Automated rollouts and rollbacks: Kubernetes progressively rolls out changes to your application or its configuration, while monitoring application health to ensure it doesn't kill all your instances at the same time. 
 -> If something goes wrong, Kubernetes will rollback the change for you. Take advantage of a growing ecosystem of deployment solutions.
@@ -116,7 +116,7 @@ Kubernetes Features:
  and the current context (the cluster, user, and namespace that kubectl is currently interacting with).
 -> Usually located in the user's home directory under ~/.kube/config but specified with "KUBECONFIG" environment variable or the --kubeconfig flag.
 
-=========================================================================================
+=======================================================================================================================
 Kubernetes Architecture and Components:
 
 Kubernetes Master components:
@@ -136,11 +136,11 @@ CLI/UI-->API-->(API server::SCHEDULER::CONTROLLERS::KEY VALUE STORE-etcd)
 ===============
 -> The Kubernetes Master (Master Node) receives input from a CLI (Command-Line Interface) or UI (User Interface) via an API. 
 -> Through CLI you define pods, replica sets, and services that you want Kubernetes to maintain. 
-	For example, which container image to use, which ports to expose, and how many pod replicas to run.
+   -- For example, which container image to use, which ports to expose, and how many pod replicas to run.
 -> You also provide the parameters of the desired state for the application(s) running in that cluster.
 
  
-1. API server: ( Front-end for k8s, Enables the communication)
+1. API server: (Front-end for k8s, Enables the communication)
 -> The users, management devices, Command line interfaces all talk to the "API server" to interact with k8s cluster.
 -> The API Server is the front-end of the control plane and the only component in the control plane that we interact with directly.
 -> All the components in the k8s cluster communicates through API server, no other component can communicate with each other directly.
@@ -419,7 +419,7 @@ Multi-container Pods Design Patterns
 	 Events				Process		Write
 Device -----------> Azure Event Hubs-----------> ##----------> Internet
 						  |
-						  |__________> Azure Storage Queue
+						  |_____________> Azure Storage Queue
 						Failed messages
 
 
@@ -435,14 +435,14 @@ Pod patterns / Container types:
 
 1. INIT CONTAINER:
 ------------------
--> Init containers are the containers that should run and complete before the startup of the main container. (applicaiton container)
+-> Init containers are the containers that should run and complete before the startup of the main container. (application container)
 -> It provides a sperate lifecycle at initialization point.
--> It can have multiple init contianers. init containers always run to completion. 
+-> It can have multiple init containers. init containers always run to completion. 
 -> Each init container must complete successfully before the next one starts.
 
 ** When to use this pattern ?
 -> when our main container needs some prerequisites such as installing some supportive software, database setup, seeding the DB, permissions on the file system before starting.
--> we can use this pattern to delay the start of the main conateiner.
+-> we can use this pattern to delay the start of the main containers.
 
 apiVersion: v1
 kind: Pod
@@ -982,7 +982,7 @@ spec:
 -> It is very similar to replication controller.
 -> The apiVersion though is a bit different. It is "apps/v1"
 -> If you provide "v1" instead of "apps/v1" you would get "no match for kind replicaset", because the specified Kubernetes api version has no support for ReplicaSet.
--> one major difference between replication controller and replica set. Replica set requires a "selector definition". The selector section helps the replicaset identify what pods fall under it.
+-> One major difference between replication controller and replica set. Replica set requires a "selector definition". The selector section helps the replicaset identify what pods fall under it.
 
 -> A ReplicaSet is a set of multiple, identical pods with no unique identities. 
 -> ReplicaSets were designed to address two requirements:	  
@@ -1231,7 +1231,8 @@ Stateless Applications:
 
 When to use Deployments?
 ------------------------
--> Use a Deployment to run stateless applications that need to benefit from declarative updates and rollbacks. They permit you to rollout changes safely, without the threat of downtime.
+-> Use a Deployment to run stateless applications that need to benefit from declarative updates and rollbacks. 
+-> They permit you to rollout changes safely, without the threat of downtime.
 
 StatefulSet vs. Deployment
 --------------------------
@@ -2760,7 +2761,6 @@ metadata:
 How to Enable PodSecurity Admission:
 ---------------------------------
 -> PodSecurity admission is available starting from Kubernetes version 1.22 as an alpha feature and became beta in Kubernetes 1.23.
--> To enable PodSecurity admission, ensure that the feature is enabled on your Kubernetes cluster and configure it according to your needs.
 -> You can enable the PodSecurity Admission controller in your Kubernetes cluster by configuring it in the apiServer settings (typically done in the kube-apiserver configuration).
 
 -> Here’s an example for enabling PodSecurity Admission:
