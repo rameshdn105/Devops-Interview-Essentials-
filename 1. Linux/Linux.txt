@@ -530,6 +530,12 @@ netstat -at : It is used to list all listening non-listening tcp ports
 netstat -lu : It is used to list only listening udp ports
 netstat -au : It is used to list all listening non-listening udp ports
 netstat -nptl : It is used to check the service ports.
+netstat -tulnp: active network connections along with the processes (PIDs) using them
+-t	Show TCP connections
+-u	Show UDP connections
+-l	Show listening ports
+-n	Show numeric addresses (no DNS lookup)
+-p	Show process ID (PID) and program name
 
 Q. What commands do you know that can be used to check DNS records?
 1. nslookup: query DNS servers for information about a specific hostname or IP address.

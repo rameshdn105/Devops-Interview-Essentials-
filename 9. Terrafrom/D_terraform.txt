@@ -116,9 +116,10 @@ $$ terraform show tfplan: Shows details of a saved execution plan
 3. Generate a Cleaned-Up Graph: $$ terraform graph | dot -Tsvg > graph.svg
 
 -> terraform validate: it will validate syntax of terraform files/command.
+-> terraform fmt: Formats the Terraform files to make them consistent and easy to read (rewrite configuration files in canonical styles and format)
+
 -> terraform destroy: to terminate resources (inverse of terraform apply)
 -> terraform init -upgarde: to update plugins in terraform  
--> terraform fmt: Formats the Terraform files to make them consistent and easy to read (rewrite configuration files in canonical styles and format)
 -> terraform state: Provides information about the "current state of the infrastructure resources" managed by Terraform.
 -> terraform output: displays the output values of the infrastructure resources created by Terraform.
 -> terraform import: imports existing infrastructure resources into Terraform state so that they can be managed using Terraform.
