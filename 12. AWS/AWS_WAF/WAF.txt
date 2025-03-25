@@ -60,10 +60,12 @@ Conditions, Rules, and Web ACLs
 -> Conditions define the basic characteristics that you want WAF to watch for in web requests.
 -> You combine conditions into rules to precisely target the requests that you want to allow, block, or count. WAF provides two types of rules:
 
-1. Add an AWS Managed Rules rule group: AWS Managed Rules provides you with a collection of managed rule groups. The majority of these are free for Amazon WAF users. After adding managed rule group, choose to save the rule.
+1. Add an AWS Managed Rules rule group: AWS Managed Rules provides you with a collection of managed rule groups. 
+-> The majority of these are free for Amazon WAF users. After adding managed rule group, choose to save the rule.
 
 2. Add managed rule groups: The rules we’re going to create will define the patterns we want to allow/block. We’ll add 2 rules only.
-  1. Regular rules – This rule protects the application from SQL injection attacks. It will check if the URI path contains an SQL injection. 
+  1. Regular rules – This rule protects the application from SQL injection attacks. 
+  -- It will check if the URI path contains an SQL injection. 
   2. Rate-based rules – are similar to regular rules, with a rate limit.
   -- This rule blocks the requests made from the same IP address after they exceed a certain limit in a time period.  
 
