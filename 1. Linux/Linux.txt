@@ -14,7 +14,7 @@ Q. how to run a process in background:
 
 Q. Systemctl: Systemctl is a SYSTEMd tool, which is mainly responsible for controlling SYSTEMd system and service manager.
 1. systemctl enable/disable/status/ls-active https.service
-2. systemctl lis-units--type=service
+2. systemctl list-units --type=service --all  // systemctl list-units --type=service --state=running
 3. systemctl start httpd.service
 4. systemctl stop httpd.service
 5. systemctl restart httpd.service
@@ -92,6 +92,7 @@ Q. What is load average in Linux?
   replacement for more RAM.
 
 ** Zombie process: In Linux OS, a zombie process or a defunct process is a finished (dead) process, but it has still occupied an entry in the process table. 
+-> When a parent gets killed, all child processes will become the child process of ‘init process (PID 1)’. Init process will wait for the children to die by sending a wait signal which in turn removes the zombie processes. The parent process can be killed using the ‘kill’ command.
 -> Normally, a child process that has completed its execution will send a SIGCHLD signal to the parent process which has created it.
 -> When a process becomes dead, it will free up the memory and other resources allocated to it. So, a zombie process will not be using any resources at all, other than an entry in the process table. 
 -> The problem may start only when a large number of zombie processes exist and system run out of PIDs
@@ -99,9 +100,7 @@ Q. What is load average in Linux?
 -> Killing the parent process (  $$ kill -9)
    If the zombie processes are not able to get removed, you should kill the parent process or restart the service 
    to get rid of the zombies.
- -- When a parent gets killed, all child processes will become the child process of ‘init process (PID 1)’.
-   Init process will wait for the children to die by sending a wait signal which in turn removes the zombie processes. 
-   The parent process can be killed using the ‘kill’ command:
+
  
 
 * Daemon process: A daemon is also called background processes. It is a UNIX or Linux program that executes inside the background. Almost every daemon contains names that finish with "d" the letter. 
@@ -115,10 +114,10 @@ Command Prompt (cmd), Batch Files (.bat or .cmd) and Powershell
 1. Using & to Separate Commands: You can use the & operator to execute multiple commands sequentially. Each command will be executed regardless of whether the previous command succeeds or fails.
 ## command1 & command2 & command3
 
-2. Using && for Conditional Execution: The && operator runs the next command only if the previous command was successful (exit code 0).
+2. Using && for Conditional Execution: The && operator runs the next command only if the previous command was "successful" (exit code 0).
 ## command1 && command2
 
-3. Using || for Conditional Execution: The || operator runs the next command only if the previous command failed (exit code not 0).
+3. Using || for Conditional Execution: The || operator runs the next command only if the previous command "failed" (exit code not 0).
 ## command1 || command2
 
 
@@ -135,13 +134,18 @@ if (Test-Path "file.txt") {
 
 
 ====================================================================
-*Vi modes: Command mode, insert mode and extended mode
+** Vi modes: Command mode, insert mode and extended mode
 -- command mode: is used for navigation and manipulation commands. (dd, x, yy, p ....)
 -- Insert mode: is for typing and editing content.
 -- extend mode: (Command-line mode) is for executing more complex commands related to file management and search/replace operations.(:w, :q, :wq!, :q!, :% s/old/new/g )
 
-*tar cvf file.tar filename  : This command creates a tar file called file.tar which is the Archive of all .c files in current directory. 
-*tar xvf file.tar : This command extracts files from Archives. 
+-- vi filename - Used to edit the file or add content to a file  (Command mode, insert mode and extended mode)
+-- esc :wq! - used to save and quit the file
+-- esc :q! - used to quit the file without saving.
+
+
+** tar cvf file.tar filename  : This command creates a tar file called file.tar which is the Archive of all .c files in current directory. 
+** tar xvf file.tar : This command extracts files from Archives. 
     -c : Creates Archive 
     -x : Extract the archive 
     -f : creates archive with given filename 
@@ -176,10 +180,6 @@ cp f1 f2 - copy file f1 to f2 (Destination file)
 mv f1 f2  - move file f1 to f2 
 rm filename   : removes file 
 
-vi filename - Used to edit the file or add content to a file  (Command mode, insert mode and extended mode)
-esc :wq! - used to save and quit the file
-esc :q! - used to quit the file without saving.
-
 cat filename - used to display the content of the file on the console
 esc :set number - used to set the number to a file content
 esc :set nonu - used to remove the line numbers
@@ -193,8 +193,8 @@ s - substitute
 g - globally - used to replace a string everywhere in the file
 1. esc : 1 s/str1/str2/g - used to replace str1 to str2 everywhere/globally in the line.
 2. esc : 1,3 s/str1/str2/g - used to change string from 1st to 3rd line
-3. esc : 1 s/str1/str2/1 - used to change str1 to str2 from 1st line & 1st occurence only
-4. esc :/string - It will move to 1st occurence and you keep pressing  "n" to 2nd occurence and so on..
+3. esc : 1 s/str1/str2/1 - used to change str1 to str2 from 1st line & 1st occurrence only
+4. esc :/string - It will move to 1st occurrence and you keep pressing  "n" to 2nd occurrence and so on..
 
 ** cp (copy) : It is used to copy content of a file from one to another.
 syn : cp sourcefile destinationfile
@@ -322,13 +322,16 @@ syn : ping <ipaddress>
 	// it displays pockets transmitted and pockets received. if no pockets received, u can use traceroute command to check.
 
 ** traceroute: 
--> prints the route that a packet takes to reach the host. This command is useful when you want to know about the route and about all the hops that a packet takes. 
+-> prints the route that a packet takes to reach the host. 
+-> This command is useful when you want to know about the route and about all the hops that a packet takes. 
 -> Below image depicts how traceroute command is used to reach the Google(172.217.26.206) host from the local machine and it also prints detail about all the hops that it visits in between.
 
 ** Traceroute: Prints the route that a packet takes to reach the host. 
 -> It is useful when you want to know about the route & about all the hops that a packet takes.
 
-Finger: Finger command is a user information lookup command which gives details of all the users logged in. This tool is generally used by system administrators. It provides details like login name, user name, idle time, login time, and in some cases their email address even.
+Finger: Finger command is a user information lookup command which gives details of all the users logged in. 
+-- This tool is generally used by system administrators. 
+-- It provides details like login name, user name, idle time, login time, and in some cases their email address even.
 
 tee - It is used to write the o/p of a command to a file as well as it displays content on the console.
 syn : cat f1 | tee log
@@ -478,6 +481,7 @@ Option	Description	Example Command
 
 
 Awk command : Used to cut the content of file column wise.
+-- -F " ": Specifies space (" ") as the field separator.
 For eg :
 0. awk -F " " '{print $1}' filename
 1. awk -F " " '{print $1}' filename - used to cut 1st column of a file
@@ -570,7 +574,7 @@ who -r command - to determine a system's run level
 uname - used to check the os
 uname -a -> used to check all the info about linux
 ps -ef -> list running process
-ps -efl ->shows the process status
+ps -efl -> shows the process status
 ps -u "ec2-user" -> used to list of process by particlar user
 ps -ef | grep "process name" - used to check particular process is running or not.
 kill -9 processID -to kill the particular process forcefully  (-9 is used for forcefully)
@@ -598,7 +602,7 @@ sudo shutdown now : shutdown within sometime
 /etc/ is where configuration files and directories are located.
 
 NS lookup: name server lookup: useful to getting info from DNS server
-tr command:translating and deleting charecters
+tr command: translating and deleting characters
 ENV: print environment variables
 
 

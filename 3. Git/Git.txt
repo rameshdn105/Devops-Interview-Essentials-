@@ -7,7 +7,7 @@
 🔹 git clean -df : It is used to clean the untracked/unwanted files from workspace.
 🔹 git log --raw command  : To find out which files changed in a given commit. It's the fastest and simplest way to get insight into which files a commit affects
 🔹 git gist :Gist provide a simple way to share code snippets with others. Every gist is a Git repository, which means that it can be forked and cloned.
-🔹 Git Reflog — Recover Lost Commits & Track History
+🔹 Git Reflog — Shows commit history (even lost commits). Helps in recovery.
 
 🔹 git -rm file: remove files
 🔹 git log --online : Used to check commit history in short form.
@@ -20,7 +20,7 @@
 🔹 git branch --merged	:to check merged branches
 
 🔹 git gc: It is the process of removing unnecessary data from the local repository. 
-This data can include unreachable objects, such as old versions of files that have been deleted or overwritten, as well as stale references to remote branches that no longer exist.
+-> This data can include unreachable objects, such as old versions of files that have been deleted or overwritten, as well as stale references to remote branches that no longer exist.
   $$ git gc
 
 🔹 git clean (Removing Untracked Files)
@@ -139,6 +139,11 @@ Branch :
 Note : Whenever branch is created the entire commit history of the parent branch will be copied to the new branch.
 Note : Irrespective of on which branch a file is created or modified, git only check on which branch file is committed and that file belongs to the committed branch only.
 
+
+Git Tag Vs Branch: 
+1. Tags are a fundamental building block in git; branches aren't. 
+2. Git performs checks to make sure tags remain constant, never change, once created pointing at a commit. 
+3. A branch on the other hand is a mere reference or pointer to a commit, and it can be updated to point at a different commit freely.
 ------------------------------------------------------------------------------------------
 Merge :
 -> Merge is nothing but integrating two branches.
@@ -148,7 +153,7 @@ Note : When you try to merge source branch to a destination branch you should be
 
 Merge conflicts:
 ================
--- Merge conflict occurs if the same line of code is modified on the same file on two different branches and when we try to merge those 2 branches, we will get merge conflicts.
+-> Merge conflict occurs if the same line of code is modified on the same file on two different branches and when we try to merge those 2 branches, we will get merge conflicts.
 
 -> Resolution:
 If i don't know whose changes should i take in the merge, I contact developers who modified file on branch1 and branch2 then they will decide and give new change. After that I will commit that to a file and continue with merge.
@@ -250,8 +255,7 @@ There are three types of repositories:
 ------------------------------------------------------------------------------------------
 Git revert and reset
 1. Git revert :
--> It is used to undo the committed changes, here history will not be removed. we can track that reverted changes in the 
-git log.
+-> It is used to undo the committed changes, here history will not be removed. we can track that reverted changes in the git log.
 syn : git revert HEAD
       git revert <commitid>
 	  
@@ -262,8 +266,12 @@ syn : git revert HEAD
 syn : git reset --soft <commitid>/HEAD
 2. Mixed reset : It is used to move files from staging area to workspace.
 syn : git reset --mixed <commitid>/HEAD
-3. Hard reset : It is used to reset the previous committed changes and there will be no clue that you have committed the changes, hard reset will remove the files from git repo, staging area, & from workspace.
+3. Hard reset : It is used to reset the previous committed changes and there will be no clue that you have committed the changes, 
+-> Hard reset will remove the files from git repo, staging area, & from workspace.
 syn : git reset --hard <commitid>/HEAD
+
+
+🔹 Git Reflog — Shows commit history (even lost commits). Helps in recovery.
 
 ------------------------------------------------------------------------------------------
 🔹 git clean -df : It is used to clean the unwanted files from workspace.
@@ -319,7 +327,8 @@ syn :
 6. git stash -p : to stash particular file
 
 ------------------------------------------------------------------------------------------
-Branching strategy
+Branching strategy [Git Flow Branch Strategy]
+==============================================
 
 -> Developers creates feature branch for their own purpose and merge it to the dev branch.
 -> DevOps team creates release branch and merge them to the dev branch.
@@ -350,7 +359,7 @@ The main idea behind the Git flow branching strategy is to isolate your work int
 There are five different branch types in total:
 
 Branch		Purpose	Branch 			From		Merge Into
-main		Production-ready code		release or hotfix	-
+main/master		Production-ready code		release or hotfix	-
 develop		Integration branch		main		release
 feature/*	New features			develop		develop
 release/*	Preparing for release		develop      main & develop
@@ -446,17 +455,14 @@ Forking is done on the GitHub Account while Cloning is done using Git. When you 
 you create a copy of the original repository (upstream repository) but the repository remains on your GitHub account. 
 Whereas, when you clone a repository, the repository is copied on to your local machine with the help of Git.
 
-Git head: (recently created branch)The HEAD in Git is a file that references the current branch you are currently on. 
+Git head: (recently created branch):
+-> The HEAD in Git is a file that references the current branch you are currently on. 
 Hence, if you are currently are in a master branch, the HEAD will have as a reference the master branch. If you checkout 
 a different branch called styles, the HEAD reference will be updated to the styles branch.
-	A head is a ref that points to the tip (latest commit) of a branch. 
+-> A head is a ref that points to the tip (latest commit) of a branch. 
 You can view your repository’s heads in the path .git/refs/heads/. In this path you will find one file for each branch, 
 and the content in each file will be the commit ID of the tip (most recent commit) of that branch.
 
-Git Tag Vs Branch: 
-1. Tags are a fundamental building block in git; branches aren't. 
-2. Git performs checks to make sure tags remain constant, never change, once created pointing at a commit. 
-3. A branch on the other hand is a mere reference or pointer to a commit, and it can be updated to point at a different commit freely.
 
 Git Reflog — How to recover a deleted branch that was not merged. It can track changes done on 
 git -rm file: remove files
@@ -464,7 +470,8 @@ git -rm file: remove files
 ------------------------------------------------------------------------------------------
 Q. What is Branch Protection?
 -> The world of software development can be chaotic. You’ve got many developers – and now code GPTs – contributing in parallel to a project, all with their own changes.
--> Branch protection facilitates a structured workflow for developers, where code contributions are scrutinized and tested, ensuring that only code that meets the team's standards is merged. This is particularly important in "inner sourcing" models, where everyone has "write" access to the source code repositories, but branches that are deployed to higher environments are protected. 
+-> Branch protection facilitates a structured workflow for developers, where code contributions are scrutinized and tested, ensuring that only code that meets the team's standards is merged. 
+-> This is particularly important in "inner sourcing" models, where everyone has "write" access to the source code repositories, but branches that are deployed to higher environments are protected. 
 
 Q. What is “Inner sourcing” and how does it work?
 -> In an "inner sourcing" model, while all developers have the ability to contribute code, not all contributions are treated equally. For instance, branches destined for production deployment are shielded by branch protection rules. 
@@ -492,8 +499,11 @@ Q. Branch Protection Contribution to DevSecOps Governance:
 
 Q. Branch Protection Policies vs. Rulesets:
 -> Branch protection policies and rulesets both offer frameworks for implementing governance controls, but they cater to different needs:
-1. Branch Protection Policies are specific to individual branches within a repository, allowing for granular control over how code is reviewed, tested, and merged. They are ideal for projects requiring specific safeguards on critical branches.
-2. Rulesets, on the other hand, can be applied at a more macro level, such as across an entire organization or repository. They offer a broader, more standardized approach to governance that can be consistently applied. 
+1. Branch Protection Policies are specific to individual branches within a repository, allowing for granular control over how code is reviewed, tested, and merged. 
+-> They are ideal for projects requiring specific safeguards on critical branches.
+
+2. Rulesets, on the other hand, can be applied at a more macro level, such as across an entire organization or repository. 
+-> They offer a broader, more standardized approach to governance that can be consistently applied. 
  
 ------------------------------------------------------------------------------------------
 Q. how do u restrict committing/modifying by reviewers, after PR is raised?

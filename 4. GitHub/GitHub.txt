@@ -14,24 +14,24 @@ jobs:
         env:
           ACTIONS_RUNNER_DEBUG: "true"
 
+-----------------------------------------------------------------------------------------------
 🔹 RBAC Components in GitHub
+
 1️⃣ Organization-Level RBAC
 -> At the organization level, GitHub provides these roles:
-Role	Description
-Owner	Full access, can manage repositories, teams, billing, and security.
-Member	Standard role with limited access based on repository/team permissions.
+1. Owner: Full access, can manage repositories, teams, billing, and security.
+2. Member: Standard role with limited access based on repository/team permissions.
 
 🔹 Assigning Organization Roles:
 -- Go to Organization Settings → People → Manage Role.
 
 2️⃣ Repository-Level RBAC
 -> At the repository level, GitHub offers fine-grained permissions:
--> Role	Permissions
-Admin	Full control over repo, including settings & access management.
-Maintain	Manage repo without admin settings (e.g., branch protection).
-Write	Push code, manage issues, and approve PRs.
-Triage	Manage issues, PRs, and discussions, but cannot push code.
-Read	View code, clone repo, and comment on issues & PRs.
+1. Admin: Full control over repo, including settings & access management.
+2. Maintain: Manage repo without admin settings (e.g., branch protection).
+3. Write: Push code, manage issues, and approve PRs.
+4. Triage: Manage issues, PRs, and discussions, but cannot push code.
+5. Read: View code, clone repo, and comment on issues & PRs.
 
 -> Assigning Repository Roles:
 Go to Repo Settings → Manage Access → Invite Team/User → Assign Role.
@@ -79,7 +79,7 @@ Paid plan details      Free to use, requires a dedicated administrator	Both free
 
 ** Integration Capabilities
 -- Jenkins has a long-standing reputation for its extensive integration capabilities. Its vast plugin ecosystem allows seamless integration with a wide array of third-party services and tools. 
-	-- Jenkins, on the other hand, requires plugins and additional configuration to integrate with GitHub.
+  -- Jenkins, on the other hand, requires plugins and additional configuration to integrate with GitHub.
 -- GitHub Actions, while growing, might have slightly fewer integrations out of the box, but it offers a solid foundation for CI/CD workflows.
 
 ** Scalability
@@ -99,9 +99,9 @@ Paid plan details      Free to use, requires a dedicated administrator	Both free
 
 --------------------------------------------------------------------------
 ✅1. What is GitHub?
--> GitHub is a platform that allows users to store, create, change, and collaborate on files and code. It's used by programmers and developers to manage projects, share progress, and work on open-source projects.
+-> GitHub is a platform that allows users to store, create, change, and collaborate on files and code. 
+-> It's used by programmers and developers to manage projects, share progress, and work on open-source projects.
  
-
 ✅2. GitHub Actions: GitHub Actions is a platform that automates software development workflows, including builds, tests, and deployments. 
 -- It's a continuous integration and continuous delivery (CI/CD) tool that allows you to: Create custom CI workflows, Speed up application development, Run arbitrary code on a repository when an event occurs, and Combine actions in a customized workflow. 
 
@@ -328,7 +328,8 @@ runs-on: self-hosted
 2. You can call a maximum of 20 unique reusable workflows from a single workflow file. This limit includes any trees of nested reusable workflows that may be called starting from your top-level caller workflow file.
 -- For example, top-level-caller-workflow.yml → called-workflow-1.yml → called-workflow-2.yml counts as 2 reusable workflows.
 3. Any environment variables set in an env context defined at the workflow level in the caller workflow are not propagated to the called workflow. 
-4. Similarly, environment variables set in the env context, defined in the called workflow, are not accessible in the env context of the caller workflow. Instead, you must use outputs of the reusable workflow. 
+4. Similarly, environment variables set in the env context, defined in the called workflow, are not accessible in the env context of the caller workflow. 
+-- Instead, you must use outputs of the reusable workflow. 
 5. To reuse variables in multiple workflows, set them at the organization, repository, or environment levels and reference them using the vars context. 
 6. Reusable workflows are called directly within a job, and not from within a job step. You cannot, therefore, use GITHUB_ENV to pass values to job steps in the caller workflow.
 

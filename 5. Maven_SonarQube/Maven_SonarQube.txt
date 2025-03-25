@@ -33,7 +33,7 @@ generating war and jar file automatically and many other things.
 -> Maven can add all the dependencies required for the project automatically by reading pom file.
 
 ** How Does the Maven Architecture Work?
--> The first step refers to configuring Maven, which is stored in a pom.xml.file
+-> The first step refers to configuring Maven, which is stored in a pom.xml file
 -> The POM file includes all of the configurations that Maven needs. The second step is to download the dependencies defined in pom.xml 
  into the local repository from the central repository
 -> After the user starts working in Maven, the tool provides various default settings, so there is no need to add every configuration in the pom.xml
@@ -345,9 +345,8 @@ sonar.projectVersion=1.0
 sonar.sources=src
 sonar.java.binaries=target/classes
 
+
 3. Dashboard: Shows issues in your code, such as bugs, security vulnerabilities, code smells, etc.
-
-
 -> Integrate SonarQube with Jenkins (CI/CD)
 -- In Jenkins, install the SonarQube plugin.
 Use the following Jenkinsfile to run SonarQube analysis:

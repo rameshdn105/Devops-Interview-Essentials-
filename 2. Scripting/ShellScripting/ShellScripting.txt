@@ -603,14 +603,17 @@ fi
 --------------------------------------------------------------------------------------
 for reversing of string
 #!/bin/bash
-str="$1"
-reversed_string=""
-len=${#str}
-for (( i=$len-1; i>=0; i-- ))
-do
-reversed_string="$reversed_string${str:$i:1}"
+read -p "enter the number" x
+result=0
+while [[ $x -gt 0 ]]
+do  
+    y=$((x % 10))
+    result=$(( ($result * 10) + y))
+    x=$(( $x / 10))
+ 
 done
-echo "$reversed_string"
+echo $result
+ 
 
 ------------------------------------------------------------------------------------------
 1. Automated data backups to S3: files modified in last 24 hrs
@@ -626,6 +629,8 @@ find "$BACKUP_FROM" -type f -mtime -1 -print | tar -cvf demo-$DATE.tar -T -
 
 # Upload the tar file to S3
 aws s3 cp demo-$DATE.tar "$BACKUP_TO/demo-$DATE.tar"
+
+# -T -: Reads the list of files from stdin (-T -), which find provides.
 ====================================================================================
 
 2. User account creation: A shell script can be created to automate the process of creating user accounts. 

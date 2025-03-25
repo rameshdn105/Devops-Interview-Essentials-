@@ -1,0 +1,32 @@
+Step 1: Kubernetes Cluster Setup on EC2 Using Kubeadm
+-> Ensure your Kubernetes cluster is set up using kubeadm.
+
+1.1 Install Kubernetes Components
+-> On all EC2 instances (both master & worker nodes):
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y curl apt-transport-https
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+sudo apt update
+sudo apt install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
+
+1.2 Initialize Master Node
+sudo kubeadm init --pod-network-cidr=192.168.0.0/16
+
+1.3 Configure kubectl
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+1.4 Install CNI (Calico)
+kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+
+1.5 Join Worker Nodes
+Run the kubeadm join command shown after master node initialization on each worker node.
+
+Step 2: Set Up CI/CD Pipeline
+We will use GitHub Actions as an example.
+
+2.1 GitHub Actions Workflow (deploy.yml)
+Create .github/workflows/deploy.yml in your repository:

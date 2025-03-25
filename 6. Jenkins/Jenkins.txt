@@ -171,9 +171,9 @@ Setting Up EC2 instance  as worker node:
 
 ** What are the pre-requisites for using Jenkins?
 -> The answer to this is pretty straightforward. To use Jenkins you require:
-- Java is required
-- A source code repository which is accessible, for instance, a Git repository.
-- A working build script, e.g., a Maven script, checked into the repository.
+-- Java is required
+-- A source code repository which is accessible, for instance, a Git repository.
+-- A working build script, e.g., a Maven script, checked into the repository.
 
 ** Mention what are the commands you can use to start Jenkins manually.
 -- To start Jenkins manually open Console/Command line, then go to your Jenkins installation directory. Over there you can use the below commands:
@@ -247,8 +247,10 @@ a. LDAP (Lightweight Directory Access Protocol): who can do operation
 
 4. Secure Jenkins Home Directory:
 -> Restrict access to the Jenkins home directory (usually located at /var/lib/jenkins) to authorized users and processes.
+
 5. Backup and Recovery:
 -> Regularly backup your Jenkins configuration and data. Implement a disaster recovery plan to restore Jenkins in case of any security incidents or hardware failures.
+
 6. Network Security:
 -> Implement proper network security measures, such as firewall rules, to restrict access to Jenkins from specific IP addresses or networks.
 	
@@ -296,7 +298,8 @@ Q. How do you store credentials in Jenkins securely?
 ** Multibranch Pipeline: It enables you to implement different Jenkinsfiles for different branches of the same project. In a Multibranch Pipeline project, Jenkins automatically discovers, manages and executes Pipelines for branches which contain a Jenkinsfile in source control.
 
 -> Difference between freestyle and pipeline:
-1. The main aim of the freestyle project is implementing, developing, or running simple jobs such as enabling you to specify the version control system from where you need to extract code and build it and call tests.  Freestyle projects are for orchestration simple jobs for a project.
+1. The main aim of the freestyle project is implementing, developing, or running simple jobs such as enabling you to specify the version control system from where you need to extract code and build it and call tests.  
+-> Freestyle projects are for orchestration simple jobs for a project.
 2. Pipeline Project is better either to set up a CD pipeline or to define the deployment pipeline as code. 
 The pipeline project is suitable to build pipelines for complex jobs whereas the freestyle project is suitable for simple jobs.
 
