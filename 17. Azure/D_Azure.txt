@@ -1,0 +1,1007 @@
+Azure: (https://www.tutorialspoint.com/microsoft_azure/microsoft_azure_deploying_virtual_machines.htm)
+Azure devops: (https://www.youtube.com/watch?v=-yFXVwhGP0s&list=PLaFzfwmPR7_Ifxq-udm66fhReFeGOe2x_)
+              (https://intellipaat.com/blog/tutorial/microsoft-azure-tutorial/azure-devops-tutorial/)
+
+				AZURE (IAAS)
+let’s summarize the problems with the private model in this Azure:
+1. This setup is expensive.
+2. Your servers will be idle most of the time.
+3. Every machine is bound to fail one day, maintaining these many servers becomes a tedious task.
+
+To handle these problems we had to come up with a new model of infrastructure.:
+1. Put your data on Cloud Servers and you are set! No more buying expensive servers.
+2. Scalability! Your server capacity will scale up or scale down according to the traffic, that too automatically.
+3. Your cloud provider will manage your servers, hence no worries about the underlying infrastructure.
+
+Cloud computing:
+----------------
+	-Delivery of your on demand computing system and "pay as u use", rather than storing the files on local storage, 
+     storing on internet, in the very cost efficient manner.
+
+Example: cloud computing is Office 365 which allows users to store, access, edit their MS Office documents 
+   online (in browser) without installing the actual program on their device.
+   
+-> Architecture of Cloud Computing:
+The architecture of cloud computing comprises of the following components −
+1. Front-end device
+2. Back-end platform
+3. Cloud-based delivery
+4. Network
+-> Front-end Devices − These are basically the devices that are used by clients to access the data or 
+   program using the browser or special applications.
+-> Back-end Platform − There are various computers, servers, virtual machines, etc. that combine to become a back-end platform.
+
+-> It is the use of remote servers on the internet to store, manage and process data 
+   rather than a local server or your personal computer .
+* Store: Store large or small files on the cloud, which you can access on the go!
+* Manage: Manage your data with optimized databases on the cloud.
+* Process: With scalable compute power on the cloud, you can process any amount of data in moments!
+
+-> So basically, all these tasks i.e “store, manage and process”, rather than doing it on your 
+   personal computer or your private datacenter, you are doing it on the public cloud, and this 
+   is what Cloud Computing is all about.
+   
+Cloud providers:
+1. AWS (6x capacity, flexible pricing, global leader)
+2. GCP Google cloud platform (best search engine, pioneers of big dta, handle big data, cheapest services povider)
+3. Digital Ocean
+4. Microsoft Azure	(second best)
+5. terremark
+
+Q. What is kafka
+-> Kafka is primarily used to build real-time streaming data pipelines and applications that adapt to the data streams. It combines 
+   messaging, storage, and stream processing to allow storage and analysis of both historical and real-time data
+--------------------------------------------------------------------------------------------------------------------------------------
+AZURE:  (an IAAS)
+=====
+-> Windows Azure, founded in 2010 which was later renamed as Microsoft Azure in 2014. 
+-> It is a cloud computing platform, designed by Microsoft to successfully build, deploy, and manage
+   applications and services through a global network of datacenters.
+-> open and flexible cloud , code development, deploymwnt, host web appn, storage
+-> Microsoft Azure is a cloud computing platform created by Microsoft which developers and IT professionals use to build, deploy 
+   and manage applications through their global network of datacentres.
+   
+Azure features:	
+community: Oracle 
+vm scale set:similar vm create deploy
+fabric service: deploy and manage microservice appln  with k8s
+functions servie create vm using any langages
+
+Azure Services:
+1. Compute: It is used to process data on the cloud by making use of powerful processors which serve multiple instances at a time.
+2. Storage Services: The storage as the name suggests, is used to store data in the cloud with the ability to scale as 
+   and when required. This data can be stored anywhere.
+3. Database: The database domain is used to provide reliable relational and non relational database instances managed by Azure.
+4. Networking: It lets you connect to cloud and on-premise infrastructure and services to get great user experience
+
+Azure Pricing: is extremely flexible and offers a "pay-as-you-go" approach which can greatly help serve your business needs. 
+      Flexible pricing greatly supports up-scaling or down-scaling the architecture as per the needs.
+
+Q. What Is Azure Portal?
+-> Azure Portal as the name suggests, is a single portal or a single junction that lets you access and manage 
+   all your applications at one place. 
+-> It lets you build, manage and monitor everything from simple web apps to complex cloud applications in a single, unified console.
+
+** Features Of Azure Portal:
+1. Single Point Management
+2. Personalized Experience
+3. Access Control And Security
+4. Service Amalgamation For Powerful Experience
+5. More Visibility
+
+Use case:
+Userbase-loadbalancer-Servers- get list of files from data base and it fetches from file systems and do job on servers.
+
+Q. Why Azure?  
+-> There are several reasons why organizations choose Azure over other cloud platforms:
+1. Integration with Microsoft: Azure is tightly integrated with other Microsoft tools and services.
+2. Comprehensive Suite of AI Services: It is a good choice for organizations that are looking to incorporate AI into their operations.
+3. Strong Focus on Security: with a range of features and tools designed to help organizations secure their data and applications.
+4. Global Footprint: with data centers located in multiple regions tools designed to help organizations secure their data and applications.
+5. Support: Azure has a large and supportive community, as well as a comprehensive support network provided by Microsoft.
+
+Q. Difference between AWS and Azure:
+  Parameter						AWS						Azure
+  -------------------------------------------------------------------------------------------------------------------------------------------
+1. Parent Company			subsidiary of Amazon.com.				product of Microsoft
+2. Date Of Initiation			2006										2010
+3. Market Share					40%											30%
+4. Open Source	 			More open to open source community		Less open to open-source community
+5. Hybrid Cloud				It is a work in progress				Excels in Hybrid Cloud Market
+6. Licencing				Offers more flexibility					Catching up with AWS
+7. Linux Ecosystem	 		Extensive support for Linux				Still building up
+8. Level of Encryption			High									Low
+9. Pricing Model			Charges on an hourly basis				Charges on per minute basis
+10.Flexibility				More flexible							Less flexible
+11.User Interface			User-friendly and rich UI				Less intuitive
+12.Service Offerings		AWS has a broader range of services     more comprehensive suite of AI services.
+13.Platform Integration		more open and diverse platform			Azure is more tightly integrated with Windows-based 
+																	technologies and has a greater focus on Microsoft-centric services
+14.Geographical Coverage	larger geographical footprint			stronger presence in certain countries, particularly in Europe.
+						    (more regions and Availability Zones)
+						
+Q. Which one is better aws or azure best feature?
+-> It's difficult to say which is better, AWS or Azure, as both are leading cloud service providers and the best choice depends on the 
+   specific requirements and use case of an organization.
+1. Some popular features of AWS include:
+-> Wide range of services and capabilities
+-> Strong focus on security
+-> Large and active community and ecosystem
+-> Flexible pricing options
+2. Some popular features of Azure include:
+-> Strong focus on artificial intelligence and machine learning
+-> Integration with other Microsoft products and services
+-> A growing range of services and capabilities
+-> Robust support for hybrid cloud scenarios
+
+Q. What are diff between azure devops and jenkins?
+-> Azure DevOps and Jenkins are both popular tools for Continuous Integration and Continuous Deployment (CI/CD), 
+   but there are some key differences between them:
+1. Origin: Jenkins is an open-source tool, while Azure DevOps is a proprietary tool from Microsoft.
+2. User Interface: Jenkins has a more basic user interface and requires more technical knowledge to set up and configure, 
+   while Azure DevOps has a more modern and user-friendly interface.
+3. Integration: Azure DevOps is tightly integrated with other Microsoft tools and services, such as Visual Studio and Azure, 
+   while Jenkins is more flexible and can be integrated with a wider range of tools and services.
+4. Pricing: Jenkins is open source and free, while Azure DevOps has a range of pricing options, including a free tier for small teams.
+5. Scalability: Azure DevOps is designed to be highly scalable, while Jenkins can be more challenging to scale in large, complex environments.
+6. Support: Azure DevOps has a more comprehensive support network and a larger community of users, while Jenkins has a large 
+   and active community of users but less official support.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Availability set (region, zone): make available data set if any natural calamity happens
+
+$$ Ailability region & zone: a region is a geographic location that contains one or more availability zones, and an availability zone is a 
+   distinct location within a region that provides additional fault tolerance and high availability for cloud computing resources.
+-> Availabity region: a region is a geographical location where cloud computing resources, such as servers, storage, and 
+    networking, are located. 
+-> Each region is a separate geographic area, often containing multiple data centers. Regions are used to provide low latency and 
+   high availability to users in different parts of the world.
+   
+$$ Availability zones: An availability zone, on the other hand, is a distinct location within a region that contains one or more data centers. 
+   Availability zones are designed to be isolated from each other, so that if one availability zone experiences a failure, it does not affect 
+   the other availability zones in the same region. 
+-> By spreading resources across multiple availability zones, cloud providers can provide high availability and fault tolerance to their customers.
+
+
+Q. What do you understand about the “Availability Set”?
+-> Availability Set is nothing but a logical grouping of VMs (Virtual Machines) that allows Azure cloud to understand how the application was developed for providing availability and redundancy.
+-> Each VM in the availability set is assigned 2 kinds of domains by Azure:
+
+** Fault domain and update domain:
+-> Fault domain: A fault domain is a group of VMs or other resources that share a common power source and network switch. This means that if there is a 
+   failure affecting the power or network infrastructure, all VMs in the same fault domain could be impacted. To mitigate this risk, 
+   VMs are spread across multiple fault domains, so that a failure in one fault domain does not affect the availability of VMs in other fault domains.
+
+** Update domain: An update domain is a group of VMs or other resources that can be updated or rebooted at the same time, without affecting the availability 
+   of other VMs. For example, when you apply updates to an Azure VM, the VM will be temporarily taken offline, but other VMs in the same 
+   update domain can continue to run without disruption. 
+-> By spreading VMs across multiple update domains, you can ensure that updates or maintenance activities can be performed 
+   without affecting the availability of other VMs.
+-> Before the maintenance of another update domain, the previously rebooted domain 
+   is given a recovery time of 30 minutes to ensure that the domain is up.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+2 types of computing model:
+	1:Deployment model: Private, Public, Hybrid, (community and multi cloud)
+	2:Service model: SAAS, IAAS, PAAS
+	
+Types of Cloud:
+
+1. Public Cloud − A service provider makes the clouds available to the general public which is termed as a public cloud. 
+   These clouds are accessed through internet by users. 
+-> These are open to public and their infrastructure is owned and operated by service providers as in case of Google and Microsoft.
+-> mantaining servers on public cloud is very easy. but data is less secure.
+Pros: Minimal investment, pay as per use only, no need of any initial cost, making it excellent for enterprises and immediate access to the resources.
+	  entire infrastructure is fully subsidised by cloud service provider. no need setup any hardware, no maintanance(done by service provider)
+	  infra structure'l be provided by cloud servicing provider, no need of infrastructure management, 
+	  dynamic scalability: depending upon, scale up/down the services as and when required. resources are easily accessable.
+Cons: less secure: as data is available to everyone to access.  there is no guarantee that our data is secure. 
+	  Low customization: cannot be customized as per our requirement, as it is made to public, so genrealized.
+
+2. Private Cloud − These clouds are dedicated to a particular organization. That particular organization can use the cloud for 
+   storing the company's data, hosting business application, etc. 
+-> The data stored on private cloud can't be shared with other organizations. 
+-> The cloud is managed either by the organization itself or by the third party.
+Pros: 
+-> better control of all the resources. you are the soul owner of ur property(car). you have complete command over resources. 
+-> data security and privacy: suitalble for storing corporate info, which need ur data  is very secure, not to share with anyone. even the hardware/software. (so, by segmenting the resources within the same infrastructure, improved access to secure is achieved, this approach is designed to work with legacy system.that unable to access with public cloud.) 
+-> customizations is also possible. since, u'e access to everything, u can personalize according to ur requirements.   
+Cons: less scalable: prviate clouds are scaled with certian range, it is less scalbale 
+	  costly compared with public cloud.
+
+3. Hybrid Cloud − When two or more clouds are bound together to offer the advantage of both public and private clouds, 
+-> they are termed as Hybrid Cloud. Organizations can use private clouds for sensitive application, while public clouds  
+  for non-sensitive applications. The hybrid clouds provide flexible, scalable and cost-effective solutions to the organizations.
+Pros: greater flexibility, control over the resources,  
+	  costly: as public cloud provides scalability. only pay for the extra capacity. so cost is bit higher. 
+	  security: chances of data theft is less, as you decide which data made to public and/or public.
+Coons: difficult to manage as it is combination of both
+	   slow data transmission as well,latency level is bit low.
+
+4. Community- agreed on terms by community members of organization (Ex: ORACLE)
+
+Benefits of Cloud:
+1. scalability. Allocation and de-allocation of resources is dynamically as per demand.
+2. Cost effective: It saves on cost by reducing capital infrastructure.
+3. Easy access: It allows the user to access the application independent of their location and hardware configuration.
+4. It simplifies the network and lets the client access the application without buying license for individual machine.
+5. Server storage: Storing data on clouds is more reliable as it is not lost easily.
+6. Easy backup, Virtual machines
+7. Broad network access, Rapid elasticity, Measured service, On demand service, Resource pooling.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+SPI: (S stand for Software, P stands for Platform and I for Infrastructure in SPI.)
+-> Following are the live examples of these models.
+1. SAAS Model − E-mail (Gmail, Yahoo, etc.)		(hardware with actual software (PAAS+actual software))
+2. PAAS Model − Microsoft Azure					(with supporting software(IAAS+supporting software))
+3. IAAS Model − Amazon S3 						(hardware can be rented from cloud)
+
+1. Azure as PaaS (Platform as a Service)		: hardware with supporting software(IAAS+supporting software)
+-> As the name suggests, a platform is provided to clients to develop and deploy software. 
+-> The clients can focus on the application development rather than having to worry about hardware and infrastructure. 
+-> It also takes care of most of the operating systems, servers and networking issues.
+Ex: Azure serviceplatform(Microsoft), force.com, AWS elastic beanstock, google app engine (GCP), openshift.
+Pros: over call is low, servers are automatically updated, less vulnurable, does not pose a risk of data breach, 
+      adapting new versions.
+Cons: portability issues
+-> It allows developers to build applications, collaborate on projects without having to purchase or maintain infrastructure.
+	Ex: Google app engine
+
+2. Azure as IaaS (Infrastructure as a Service)    : hardware can be rented from cloud
+-> Gives complete control of the operating systems and the application platform stack 
+   to the application developers. 
+-> It lets the user to access, manage and monitor the data centers by themselves.
+-> Combination of everything like  computing, storage, networking, it works very similar to ur computer hardware,   
+   like o/s, networks are extra, only diff is that it operates virtually.
+Pros: facilitates very efficient design time portability, appn can be migrated to indows azure without rework, database can
+      be migrated to azure, allows quick transition of services to clouds
+Cons: 
+-> It allows companies to rent servers, storage space, etc. from a cloud provider.
+	Ex: 
+
+3. Azure as SAAS (Software as service)		: hardware with actual software (PAAS+actual software)
+-> Provide access to software applications over the internet, eliminating the need for organizations
+    to install, manage, and maintain the software on their own servers. 
+-> Customers can subscribe to the services they need, pay for what they use, and scale their usage as their needs change, reducing 
+   the costs and complexities associated with traditional software deployment models.
+-> When you receive a word document, even though u dont have word software in ur personal computer, 
+   you may have the access to view the document using google docs/gmail.
+Ex: Office 365, Dynamics 365, and Azure DevOps. 
+Pros: You pay as you use it, highest degree of vendor management, 
+-> It allows companies to use software without purchasing them, which reduces the expenditure of 
+   the company drastically, since they are already installed on the cloud servers they can be quickly deployed and therefore saves time.
+	Ex: Gmail
+
+Packaged software: Managed by you- Applications, Data, Runtime, Middleware, O/S, Virtualization, Servers, Storage, Networking
+IAAS: (Managed by you- Applications, Data, Runtime, Middleware)  (Managed by vendor: O/S, Virtualization, Servers, Storage, Networking)
+PAAS: (Managed by you- Applications, Data) (Managed by vendor: Runtime, Middleware, O/S, Virtualization, Servers, Storage, Networking)
+SAAS: Managed by vendor- Applications, Data, Runtime, Middleware, O/S, Virtualization, Servers, Storage, Networking
+
+-> Resource group: a resource group is a logical container that holds related resources for an Azure solution. A resource group can include 
+   resources such as virtual machines, storage accounts, databases, and networking components.
+
+-------------------------------------------------------------------------------------------------------------------------------------
+Microsoft Azure provides a wide range of cloud computing services and solutions including:
+1. Compute: IAAS, PAAS, SAAS, Virtual Machines, App Service, Azure Functions, Container Instances, Batch for containerized workload,  
+   Service for facric for microservices and container orchestration, and Cloud Services for building cloud-based apps and APIs
+2. Storage: Blob Storage, Queue Storage, File Storage, Archive Storage, Disk Storage
+3. Database: Azure SQL Database, Cosmos DB, Azure Database for MySQL, Azure Database for PostgreSQL
+4. Networking: Virtual Network, Load Balancer, VPN Gateway, ExpressRoute, Traffic Manager
+5. Web and Mobile: Azure Active Directory, API Management, Notification Hubs, Azure Search
+6. Internet of Things (IoT): IoT Hub, IoT Central, IoT Edge
+7. Analytics: Azure Stream Analytics, Azure Data Lake Storage, HDInsight, Power BI
+8. Machine Learning: Azure Machine Learning, Cognitive Services, Databricks
+9. DevOps: Azure DevOps, Azure Monitor, Azure DevTest Labs
+10.Security: Azure Security Center, Azure Key Vault, Azure Active Directory B2C
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+1. Compute: refers to the processing power and resources provided by the Azure platform for running applications and services.
+   
+a. Virtual Machines: (IAAS) It is a software environment that emulates the functionality of a physical computer, allowing multiple operating systems 
+   and applications to run on a single physical server.
+
+b. App Service:(PaaS) It allows developers to create, deploy, and scale web, mobile, and API applications in the cloud. Ex: multiplayer games
+-> It provides services to support the full application development lifecycle, including integration with other Azure services 
+   like Azure Functions, Azure Cosmos DB, and Azure Storage.
+	
+c. Azure Functions: serverless, event-driven computing service. It allows developers to build and run applications and services without
+   the need to manage infrastructure, and only pay for the resources consumed during actual function execution.
+-> Azure Functions supports multiple programming languages including C#, Java, JavaScript, and Python.
+-> The term 'serverless' is somewhat misleading, as there are still servers providing these backend services, but all of the server 
+   space and infrastructure concerns are handled by the vendor. Serverless means that the developers can do their work without having 
+   to worry about servers at all.
+
+d. Azure Container Instances (ACI): is a fast and simple way to run containerized applications in the Azure cloud. 
+-> It provides a fully managed service for running Docker containers, without the need for managing virtual machines or infrastructure. 
+-> With ACI, you can quickly and easily create containers, manage their network and storage, and scale them up or down as needed.
+
+e. Batch for containerized workload: A robust and scalable platform for executing containerized workloads in the cloud, making it easier for 
+   organizations to run large-scale batch processing jobs and minimize the need for managing infrastructure and resources.
+-> you can create a pool of virtual machines and then execute containerized workloads on those virtual machines in parallel. 
+   The virtual machines can be automatically scaled up or down as needed, depending on the workload demand, and Azure Batch 
+   takes care of managing the underlying infrastructure and resources.
+ -> Azure Batch integrates with other Azure services, such as Azure Container Registry, to make it easy to manage and deploy your containerized workloads.
+ 
+f. Service Fabric:  provides an infrastructure to build, deploy, and upgrade microservices efficiently. 
+   It also provides options for autoscaling, managing state, monitoring health, and restarting services in case of failure.
+   
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+2. Storage: refers to the cloud-based data storage services provided by the Azure platform.
+   
+   a. Azure Blob Storage: Object-based storage for unstructured data, such as images, videos, audio, and documents.
+      1. Block Blobs: Block Blobs are designed for efficient and scalable uploading and downloading of large data files. They are 
+         optimized for streaming and are typically used to store unstructured data, such as images and videos. (Ex: Netflix)
+
+      2. Page Blobs: Page Blobs are similar to Block Blobs, but they are optimized for random read and write operations. They are 
+         typically used to store virtual hard disk (VHD) files, which are used by virtual machines. (data files for databases, log files, backup & restore data )
+      3. Append Blobs: Append Blobs are optimized for appending data to an existing Blob, making them well suited for logging and 
+         event data. They are similar to Block Blobs, but once data is written to an Append Blob, it cannot be modified. (store log files generated 
+		 by applications, store event data from various sources, store time-series data)
+   ## dashboard-storage accounts-create-give details
+   
+   b. Azure Files storage: (fully managed file sharing service) structural data, allows you to create and manage file shares that can be accessed using the 
+      standard Server Message Block (SMB) protocol or REST API, which is the same protocol used for accessing files on a local network. The data in this storage is protected by HTTPS and SMB 3.0 Protocol.
+   -> This makes it easy to migrate your existing file shares to the cloud, and to access your files from anywhere, at any time, and from any device.
+   -> They are used for improving the performance and capabilities of on-premise applications.
+   -> The OS deployments and hardware management is taken by Azure itself.
+   
+   c. Azure Queue Storage: A messaging queue service for storing and processing high-volume, asynchronous messages. 
+     (e-commerce {order processing}, Inventory Management)
+   -> This storage ensures that the application becomes less prone to failure of individual components and is scalable.
+   -> With the help of message queues, it provides the queue monitoring feature for helping the application to ensure the user demands are met.
+	 
+   d. Azure Table Storage: A NoSQL key-value store for semi-structured data. designed for large-scale, non-relational data storage, 
+      and is optimized for high-performance, scalability, and ease of use.
+   -> applications that follow a flexible schema of data, data is stored in tables, and each table contains a collection of entities. An entity is a collection of properties, where each 
+      property has a name and a value. Each entity also has a unique key, called a Partition Key and a Row Key, that allows for efficient 
+	  access and retrieval of data.   (Ex:  large amount of data about user behavior and preferences in web application)
+   
+   e. Azure Disk Storage: normal disk storage, High-performance, durable disk storage for Azure virtual machines.
+   -> It is used to store data that needs to persist even if the virtual machine (VM) that it is attached to is deleted or stopped. 
+   -> 1. Standard Disk Storage: uses magnetic drives to provide low-cost, large-capacity storage.  
+      2. Premium Disk Storage: uses solid-state drives (SSDs) to provide high-performance, low-latency storage.
+   
+   f. Azure Archive Blob Storage: is a cost-effective, long-term storage solution for infrequently accessed data in Microsoft Azure. 
+      It provides secure, durable storage for large amounts of data that is not frequently accessed but must be retained for compliance or business reasons.
+   -> you have a large library of video files that are rarely accessed but still need to be kept for regulatory purposes. Instead of keeping 
+	  these files in the more expensive Azure Hot Blob Storage, you can move them to Azure Archive Blob Storage to reduce your storage costs.
+   -> there may be a retrieval time penalty for accessing archive data, as the data needs to be retrieved from tape.
+   
+   g. Azure Data Lake Storage: An analytics data lake for big data analytics and Apache Hadoop-based workloads.
+   -> provides a scalable and secure repository for big data analytics. 
+   -> It is designed to store and analyze large amounts of data of any format, including structured, semi-structured, and unstructured data.
+   -> You can store and analyze petabytes of data using Azure services such as Azure HDInsight, Azure Databricks, and Azure Machine Learning. 
+      It supports batch processing, interactive analytics, and machine learning scenarios, making it an ideal solution for a wide range of big data use cases.	  
+
+Q. What is Storage account, types of containers?
+-> It allows you to store and access your data through the cloud. It provides a centralized location to store data and enables 
+   you to access your data from anywhere with an internet connection.
+-> There are two types of containers in cloud storage:
+1. Blob containers: Blob containers are used to store unstructured data, such as images, videos, audio files, and text files, 
+   in binary format. Blob containers provide scalability, high availability, and low latency for accessing your data.
+2. File containers: File containers are used to store structured data, such as spreadsheets and documents, as a file system. 
+   File containers provide a way to mount a cloud-based file system on your local computer or virtual machine and access your 
+   data as if it were stored on a local drive.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+3. Database: an organized collection of data stored and accessed electronically. 
+-> It is designed to store, manage, and retrieve data efficiently and accurately.
+   a. Azure SQL MySQL, PostgreSQL, MariaDB Database: 
+   -> A managed relational database service based on Microsoft SQL/MySQL/PostgreSQL/Maria DB database engine. offering a fully managed, scalable, 
+      and highly available relational database solution.  (Dashboard-Database for my sql-create-give)
+   -> It provides features such as automatic patching, automatic backups, and high availability, making it a 
+       highly available and secure solution for your data.
+   
+   b. Azure Cosmos DB: A globally distributed, multi-model NoSQL database that supports document, key-value, graph, and column-family data models.
+-> It supports multiple data models, including document, key-value, graph, and column-family, and allows you to easily build and scale globally 
+   distributed applications. 
+-> Easily store and access your data globally, while ensuring low latency and high throughput. It provides features such as automatic and instant scalability, tunable consistency levels, and globally distributed data, making it a highly available and scalable solution for your data.
+   
+   C. Azure Cache for Redis: A fully managed, in-memory data store and cache based on the Redis database.
+->  you can easily create, manage, and scale in-memory data stores in the cloud, without having to worry about the underlying 
+    infrastructure. 
+-> It provides features such as automatic scaling, built-in high availability, and secure network isolation,
+    making it a highly available and secure solution for your data.
+
+-> SQL: vulnerable, 
+-> No SQL: 
+		SQL							NOSQL
+	Rational based 						Non-ratioal, distributed database
+	Vertically scalable					Horrizontally scalable
+	Table based database					Document based, Graph based or key-value pair 
+	Pre-defined schema					Dynamic schema
+	Uses SQL-based						Uses UnQL (Unstructured Query language)
+	Not preferred for large datasets	Largly preferred for large datasets
+-> SQL databases are best suited for structured data and complex transactions, while NoSQL databases are better for handling 
+   large amounts of unstructured data and provide higher scalability.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+4. Networking: a collection of interconnected devices that can communicate and exchange data with each other.
+
+a. Azure Virtual Network (VNet): It enables you to create and manage isolated networks in the cloud, and to securely connect your resources to the network.
+-> you can create and configure your own virtual network, including virtual subnets, route tables, and network security groups. You can also control the flow of inbound and outbound network traffic to your virtual network and its resources, ensuring that your network is secure and isolated from the public internet.
+-> Key benefits: Security, Isolation, Scalability, Interoperability, Cost-effective.
+
+** Virtual Subnets: It's a logical segment of a virtual network that you can use to segment your network into smaller, more manageable parts. 
+   Each subnet can have its own IP address range, security policies, access controls, and routing tables, and can be used to isolate different parts of your network for security and management purposes.
+-> There are five classes of subnetworks: Class A, Class B, Class C, Class D, and Class E. Each class relates to a specific range of IP addresses. 
+   Classes A, B, and C are used the most often by different networks
+-> Subnets are useful in situations where you need to separate different types of network traffic, such as separating front-end and 
+   back-end workloads, or creating dedicated subnets for security or compliance requirements. Subnets also provide a 
+   way to segment network traffic for scale and performance reasons.
+
+** Route Tables: Its a set of rules that determine the flow of network traffic between subnets. You can use route tables to control the flow of inbound and outbound network traffic, ensuring that network traffic is routed to its intended destination.
+
+** Inbound and outbound rules: Restrictions and policies that are put in place to control and monitor the flow of data into and out of a network. These rules are typically implemented in firewalls.
+-> Inbound and outbound rules refer to the firewall rules that control access to and from a virtual machine (VM) or other network resources.
+-> Inbound rules define the incoming traffic that is allowed to reach a network resource, such as a VM. 
+   For example, an inbound rule may allow traffic on a specific port (e.g. TCP port 80) from a specific source IP address range.
+-> Outbound rules define the outgoing traffic that is allowed to leave a network resource, such as a VM. 
+   For example, an outbound rule may allow traffic on a specific port (e.g. TCP port 8080) to a specific destination IP address range.
+-> By using inbound and outbound rules, customers can control network traffic and secure their network resources in Azure. 
+   These rules can be configured at the network security group (NSG) level, which acts as a firewall for network traffic. 
+   Customers can create and manage NSGs through the Azure portal, Azure CLI, or Azure PowerShell.
+   
+** Network Security Groups: Its a set of security rules that control inbound and outbound network traffic to and from your virtual network and its resources. To enforce network security policies and to protect your virtual network and its resources from potential threats. 
+
+** VPN (Virtual Private Network): A VPN is a private network that uses a public network, such as the internet, to securely connect remote users or devices to a centralized network. 
+-> VPNs use encryption to secure the connection and to protect data from being intercepted or accessed by unauthorized parties.
+    
+B. Azure ExpressRoute: A dedicated, private connection between your on-premises infrastructure and Azure, providing higher security and reliability compared to a public Internet connection.
+-> Benefits: Improved security, Increased reliability, Increased performance, Integration with on-premises infrastructure
+
+C. Azure Load Balancer: A fully managed, highly available load balancer that enables you to distribute incoming traffic to multiple virtual machines in a scalable and efficient manner. Provides high availability and automatic failover for your applications.
+-> Benefits : Improved availability, Increased scalability, Better performance, Cost-effectiveness.
+
+D. Azure Application Gateway: A web application firewall and load balancer that enables you to secure and manage incoming web traffic to your applications. Provides high availability and automatic failover for your applications.
+-> Supporting features: Load balancing, SSL offloading, URL-based routing, Web application firewall (WAF), Health probes
+Q. Have u configured applications gateway in Azure for app Service?
+		In the Azure portal, select your Application Gateway.
+		Under Backend pools, select the backend pool.
+		Under Target type, select App Services.
+		Under Target select your App Service.
+		Select Save.
+
+E. Azure VPN Gateway: Create secure and encrypted connections between your virtual network and on-premises infrastructure.
+-> Benefits: Improved security, Increased reliability, Cost-effectiveness, Improved performance, Integration with on-premises infrastructure.
+-> There are two types of VPN gateways in Azure:
+1. VPN Gateway: This type of VPN gateway provides basic VPN capabilities, including support for Point-to-Site (P2S) and Site-to-Site (S2S) VPNs.
+2. ExpressRoute Gateway: This type of VPN gateway is used in conjunction with ExpressRoute, a direct, private connection between an organization's on-premises infrastructure and Azure data centers. The ExpressRoute gateway enables organizations to establish a secure connection to Azure without using the public internet.
+
+F. Azure Traffic Manager: A DNS-based load balancing service that enables you to distribute incoming traffic across multiple endpoints such as Azure virtual machines, Web Apps, or cloud services in a scalable and resilient manner.
+-> Traffic Manager uses a Domain Name System (DNS) query to determine the location of the user and then directs the user to the closest endpoint.
+-> use cases: Global Load Balancing, High Availability, Traffic Management, Disaster Recovery
+
+Q. how will you create a traffic manger?
+-> To create a Traffic Manager in Microsoft Azure, you can follow these steps:
+1. Log in to the Azure portal.
+2. Navigate to the Traffic Manager profiles menu.
+3. Click the "Create a resource" button.
+4. In the search bar, type "Traffic Manager profile" and select it from the results.
+5. Click the "Create" button.
+6. Fill in the required information, such as the name of the profile, the resource group it should belong to, and the subscription.
+7. Choose the routing method that you want to use. Traffic Manager supports multiple routing methods, including Priority, Weighted, and Geographic.
+8. Add the endpoints that Traffic Manager should route traffic to. You can add endpoints from different Azure regions, or from external domains.
+9. Review the settings, and then click the "Create" button to create the Traffic Manager profile.
+
+Q. What is network peering?
+-> It allows customers to connect virtual networks (VNets) within the same or different Azure regions.
+-> This enables customers to easily connect and communicate between VNets, providing a fast and secure way to transfer data between resources within the same network boundary.
+-> There are two types of network peering in Azure:
+1. VNet peering: This allows customers to connect two VNets within the same region. VNet peering provides a 
+   low latency, high-bandwidth connection between VNets.
+2. Global VNet peering: This allows customers to connect two VNets in different regions. Global VNet peering 
+   provides a low latency, high-bandwidth connection between VNets across regions.
+-> Network peering in Azure is a resource-level connection and does not require a VPN gateway or VPN connection. 
+   This makes it easier to set up and manage network connections, and eliminates the need for extra network components.
+
+** Establish network peering betweem 2 Vnets: (Vnet1 & Vnet2)
+1. Create Vnets (Different region or same region, adress space should not overlap)
+2. Create subnets (Optional)
+3. Enable network peering: Vnet1 -> Peerings -> Add
+   (Details: peering name, select Vnet2, Choose Vnet gateway transit {VPN, Expressroute way gateway}) -> Ok
+4. Accept peering on other Vnet: Vnet2 -> Peerings -> Accept
+5. Verify conectivity: Resources within the peered virtual networks can communicate with each other using private IP addresses. Test the connectivity between resources in the peered virtual networks to ensure that they can communicate as expected.
+6. Configure Network Security Groups (NSGs) and Routes (Optional): configure Network Security Groups (NSGs) on the subnets or individual resources.
+-> However, you cannot establish peering across different Azure subscriptions.
+	  
+--------------------------------------------------------------------------------------------------------------------------------------------------------  
+5. Security / Identity:
+    a. Azure Active Directory (AD): Authentiction and Authorization
+	-> A cloud-based identity and access management (IAM) solution that enables you to manage user identities and access to your applications and data. access to add all admin rights to (hands on folder), security and management wil give authorization powers, 
+    -> will give access to resources, proper identity, authentication, authorization.
+	
+    2. ARM (Azure resource manager): about resources (manager of azure, managing deploying resources health of resources)
+      -> facility access control, permission, security, logs using ARM
+    
+    b. Azure Key Vault: Managing encryption keys and secrets, such as passwords, connection strings, and 
+	   certificates, in a secure and highly available manner.
+	-> Features: Key management, Access control, Auditing and monitoring, Integration with Azure services, Scalability, Compliance and reguatory support.
+    c. Azure Security Center: to make sure all resoures in virtual network are virus free and software compliance
+	-> A unified security management solution that enables you to monitor and manage the security of your 
+	   Azure resources, and to detect and respond to threats.
+    d. Azure Monitor:  to collect, analyze, and act on log data generated by 
+	   your applications and services, and to gain insight into their performance and health.
+    e. Azure DDoS protection: protect your applications from distributed denial-of-service (DDoS) 
+	   attacks, and to ensure the availability and performance of your applications.
+    f. Azure Firewall: to control network traffic to and from your applications 
+	   and services, and to enforce network security policies.
+    g. Azure Confidential Computing: A set of technologies that enable you to protect sensitive data, such as cryptographic keys and 
+	   personal information, while it is being processed in the cloud.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+6. Analytics:
+   a. Azure Data Factory: to create, schedule, and orchestrate data pipelines for collecting, transforming, and loading data into Azure. 
+	- transfer one data source to other block storage
+   b. Azure Databricks: A fast, easy, and collaborative Apache Spark-based analytics platform that enables you to build, train, and deploy machine learning models, and to process big data in real-time.
+   c. Azure HDInsight:to process big data using popular open-source frameworks such as Apache Hadoop, Apache Spark, and Apache Hive.
+   d. Azure Stream Analytics: A real-time data stream processing service that enables you to analyze and process large amounts of data in real-time, using SQL-based queries.
+   e. Azure Cosmos DB: A globally distributed, multi-model database service that enables you to store, manage, and query big data, using a variety of data models, including NoSQL and SQL.
+   f. Azure SQL Data Warehouse: A fully managed, highly scalable data warehousing service that enables you to store and analyze large amounts of data, using standard SQL and business intelligence tools.
+   g. Power BI (business intelligence): A cloud-based business intelligence and data visualization service that enables you to create interactive reports, dashboards, and charts, and to share insights with others.
+      
+-----------------------------------------------------------------------------------------------------------------------------------------------------------	
+7. Azure App Service/ Mobile & Web: 
+   a. Azure Functions: A serverless compute service for building event-driven, microservice-based applications.
+   b. Azure API Management is a fully managed service for creating, publishing, and managing APIs (Application Programming Interfaces).  
+      It provides a secure and scalable platform for creating, deploying, and managing APIs, while ensuring high availability and performance.
+   c. Azure Mobile Apps: A backend service for building mobile apps that can store and retrieve data from the cloud.
+   d. Azure Notification Hubs: A scalable, multi-platform push notification service for sending notifications to mobile and web apps.
+   e. Azure Active Directory: A cloud-based identity and access management service that enables you to securely manage identities and access to resources.
+   f. Azure Search: It is a cloud-based search-as-a-service solution that enables you to easily add search capabilities to your web and mobile applications.
+   
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+8. Internet of Things (IoT):
+   a. Azure IoT Central: to build and deploy IoT solutions without requiring extensive cloud or IoT expertise.
+   b. Azure IoT Hub: fully managed, bi-directional communication hub to securely connect, monitor, and manage devices at scale.
+   c. Azure IoT Edge: A platform for building and deploying intelligent edge solutions, enabling you to bring computing and 
+      data processing closer to your IoT devices, reducing latency and improving performance.
+   d. Azure Time Series Insights: to store, visualize, and analyze time series data from your IoT devices 
+      and assets, providing insights into device behavior and performance.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+9. Machine Learning:
+   a. Azure Machine Learning: To build and deploy machine learning models for IoT applications, including
+       predictive maintenance, anomaly detection, and predictive quality control.
+   b. Azure Machine Learning Studio: for building, training, and deploying machine learning models, 
+      without requiring coding skills.
+   c. Azure Machine Learning Service: to build, train, and deploy machine learning models at scale, using popular
+       machine learning frameworks such as PyTorch, TensorFlow, and scikit-learn.
+   d. Azure Databricks: A fast, easy, and collaborative Apache Spark-based analytics platform that enables you to build, train, and 
+      deploy machine learning models, and to process big data in real-time.
+   e. Azure Cognitive Services: A collection of pre-built APIs that enable you to add artificial intelligence and machine learning 
+      capabilities to your applications, such as speech recognition, computer vision, and natural language processing.
+   f. Azure Model Management: A cloud-based model management service that enables you to manage the lifecycle of your machine learning 
+      models, including versioning, tracking, and deployment.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+Q. CI/CD pipeline or Deployment process in Azure Devops?   task you have used in pipeline?
+-> The deployment process in Azure DevOps is a set of steps that are followed to release an application to a production environment. 
+   The process usually involves several stages, including source control, build, test, and deployment. Here is a general outline of 
+   the deployment process in Azure DevOps:
+1. Source control: The source code of the application is stored in a source control repository, such Azure Repos, GitHub, and Bitbucket. 
+   This allows for version control and collaboration among developers.
+2. Build: The source code is built into a deployable package, such as an executable file or a web application archive (WAR) file. 
+   This is usually done using a build system, such as Azure DevOps Build, which compiles the code, performs static analysis, and creates a build artifact.
+3. Test:  unit tests, integration tests, and acceptance tests. 
+   This helps to ensure that the application is working correctly before it is deployed to production.
+4. Deployment: The build artifact is deployed to a production environment, such as a web server, a virtual machine, or a cloud platform. 
+   This can be done manually or automatically, using a deployment pipeline in Azure DevOps. The deployment pipeline defines the steps that 
+   are followed to deploy the application, including infrastructure provisioning, configuration management, and deployment orchestration.
+5. Monitoring/Continuous feedback: Once the application is deployed, it is monitored to ensure that it is functioning correctly and to detect any issues     that may arise. Azure DevOps provides monitoring tools, such as Application Insights, that can be used to monitor the performance and availability of the application.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Q. Vertical scaling horizontal scaling?
+-> Vertical scaling and horizontal scaling are two different methods of scaling computing resources to meet the growing demands of an application.
+-> Vertical scaling, also known as "scaling up", involves increasing the computing resources of a single machine, such as 
+   adding more memory, disk space, or processing power. Vertical scaling is generally easier to implement and can provide quick 
+   performance gains, but it has limitations in terms of scalability and can become expensive as the demands of the application continue to grow.
+-> Horizontal scaling, also known as "scaling out", involves adding more servers/machines to the system, thereby increasing the overall 
+   computing resources available to the application. Horizontal scaling is more flexible and scalable, as it allows you to 
+   add resources as needed. It can also provide improved reliability and availability, as the application can continue to run even if one 
+   machine fails. However, it requires more complex configuration and management, as the application must be designed to run across multiple machines.
+
+Q. how will you block a user from accessing the internet?
+-> is not directly possible as it is a development platform that is used to manage software development and not a network security solution.
+1. Log in to the Azure DevOps portal.
+2. Go to the organization settings.
+3. Select "Access control (IAM)".
+4. Select the user that you want to restrict.
+5. Remove the "Project Collection Build Service" and "Project Collection Test Service" roles for the user, which will restrict their ability to build and test code.
+6. If you want to further restrict their access, you can also remove their "Project Contributor" or "Project Reader" roles, which will restrict their ability to access and modify code and other project resources.
+ 
+Q. we have a monolothic applicaiton with 2 vms deploy it on 2 diff servers convert it to microservices?  converting monolithic to microservices?
+-> Converting a monolithic application to microservices can be a complex and challenging process, but it can also bring 
+   several benefits, such as increased scalability, improved resiliency, and easier deployment and maintenance. 
+1. Identify components: The first step is to identify the different components or functions of your monolithic application. 
+   This will help you determine which parts of the application can be decomposed into separate microservices.
+2. Design microservices: Based on the components you have identified, design the individual microservices. Each microservice 
+   should be a self-contained, loosely-coupled unit of functionality that can be developed, deployed, and maintained independently.
+3. Refactor code: Once you have designed the microservices, you'll need to refactor the code of your monolithic application to extract 
+   the individual microservices. This will involve breaking down the monolithic codebase into separate repositories and creating new microservice projects.
+4. Implement microservices: Implement each microservice using the programming language and framework that is best suited for the task. 
+   You'll need to write the code, write unit tests, and deploy the microservices to a test environment for testing.
+5. Test microservices: Test each microservice individually and verify that it works as expected. You'll need to test the microservices 
+   in isolation and also in combination with other microservices to ensure that they work together correctly.
+6. Deploy microservices: Deploy each microservice to a production environment. You'll need to choose a deployment strategy, such 
+   as a rolling deployment, blue/green deployment, or canary deployment, that is appropriate for your application.
+7. Monitor and maintain microservices: Monitor the performance and availability of each microservice and perform regular maintenance 
+   tasks, such as updating the code, fixing bugs, and adding new features.
+   
+Q. how your database will communicate with backend when you setup the cluster?
+-> The database driver or API provides a way for the backend to communicate with the database and perform operations such as executing queries, retrieving data, and updating records.
+1. Connect to the database cluster: by specifying the IP address or hostname 
+   of one of the database nodes in the cluster and the port number used by the database management system.
+2. Send a request: The backend sends a request to the database cluster, specifying the type of operation it wants to perform, such as 
+   executing a query, retrieving data, or updating records.
+3. Load balancing: The database cluster uses a load balancer to distribute the incoming requests to the different nodes in the cluster. 
+   The load balancer ensures that the requests are distributed evenly across the nodes, improving the performance and scalability of the cluster.
+4. Query execution: The database node that received the request processes the query, retrieves the data, and returns the result to the backend. 
+   If the query involves a complex operation or requires a large amount of data, the database cluster can perform the operation in parallel, 
+   using multiple nodes to process the query.
+5. Data synchronization: The database cluster uses a consensus algorithm, such as Paxos or Raft, to ensure that the data is consistent 
+   and up-to-date across all the nodes in the cluster. The database nodes communicate with each other and coordinate the updates to 
+   the data, ensuring that each node has the same copy of the data.
+   
+Q. what kind of application you have deployed in ci/cd pipleine?
+1. Web applications: These include single-page applications, dynamic websites, and e-commerce platforms.
+2. Mobile applications: These include native iOS and Android applications.
+3. Microservices: These are applications that are designed to perform specific tasks and communicate with other microservices to 
+   deliver a complete solution.
+4. Cloud-based applications: These are applications that are hosted in the cloud and can be accessed from anywhere with an internet connection.
+5. Artificial intelligence and machine learning models: These are applications that use advanced algorithms and data to make predictions or decisions.
+6. Blockchain applications: These are applications that use blockchain technology for various purposes, such as for financial transactions, 
+   digital identity management, and supply chain management.   
+ 
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+q. What are the roles implemented in Windows Azure?
+1. Web Role
+2. Worker Role
+3. Virtual Machine Role
+-> Web Role: It gives a web solution that is front-end. This is like an ASP.NET application. While under facilitating, 
+   Azure gives IIS and required services.
+-> Worker Role: It gives solutions for background service. It can run long activities.
+-> Virtual Machine Role: The roles of both web and worker are executed on virtual machines. The Virtual Machine 
+   Roles give the client the capacity to modify the Azure Virtual Machine on which the web and worker roles are running.
+
+Q. Diff between webapp, functional app?
+-> A web application and a functional application are both software programs, but they differ in their purpose, design, and usage.
+-> A web application is designed to run on the World Wide Web, through a web browser. It is accessible from anywhere with an 
+   internet connection and is typically hosted on a remote server. 
+-> Examples of web applications include online shopping websites, 
+   social media platforms, email services, and project management tools.
+-> On the other hand, a functional application is a standalone program that runs on a local computer or device. It is designed to 
+   perform specific tasks, such as data processing, image editing, or financial management. A functional application is not accessible 
+   from the web and is typically installed on the user's device.
+   
+Q. What is Service pool?
+-> A service pool is a group of resources in a computer system that are dedicated to performing a specific service. The resources in a service pool can be shared among multiple service instances and can be dynamically allocated or deallocated based on the demands of the system.
+-> used to manage the performance and scalability of services in large-scale systems. 
+-> By pooling resources, a service system to handle large amounts of requests and to maintain a high level of service quality.
+-> Service pools can consist of a variety of resources, including memory, CPU, disk space, and network bandwidth. The resources in a service pool can be managed by an operating system, a hypervisor, or a middleware component, depending on the architecture of the system.
+-> Service pools are commonly used in cloud computing, web servers, database servers, and other large-scale systems to manage the performance and scalability of services. By using service pools, organizations can ensure that their systems can handle large amounts of traffic, respond quickly to user requests, and maintain high levels of service quality.
+   
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Q. How to Integrate 3rd part tool?
+-> Integrating a third-party tool into your workflow can be a powerful way to enhance your productivity and add new capabilities to your applications.
+   However, the process of integrating a third-party tool can be complex and time-consuming, especially if you are unfamiliar with the 
+   tool and its APIs. Here are the general steps for integrating a third-party tool:
+1. Research the tool: Start by researching the third-party tool and understanding its capabilities, limitations, and requirements. 
+   This will help you determine if it is a good fit for your workflow and ensure that you have the necessary resources to integrate it.
+2. Sign up for an account: If the tool requires an account, sign up for an account and create a test environment where you can experiment with the tool.
+3. Familiarize yourself with the tool's APIs: Most third-party tools have APIs that allow you to programmatically access and control 
+   their functionality. Familiarize yourself with the tool's APIs and any relevant documentation, such as API reference guides and sample code.
+4. Integrate the tool into your workflow: Depending on the specific requirements of the tool, you may need to modify your existing 
+   applications or develop new applications to integrate the tool into your workflow. This may involve writing code to access the tool's APIs, 
+   setting up authentication, and handling any errors that may occur during the integration process.
+5. Test the integration: Once the integration is complete, test the integration thoroughly to ensure that it is working as expected. 
+   This may involve conducting unit tests, integration tests, and user acceptance tests.
+6. Monitor the integration: After the integration is complete, monitor the integration to ensure that it continues to work as expected 
+   and to identify any issues that may arise.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Q. Infrastructure for java project deployment?
+1. Application Server: A Java application server, such as Apache Tomcat, is used to run the Java application. The application 
+   server provides a runtime environment for the Java application, including features such as threading, memory management, and security.
+2. Database Server: A database server, such as MySQL or PostgreSQL, is used to store and manage the data used by the Java application. 
+   The database server can be installed on the same machine as the application server, or it can be run on a separate machine to improve performance and scalability.
+3. Load Balancer: A load balancer is used to distribute incoming requests evenly across multiple application servers, providing redundancy and 
+   improving performance. Load balancers can be hardware-based or software-based, and they can be integrated with the cloud infrastructure.
+4. Web Server: A web server, such as Apache or Nginx, can be used to serve static content and handle incoming requests to the Java application. 
+   The web server can act as a reverse proxy, forwarding incoming requests to the load balancer, which in turn routes the requests to the 
+   appropriate application server.
+5. Monitoring and Logging: Monitoring and logging tools, such as Nagios and Logstash, can be used to monitor the health and performance of the 
+   infrastructure, and to collect and store log data for analysis and troubleshooting.
+6. Backup and Recovery: Backup and recovery solutions, such as snapshots or backups to object storage, are used to protect against data loss and 
+   ensure that the infrastructure can be quickly restored in the event of a failure.
+7. Cloud Infrastructure: The infrastructure can be deployed in a cloud environment, such as Amazon Web Services (AWS), Microsoft Azure, or 
+   Google Cloud Platform (GCP), providing a scalable and flexible platform for deploying and managing the infrastructure.
+
+Q. What is App registration?
+-> App registration refers to the process of creating a new application in a platform or service that requires apps to be registered before 
+   they can be used. The purpose of app registration is to establish a unique identity for the app, which can be used for authentication, 
+   authorization, and other security-related tasks.
+
+Q. What is an Application insides?
+-> The insides of an application refer to its internal components, architecture, and implementation details.
+1. User Interface (UI): The UI is the part of the application that users interact with. 
+-> It includes the screens, buttons, and other visual elements that make up the app's design.
+2. Business Logic: The code that implements the core functionality of the app, such as processing data, 
+   making calculations, and responding to user interactions.
+3. Data Storage: to store data, such as user information, application settings, and content. 
+-> This data is stored in a database or data storage solution, such as a local file system, cloud-based storage, or a NoSQL database.
+4. APIs: Applications often interact with other applications, services, or platforms using APIs. 
+-> APIs provide a standardized way for the app to request data or perform actions on behalf of the user.
+5. Security: An application's security is critical to protect user data and ensure that the app operates securely. 
+-> Security measures can include encryption, authentication, and access control.
+6. Error Handling: An application needs to handle errors gracefully, such as when there's a problem with the data, 
+   network connection, or other component. Error handling code is responsible for detecting and responding to errors, 
+   and for providing users with informative error messages.
+
+Q. Automatic alerts in azure?
+-> Azure provides several tools and services for setting up automatic alerts to notify you when important events or conditions occur in your cloud environment.
+1. Azure monitor
+2. Azure log analytics
+3. Azure alerts
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+Q. What are Task group?
+-> A collection of tasks that can be reused across multiple builds and releases. 
+-> Task groups allow you to abstract complex sequences of steps into a single, reusable entity. By creating a task group, you can encapsulate the steps required to perform a specific set of tasks, such as building an application, deploying code, or running tests, and reuse the task group across multiple build and release pipelines.
+-> Task groups are defined using YAML or the classic editor in Azure DevOps, and they can be parameterized, so that you can pass values to the tasks in the task group at runtime. Task groups can also be versioned, so that you can maintain different versions of the task group and use the appropriate version for different build and release pipelines.
+-> Advantages:
+1. simplify your build and release pipelines, 
+2. reduce the amount of duplicated code, and 
+3. ensure consistency and reliability across your pipelines.
+4. to manage complex sequences of steps in a centralized way, so that you can make changes to the steps once and have those  
+   changes automatically reflected in all pipelines that use the task group.
+
+Q. What is Azure data factory?
+-> It provides a way to manage and automate data movement and data transformation from various sources to various destinations.
+-> Data Factory allows customers to create and manage data pipelines that move and transform data from various sources to various destinations, including Azure data stores, such as Azure Blob Storage and Azure SQL Database, as well as on-premises and other cloud sources.
+-> Data Factory also provides data management features, such as data cataloging, data lineage, and data quality checks, making it easy for customers to manage and maintain their data assets.
+-> By using Azure Data Factory, customers can build, deploy, and manage data pipelines that support their data integration needs, making it easier to work with data and derive insights from it.
+   
+Q. What is Azure tenant? renting hardare/sftwr, temperory subscription
+-> A tenant refers to a "dedicated instance of Azure Active Directory (Azure AD)" that is used to manage access, identities, and resources within the Azure cloud platform.
+-> Each Azure tenant has its own unique directory, subscription, and settings, allowing for isolated and secure management of 
+   resources and identities within the tenant. An organization can have multiple tenants to isolate resources and identities 
+   for different departments, business units, or subsidiaries.
+-> Having a tenant in Azure provides benefits such as:
+1. Centralized management and control over resources and identities
+2. Better security through isolation of resources and identities
+3. Ability to enforce policies and compliance requirements at the tenant level
+4. Support for multi-factor authentication and conditional access policies.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+Q. what are the types of disks available?
+-> In Microsoft Azure, there are two types of disks available for use with virtual machines:
+1. Standard Disks: Standard disks use hard disk drives (HDD) for storage and are suitable for most workloads that require low 
+   to moderate I/O performance. Standard disks are less expensive than premium disks and are suitable for storing data that is not frequently accessed.
+2. Premium Disks: Premium disks use solid-state drives (SSD) for storage and are designed for high-performance workloads that 
+   require high I/O performance. Premium disks are more expensive than standard disks but are well suited for high-performance 
+   databases, big data analytics, and other I/O-intensive applications.
+-> Both standard and premium disks are stored as virtual hard disk (VHD) files and can be either managed or unmanaged. Managed disks 
+   are fully managed by Azure and automatically handle the storage and replication of the disk data. 
+   Unmanaged disks are directly attached to virtual machines and require manual management.
+-> In addition to standard and premium disks, Azure also offers two other types of disks:
+a. Ultra Disks: Ultra Disks are a high-performance, high-scalability, and low-latency disk storage solution designed for I/O-intensive workloads. 
+   Ultra Disks use SSDs for storage and are suitable for demanding enterprise and application scenarios.
+b. Shared Disks: Shared Disks are a new type of disk storage that provides a shared, multi-node file system for use by 
+   multiple virtual machines. Shared Disks can be used for high-availability and disaster recovery scenarios and are suitable 
+   for use with SQL Server Always On and other applications that require shared disk storage.
+
+Q. Do u know how to integrate keyvaults into the azure devops pipelines.?
+1.Prerequisites. An Azure DevOps organization. ...
+2.Create an Azure Key Vault. Sign in to the Azure Portal, and then select the Cloud Shell button in the upper-right corner
+3.Create a project. ...
+4.Create a repo. ...
+5.Create a new pipeline. ...
+6.Set up Azure Key Vault access policies. ...
+7.Run and review the pipeline. ...
+8.Clean up resources.
+	
+Q. What work u have done in Azure AD?
+-> Azure AD is a cloud-based identity and access management (IAM) service provided by Microsoft. It provides a central location for 
+   managing and securing user identities and access to applications, both in the cloud and on-premises. Some of the common tasks that  
+   can be performed in Azure AD include:
+1. User Management: Azure AD provides a central location for managing user identities, including creating and deleting users, 
+   resetting passwords, and assigning licenses.
+2. Application Integration: Azure AD integrates with cloud-based and on-premises applications, allowing users to securely access 
+   those applications using a single set of credentials.
+3. Single Sign-On (SSO): Azure AD provides SSO capabilities, allowing users to sign in once and have access to all their applications 
+   without having to sign in again.
+4. Multi-Factor Authentication (MFA): Azure AD provides MFA capabilities, which can be used to secure access to applications and resources.
+5. Group Policy Management: Azure AD provides group policy management capabilities, allowing administrators to enforce security policies 
+   and access controls for users and applications.
+6. Reporting and Auditing: Azure AD provides reporting and auditing capabilities, allowing administrators to track and monitor user activity, 
+   identify potential security threats, and respond to security incidents.
+
+Q. how to build a hybrid cloud in azure?
+•	Gather your stakeholders: Make sure you include everyone on your team whose input is needed. ...
+•	Plan your workloads: ...
+•	Understand compliance: ...
+•	Research providers: ...
+•	Consider your budget: ...
+•	Preparing for downtime: ...
+•	Plan how you'll scale: ...
+•	Get cloud visibility:
+
+Q. What are the three principal segments of the Windows Azure platform?
+-> Windows Azure has three principal segments: Compute, Storage, and Fabric.
+A. Windows Azure Compute
+-> Windows Azure gives a code that can be managed by the hosting environment. It gives the calculation benefit 
+   through parts. Windows Azure backs three types of roles:
+-> Web roles utilized for web application programming and upheld by IIS7
+-> Worker roles utilized for foundation handling of web roles
+-> Virtual machine (VM) roles utilized for moving windows server applications to Windows Azure in a simple way
+B. Windows Azure Storage
+-> It gives four types of storage services:
+-> Queues for informing between web parts and worker roles
+-> Tables for storing structural data
+-> BLOBs (Binary Large Objects) to store contents, records, or vast information
+-> Windows Azure Drives (VHD) to mount a page BLOB. These can be transferred and downloaded by means of BLOBs
+C. Windows Azure AppFabric
+-> AppFabric provides five services:
+1. Service bus
+2. Access
+3. Caching
+4. Integration
+4. Composite
+
+Q. Define Windows Azure AppFabric.
+-> Windows Azure Diagnostics empowers you to gather diagnostic data from an application running in Windows Azure. 
+   Diagnostic data is used for capacity planning and evaluation.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Microsoft Azure - Components: Categorizing the services would help you understand Azure better.
+=============================
+1. Compute / Execution Models: interface for executing the application, which is one of the basic functions of Azure.
+2. Data Management: Azure SQL Database, Cosmos DB, Azure Database for MySQL, Azure Database for PostgreSQL
+-> Data management can be done by using SQL server Database component or the simple data storage module offered by Windows Azure.
+   SQL server database can be used for relational database. The storage module can store unrelated tables (without foreign
+    key or any relation) and blobs. Blobs include binary data in the form of images, audio, video, and text files.
+3. Networking: Azure traffic manager routes the requests of a user intelligently to an available datacenter. 
+   The process involves finding the nearest datacenter to the user who makes the request for web application, and if the nearest 
+   datacenter is not available due to various reasons, the traffic manager deviates the request to another datacenter. 
+   However, rules are set by the owner of the application as to how a traffic manager should behave.
+-> The virtual network is another feature that is part of networking in services offered by Windows Azure. 
+   The virtual network allows a network between local machines at your premise and virtual machine in Azure Datacenter. 
+   IPs to virtual machines can be assigned in a way that makes them appear to be residing in your own premise. 
+   The virtual network is set up using a Virtual Private Network (VPN) device.
+4. Big Data and Big Compute: The large amount of data can be stored and managed using Windows Azure.
+-> Azure offers HDInsight which is Hadoop-based service. Organizations often need to manage large amount of data which 
+   is necessarily not relational database management. 
+-> Hadoop is a prominent technology used these days. Thus, Azure offers Hadoop service on their platform for clients.
+-> The term ‘Big Compute’ refers to high performing computations. This is achieved by executing code on many machines at the same time.
+5. Messaging: Windows Azure offers two options for handling the interactions between two apps. One falls under storage 
+   component of the service and is called 'Message Queues'. 
+-> The other one comes under the app service and is called 'Service Bus'. The messages can be sent to initiate communication
+   among different components of an application or among different applications using these two options.
+6. Caching: Microsoft Azure offers two kinds of caching which are in-memory Caching and Content Delivery Network (CDN) for 
+   caching frequently accessed data and improves the application performance. 
+-> CDN is used to cache the blob data that will be accessed faster by users around the world
+7. Identity and Access: This component is about management of users, authentication and authorization. 
+-> Active directory stores the information of users accessing the application and also the organization’s information. 
+   It can synchronize with the related information on local machines residing on premises. 
+-> Multifactor Access (MFA) service is built to address the security concerns such as only the right user can access the application.
+8. Mobile Service: Windows Azure offers a very easy platform to develop mobile application. You can simply start using mobile 
+  development tools after logging into your account. You don’t have to write big custom codes for the mobile application if you 
+  use this service. 
+-> The push notifications can be sent, data can be stored and users can be authenticated in very less time.
+9. Backup: The site recovery service replicates the data at secondary location as well as automates the process of recovery 
+   of data in case of data outage. Similarly Azure backup can be used to backing up the on premise data in clouds. 
+-> Data is stored in encrypted mode in both the cases. Windows Azure offers a very effective and reliable backup service to 
+   clients and ensures they don’t face inconvenience in case of hardware failures. 
+10.Media: This service addresses multiple concerns related to uploading media and making it available to end users easily. 
+-> Users can manage tasks related to the media like encoding, ad insertion, streaming, etc. easily
+11.Commerce: Windows Azure offers the opportunity to users to buy or sell applications and data through their platform. 
+-> The applications are put in the marketplace or Azure store from where they can be accessed and bought by other users.
+12.Software Development Kit (SDK): Azure applications can be produced by the developers in various programming languages. 
+-> Microsoft currently provides language-specific SDKs for Java, .NET, PHP, Node.js, Ruby, and Python. 
+-> There is also a general Windows Azure SDK that supports language, such as C++.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Azure devops: Agent pools/jobs
+two types of pipelines/jobs
+1. Self-hosted: cutomize the way we want, add dependencies
+2. Microsoft hosted: cant add dependencies, predefined dependencies
+
+Adding services/plugins in azure devops
+Project-Project settings-service hooks-add services(jenkins, grafana etc.)
+
+
+Azure:  
+how integrate azure with azure devops
+automation, jenkins-plugins
+azure advancemnet:automation, enhancement of azure
+
+*autoscaling and load balancer
+*Scaling:
+1. Horrizontal: increase servers
+2. Vertical: Increase capcity or configuration of system (i3, i5 and i7)
+
+*Manual scaling
+
+*For autoscaling load balancer is automatically attached.
+dashboard-app servives- scale out-autoscale-scale based on metric-add rule
+rule: time aggregte(CPu percentage)-operator(>=)-duration(5)-operation(increase count by:1-5)
+rule to decrease: operator (less than)
+
+Host on web:
+Configure database:
+connection security-
+
+
+
+Azure Storage:
+durability, abailability, scalability
+
+Components of storage:
+Blob storage: stores any type of text, data, doc, media file etc.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ramesh1
+ssh -i pem.key.pem ramesh1@20.163.18.117
+
+windows adm account paswd while creatig vm with windows
+ramesh105
+@rdn1nt13ME121
+
+Terraform_group1-vnet/default
+
+ram333-wndows
+ramwind1-windows
+
+implicit and eplicit dependency
+  
+  azure resource manager and terraform
+  
+  module in the module-child module
+  
+  Prometheus
+  
+  -> to lunch tomcat server, we usuay do with 8080
+need to do in 
+server.xml
+go to connector port change from 8080-9000
+6000-9000 will be in this 
+
+3 types of ports in tomcat
+1 AJP port
+2 connector port 
+3 shudown port
+
+types  of connectors:

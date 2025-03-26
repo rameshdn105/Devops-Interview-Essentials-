@@ -1,0 +1,305 @@
+
+** Vnet: A Virtual Network (VNet) in Azure is a software-defined network that allows you to securely connect and isolate Azure resources, such as virtual machines, databases, and application services, in a private network environment.
+-> A virtual network enables many types of Azure resources, such as Azure Virtual Machines (VM), to securely communicate with each other, the internet, and on-premises networks. 
+
+Properties/Benifits:
+====================
+
+1. Scaling: process of expanding or increasing the size of a Virtual Network (VNet) in cloud computing.
+-> As your organization's workload grows->  scale your VNet to accommodate the increased demand for resources.
+-> VNet scaling-> increasing the number of subnets within the VNet, address space of the VNet, resources 
+   (virtual machines, load balancers, and gateways).
+   a. Subnets: A smaller subset of the address space that is used to divide the network into smaller segments.
+   b. Address space: Overall range of IP addresses that are available for use in a network.
+
+2. Availability: To remain accessible and operational even in the event of a failure or outage.
+-> VNet, cloud providers typically employ a range of strategies such as redundancy, failover, and load balancing
+-> They may replicate resources across multiple physical locations to ensure that a failure in one location 
+   does not impact the availability of the VNet. 
+-> They may also use load balancing to distribute network traffic across multiple resources, further 
+   increasing the overall availability of the VNet.
+
+3. Isolation: separated from other VNets or public internet traffic.
+-> You can control the flow of traffic between resources within the VNet and prevent unauthorized access from outside the network.
+-> various techniques such as using:
+
+a. Network security groups (NSGs) to control inbound and outbound traffic. (Filtering network traffic)
+   -> NSGs allow you to define rules that control which types of traffic are allowed to enter or leave a subnet(or VMs).
+   -> NSGs can be associated with subnets or specific VMs within a VNet, and can be applied to both inbound and outbound traffic.
+   -> NSGs are used to enforce network security policies by allowing you to specify which ports, protocols, and IP addresses are allowed or denied for inbound or outbound traffic. You can create rules that allow specific types of traffic, such as HTTP or SSH, and block others that are not needed or could pose a security risk.
+
+b. Configuring Virtual private network (VPN) gateways to establish secure connections between on-premises networks and the VNet.
+
+c. Azure Private Link to securely access Azure services and resources over a private endpoint.
+-> Each VNet you create has its own CIDR block and can be linked to other VNets and on-premises networks as long as the CIDR blocks do not overlap. You also have control of DNS server settings for VNets, and segmentation of the VNet into subnets.
+** CIDR: Classless Inter-Domain Routing:
+-> A technique used to allocate and manage IP addresses in networks. A CIDR block is a range of IP addresses that you 
+   can use to define the address space for the VNet.
+-> When you create a VNet in a cloud environment, you are typically asked to specify a CIDR block that will be used for the VNet. 
+   This CIDR block defines the range of IP addresses that can be assigned to resources within the VNet, 
+   such as virtual machines, subnets, and network interfaces.
+-> For example, if you specify a CIDR block of 10.0.0.0/16 for a VNet, you are essentially defining a range of 65,536 IP addresses 
+   that can be used within the VNet. You can then further divide this range into smaller subnets, each with its own CIDR block.
+
+4. Flexible network topology: You can create multiple subnets within a VNet, each with its own CIDR block, to segment resources 
+   and apply different network policies.
+
+5. Integration with other Azure services: Azure App Service, Azure SQL Database, and Azure Kubernetes Service.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+## Why use an Azure Virtual network?
+=====================================
+
+1. Communication with the internet: (Public ip, NAT gateway, Loadbalancer)
+-> All resources in a VNet can communicate outbound to the internet, by default. 
+-> You can communicate inbound to a resource by assigning a public IP address or a public Load Balancer. 
+-> You can also use public IP, NAT gateway, or public Load Balancer to manage your outbound connections.
+
+2. Communication between Azure resources: 3 mechanism (VNets, VNet service endpoints and VNet peering)
+a. VNet: Virtual Networks can connect not only VMs, but other Azure Resources, such as the App Service Environment, 
+   Azure Kubernetes Service, and Azure Virtual Machine Scale Sets.   allowing them to communicate with each other as if they were on the same network.
+b. Virtual network service endpoint: Extend your virtual network private address space and the identity of your virtual network to Azure service resources. Examples of resources include Azure Storage accounts and Azure SQL Database, over a direct connection.
+c. Through virtual network peering: You can connect virtual networks to each other, enabling resources in either virtual network to communicate with each other, using virtual network peering. The virtual networks you connect can be in the same, or different, Azure regions. 
+
+-------------------------------------------------------------------------------------------------------------------------
+3. Communication between on-premises resources: Securely extend your data center. 
+-> connect your on-premises computers and networks to a virtual network using: 
+1) Point-to-site virtual private network (VPN), 
+2) Site-to-site VPN & 
+3) Azure ExpressRoute.
+
+1) Point-to-site VPN: Established between a virtual network and a single computer in your network.
+-> P2S VPN is also a useful solution to use instead of S2S VPN when you have only a few clients that need to connect to a VNet. 
+Q. What protocol does P2S use?: 
+   a. OpenVPN® Protocol: an SSL (Secure Sockets Layer)/TLS(Transport Layer Security) based VPN protocol. A TLS VPN solution can penetrate firewalls, since most firewalls open TCP port 443 outbound, which TLS uses.
+   -> SSTP uses HTTPS protocol to establish a connection between the device and the VPN gateway in the cloud.
+   b. Secure Socket Tunneling Protocol (SSTP): A proprietary TLS-based VPN protocol. A TLS VPN solution can penetrate firewalls, since most firewalls open TCP port 443 outbound, which TLS uses.
+   c. IKEv2 VPN: a standards-based IPsec VPN solution. IKEv2 VPN can be used to connect from Mac devices (macOS versions 10.11 and above).
+Q. How are P2S VPN clients authenticated?
+   a. Certificate authentication: The validation of the client certificate is performed by the VPN gateway and happens during 
+      establishment of the P2S VPN connection. The root certificate is required for the validation and must be uploaded to Azure.
+   b. Azure Active Directory authentication: allows users to connect to Azure using their Azure Active Directory credentials. 
+
+2. A Site-to-Site (S2S) VPN gateway connection :
+-> Established between your on-premises VPN device and an Azure VPN Gateway that is deployed in a virtual network.
+-> It is a connection over IPsec/IKE (IKEv1 or IKEv2) VPN tunnel. S2S connections can be used for cross-premises and hybrid configurations. 
+-> A S2S connection requires a VPN device located on-premises that has a public IP address assigned to it.
+
+3. Azure ExpressRoute: to establish a dedicated, private connection between their on-premises infrastructure and Azure datacenters.
+-> ExpressRoute also supports several connectivity options, including layer 2 connectivity through Ethernet VPN 
+   and layer 3 connectivity through Border Gateway Protocol (BGP). 
+-> This allows customers to choose the option that best suits their network topology and routing requirements.
+
+-----------------------------------------------------------------------------------
+4. Filtering network traffic: You can filter network traffic between subnets using either or both of the following options:
+
+A. Network security groups: Network security groups and application security groups can contain multiple inbound and outbound security rules that enable you to filter traffic to and from resources by source and destination IP address, port, and protocol. To learn more, see Network security groups or Application security groups.
+-> A network security group contains security rules that allow or deny inbound network traffic to, or outbound network traffic from, 
+   several types of Azure resources. For each rule, you can specify source and destination, port, and protocol.
+-> Security rules are evaluated and applied based on the five-tuple (source, source port, destination, destination port, and protocol) 
+   information. You can't create two security rules with the same priority and direction.
+-> Service tags: represents a group of IP address prefixes from a given Azure service. It helps to minimize the complexity of frequent updates on network security rules.
+
+B. Network virtual appliances: A network virtual appliance is a VM that performs a network function, such as a firewall, WAN optimization, or other network function. 
+-> To view a list of available network virtual appliances that you can deploy in a virtual network, see Azure Marketplace.
+
+-> Firewalls, gateways, proxies, and Network Address Translation (NAT) services.
+  a. Firewall: a network security device that monitors and controls incoming and outgoing network traffic 
+      based on a set of predetermined security rules. It acts as a barrier between a trusted internal network 
+      and an untrusted external network, such as the internet. 
+   -> The primary purpose of a firewall is to prevent unauthorized access to or from a network, while allowing authorized communication to pass through.
+   -> Techniques: inspect network traffic, including packet filtering, stateful inspection, and application-level gateway filtering.
+   1. Packet filtering is the simplest form of firewall and works by analyzing the headers of each packet of 
+      network traffic and allowing or blocking traffic based on the packet's source and destination addresses, protocol, and port number.
+   2. Stateful inspection firewalls maintain a record of the state of each network connection and use that 
+      information to determine whether to allow or block traffic.
+   3. Application-level gateway filtering, also known as proxy-based firewall, inspects the full contents of 
+      each network packet to ensure that only authorized traffic is allowed through.
+
+ b. Gateway: a gateway is a device that acts as a bridge between two or more networks, allowing them to communicate with each other.
+   -> A gateway can be a physical device, such as a router, or a software-based service that provides access to a network or the internet.
+ 
+ c. Proxies: A proxy server acts as an intermediary between a client (such as a web browser) and a server.
+   -> Benifits: Content filtering, Anonymity, Imroved performance, Security.
+   -> Types: HTTP proxy, SOCKS procy, Transparent proxy, Anonymous proxy, SSL proxy.
+ 
+ d. Network Address Translation: A technique used in computer networking to modify network address information in the IP header of 
+    packets while they are in transit across a traffic routing device, typically a router or firewall.
+   -> NAT device keeps track of outgoing traffic from the private network and creates a translation table that maps the private IP 
+      address and port number to the public IP address and port number.
+   -> Benifits: Security, Conservation of IP adress, Simplicity.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+5. Routing network traffic:  Azure routes traffic between subnets, connected virtual networks, on-premises networks, 
+   and the Internet, by default.
+-> You can implement route tables or border gateway protocol (BGP) routes to override the default routes Azure creates.
+
+a. Route tables: You can create custom route tables with routes that control where traffic is routed to for each subnet. 
+
+b. Border gateway protocol (BGP) routes: If you connect your virtual network to your on-premises network using an 
+   Azure VPN Gateway or ExpressRoute connection, you can propagate your on-premises BGP routes to your virtual networks.
+
+** Both SSL and TLS are cryptographic protocols that provide secure communication over a network, such as the internet. 
+   They are commonly used to establish secure connections between web browsers and web servers, and to secure other 
+   types of network communications as well. 
+
+** The main differences between Point-to-Site (P2S) VPN and Site-to-Site (S2S) VPN are:
+1. Connectivity: P2S VPN connects individual devices to a Virtual Network (VNet) in the cloud, 
+   while S2S VPN connects entire networks to each other.
+2. Deployment: P2S VPN is typically easier to deploy than S2S VPN since it only requires a VPN client to be 
+   installed on the remote device, whereas S2S VPN requires a VPN gateway to be deployed in each network that needs to be connected.
+3. Scalability: P2S VPN is generally less scalable than S2S VPN since it's designed for individual device 
+   connections, whereas S2S VPN can be used to connect multiple networks and handle much higher volumes of traffic.
+4. Security: Both P2S and S2S VPN provide a secure way to connect to cloud resources, but S2S VPN may offer better 
+   security since it can be used to create a secure connection between entire networks.
+5. Cost: P2S VPN is generally less expensive than S2S VPN, since it only requires the installation of a VPN client on 
+   the remote device, whereas S2S VPN requires a VPN gateway to be deployed in each network that needs to be connected.
+
+Q. Azure Firewall provides several features to secure network traffic in Azure, including:
+1. Network traffic filtering: Azure Firewall filters network traffic between VNets and the internet, as well as between 
+   VNets in the same region or across regions.
+2. Network Address Translation (NAT): Azure Firewall provides source NAT for outbound traffic from VNets to the internet and 
+   destination NAT for inbound traffic from the internet to VNets.
+3. Application rules: Azure Firewall supports application rules that allow or deny traffic based on the application protocol, port, and IP address.
+4. Network rules: Azure Firewall supports network rules that allow or deny traffic based on the source IP address, destination IP address, and port.
+5. Threat intelligence: Azure Firewall can use threat intelligence from Microsoft Threat Intelligence feeds 
+   to detect and block known malicious IP addresses and domains.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## Design considerations for Azure Virtual Networks:
+1. Address space and subnets: You can create multiple virtual networks per region per subscription. You can create multiple subnets within each virtual network.
+a. Virtual Networks: When planning to implement virtual networks, you need to consider the following:
+--> Ensure non-overlapping address spaces. Make sure your VNet address space (CIDR block) does not overlap with your organization's other network ranges.
+--> Is any security isolation required?
+--> Do you need to mitigate any IP addressing limitations?
+--> Will there be connections between Azure VNets and on-premises networks?
+--> Is there any isolation required for administrative purposes?
+--> Are you using any Azure services that create their own VNets?
+
+b. Subnets: A subnet is a range of IP address in the VNet. You can segment VNets into different size subnets, creating as 
+   many subnets as you require for organization and security within the subscription limit.
+-> You can then deploy Azure resources in a specific subnet.
+-> When planning to implement subnets, you need to consider the following:
+1. Each subnet must have a unique address range, specified in Classless Inter-Domain Routing (CIDR) format.
+2. Certain Azure services require their own subnet.
+3. Subnets can be used for traffic management. For example, you can create subnets to route traffic through a network virtual appliance.
+4. You can limit access to Azure resources to specific subnets with a virtual network service endpoint. 
+   You can create multiple subnets, and enable a service endpoint for some subnets, but not others.
+   
+   Are there any restrictions on using IP addresses within these subnets?
+Yes. Azure reserves the primary four and last IP address for a complete of 5 IP addresses within each subnet.
+
+For example, the IP address range of 192.168.1.0/24 has the subsequent reserved addresses:
+
+192.168.1.0 : Network address
+192.168.1.1 : Reserved by Azure for the default gateway
+192.168.1.2, 192.168.1.3 : Reserved by Azure to map the Azure DNS IPs to the VNet space
+192.168.1.255 : Network broadcast address. 
+
+c. Micro-segmentation: Although subnets are the smallest unit you can create based on IP addressing, you can 
+   further segment your network by using Network Security Groups (NSGs) to control access to the subnet.
+-> Each network security group contains rules, which allow or deny traffic to and from sources and destinations.
+-> You can associate zero or one NSG to each subnet in a virtual network. You can associate the same, or a 
+   different, network security group to each subnet.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## Determine a naming convention:
+-> it is important to plan your naming convention for your resources.
+-> A well-chosen name helps you quickly identify the resource's type, its associated workload, its deployment environment, and the Azure region hosting it.
+-> For example, a public IP resource for a production SharePoint workload residing in the West US region might be pip-sharepoint-prod-westus-001
+-> pip-sharepoint-prod-westus-001
+pip: Resource type
+sharepoint: workload/application
+Prod: Environment
+Westus: Azure region
+001: Instance
+-> All Azure resource types have a scope that defines the level that resource names must be unique. A resource must have a unique name within its scope.
+-> There are four levels you can specify a scope: management group, subscription, resource group, and resource. 
+   Scopes are hierarchical, with each level of hierarchy making the scope more specific.
+-> For example, a virtual network has a resource group scope, which means that there can be only one network named 
+   vnet-prod-westus-001 in each resource group. Other resource groups could have their own virtual network named vnet-prod-westus-001.
+   Subnets are scoped to virtual networks, so each subnet within a virtual network must have a distinct name.
+
+## Understand Regions and Subscriptions:
+-> Azure regions are important to consider as you design your Azure network in relation to your infrastructure, data, applications, and end users.
+-> You can deploy as many virtual networks as you need within each subscription, up to the subscription limit. 
+   Some larger organizations with global deployments have multiple virtual networks that are connected between regions.
+1. Azure Availability Zones:
+-> An Azure Availability Zone enables you to define unique physical locations within a region. 
+-> Each zone is made up of one or more datacenters equipped with independent power, cooling, and networking. 
+   Designed to ensure high-availability of your Azure services, the physical separation of Availability Zones 
+   within a region protects applications and data from datacenter failures.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## Create a Virtual Network in Azure:
+-> Before you can create a VNet, you must create a resource group. 
+-> A resource group: is a container that holds related resources for an Azure solution. The resource group can include all the resources for the solution, 
+   or only those resources that you want to manage as a group.
+
+-> Create a Virtual Network by using the portal:
+1. Log in to the Azure portal, and then select Create a resource:
+2. Virtual network-> Create-> 
+   Tab1: Basic(Subscription, Resource group, Select an existing resource group or Create a new resource group) -> Instance details(Name, Region)
+   Tab2: IP adresses (add IPv4 and IPv6 address spaces)-> define IPv4 subnets
+-> Address space: When you set up a virtual network, you define the internal address space in Classless Inter-Domain Routing (CIDR) format.
+-> Subnet: Within each virtual network address range, you can create one or more subnets that partition the virtual network's address space.
+   Tab3: Security:
+** In the Create virtual network tab, you can enable security features like BastionHost, DDoS Protection, and Firewall. 
+a. BastionHost: a new fully platform-managed PaaS service that you provision inside your virtual network. 
+   It provides secure and seamless RDP/SSH connectivity to your virtual machines directly in the Azure portal over SSL.
+   When you connect via Azure Bastion, your virtual machines do not need a public IP address.
+b. Distributed Denial of Service (DDoS) protection: You can select to enable DDoS protection Standard. 
+   DDoS Protection is a paid service plan that offers enhanced DDoS mitigation capabilities via adaptive tuning, attack notification, 
+   and telemetry to protect against the impacts of a DDoS attack for all protected resources within this virtual network.
+   Basic DDoS protection is integrated into the Azure platform by default and at no additional cost.
+c. Firewall: Azure Firewall is a managed cloud-based network security service that protects your Azure Virtual Network resources.
+   Tab4: In the Review + create tab, you can define Tags, which can help you to organize and manage your Azure resources.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## Virtual network integration for Azure services:
+-> Integrating Azure services to an Azure virtual network enables private access to the service from virtual machines or 
+   compute resources in the virtual network. You can integrate Azure services in your virtual network with the following options:
+1. Deploying dedicated instances of the service into a virtual network. The services can then be privately accessed 
+   within the virtual network and from on-premises networks.
+2. Using Private Link to access privately a specific instance of the service from your virtual network and from on-premises networks.
+3. You can also access the service using public endpoints by extending a virtual network to the service, through service endpoints. 
+   Service endpoints allow service resources to be secured to the virtual network.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+## Virtual Network service endpoints
+-> VNet service endpoint provides secure and direct connectivity to Azure services over an optimized route over the Azure backbone network.
+   Endpoints allow you to secure your critical Azure service resources to only your virtual networks. 
+-> Service Endpoints enables private IP addresses in the VNet to reach the endpoint of an Azure service without 
+   needing a public IP address on the VNet.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+-> Diff between loadbalancer and application gateway:
+1. Load Balancer: It is a Layer 4 (Transport layer) load balancing service that is used to distribute network traffic to a pool 
+   of backend virtual machines or instances. It provides load balancing of both inbound and outbound traffic using various algorithms 
+   such as round-robin, least connections, and IP hash. It is ideal for simple network traffic management scenarios and provides high 
+   availability and scalability for applications.
+
+2. Application Gateway: It is a Layer 7 (Application layer) load balancing service that is used to distribute traffic to different services 
+   based on URL routing rules. It is an application delivery controller (ADC) that offers advanced features such as SSL offloading, cookie-based 
+   session affinity, URL-based routing, web application firewall (WAF), and multi-site hosting. It can handle HTTP, HTTPS, and WebSocket traffic 
+   and is ideal for complex network traffic management scenarios.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+When migrating workloads from on-premises to the cloud, particularly to Azure's Virtual Network (VNet), several network considerations need to be taken into account to ensure a successful and secure migration. Here are some key things to consider:
+1. VNet Design: Plan your VNet design carefully. Decide on the number of VNets required, the size of each VNet, and the address space for each VNet. Consider segregating resources into separate VNets based on security or functional requirements.
+2. Subnet Configuration: Organize your resources within the VNets into appropriate subnets. Define subnets for different tiers, such as front-end, back-end, application, and database tiers. Allocate IP ranges accordingly.
+3. Connectivity to On-Premises: If you have existing on-premises resources that need to communicate with the cloud resources, establish the appropriate connectivity. You can use Azure ExpressRoute or VPN Gateway to create a secure and private connection between on-premises and Azure VNets.
+4. Network Security Groups (NSGs): Implement NSGs to control inbound and outbound traffic to and from the resources within the VNets. NSGs act as firewalls and allow you to define rules for traffic filtering.
+5. Application Gateway/Front Door: If you have web applications, consider using Azure Application Gateway or Azure Front Door to manage and optimize web traffic.
+6. Load Balancing: Implement Azure Load Balancer for distributing incoming traffic across multiple resources for high availability and scale.
+7. Network Security: Ensure that your VNets are secure by following Azure's security best practices. This includes securing administrative access, implementing Just-In-Time (JIT) access, and enabling Network Watcher for monitoring and diagnostics.
+8. DNS Configuration: Configure DNS settings for the VNets to resolve internal and external domain names as required.
+9. Service Endpoints: Use service endpoints to secure your Azure service resources so that they are only accessible from your VNet.
+10. Private Link: Consider using Azure Private Link to securely access Azure services (e.g., Azure Storage, Azure SQL Database) over a private connection instead of the public internet.
+11. DDoS Protection: Enable Azure DDoS Protection Standard to safeguard your resources against distributed denial of service (DDoS) attacks.
+12. Traffic Routing: Define appropriate user-defined routes (UDRs) to control how traffic is routed within the VNet and to other networks.
+13. Monitoring and Logging: Set up network monitoring and logging to gain visibility into network traffic and diagnose issues when they occur.
+14. Backup and Disaster Recovery: Plan for backup and disaster recovery strategies for your VNets and the resources within them.
+15. Compliance and Governance: Ensure that your VNet adheres to regulatory requirements and internal governance policies.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

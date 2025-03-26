@@ -1,0 +1,154 @@
+1. What is Azure Cloud Service?
+-> Cloud service can convey multiple web applications in Azure, characterizing a number of parts to disseminate handling and permit adaptable scaling of your application.
+-> The fundamental favorable position of cloud service is the capacity to help more complex multilevel structures.
+
+
+2. Differentiate between Microsoft Azure and AWS.
+Features		Microsoft Azure					Amazon Web Services (AWS)
+Analytics		Azure Stream Analytics				Amazon Kinesis
+Backup Options		Azure Backup					Amazon Glacier
+Compliance		Azure Trust Center				AWS CLoudHSM
+Content Delivery Network (CDN)	Azure CDN				Amazon CloudFront
+Data Orchestration	Azure Data Factory				AWS Data Pipeline
+Hybrid Cloud Storage	StorSimple					AWS Storage Gateway
+Monitoring		Azure Operational Insights			Amazon CloudTrail
+NoSQL Database Options	Azure DocumentDB				Amazon DynamoDB
+
+3. What is Azure DevOps?
+-> Azure DevOps is a SaaS platform that provides development services for creating work 
+   plans, working together on code, developing applications, and deploying them. 
+-> It offers an end-to-end DevOps toolchain for the development and deployment of software. 
+-> It is able to integrate with a number of popular tools in the market and is a great way for setting up a DevOps toolchain.
+
+4. What is Azure Active Directory (Azure AD)?
+-> It is a cloud-based IAM solution and directory by Microsoft. It brings together application access management, 
+   core directory services, and identity protection and turns them into a single solution. 
+-> It helps employees of an organization sign in and access resources such as:
+1. External resources, including Microsoft 365, the Azure portal, and a big number of SaaS applications
+2. Internal resources, such as apps on a corporate network and intranet, as well as any cloud-based apps built by that organization.
+-> Azure AD is intended for use by:
+1. IT Admins
+2. App Developers
+3. Azure, Office 365, Microsoft 365, or Dynamics CRM online subscribers
+
+5. What is Azure Data Factory?
+-> Azure Data Factory is a serverless and cloud-based data integration service and platform used for 
+   the creation of ETL and ELT pipelines. 
+-> It helps in the creation of data-driven workflows for the planning and execution of data movements 
+   and data transformation at scale.
+
+6. What is Azure Databricks?
+-> Azure Databricks is a Data Analytics platform that offers two environments for the development of data-intensive applications: 
+1. Azure Databricks SQL Analytics 
+2. Azure Databricks Workspace
+-> Azure Databricks’ integration with the security, compute, analytics, storage, and AI services that 
+   are natively provided by cloud providers facilitate the unification of data and AI workloads.
+
+7. What is Azure Data Lake?
+-> Azure Data Lake is a cloud platform that supports Big Data Analytics through its unlimited storage 
+   for structured, semi-structured, or unstructured data of all types and sizes.
+
+8. What are Azure resources?
+-> Any entity managed by Azure can be referred to as an Azure resource. 
+-> The following are some examples of Azure resources: Storage accounts, virtual networks, virtual machines, etc.
+
+9. What are the roles implemented in Windows Azure?
+1. Web Role: It gives a web solution that is front-end. This is like an ASP.NET application. 
+   While under facilitating, Azure gives IIS and required services.
+2. Worker Role: It gives solutions for background service. It can run long activities.
+3. Virtual Machine Role: The roles of both web and worker are executed on virtual machines. The Virtual Machine Roles 
+   give the client the capacity to modify the Azure Virtual Machine on which the web and worker roles are running.
+
+10. What are the three principal segments of the Windows Azure platform?
+-> Windows Azure has three principal segments: Compute, Storage, and Fabric.
+A. Windows Azure Compute: 
+-> Windows Azure gives a code that can be managed by the hosting environment. It gives the calculation 
+   benefit through parts. Windows Azure backs three types of roles:
+  1. Web roles utilized for web application programming and upheld by IIS7
+  2. Worker roles utilized for foundation handling of web roles
+  3. Virtual machine (VM) roles utilized for moving windows server applications to Windows Azure in a simple way
+B. Windows Azure Storage:  It gives four types of storage services:
+  1. Queues for informing between web parts and worker roles
+  2. Tables for storing structural data
+  3. BLOBs (Binary Large Objects) to store contents, records, or vast information
+  4. Windows Azure Drives (VHD) to mount a page BLOB. These can be transferred and downloaded by means of BLOBs
+C. Windows Azure AppFabric: AppFabric provides five services:
+  1. Service bus
+  2. Access
+  3. Caching
+  4. Integration
+  5. Composite
+
+11. Define Windows Azure AppFabric.
+-> Windows Azure Diagnostics empowers you to gather diagnostic data from an application running in Windows Azure. 
+   Diagnostic data is used for capacity planning and evaluation.
+
+12. What is the distinction between Windows Azure Queues and Windows Azure Service Bus Queues?
+a. Azure Queues give a solid, diligent messaging between and within the services. 
+   They also highlight a very straightforward rest-based get/put/peek interface.
+b. Bus Queues are part of a more extensive Windows Azure messaging framework that supports queuing.
+
+13. What is table storage in Windows Azure?
+-> Windows Azure Table storage service stores a lot of organized information. Windows Azure tables 
+   are perfect for putting away organized, non-relational data.
+1. Table: A table is a collection of entities. Tables don’t uphold a blueprint on elements, which 
+   implies that a solitary table can contain substances that have distinctive arrangements of properties. 
+   A record can contain numerous tables.
+2. Entity: An entity is an arrangement of properties, like a database row. An entity can be up to 1 MB in size.
+3. Properties: A property is a name-value pair. Every entity can incorporate up to 252 properties 
+   to store data. Every entity likewise has three system properties that determine a segment key, a row key, and a timestamp.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

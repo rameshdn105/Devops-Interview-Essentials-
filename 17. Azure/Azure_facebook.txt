@@ -1,0 +1,90 @@
+web application:
+
+-> Users-webserver(appn can be developed in: php, asp net, java, note js)- accessed by ip adress initially-
+   rational data base (all apn data stored),( SQL. oracle, my sql,) {Azure sql database}
+-> Private network or on premise network {virtual pvt network}
+
+3tier architecutre: 
+
+One traffic increases below structure is used: {servers-virtual machines}
+Web server(Disc)-(Angular, html/css)
+App server(Disc)-web api
+RDMBS (SQL server/oracle) (DB)
+
+After again increase in traffic we will use scaling.{autoscaling}
+Horizontal scaling: add new servers{VM's}
+Vertical scaling:  CPU memory, storage capacity
+
+What traffic should go which server load balancer {Azure load bal} wil do.
+Domain name will be provided for user to contact application.{DNS}
+
+But to build high traffic complex application we need more services:
+But we cant keep everything in shown data bases as lot of images, videos will be circulating in fb its not a good idea to save all in same servers,
+so we need external storage which will keep all videos, sometimes videos contains objectionable or nude videos 
+   to filter them we add content filter. {Computer vision/Cognitive services}
+
+-> messages, likes and comments this data will be so big that our rational SQL wll not be able to handle it.
+so we need NoSQL will be used like MongoDB.
+
+-> Click stream analysis: all clicks and likes will be stored in some storages and analysed in Hadoop (Big data analysis platform) and 
+   this big data will be stored in Datawarehouse, with help of business decisions will be taken by business intelligence.
+-> by using it they can lunch a new product, launch graphs maps for business analytics.
+
+-> Implications performance mode: images, videos can be shared in other web sites also for this direct for images and videos will be provided
+   For mobile specifically we will be keeping external storage mobile, as these images will be rendered/displayed 
+   differently from laptop. First these images will compressed, resized then it will be stored.
+Why: they are big in size and take time to download.
+-> Apply content delivery network(Azure CDN) in diff location around the world: 
+
+-> Messaging queues/notifications (MSMQ) {Azure bus service}: helps msges deliver fast and efficiently.
+
+-> Monitoring dashboard {Azure monitor}: keep checking health of all resources, server, database, storage in single dashboard. If any problem any one of them it will alarm.
+
+Replacing all on premise with azure srvices:
+
+Private network: Virtual network	(VPC:virtual private cloud)
+Servers: Virtual  machines   (Instance)
+disk storage: azure disk storage for caching, processing fequesntly requested data, limited size  (S3 bucket)
+load balancer {Azure load bal}
+
+autoscaling: based on traffic it will scale  (Horrizontal scaling: add new servers{VM's}, Vertical scaling:  CPU memory, storage capacity)
+database: azure sql database, oracle, MySQL
+Db cache: Radis cache
+NoSQL: Cosomos DB,MongoDB
+DNS: AZure DNS, FB.com to mapping to ip adres of servers
+
+Click stream analysis: records all user activity or clicks of users stores in storage i.e., Blob storage/File storage:
+Hadoop: Azure HD insight  (Big data analysis platform)
+warehouse: Azuredata warehouse   (this big data will be stored)
+Business intelligence: Azure synaps (Graphs then launching new product)
+external Storage: Azure blob storage (Storing mages and videos) take help of computer visions for AI  
+content filter: Computer vision/Cognitive services		(sometimes videos contains objectionable or nude videos to filter them we add content filter)
+convert laptop specific images into mobile sized images: Functions (Serverless computing they do not any outsde involvement)
+Content delivery network: Azure content delivery network.		(CDNs are commonly used for delivering high-bandwidth content such as video and audio streaming, large software downloads, and online gaming)
+
+Messages notification services: Azure bus services		(helps msges deliver fast and efficiently)
+Monitor: Azure monitor 		(keep checking health of all resouces, server, database, storage in single dashboard. If any problem any one of them it will alarm.)
+Azure DDoS Protection: type of cyberattack that aims to make a website or online service unavailable by overwhelming it with traffic from multiple sources
+Azure active directory: Authentication and Authorization
+Azure key vault: securely storing and accesing secrets, all info stored will be in encrypted form.
+App Service certificate: Now we want our application is accessed by https not http as https is more secure.
+* Web application Firewall(WAF): monitor and restrict incoming and outgoing traffic.
+* Security center: to make sure all resoures in virtual network are virus free and software compliance
+* Resource manager: Manage rsources, adding new load balancer
+* CI/CD: depoying appn in one go without deploying each and every component saparately.
+
+
+Some services which will do virtual network Secure:
+Security:
+Azure active directory: Authentiction and Authorization
+-> identiy and access mnagement svc which helps developer, admin  to sign in and access all these resouces
+-> what resource will be available to which developer will be decided by those service.
+
+Azure key vault: securely storing and accesing secrets, all info stored will be in encrypted form.
+-> Ex:database is conection is stored in ths keyvault.
+
+* App Service certificate: Now we want our application is accessed by https not http as https is more secure.
+* Web application Firewall(WAF): monitor and restrict incoming and outgoing traffic.
+* Security center: to make sure all resoures in virtual network are virus free and software compliance
+* Resource manager: Manage rsources, adding new load balancer
+* CI/CD: depoying appn in one go without deploying each and every component saparately.

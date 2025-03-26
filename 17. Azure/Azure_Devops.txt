@@ -1,0 +1,597 @@
+** Azure Pipelines:
+-> Azure Pipelines is the part of Azure DevOps that automatically builds, tests, and deploys code projects. 
+-> Azure Pipelines combines continuous integration, continuous testing, and continuous delivery to build, test, and deliver your code to any destination. Azure Pipelines supports all major languages and project types.
+
+** Azure Pipelines benefits:
+-> Azure Pipelines provides a quick, easy, and safe way to automate building your projects with consistent and quality code that's readily available to users.
+-> Azure Pipelines offers the following benefits:
+	1. Works with any language or platform.
+	2. Deploys to different types of targets at the same time.
+	3. Integrates with Azure deployments.
+	4. Builds on Windows, Linux, or Mac machines.
+	5. Integrates with GitHub.
+	6. Works with open-source projects.
+
+** Version control systems
+-> Azure Pipelines requires your source code to be in a version control system. Azure Pipelines supports several forms of version control, including Azure Repos Git, GitHub, and TFVC. 
+-> You can set up Azure Pipelines to automatically build and validate any changes you push to your version control repository.
+
+
+** Prerequisites - Azure DevOps: Make sure you have the following items:
+1. A GitHub account where you can create a repository. Create one for free.
+2. An Azure DevOps organization. Create one for free. If your team already has one, then make sure you're an administrator of the Azure DevOps project that you want to use.
+3. An ability to run pipelines on Microsoft-hosted agents. To use Microsoft-hosted agents, your Azure DevOps organization must have access to Microsoft-hosted parallel jobs. You can either purchase a parallel job or you can request a free grant.
+
+
+** Key concepts for new Azure Pipelines users: Azure DevOps Services
+--> A trigger tells a pipeline to run.
+--> A pipeline is made up of one or more stages. A pipeline can deploy to one or more environments.
+--> A stage is a way of organizing jobs in a pipeline and each stage can have one or more jobs.
+--> Each job runs on one agent. A job can also be agentless.
+	 1. Direct API Integration: Instead of running on a specific machine, the job interacts directly with a service via API calls. 
+         -> For example, it might interact with cloud services, deployment platforms, or other APIs to perform tasks.
+	 2. Serverless Computing: The job might be executed in a serverless environment where the cloud provider manages the underlying infrastructure. 
+         -> The job’s code is executed in response to events or triggers, and it scales automatically.
+--> Each agent runs a job that contains one or more steps.
+--> A step can be a task or script and is the smallest building block of a pipeline.
+--> A task is a prepackaged script that performs an action, such as invoking a REST API or publishing a build artifact.
+--> An artifact is a collection of files or packages published by a run.
+
+
+-> Agent: When your build or deployment runs, the system begins one or more jobs. An agent is computing infrastructure with installed agent software that runs one job at a time. For example, your job could run on a Microsoft-hosted Ubuntu agent.
+
+-> Approvals: Approvals define a set of validations required before a deployment runs. Manual approval is a common check performed to control deployments to production environments. 
+-- When checks are configured on an environment, a pipeline run pauses until all the checks are completed successfully.
+
+-> Artifact: An artifact is a collection of files or packages published by a run. Artifacts are made available to subsequent tasks, such as distribution or deployment.
+
+
+** Azure DevOps comes with two options:
+1. Azure DevOps Services
+2. Azure DevOps Server
+-> Both the services and the server were known as Visual Studio Team Services (VSTS) and Team Foundation Server (TFS), respectively. 
+   They provide environments that support Git, Agile tools, and continuous integration.
+
+1. Azure DevOps services are the cloud services of Microsoft Azure, and they offer a highly scalable and reliable hosted service that is globally available. 
+2. DevOps Server, on the other hand, is an on-premise offering that is on a SQL Server backend.
+-> Enterprises go for the on-premise offering when they want their data within their network or when there is a requirement for accessing SQL Server reporting services that are integrated with Azure DevOps data and tools.
+
+Azure DevOps Services						Azure DevOps Server
+It is a cloud offering.					It is an on-premise offering.
+It offers two options for scaling and 			It offers three options for scaling and 
+scoping data: organizations and projects.		scoping data: deployment, project collections, and projects.
+You can connect over the public network.		You can connect to the intranet server.
+The access level must be assigned to each user.		Access levels must be set based on the license.
+
+** Azure DevOps Services:
+1. Azure Boards
+2. Azure Repos
+3. Azure Pipeline
+4. Azure Test plans
+5. Azure Artifacts
+
+1. Azure Boards: Azure Boards is an agile project management tool and a work tracking system that enables teams to plan, track, and discuss work across the entire development process.
+-> Azure boards make it easy to track tasks, bugs, and features. 
+-> Azure Boards is a powerful agile tool for managing Kanban board, reporting, product backlog.
+-> Components like work items, backlogs, Boards, queries, sprints details.
+-> We can manage user authentication and authorization, team, project, and organization-level settings. 
+   Azure Boards helps you to write query to retrieve specific work items from the system.
+-> Work item can be bug, epic, issue, task or features. This service is sprint ready and built for insights to improve productivity.
+-> There are three types of work items:
+a. Epic: An epic work item tracks requirements or features.  
+b. Issue: Issue tracks bugs or smaller changes.
+c. Task: tracks even smaller works done. It is easy to add or update your work status and, with a drag-and-drop feature, you can prioritize your works.
+-> It can be customized with custom work item types, fields, and templates to fit specific team needs, and also integrated with various other Azure DevOps services.
+
+2. Azure Repos: A version control system that enables teams to collaborate on code development and manage code changes, security controls provided
+-> Azure Repos is a collection of version control tools that are used to manage your code and provides two types of version control:
+1. Git: Git is a distributed version control system 
+-> the local copy that you have is a complete repository allowing you to work offline as well.
+2. Team Foundation Version Control (TFVC):
+-> In TFVC, the historical data is kept only on the server since it is a centralized version control system.
+** Access to the repositories are managed by Azure AD, hence source code access management is fast and easy.
+
+3. Azure Pipelines: A continuous integration and delivery (CI/CD) platform that enables teams to automate the build, test, and deployment of applications.
+-> Azure Pipeline is a combination of continuous integration (CI) and continuous delivery (CD) which you can use to create and test your code automatically and give access to other users.
+-> You can produce consistent and quality code with CI and CD.
+-> You can work with programming languages like Python, Ruby, Java, PHP, C#, and Go. To use Azure Pipelines, 
+   your source code must be stored in a version control system such as Git.
+-> Coming to the pricing, private projects can work up to 30 hours for free, every month, and for public projects it is free.
+
+4. Azure Test Plans: A testing tool that enables teams to plan, track, and manage testing for their applications through PI(Programing increment) sprint
+-> You can improve the quality of your code by testing it. With Azure Test Plans, you can test your code 
+   manually or exploratorily as well. You can request, provide, and track feedback also. 
+-> You can perform unit and functional testing. Running tests continuously is also possible with Continuous testing.
+-> Test results are beneficial to record software bugs and defects.
+-> Automated tests will typically execute in a Pipeline.
+-> Stakeholder’s feedback can be captured in work items.
+
+5. Azure Artifacts ((Packages)): manages the dependencies used in source code. A package management system that enables teams to share packages, such as libraries and tools, across their organization.
+-> Azure Artifacts is a store that has all your artifacts that were produced while developing and deploying. 
+-> In simple terms, Artifacts are executable files, i.e., they do not contain any code. 
+-> Azure Artifacts can host and share package (like NPM, Nuget, Maven) feeds from public and private sources.
+-> You can use multiple feeds to organize and control access to your packages. 
+-> Are wondering what a feed is? :- A feed is a container for packages that helps in consuming and publishing. 
+-> Azure Artifacts provide a fast, secure, and easy feed of binary packages.
+-> Azure Artifacts ensure that your pipelines are fully integrated package management. You can also create packages like Maven, npm, and NuGet. It includes a free usage tier of 2 GB.
+-> These stored artifacts are easy to integrate with Azure Pipelines.
+
+6. Collaboration: Azure DevOps provides a set of collaboration tools, such as wikis, dashboards, and pull requests, which allow teams to share information and communicate effectively.
+
+7. Monitoring and diagnostics: Azure DevOps provides a set of tools for monitoring and diagnosing issues in applications, including Application Insights, which provides real-time monitoring and diagnostics data.
+
+-> Azure DeVops dashboard: Administrator, manager
+
+-----------------------------------------------------------------------------------------------------------------------------
+-> Developer Tools refer to the software and services that are used by developers to create, test, and deploy applications. Azure provides a comprehensive suite of developer tools to help developers build, test, and deploy applications faster and more efficiently.
+    a. Visual Studio: A powerful integrated development environment (IDE) for building Windows, web, and mobile applications, that integrates seamlessly with Azure services.
+    b. Visual Studio Code: A lightweight code editor for building and debugging modern web and cloud applications, that runs on Windows, Mac, and Linux.
+    c. Azure DevOps: A set of development tools, services, and features for collaborating on code development and deployment, including Azure Boards, Azure Repos, Azure Pipelines, and Azure Test Plans.
+    d. Azure Functions: A serverless compute service that enables you to run event-driven applications and microservices, without having to manage infrastructure.
+    e. Azure Container Instances: A fast and simple way to run containers in the cloud, without having to manage virtual machines or Kubernetes clusters.
+    f. Azure SDKs: A collection of software development kits (SDKs) for building applications that run on Azure, in various programming languages, including .NET, Java, Python, and more.
+    g. Azure CLI: A command-line interface for managing Azure resources, that enables you to automate tasks and scripts, and to manage resources from the command line.
+    h. Azure Power Platform: A low-code platform for building and deploying custom business applications, that enables you to automate processes, and to create custom apps without writing code.
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+Azure DevOps Benefits: 
+1. Reliability: Azure DevOps is reliable, scalable, and globally available.
+2. Accessibility: Azure DevOps users get access to new features every 3 weeks. Microsoft is transparent.
+3. Flexibility: If your DevOps team doesn’t want or need the full suite of services, they can acquire them independently.
+4. End of upgrade cycle: For organizations running on-premises CI/CD tooling, upgrading is difficult. By SaaS, it is an easy task.
+
+Azure DevOps Tools: 
+1. Azure Pipelines: Implement CI/CD to continuously build, test, and deploy to any platform and any cloud.
+2. Azure Boards: Plan, track, and discuss work across your teams using Kanban boards, backlogs, team dashboards, and custom reporting.
+3. Azure Monitor: Get full observability into your applications, infrastructure, and network. 
+4. Visual Studios: Use the integrated development environment (IDE) designed for creating powerful, scalable applications for Azure.
+5. Azure Kubernetes Services: Use the integrated development environment (IDE) designed for creating powerful, scalable applications for Azure.
+
+-> Tools for Azure DevOps
+-> Azure DevOps works well with most of the DevOps tools.
+	Category				Tools Name
+Configuration Tools			Chef, Ansible, Puppet
+Continuous Integration			Jenkins
+Microservices				Docker, K8s
+Collaboration				Slack, Trello
+Monitoring				Kibana, Grafana
+Development				Visual Studio
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+Azure Devops:
+
+Step1:
+=====
+New project: Project name, Description, Visibility (Public, Private), Advanced (Version control : {Git, TFVC(team foundation version control)}
+Public: Anyone on the internet can view the project. Certain features like TFVC are not supported.
+Private: Only people you give access to will be able to view this project.
+
+Steps2:
+=======
+1. Overviw: summary, dashboard, Wiki
+2. Boards:
+3. Repos: (Files, commits, pushes, branches, tags, pull requests)
+-> Integrate your repos (Import a repository: Provide your git hub repository link)
+	Repository  type: Git/TFCV
+	Clone: Git hub repository link	
+4. Pipeline: 
+  A. (Pipelines, environments, releases, library, task groups, deployment groups)
+-> Create pipeline-> Use the classic editor-> Azure Repos Git-> Continue (team project, repository, branch for manual and schedues build)
+-> Select a template to build -> Maven apply
+-> a. Tasks: Name, agent pool (microsoft hosted, self hosted), agent specification(ubuntu 20.04), 
+   b. Variables: Pipeline variables, Variable groups , predefined variables
+   c. Triggers: Scheduled, Build completion, Enable continuous integration (Branch filters: type, branch specification)
+   d. Options: Build properties, Build job (Build job authorization scope, build job timeout in minutes, build job cancel timeout in minutes, Demands)
+   e. History
+-> f. Save and Queue: save comment, defined:agent pool, agent specification, branch    Save and Run
+-> To check logs: Pipeline job-> Jobs-> Agent job1-> click it and see console
+ 
+  B. Releases: New pipeline-> Artifact (add, schedule) + Stages(multiple stages)-> select template (Azure App Service deployment, Deploy to a Kubernetes cluster)-> Apply
+
+5. Test plans:
+6. Artifacts:
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Q. TFCV: Team Foundation Version Control, which is a centralized version control system (VCS) developed by Microsoft. 
+-> TFVC is a part of Microsoft's Team Foundation Server (TFS) and Visual Studio Team Services (VSTS) products.
+-> TFVC is designed to help teams manage their source code, track changes made to the codebase over time, and 
+   collaborate on software development projects. 
+-> It offers features such as version control, branching and merging, and team collaboration, all of which help ensure that changes to the code are managed effectively and consistently.
+
+Q. Build pipeline: A build pipeline is a set of steps that are executed in a specific order to build and package the application's source code into a deployable artifact. 
+-> This process typically involves compiling code, running unit tests, and creating a package that can be deployed to an environment. 
+-> Build pipelines can be triggered automatically when changes are made to the source code or they can be triggered manually.
+
+Q. Release pipeline: It is a set of steps that are executed in a specific order to deploy the application to a target environment. 
+-> This process typically involves deploying the artifact that was created in the build pipeline, running integration tests, and promoting the application to the next environment in the deployment pipeline. 
+-> Release pipelines can also include approval gates to ensure that the deployment is reviewed and approved by the appropriate stakeholders.
+-> In Azure DevOps, build and release pipelines are defined using YAML-based code, which allows for version control, testing, and collaboration among team members.
+
+Q. Agent pools: an agent pool is a group of one or more virtual or physical machines that are configured to run build and release pipelines. 
+-> An agent pool allows Azure DevOps to distribute workloads across multiple agents, providing better performance and scalability for the build and release process.
+-> Azure DevOps provides two types of agent pools: hosted and private. 
+  a. Microsoft Hosted agent: pools are provided by Microsoft and are available to all Azure DevOps users. 
+  -> These agent pools are maintained by Microsoft and are designed to provide a general-purpose set of agents that can be used for most build and release pipelines. 
+  b. Private agent pool: created and managed by users and can be configured to meet specific needs, such as running on-premises machines or providing specialized capabilities.
+-> When a build or release pipeline is triggered, Azure DevOps selects an agent from the agent pool that best matches the pipeline's requirements. 
+-> The agent then executes the steps defined in the pipeline, such as building the application or deploying it to a target environment. 
+-> Once the pipeline is complete, the agent is released back into the agent pool, ready to be used for the next pipeline execution.
+
+Q. Pipeline variables, Variable groups , predefined variables in azure devops
+-> In Azure DevOps, variables are used to store values that can be used across different stages or tasks in a build or release pipeline. 
+   There are several types of variables that can be used in Azure DevOps:
+1. Pipeline variables: These are variables that are defined within a specific pipeline and can be used in any stage or task within that pipeline. 
+   Pipeline variables can be defined at the pipeline level, stage level, or task level.
+-> Ex: buildConfiguration: 'Release', webAppServiceName: 'my-web-app', dbConnectionString: 'my-db-connection-string'
+2. Variable groups: These are variables that are shared across multiple pipelines. Variable groups allow teams to define a set of variables 
+   once and use them across different pipelines, reducing the need for duplication of effort. 
+-> Variable groups can be defined at the project or organization level.
+->  group: my-variable-group -->   name: dbConnectionString
+3. Predefined variables: These are variables that are automatically defined by Azure DevOps and can be used in pipelines without the need 
+   for explicit definition. Predefined variables include information such as the build ID, the build number, and the repository name.
+-> Examples of predefined variables in Azure DevOps include:
+$(Build.ArtifactStagingDirectory): The local path on the agent where artifacts are copied to before being pushed to a remote artifact repository.
+$(Build.BuildNumber): The unique identifier for the build.
+$(Build.Repository.Name): The name of the repository that the build is associated with.
+$(Build.SourceBranch): The branch being built.
+$(System.DefaultWorkingDirectory): The default working directory for the pipeline.
+
+Q. Azure subscriptions:
+-> An Azure subscription is a logical container used to manage access to Azure services and resources. 
+-> It provides a way for users to access and use Azure services, such as virtual machines, storage accounts, databases, and other Azure services.
+-> When a user signs up for Azure, they create an Azure account. The Azure account provides a way to manage 
+   access to Azure services, billing, and support. Users can then create one or more subscriptions under their Azure account.
+
+Q. Azure tenants:
+-> a tenant refers to a dedicated and isolated instance of Azure Active Directory (Azure AD) that is used to manage and organize resources within Azure. 
+-> An Azure tenant represents an organization's presence in Azure and serves as a security and administrative boundary.
+-> When an organization signs up for Azure, it creates a tenant, which is associated with a unique domain name 
+   (e.g., yourdomain.onmicrosoft.com). 
+-> This tenant serves as the root of the organization's Azure AD hierarchy and provides a range of services and features for managing identities, access, and resources within Azure.
+
+Here are a few key points about Azure tenants:
+1. Identity and Access Management: Azure AD within a tenant manages user identities, authentication, and authorization for accessing Azure resources. It enables administrators to define access policies, roles, and permissions to control who can perform specific actions within the tenant.
+2. Resource Isolation: Each Azure tenant operates independently and provides isolation between different organizations or divisions within an organization. Resources such as virtual machines, storage accounts, databases, and other Azure services are created within a specific tenant and are accessible only to users and applications associated with that tenant.
+3. Billing and Subscriptions: An Azure tenant is linked to one or more Azure subscriptions, which represent the billing and management unit within Azure. Subscriptions are associated with a specific tenant and define the scope of resources that can be provisioned and used. Billing and usage are tracked at the subscription level.
+4. Management and Governance: Include monitoring and auditing of resources, implementing policies and compliance controls, managing security, and integrating with other Azure services like Azure Monitor, Azure Policy, and Azure Security Center.
+5. Collaboration and Multi-tenancy: Azure tenants can be used to collaborate and share resources with users from other tenants or organizations. Azure AD supports external collaboration by allowing guest users from other Azure AD tenants or even from other identity providers to be invited to access resources within a tenant.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Project settings:
+
+1. Service hooks: (Hook: desired state = present state, if it is not equal it will trigger the pipeline)
+-> It used to automate the execution of external services or applications when certain events occur within a project. 
+-> Service hooks allow for seamless integration between Azure DevOps and other external systems, allowing teams to build end-to-end workflows across different tools and services.
+-> Service hooks can be configured at the project level and are associated with specific events within Azure DevOps. When an event occurs, 
+   the service hook will trigger an action in an external system or application.
+-> Some common examples of events that can trigger service hooks in Azure DevOps include:
+A build completes
+A pull request is created
+A work item is updated
+A release is created
+A code push occurs
+-> Azure DevOps provides several built-in integrations with popular external services, such as Slack, Microsoft Teams, and GitHub, 
+   as well as the ability to create custom integrations using webhooks.
+
+2. Agent pools: an agent pool is a group of one or more virtual or physical machines that are configured to run build and release pipelines. 
+-> An agent pool allows Azure DevOps to distribute workloads across multiple agents, providing better performance and scalability for the build and release process.
+-> Azure DevOps provides two types of agent pools: hosted and private. 
+  a. Microsoft Hosted agent: pools are provided by Microsoft and are available to all Azure DevOps users. 
+  -> These agent pools are maintained by Microsoft and are designed to provide a general-purpose set of agents that can be used for most build and release pipelines. 
+  b. Private agent pools, on the other hand, are created and managed by users and can be configured to meet specific needs, such as 
+     running on-premises machines or providing specialized capabilities.
+-> When a build or release pipeline is triggered, Azure DevOps selects an agent from the agent pool that best matches the pipeline's requirements. 
+-> The agent then executes the steps defined in the pipeline, such as building the application or deploying it to a target environment. 
+-> Once the pipeline is complete, the agent is released back into the agent pool, ready to be used for the next pipeline execution.
+
+3. Parallel jobs: the number of concurrent jobs that can be executed within a pipeline at the project level. This setting controls how 
+   many pipelines can run at the same time within the same project.
+-> Azure DevOps allows up to four parallel jobs in a project. This means that four different pipelines can run concurrently within the same project. 
+   This setting can be increased or decreased depending on the needs of the project.
+
+4. Service connections:
+-> Service connections are a way to securely store and manage information needed to connect to external services such as Azure, GitHub, or Docker Hub, Jenkins. 
+-> They can be used in pipelines, release definitions, and other parts  of your project to automate the deployment and management of your application.
+-> Once you have created a service connection, you can use it in your pipelines and release definitions by referencing its name. 
+-> For example, you could use an Azure Resource Manager service connection to deploy your application to Azure, or a Docker Hub service connection to push your container images to Docker Hub.
+-> Service connections in Azure DevOps are a convenient way to manage and automate your deployments and integrations with external services, while also ensuring that your sensitive credentials and information are securely stored and managed.
+
+5. Service Endpoints:  ( Azure Resource Manager (ARM) service connections)
+-> Service Endpoints are a feature of Azure Virtual Networks (VNets).
+-> They provide a secure and direct connection between a VNet and an Azure service (e.g., Azure Storage, Azure SQL Database) over the Azure backbone network.
+-> In Azure DevOps, a service endpoint is a secure way to connect to external services or systems from your build, release, or deployment pipelines. Service endpoints store the necessary authentication credentials (e.g., username, password, token) and connection details to enable communication with these external resources securely.
+-> Azure DevOps provides several built-in service endpoint types to connect to various external services. Some commonly used service endpoint types include:
+
+a. Azure Service Principal: 
+-> An Azure Service Principal is a security identity used by applications, services, or automation tools to access Azure resources. Essentially, it is like a "user identity" for an application, and it is used to authenticate and authorize that application to perform actions in Azure.
+-> Used to connect to Azure resources such as Azure Resource Manager, Azure Container Registry, or Azure Key Vault. It requires a service principal (a type of Azure Active Directory application) and related credentials.
+
+b. GitHub: Used to connect to a GitHub repository to retrieve source code or trigger builds based on code changes in GitHub.
+c. Azure Kubernetes Service (AKS): Used to connect to an AKS cluster to deploy containerized applications.
+d. Docker Registry: Used to connect to container registries like Docker Hub or private container registries to pull and push container images.
+e. Azure App Service: Used to connect to Azure App Services for deploying web applications.
+f. Generic: A flexible endpoint type that allows you to connect to various services using custom authentication methods, such as Basic Authentication, OAuth, or personal access tokens.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Q. Difference between Self hosted and Microsoft hosted agents:
+-> In Azure DevOps, build and release pipelines require agents to execute tasks and jobs. These agents can be classified into two main types: self-hosted agents and Microsoft-hosted agents. Here are the technical differences between the two:
+1. Ownership and Location:
+-- Self-hosted agents are agents that you set up and manage on your own infrastructure. They can run on your local machines, virtual machines, or in the cloud.
+-- Microsoft-hosted agents, also known as Azure Pipelines agents, are managed by Microsoft in Azure data centers. They are provided as a service and do not require any setup or maintenance from the user.
+
+2. Security and Isolation:
+-- Self-hosted agents may run on machines with different security configurations, depending on your organization's policies. They can be firewalled or located in a private network, providing higher isolation in certain scenarios.
+-- Microsoft-hosted agents are pre-configured and managed by Microsoft. They are created and destroyed dynamically for each pipeline run. While they are designed to be secure, they run in a shared environment, and any customizations made during the build or release process are ephemeral and don't persist across runs.
+
+3. Customization:
+-- Self-hosted agents allow for more customization and flexibility. You can install specific tools, SDKs, or dependencies required for your builds and deployments.
+-- Microsoft-hosted agents come with a predefined set of tools and software installed. While they offer a wide range of capabilities, you cannot modify or customize the agent's software environment.
+
+4. Scalability:
+-- Self-hosted agents allow you to scale the number of agents based on your organization's needs. You can add or remove agents as required to handle build and deployment workloads.
+-- Microsoft-hosted agents are automatically scaled by Azure DevOps based on demand. They can provide rapid scaling and provisioning when needed, which can be beneficial for large builds or concurrent pipelines.
+
+5. Cost:
+-- Self-hosted agents might involve additional costs, as you need to manage the infrastructure they run on (e.g., VM costs, maintenance, and monitoring).
+-- Microsoft-hosted agents are included as part of the Azure Pipelines service, so there are no additional costs for using them. However, you may have usage limits based on your Azure DevOps plan.
+
+6. Access to On-premises Resources:
+-- Self-hosted agents can access resources in your on-premises network (e.g., build servers, databases) since they are typically deployed within your network infrastructure.
+-- Microsoft-hosted agents can only access publicly accessible resources or those accessible through Azure services.
+-> In summary, self-hosted agents offer more control, security, and customization options, making them suitable for organizations with specific requirements or on-premises resources. On the other hand, Microsoft-hosted agents are convenient, scalable, and cost-effective for projects that can work within the provided software environment and do not require specialized configurations. The choice between self-hosted and Microsoft-hosted agents depends on your organization's needs, security considerations, and infrastructure preferences.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. Explain the concept of Infrastructure as Code (IaC) and how it is implemented in Azure DevOps?
+-> Infrastructure as Code (IaC) is a practice of managing and provisioning infrastructure using machine-readable definition files rather than manual processes. 
+-> In Azure DevOps, IaC is typically implemented using Azure Resource Manager (ARM) templates. ARM templates are JSON files that define the Azure resources and their configurations, and they can be version-controlled alongside the source code.
+
+18. What are Azure Resource Manager (ARM) templates, and how can you use them in Azure DevOps?
+-> ARM templates are JSON files used to define the infrastructure and resources in Azure. In Azure DevOps, you can use ARM templates in your pipeline to provision resources as part of your deployment process. This allows you to create and manage infrastructure as code.
+
+2. What is Continuous Integration (CI) and Continuous Deployment (CD) in the context of Azure DevOps?
+-> Continuous Integration (CI) is the practice of automatically building and testing code changes as soon as they are committed to the version control system. Azure DevOps allows setting up CI pipelines that automatically trigger builds upon code commits, ensuring that code is continuously validated.
+-> Continuous Deployment (CD) is the next step in the CI/CD process. It involves automatically deploying code changes to different environments (e.g., staging, production) after they have been successfully built and tested through the CI process.
+
+3. Explain the concept of Multi-stage YAML pipelines in Azure DevOps?
+-> Multi-stage YAML pipelines allow defining build and deployment stages in a single YAML file in Azure DevOps. 
+-> It enables building, testing, and deploying applications in a structured manner, all within a single pipeline file. Each stage represents a separate phase of the CI/CD process, and they can be defined sequentially or in parallel for more complex workflows.
+
+4. What is Azure Kubernetes Service (AKS), and how does it integrate with Azure DevOps for container orchestration?
+-> Azure Kubernetes Service (AKS) is a managed Kubernetes container orchestration service in Azure. 
+-> It simplifies the deployment, management, and scaling of containerized applications using Kubernetes. 
+-> In Azure DevOps, AKS can be integrated as a deployment target for containerized applications. You can define Kubernetes YAML manifests in your code repository and use Azure DevOps pipelines to deploy those applications to AKS clusters.
+
+5. How can you ensure security and compliance in Azure DevOps pipelines?
+-> Security and compliance can be mensured in Azure DevOps pipelines through several practices:
+-- Use secure access controls and permissions to restrict who can modify pipelines and access sensitive data.
+-- Implement security scanning tools (e.g., Azure Security Center, SonarQube) in the pipeline to identify vulnerabilities in the code and dependencies.
+-- Enable continuous security testing and integrate automated security tests into the pipeline.
+-- Use secrets management to securely store and access sensitive data, such as passwords and API keys.
+-- Regularly audit and review pipeline configurations for compliance with organizational standards.
+
+6. Explain how you can achieve high availability and fault tolerance for applications deployed using Azure DevOps?
+-> High availability and fault tolerance can be achieved in Azure DevOps by employing the following techniques:
+** Deploying applications across multiple Azure regions to ensure redundancy and failover capability in case of regional outages.
+** Using Azure Traffic Manager or Azure Front Door to distribute incoming traffic across multiple instances or regions.
+** Implementing auto-scaling for applications to dynamically adjust resources based on demand.
+** Designing applications to be stateless, enabling easy replication and horizontal scaling.
+** Utilizing Azure Availability Sets or Availability Zones to distribute virtual machines across multiple fault domains and update domains.
+
+7. Explain how you can monitor and troubleshoot Azure DevOps pipelines and deployments?
+-> Monitoring and troubleshooting Azure DevOps pipelines and deployments involve the following practices:
+** Use Azure Monitor to track pipeline and application performance, identify bottlenecks, and receive alerts for critical issues.
+** Enable Application Insights to monitor application health and detect exceptions and failures.
+** Implement custom logging and tracing in applications to aid in troubleshooting.
+** Use Azure Log Analytics to collect and analyze logs from various Azure services.
+** Use Azure DevOps' built-in logging and diagnostic tools to troubleshoot pipeline execution issues.
+
+11. How can you manage secrets and sensitive information in Azure DevOps pipelines?
+-> Azure DevOps provides a secure way to manage secrets through variable groups, variable templates, and secure pipeline variables. Secrets can be encrypted and securely stored, preventing accidental exposure in logs or source code repositories.
+
+15. Explain how you can integrate security scanning tools like SonarQube into Azure DevOps pipelines to identify code vulnerabilities.
+-> You can integrate SonarQube into Azure DevOps pipelines using a plugin or extension. SonarQube scans the code for code quality, security vulnerabilities, and bugs. By adding SonarQube tasks to the pipeline, you can automatically analyze code and enforce quality gates for the build process. 
+
+8. What are Azure DevOps service connections, and how are they used in pipelines?
+-> Azure DevOps service connections are configurations that allow Azure DevOps to connect securely to external services and resources, such as Azure subscriptions, GitHub repositories, Docker registries, etc. Service connections are used in pipelines to enable communication and interaction with these external resources during the build, test, and deployment processes.
+
+9. How does Azure Pipelines support multi-platform builds and deployments for different operating systems?
+-> Azure Pipelines supports multi-platform builds and deployments through agents. Microsoft provides agents for Windows, macOS, and Linux, allowing you to build and deploy applications on different operating systems. You can also create and use self-hosted agents on your own infrastructure to support custom platforms.
+
+10. Explain the difference between YAML-based and classic pipelines in Azure DevOps.
+-> YAML-based pipelines are defined in a YAML file directly within the code repository, making them version-controlled alongside the source code. 
+-> Classic pipelines are created through the Azure DevOps web interface using a visual editor. 
+-> YAML-based pipelines offer more flexibility and scalability, making them the preferred choice for many teams.
+
+12. Explain how you can automate the deployment of an application to Azure using Azure DevOps.
+-> Automating the deployment to Azure involves defining deployment scripts or templates (e.g., ARM templates, Bicep files, or Terraform scripts) and configuring the Azure DevOps pipeline to deploy these scripts to the desired Azure environment, such as Azure App Service, Azure Kubernetes Service (AKS), or Azure Virtual Machines.
+
+13. What are Azure Artifacts, and how do they enhance the software build and deployment process?
+-> Azure Artifacts is a package management system in Azure DevOps that allows you to create, publish, and share code artifacts and dependencies. 
+-> It enhances the software build and deployment process by providing a centralized location to store and retrieve packages, ensuring consistency and version control across environments.
+
+14. Explain how you can implement approval gates and release strategies in Azure DevOps for controlled deployments?
+-> In Azure DevOps, you can implement approval gates and release strategies using environments and deployment strategies. Approval gates require manual approval before proceeding with the next stage of deployment, ensuring controlled releases. Deployment strategies like rolling deployments or blue-green deployments enable controlling how the release is rolled out to different environments.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+16. How can you set up automated end-to-end testing for web applications in Azure DevOps?
+-> By using testing frameworks like Selenium or Cypress. You can define test scripts and integrate them into the build or release pipeline to automatically test the application in a browser environment.
+
+17. Explain how you can configure Azure DevOps to automatically build and deploy a containerized application to Azure Kubernetes Service (AKS).
+-> To automatically build and deploy a containerized application to AKS, you can use Azure DevOps YAML pipelines. Define a build stage to create a Docker image and push it to a container registry. Then, set up a deployment stage to use Kubernetes manifests or Helm charts to deploy the application to AKS.
+
+19. How do you handle rollbacks and recovery in Azure DevOps pipelines in case of deployment failures?
+-> Rollbacks and recovery in Azure DevOps pipelines involve proper error handling and the use of deployment strategies. For example, you can use the blue-green deployment strategy to quickly switch back to the previous version in case of issues with the new deployment.
+
+20. Explain how you can use Azure Key Vault to securely manage and store secrets for Azure DevOps pipelines.
+-> Azure Key Vault is used to securely manage and store secrets, such as connection strings and API keys, in Azure. You can use Azure Key Vault as a service connection in Azure DevOps pipelines to retrieve secrets securely during the build and deployment process.
+
+21. How do you manage the continuous improvement of CI/CD processes in Azure DevOps?
+-> Continuous improvement of CI/CD processes in Azure DevOps involves regular reviews and retrospectives to identify bottlenecks, inefficiencies, and areas for improvement. Feedback from team members and stakeholders should be collected and incorporated into the process to optimize and streamline workflows.
+
+22. Explain how you can set up a scalable and automated build system in Azure DevOps for a large-scale project.
+-> To set up a scalable and automated build system for a large-scale project in Azure DevOps, follow these practices:
+** Use YAML-based pipelines for version control and maintainability.
+** Utilize self-hosted agents on your own infrastructure to increase build capacity and speed.
+** Implement parallel builds and tests to take advantage of cloud resources.
+** Optimize the build process by caching dependencies and incremental builds.
+
+23. How can you manage configuration and environment-specific settings in Azure DevOps pipelines?
+-> By using pipeline variables and variable groups. Use different variable groups for different environments (e.g., Dev, Test, Prod) and make the variables accessible only to authorized users or release stages.
+
+24. Explain the concept of "Infrastructure as Code" in Azure DevOps, and how does it support the DevOps philosophy?
+-> "Infrastructure as Code" (IaC) is the practice of managing and provisioning infrastructure using machine-readable definition files. In Azure DevOps, IaC is implemented using Azure Resource Manager (ARM) templates or other IaC tools like Terraform. 
+-> It supports the DevOps philosophy by providing consistent and repeatable infrastructure deployments, reducing manual configuration errors, and allowing teams to version-control infrastructure changes alongside the application code.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+Security:
+=========
+** The DevSecOps stack for multiple P&C Solutions projects might include:
+
+1. Source Code Management (SCM) Tools: Tools like Git and Azure Repos for version control and secure management of source code.
+2. Build and Continuous Integration (CI) Tools: CI tools like Azure Pipelines, Jenkins, or GitLab CI to automate the build process and ensure the code is regularly integrated and tested.
+3. Static Application Security Testing (SAST) Tools: Tools like SonarQube, Fortify, or Checkmarx that analyze the source code for potential security vulnerabilities during the build process.
+4. Dynamic Application Security Testing (DAST) Tools: Tools like OWASP ZAP or Burp Suite that perform security testing by simulating real-world attacks on running applications.
+5. Dependency Scanning Tools: Tools like WhiteSource, Snyk, or Nexus IQ that analyze and monitor third-party dependencies for known vulnerabilities.
+6. Container Security Tools: Tools like Clair or Aqua Security that scan container images for security issues before deployment.
+7. Infrastructure as Code (IaC) Security Tools: Tools like Terraform, ARM Template Checkers, or AWS Config that ensure security best practices are followed in infrastructure code.
+8. Secrets Management: Tools like Azure Key Vault, HashiCorp Vault, or AWS Secrets Manager for secure storage and management of secrets, keys, and certificates.
+9. Security Incident and Event Management (SIEM) Tools: SIEM solutions like Azure Sentinel or Splunk for centralized security event monitoring and alerting.
+10. Identity and Access Management (IAM) Tools: IAM solutions like Azure Active Directory or Okta for managing user access and permissions.
+11. Continuous Monitoring and Logging: Tools like Azure Monitor or ELK Stack (Elasticsearch, Logstash, Kibana) for continuous monitoring and log analysis.
+12. Automated Compliance and Governance: Tools and policies that enforce compliance with industry standards (e.g., HIPAA, GDPR) and internal security policies.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Q. Knowledge on blue green deployment and canery releases?
+-> Blue-Green Deployment and Canary Releases are two popular deployment strategies used in DevOps to minimize risks and downtime when deploying new versions of an application. Let's delve into the technical details of each approach:
+
+1. Blue-Green Deployment:
+In Blue-Green Deployment, two identical environments are set up: one is the "Blue" environment (the currently running version) and the other is the "Green" environment (the new version). The deployment process involves the following steps:
+-- Deploy the new version of the application to the "Green" environment.
+-- Perform testing and validation in the "Green" environment to ensure it behaves as expected.
+-- Once the testing is successful, switch the network traffic from the "Blue" environment to the "Green" environment, making the new version live.
+-- The "Blue" environment now becomes the idle one, and it can be used for rollback or future deployments.
+
+** Key Advantages of Blue-Green Deployment:
+-- Zero Downtime: Users experience no downtime during the deployment switch, as they are redirected seamlessly to the new version.
+-- Quick Rollback: If any issues are detected with the new version, you can quickly roll back by directing traffic back to the "Blue" environment.
+
+2. Canary Releases:
+-> Canary Releases involve gradually rolling out a new version of the application to a subset of users (a "canary group") before deploying to the entire user base. The deployment process includes the following steps:
+-- Deploy the new version of the application to a small percentage of users or specific devices in the "Canary" group.
+-- Monitor the performance and stability of the new version in the Canary group.
+-- Gradually increase the percentage of users in the Canary group receiving the new version based on monitoring and feedback.
+-- If the new version performs well, deploy it to the entire user base. Otherwise, roll back the changes and investigate the issues.
+
+** Key Advantages of Canary Releases:
+-- Risk Mitigation: By testing with a small group first, you can catch issues early and minimize the impact if something goes wrong.
+-- Feedback Collection: You can gather valuable feedback from users in the Canary group before deploying to a broader audience.
+
+-> Considerations and Best Practices:
+-- For Blue-Green Deployment, ensure that both environments are as identical as possible to minimize discrepancies.
+-- Use automated testing and monitoring to validate the new version's performance and health during Blue-Green Deployment or Canary Releases.
+-- Implement feature flags or configuration management to enable/disable specific features during Canary Releases, making it easier to control the rollout.
+-- Monitor key metrics, such as error rates and response times, during both deployment strategies to ensure the new version meets performance requirements.
+-- Ultimately, the choice between Blue-Green Deployment and Canary Releases depends on factors such as the application's criticality, user base, and risk tolerance. Both strategies aim to ensure a smooth and reliable deployment process while mitigating risks associated with releasing new versions of the application.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Q. How to trigger when commits changes occurs?
+-> In Azure DevOps, you can trigger a pipeline when changes are committed to the source code repository. This is known as Continuous 
+   Integration (CI) and is a common practice in modern software development. Here are the steps to trigger a pipeline when changes are committed:
+1. Create a pipeline-> Pipelines section-> create a new pipeline-> source control repository-> configure the pipeline to build and deploy your application.
+2. Enable Continuous Integration: In the pipeline, go to the Triggers section and enable Continuous Integration. This will 
+   trigger the pipeline to run automatically whenever changes are committed to the source code repository.
+3. Configure the trigger: You can configure the trigger to run the pipeline on every push to the repository or on a specific branch. 
+   You can also specify the branch that you want to trigger the pipeline on.
+4. Save and run the pipeline: Save the changes to the pipeline and run it manually to test the trigger. If the trigger is configured 
+   correctly, it will run automatically every time changes are committed to the source code repository.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+Scenario: You want to deploy a web application on Azure. Which Azure service should you use, and how would you set up a continuous deployment pipeline using Azure DevOps?
+Answer: You should use Azure App Service to deploy the web application. To set up continuous deployment, you can create an Azure DevOps pipeline with a build stage (using Azure DevOps agents) to compile the application code and a release stage to deploy it to the App Service.
+
+Scenario: You have multiple developers working on a project, and you want to ensure they can collaborate effectively. How can Azure DevOps help manage source code and enable version control?
+Answer: Azure DevOps provides a version control system, such as Git or Team Foundation Version Control (TFVC). Developers can push their code to repositories hosted in Azure DevOps, enabling collaboration, versioning, and code review.
+
+Scenario: Your application needs a relational database. Which Azure service should you choose, and how would you provision and manage it using Terraform?
+Answer: You should choose Azure SQL Database for a fully managed relational database service. To provision and manage it using Terraform, you can create a Terraform configuration file defining the Azure SQL Database resource and its configurations.
+
+Scenario: Your organization wants to ensure secure access to Azure resources. How can you use Azure AD and service principals to achieve this?
+Answer: You can create an Azure AD service principal and assign the necessary role-based access control (RBAC) roles to it. This service principal can then be used by applications to authenticate and access Azure resources securely.
+
+Scenario: You need to set up monitoring and alerting for an Azure Virtual Machine. What Azure services would you use, and how would you configure alerts based on specific conditions?
+Answer: You can use Azure Monitor to set up monitoring for the VM. Configure metrics and diagnostic settings to collect data. To set up alerts, use Azure Monitor Alerts and define conditions based on metric thresholds.
+
+Scenario: You have a microservices-based application, and you want to manage it using Kubernetes. How can Azure Kubernetes Service (AKS) simplify the management of your Kubernetes clusters?
+Answer: AKS provides a managed Kubernetes environment, abstracting away the complexities of cluster management. It offers features like automatic scaling, rolling updates, and integration with Azure services.
+
+Scenario: Your application requires a caching mechanism to improve performance. Which Azure service should you use, and how would you integrate it into your application?
+Answer: You should use Azure Cache for Redis for caching. Integrate it into your application by using the Redis client library and setting up cache configurations in your code.
+
+Scenario: You need to implement a disaster recovery plan for your critical Azure resources. How can you use Azure Site Recovery to achieve this?
+Answer: Azure Site Recovery replicates VMs and physical servers to a secondary location. In case of a disaster, you can failover to the secondary location to keep the services running.
+
+Scenario: Your team wants to implement Infrastructure as Code (IaC) for managing Azure resources. Which tool would you choose, and how would you structure your Terraform files for better organization?
+Answer: Choose Terraform as the IaC tool. Structure your Terraform files using modules to organize resources and keep configurations reusable.
+
+Scenario: You have sensitive information that needs to be securely stored and accessed by your applications. How can you use Azure Key Vault to manage secrets?
+Answer: You can use Azure Key Vault to store and manage secrets securely. Access the secrets programmatically using the Key Vault SDK or through Azure services like Azure Functions.
+
+Scenario: Your team is working on a big project with multiple features being developed simultaneously. How can you use Azure Boards to manage and track the progress of different features?
+Answer: You can use Azure Boards to create work items (e.g., user stories, tasks) for each feature, assign them to team members, track progress, and visualize the status using dashboards and reports.
+
+Scenario: You want to run a cost analysis of your Azure resources and optimize your spending. How can you use Azure Cost Management and Billing to achieve this?
+Answer: Azure Cost Management and Billing provide cost analysis, budgeting, and recommendations to optimize spending. You can use it to identify resource cost patterns and take cost-saving actions.
+
+Scenario: You need to deploy a containerized application to Azure. How can you use Azure Container Instances (ACI) or Azure Kubernetes Service (AKS) for container orchestration?
+Answer: For a simple container deployment, use Azure Container Instances (ACI). For more advanced container orchestration, such as with Kubernetes, use Azure Kubernetes Service (AKS).
+
+Scenario: Your application experiences high traffic and needs auto-scaling capabilities. How can you set up Azure Application Gateway or Azure Load Balancer to handle the traffic efficiently?
+Answer: Use Azure Application Gateway or Azure Load Balancer to distribute incoming traffic across multiple instances, ensuring high availability and auto-scaling based on demand.
+
+Scenario: Your organization has a large user base, and you want to implement single sign-on (SSO) for Azure resources. How can you use Azure AD Application Proxy to achieve this?
+Answer: Azure AD Application Proxy allows users to access applications securely from outside the corporate network without requiring a VPN. It enables SSO and provides access control.
+
+Scenario: You want to store and analyze log data from your Azure resources. How can you use Azure Monitor and Log Analytics to achieve this?
+Answer: Azure Monitor collects and analyzes log data from various Azure resources. Log Analytics provides a query language to analyze and visualize log data.
+
+Scenario: You need to automate the deployment of infrastructure resources using Terraform. How can you set up a CI/CD pipeline in Azure DevOps for this purpose?
+Answer: Create an Azure DevOps pipeline with Terraform tasks. Use a service principal to authenticate with Azure and set up stages for plan, apply, and destroy operations.
+
+Scenario: Your team wants to perform automated testing for your web application. How can you use Azure DevTest Labs to create isolated testing environments?
+Answer: Azure DevTest Labs allows you to create custom testing environments, manage VM images, and set up policies for VM usage, enabling automated testing in isolated environments.
+
+Scenario: You have multiple cloud providers, and you want to manage them using a single tool. How can you use Terraform to implement multi-cloud infrastructure management?
+Answer: Terraform supports multiple cloud providers. Define your infrastructure in Terraform files and use the appropriate provider plugins for each cloud provider you need to manage.
+
+Scenario: Your team is using multiple repositories for different projects. How can you use Azure Repos in Azure DevOps to manage and organize your source code effectively?
+Answer: Create separate repositories for each project, use branches for feature development, and set up pull requests for code review and collaboration.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
