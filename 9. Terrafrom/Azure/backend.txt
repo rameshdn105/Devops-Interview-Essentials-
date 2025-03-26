@@ -315,7 +315,21 @@ module "security" {
 
 
 ***************************************************************************************
-
+Q. What work u have done in Azure AD?
+-> Azure AD is a cloud-based identity and access management (IAM) service provided by Microsoft. 
+-> It provides a central location for managing and securing user identities and access to applications, both in the cloud and on-premises. 
+-> Some of the common tasks that can be performed in Azure AD include:
+1. User Management: Azure AD provides a central location for managing user identities, including creating and deleting users, 
+   resetting passwords, and assigning licenses.
+2. Application Integration: Azure AD integrates with cloud-based and on-premises applications, allowing users to securely access 
+   those applications using a single set of credentials.
+3. Single Sign-On (SSO): Azure AD provides SSO capabilities, allowing users to sign in once and have access to all their applications 
+   without having to sign in again.
+4. Multi-Factor Authentication (MFA): Azure AD provides MFA capabilities, which can be used to secure access to applications and resources.
+5. Group Policy Management: Azure AD provides group policy management capabilities, allowing administrators to enforce security policies 
+   and access controls for users and applications.
+6. Reporting and Auditing: Azure AD provides reporting and auditing capabilities, allowing administrators to track and monitor user activity, 
+   identify potential security threats, and respond to security incidents.
 
 
 

@@ -195,6 +195,20 @@ VM1 → Update Domain 1
 VM2 → Update Domain 2
 VM3 → Update Domain 3
 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Q. What is Azure tenant? renting hardare/sftwr, temperory subscription
+-> A tenant refers to a "dedicated instance of Azure Active Directory (Azure AD)" that is used to manage access, identities, and resources within the Azure cloud platform.
+-> Each Azure tenant has its own unique directory, subscription, and settings, allowing for isolated and secure management of 
+   resources and identities within the tenant. An organization can have multiple tenants to isolate resources and identities 
+   for different departments, business units, or subsidiaries.
+-> Having a tenant in Azure provides benefits such as:
+1. Centralized management and control over resources and identities
+2. Better security through isolation of resources and identities
+3. Ability to enforce policies and compliance requirements at the tenant level
+4. Support for multi-factor authentication and conditional access policies.
+
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 2 types of computing model:
 	1:Deployment model: Private, Public, Hybrid, (community and multi cloud)
@@ -769,7 +783,7 @@ Q. how will you create a traffic manger?
 🔹 Set up alerting for suspicious activities like unauthorized access attempts
 
 
-1️⃣ Azure Monitor
+5. Azure Monitor
 ✅ Collects and analyzes metrics, logs, and traces from Azure resources.
 -- Provides insights into performance, health, and availability.
 
@@ -779,12 +793,31 @@ Q. how will you create a traffic manger?
 -- Alerts & Notifications: Detect anomalies and send alerts.
 -- Workbooks & Dashboards: Visualize data using dashboards.
 
-    e. Azure DDoS protection: protect your applications from distributed denial-of-service (DDoS) 
-	   attacks, and to ensure the availability and performance of your applications.
-    f. Azure Firewall: to control network traffic to and from your applications 
-	   and services, and to enforce network security policies.
-    g. Azure Confidential Computing: A set of technologies that enable you to protect sensitive data, such as cryptographic keys and 
-	   personal information, while it is being processed in the cloud.
+
+6. Azure DDoS protection:
+-> Protect your applications from distributed denial-of-service (DDoS) attacks, and to ensure the availability and performance of your applications.
+
+7. Azure Firewall: to control network traffic to and from your applications  and services, and to enforce network security policies.
+    
+8. Azure Confidential Computing: A set of technologies that enable you to protect sensitive data, such as cryptographic keys and personal information, while it is being processed in the cloud.
+
+
+Q. What work u have done in Azure AD?
+-> Azure AD is a cloud-based identity and access management (IAM) service provided by Microsoft. It provides a central location for 
+   managing and securing user identities and access to applications, both in the cloud and on-premises. Some of the common tasks that  
+   can be performed in Azure AD include:
+1. User Management: Azure AD provides a central location for managing user identities, including creating and deleting users, 
+   resetting passwords, and assigning licenses.
+2. Application Integration: Azure AD integrates with cloud-based and on-premises applications, allowing users to securely access 
+   those applications using a single set of credentials.
+3. Single Sign-On (SSO): Azure AD provides SSO capabilities, allowing users to sign in once and have access to all their applications 
+   without having to sign in again.
+4. Multi-Factor Authentication (MFA): Azure AD provides MFA capabilities, which can be used to secure access to applications and resources.
+5. Group Policy Management: Azure AD provides group policy management capabilities, allowing administrators to enforce security policies 
+   and access controls for users and applications.
+6. Reporting and Auditing: Azure AD provides reporting and auditing capabilities, allowing administrators to track and monitor user activity, 
+   identify potential security threats, and respond to security incidents.
+
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 6. Analytics:
@@ -867,23 +900,6 @@ Q. how will you block a user from accessing the internet?
 5. Remove the "Project Collection Build Service" and "Project Collection Test Service" roles for the user, which will restrict their ability to build and test code.
 6. If you want to further restrict their access, you can also remove their "Project Contributor" or "Project Reader" roles, which will restrict their ability to access and modify code and other project resources.
  
-Q. we have a monolothic applicaiton with 2 vms deploy it on 2 diff servers convert it to microservices?  converting monolithic to microservices?
--> Converting a monolithic application to microservices can be a complex and challenging process, but it can also bring 
-   several benefits, such as increased scalability, improved resiliency, and easier deployment and maintenance. 
-1. Identify components: The first step is to identify the different components or functions of your monolithic application. 
-   This will help you determine which parts of the application can be decomposed into separate microservices.
-2. Design microservices: Based on the components you have identified, design the individual microservices. Each microservice 
-   should be a self-contained, loosely-coupled unit of functionality that can be developed, deployed, and maintained independently.
-3. Refactor code: Once you have designed the microservices, you'll need to refactor the code of your monolithic application to extract 
-   the individual microservices. This will involve breaking down the monolithic codebase into separate repositories and creating new microservice projects.
-4. Implement microservices: Implement each microservice using the programming language and framework that is best suited for the task. 
-   You'll need to write the code, write unit tests, and deploy the microservices to a test environment for testing.
-5. Test microservices: Test each microservice individually and verify that it works as expected. You'll need to test the microservices 
-   in isolation and also in combination with other microservices to ensure that they work together correctly.
-6. Deploy microservices: Deploy each microservice to a production environment. You'll need to choose a deployment strategy, such 
-   as a rolling deployment, blue/green deployment, or canary deployment, that is appropriate for your application.
-7. Monitor and maintain microservices: Monitor the performance and availability of each microservice and perform regular maintenance 
-   tasks, such as updating the code, fixing bugs, and adding new features.
    
 Q. how your database will communicate with backend when you setup the cluster?
 -> The database driver or API provides a way for the backend to communicate with the database and perform operations such as executing queries, retrieving data, and updating records.
@@ -932,10 +948,12 @@ Q. Diff between webapp, functional app?
    from the web and is typically installed on the user's device.
    
 Q. What is Service pool?
--> A service pool is a group of resources in a computer system that are dedicated to performing a specific service. The resources in a service pool can be shared among multiple service instances and can be dynamically allocated or deallocated based on the demands of the system.
+-> A service pool is a group of resources in a computer system that are dedicated to performing a specific service. 
+-> The resources in a service pool can be shared among multiple service instances and can be dynamically allocated or deallocated based on the demands of the system.
 -> used to manage the performance and scalability of services in large-scale systems. 
 -> By pooling resources, a service system to handle large amounts of requests and to maintain a high level of service quality.
--> Service pools can consist of a variety of resources, including memory, CPU, disk space, and network bandwidth. The resources in a service pool can be managed by an operating system, a hypervisor, or a middleware component, depending on the architecture of the system.
+-> Service pools can consist of a variety of resources, including memory, CPU, disk space, and network bandwidth. 
+-> The resources in a service pool can be managed by an operating system, a hypervisor, or a middleware component, depending on the architecture of the system.
 -> Service pools are commonly used in cloud computing, web servers, database servers, and other large-scale systems to manage the performance and scalability of services. By using service pools, organizations can ensure that their systems can handle large amounts of traffic, respond quickly to user requests, and maintain high levels of service quality.
    
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1058,21 +1076,7 @@ Q. Do u know how to integrate keyvaults into the azure devops pipelines.?
 7.Run and review the pipeline. ...
 8.Clean up resources.
 	
-Q. What work u have done in Azure AD?
--> Azure AD is a cloud-based identity and access management (IAM) service provided by Microsoft. It provides a central location for 
-   managing and securing user identities and access to applications, both in the cloud and on-premises. Some of the common tasks that  
-   can be performed in Azure AD include:
-1. User Management: Azure AD provides a central location for managing user identities, including creating and deleting users, 
-   resetting passwords, and assigning licenses.
-2. Application Integration: Azure AD integrates with cloud-based and on-premises applications, allowing users to securely access 
-   those applications using a single set of credentials.
-3. Single Sign-On (SSO): Azure AD provides SSO capabilities, allowing users to sign in once and have access to all their applications 
-   without having to sign in again.
-4. Multi-Factor Authentication (MFA): Azure AD provides MFA capabilities, which can be used to secure access to applications and resources.
-5. Group Policy Management: Azure AD provides group policy management capabilities, allowing administrators to enforce security policies 
-   and access controls for users and applications.
-6. Reporting and Auditing: Azure AD provides reporting and auditing capabilities, allowing administrators to track and monitor user activity, 
-   identify potential security threats, and respond to security incidents.
+
 
 Q. how to build a hybrid cloud in azure?
 •	Gather your stakeholders: Make sure you include everyone on your team whose input is needed. ...
