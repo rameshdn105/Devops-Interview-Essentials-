@@ -51,15 +51,15 @@ Cloud providers:
 Q. What is kafka
 -> Kafka is primarily used to build real-time streaming data pipelines and applications that adapt to the data streams. It combines 
    messaging, storage, and stream processing to allow storage and analysis of both historical and real-time data
---------------------------------------------------------------------------------------------------------------------------------------
+
+
+**********************************************************************************************************************************************
 AZURE:  (an IAAS)
 =====
 -> Windows Azure, founded in 2010 which was later renamed as Microsoft Azure in 2014. 
--> It is a cloud computing platform, designed by Microsoft to successfully build, deploy, and manage
-   applications and services through a global network of datacenters.
+-> It is a cloud computing platform, designed by Microsoft to successfully build, deploy, and manage applications and services through a global network of datacenters.
 -> open and flexible cloud , code development, deploymwnt, host web appn, storage
--> Microsoft Azure is a cloud computing platform created by Microsoft which developers and IT professionals use to build, deploy 
-   and manage applications through their global network of datacentres.
+-> Microsoft Azure is a cloud computing platform created by Microsoft which developers and IT professionals use to build, deploy and manage applications through their global network of datacentres.
    
 Azure features:	
 community: Oracle 
@@ -68,18 +68,21 @@ fabric service: deploy and manage microservice appln  with k8s
 functions servie create vm using any langages
 
 Azure Services:
+===============
 1. Compute: It is used to process data on the cloud by making use of powerful processors which serve multiple instances at a time.
 2. Storage Services: The storage as the name suggests, is used to store data in the cloud with the ability to scale as 
    and when required. This data can be stored anywhere.
 3. Database: The database domain is used to provide reliable relational and non relational database instances managed by Azure.
 4. Networking: It lets you connect to cloud and on-premise infrastructure and services to get great user experience
 
-Azure Pricing: is extremely flexible and offers a "pay-as-you-go" approach which can greatly help serve your business needs. 
-      Flexible pricing greatly supports up-scaling or down-scaling the architecture as per the needs.
+
+Azure Pricing: 
+==============
+-> It is extremely flexible and offers a "pay-as-you-go" approach which can greatly help serve your business needs. 
+-> Flexible pricing greatly supports up-scaling or down-scaling the architecture as per the needs.
 
 Q. What Is Azure Portal?
--> Azure Portal as the name suggests, is a single portal or a single junction that lets you access and manage 
-   all your applications at one place. 
+-> Azure Portal as the name suggests, is a single portal or a single junction that lets you access and manage all your applications at one place. 
 -> It lets you build, manage and monitor everything from simple web apps to complex cloud applications in a single, unified console.
 
 ** Features Of Azure Portal:
@@ -104,19 +107,19 @@ Q. Difference between AWS and Azure:
   Parameter						AWS						Azure
   -------------------------------------------------------------------------------------------------------------------------------------------
 1. Parent Company			subsidiary of Amazon.com.				product of Microsoft
-2. Date Of Initiation			2006										2010
-3. Market Share					40%											30%
-4. Open Source	 			More open to open source community		Less open to open-source community
+2. Date Of Initiation			2006							2010
+3. Market Share				40%							30%
+4. Open Source	 			More open to open source community			Less open to open-source community
 5. Hybrid Cloud				It is a work in progress				Excels in Hybrid Cloud Market
 6. Licencing				Offers more flexibility					Catching up with AWS
 7. Linux Ecosystem	 		Extensive support for Linux				Still building up
-8. Level of Encryption			High									Low
+8. Level of Encryption			High							Low
 9. Pricing Model			Charges on an hourly basis				Charges on per minute basis
-10.Flexibility				More flexible							Less flexible
+10.Flexibility				More flexible						Less flexible
 11.User Interface			User-friendly and rich UI				Less intuitive
 12.Service Offerings		AWS has a broader range of services     more comprehensive suite of AI services.
 13.Platform Integration		more open and diverse platform			Azure is more tightly integrated with Windows-based 
-																	technologies and has a greater focus on Microsoft-centric services
+										technologies and has a greater focus on Microsoft-centric services
 14.Geographical Coverage	larger geographical footprint			stronger presence in certain countries, particularly in Europe.
 						    (more regions and Availability Zones)
 						
@@ -150,35 +153,47 @@ Q. What are diff between azure devops and jenkins?
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 Availability set (region, zone): make available data set if any natural calamity happens
 
-$$ Ailability region & zone: a region is a geographic location that contains one or more availability zones, and an availability zone is a 
-   distinct location within a region that provides additional fault tolerance and high availability for cloud computing resources.
--> Availabity region: a region is a geographical location where cloud computing resources, such as servers, storage, and 
-    networking, are located. 
--> Each region is a separate geographic area, often containing multiple data centers. Regions are used to provide low latency and 
-   high availability to users in different parts of the world.
+** Ailability region & zone: 
+-> A region is a geographic location that contains one or more availability zones, and an availability zone is a distinct location within a region that provides additional fault tolerance and high availability for cloud computing resources.
+
+1. Availabity region: a region is a geographical location where cloud computing resources, such as servers, storage, and networking, are located. 
+-> Each region is a separate geographic area, often containing multiple data centers. 
+-> Regions are used to provide low latency and high availability to users in different parts of the world.
    
-$$ Availability zones: An availability zone, on the other hand, is a distinct location within a region that contains one or more data centers. 
-   Availability zones are designed to be isolated from each other, so that if one availability zone experiences a failure, it does not affect 
+2. Availability zones: It is a distinct location within a region that contains one or more data centers. 
+-> Availability zones are designed to be isolated from each other, so that if one availability zone experiences a failure, it does not affect 
    the other availability zones in the same region. 
 -> By spreading resources across multiple availability zones, cloud providers can provide high availability and fault tolerance to their customers.
 
 
-Q. What do you understand about the “Availability Set”?
--> Availability Set is nothing but a logical grouping of VMs (Virtual Machines) that allows Azure cloud to understand how the application was developed for providing availability and redundancy.
--> Each VM in the availability set is assigned 2 kinds of domains by Azure:
+📌  Availability Set:
+=====================
+-> An Availability Set is an Azure feature designed to improve the high availability and fault tolerance of Virtual Machines (VMs) by distributing them across multiple fault domains and update domains within a data center.
 
-** Fault domain and update domain:
--> Fault domain: A fault domain is a group of VMs or other resources that share a common power source and network switch. This means that if there is a 
-   failure affecting the power or network infrastructure, all VMs in the same fault domain could be impacted. To mitigate this risk, 
-   VMs are spread across multiple fault domains, so that a failure in one fault domain does not affect the availability of VMs in other fault domains.
+🚀 How to Create an Availability Set (Azure CLI)
+$$  az vm availability-set create --name MyAvailabilitySet --resource-group MyResourceGroup --platform-fault-domain-count 2 --platform-update-domain-count 5 --location eastus
 
-** Update domain: An update domain is a group of VMs or other resources that can be updated or rebooted at the same time, without affecting the availability 
-   of other VMs. For example, when you apply updates to an Azure VM, the VM will be temporarily taken offline, but other VMs in the same 
-   update domain can continue to run without disruption. 
--> By spreading VMs across multiple update domains, you can ensure that updates or maintenance activities can be performed 
-   without affecting the availability of other VMs.
--> Before the maintenance of another update domain, the previously rebooted domain 
-   is given a recovery time of 30 minutes to ensure that the domain is up.
+
+🛠️ Key Concepts of Availability Sets
+1️⃣ Fault Domains (FD)
+-> Represents physical separation of hardware (racks, power, cooling).
+-> Azure distributes VMs across multiple fault domains to avoid single points of failure.
+-> If one rack fails, VMs in another fault domain continue running.
+
+✅ Example: If an availability set has 2 Fault Domains, and you deploy 4 VMs, then:
+VM1 & VM2 → Fault Domain 1
+VM3 & VM4 → Fault Domain 2
+
+
+2️⃣ Update Domains (UD)
+-> Represents groups of VMs that undergo maintenance updates separately.
+-> Azure ensures that not all VMs are restarted at the same time during maintenance.
+-> Default is 5 Update Domains, but it can be increased.
+
+✅ Example: If an availability set has 3 Update Domains, VMs are distributed like:
+VM1 → Update Domain 1
+VM2 → Update Domain 2
+VM3 → Update Domain 3
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 2 types of computing model:
@@ -277,174 +292,364 @@ IAAS: (Managed by you- Applications, Data, Runtime, Middleware)  (Managed by ven
 PAAS: (Managed by you- Applications, Data) (Managed by vendor: Runtime, Middleware, O/S, Virtualization, Servers, Storage, Networking)
 SAAS: Managed by vendor- Applications, Data, Runtime, Middleware, O/S, Virtualization, Servers, Storage, Networking
 
--> Resource group: a resource group is a logical container that holds related resources for an Azure solution. A resource group can include 
-   resources such as virtual machines, storage accounts, databases, and networking components.
+** Resource group: 
+------------------
+-> Resource group is a logical container that holds related resources for an Azure solution. 
+-> A resource group can include resources such as virtual machines, storage accounts, databases, and networking components.
 
--------------------------------------------------------------------------------------------------------------------------------------
-Microsoft Azure provides a wide range of cloud computing services and solutions including:
-1. Compute: IAAS, PAAS, SAAS, Virtual Machines, App Service, Azure Functions, Container Instances, Batch for containerized workload,  
-   Service for facric for microservices and container orchestration, and Cloud Services for building cloud-based apps and APIs
+
+******************************************************************************************
+** Cloud computing services and solutions:
+------------------------------------------
+1. Compute: IAAS, PAAS, SAAS, Virtual Machines, App Service, Azure Functions, Container Instances, Batch for containerized workload, Service for facric for microservices and container orchestration, and Cloud Services for building cloud-based apps and APIs.
+
 2. Storage: Blob Storage, Queue Storage, File Storage, Archive Storage, Disk Storage
+
 3. Database: Azure SQL Database, Cosmos DB, Azure Database for MySQL, Azure Database for PostgreSQL
+
 4. Networking: Virtual Network, Load Balancer, VPN Gateway, ExpressRoute, Traffic Manager
+
 5. Web and Mobile: Azure Active Directory, API Management, Notification Hubs, Azure Search
+
 6. Internet of Things (IoT): IoT Hub, IoT Central, IoT Edge
+
 7. Analytics: Azure Stream Analytics, Azure Data Lake Storage, HDInsight, Power BI
+
 8. Machine Learning: Azure Machine Learning, Cognitive Services, Databricks
+
 9. DevOps: Azure DevOps, Azure Monitor, Azure DevTest Labs
+
 10.Security: Azure Security Center, Azure Key Vault, Azure Active Directory B2C
 
--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+******************************************************************************************
 1. Compute: refers to the processing power and resources provided by the Azure platform for running applications and services.
    
-a. Virtual Machines: (IAAS) It is a software environment that emulates the functionality of a physical computer, allowing multiple operating systems 
-   and applications to run on a single physical server.
+a. Virtual Machines: (IAAS)
+-- It is a software environment that emulates the functionality of a physical computer, allowing multiple operating systems and applications to run on a single physical server.
 
-b. App Service:(PaaS) It allows developers to create, deploy, and scale web, mobile, and API applications in the cloud. Ex: multiplayer games
--> It provides services to support the full application development lifecycle, including integration with other Azure services 
-   like Azure Functions, Azure Cosmos DB, and Azure Storage.
+b. App Service:(PaaS) 
+-- It allows developers to create, deploy, and scale web, mobile, and API applications in the cloud. Ex: multiplayer games
+-- It provides services to support the full application development lifecycle, including integration with other Azure services like Azure Functions, Azure Cosmos DB, and Azure Storage.
 	
-c. Azure Functions: serverless, event-driven computing service. It allows developers to build and run applications and services without
-   the need to manage infrastructure, and only pay for the resources consumed during actual function execution.
--> Azure Functions supports multiple programming languages including C#, Java, JavaScript, and Python.
--> The term 'serverless' is somewhat misleading, as there are still servers providing these backend services, but all of the server 
-   space and infrastructure concerns are handled by the vendor. Serverless means that the developers can do their work without having 
-   to worry about servers at all.
+c. Azure Functions: [serverless, event-driven computing service]
+-- It allows developers to build and run applications and services without the need to manage infrastructure, and only pay for the resources consumed during actual function execution.
+-- Azure Functions supports multiple programming languages including C#, Java, JavaScript, and Python.
+-- The term 'serverless' is somewhat misleading, as there are still servers providing these backend services, but all of the server space and infrastructure concerns are handled by the vendor. 
+-- Serverless means that the developers can do their work without having to worry about servers at all.
 
-d. Azure Container Instances (ACI): is a fast and simple way to run containerized applications in the Azure cloud. 
--> It provides a fully managed service for running Docker containers, without the need for managing virtual machines or infrastructure. 
--> With ACI, you can quickly and easily create containers, manage their network and storage, and scale them up or down as needed.
+d. Azure Container Instances (ACI): 
+-- It is a fast and simple way to run containerized applications in the Azure cloud. 
+-- It provides a fully managed service for running Docker containers, without the need for managing virtual machines or infrastructure. 
+-- With ACI, you can quickly and easily create containers, manage their network and storage, and scale them up or down as needed.
 
-e. Batch for containerized workload: A robust and scalable platform for executing containerized workloads in the cloud, making it easier for 
-   organizations to run large-scale batch processing jobs and minimize the need for managing infrastructure and resources.
--> you can create a pool of virtual machines and then execute containerized workloads on those virtual machines in parallel. 
-   The virtual machines can be automatically scaled up or down as needed, depending on the workload demand, and Azure Batch 
-   takes care of managing the underlying infrastructure and resources.
- -> Azure Batch integrates with other Azure services, such as Azure Container Registry, to make it easy to manage and deploy your containerized workloads.
+e. Batch for containerized workload: 
+-- A robust and scalable platform for executing containerized workloads in the cloud, making it easier for organizations to run large-scale batch processing jobs and minimize the need for managing infrastructure and resources.
+-- You can create a pool of virtual machines and then execute containerized workloads on those virtual machines in parallel. 
+-- The virtual machines can be automatically scaled up or down as needed, depending on the workload demand, and Azure Batch takes care of managing the underlying infrastructure and resources.
+-- Azure Batch integrates with other Azure services, such as Azure Container Registry, to make it easy to manage and deploy your containerized workloads.
  
-f. Service Fabric:  provides an infrastructure to build, deploy, and upgrade microservices efficiently. 
-   It also provides options for autoscaling, managing state, monitoring health, and restarting services in case of failure.
+f. Service Fabric:  
+-- It provides an infrastructure to build, deploy, and upgrade microservices efficiently. 
+-- It also provides options for autoscaling, managing state, monitoring health, and restarting services in case of failure.
    
-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+******************************************************************************************
 2. Storage: refers to the cloud-based data storage services provided by the Azure platform.
    
-   a. Azure Blob Storage: Object-based storage for unstructured data, such as images, videos, audio, and documents.
-      1. Block Blobs: Block Blobs are designed for efficient and scalable uploading and downloading of large data files. They are 
-         optimized for streaming and are typically used to store unstructured data, such as images and videos. (Ex: Netflix)
+1. Azure Blob Storage: Object-based storage for unstructured data, such as images, videos, audio, and documents.
+a. Block Blobs: Block Blobs are designed for efficient and scalable uploading and downloading of large data files. 
+-- They are optimized for streaming and are typically used to store unstructured data, such as images and videos. (Ex: Netflix)
 
-      2. Page Blobs: Page Blobs are similar to Block Blobs, but they are optimized for random read and write operations. They are 
-         typically used to store virtual hard disk (VHD) files, which are used by virtual machines. (data files for databases, log files, backup & restore data )
-      3. Append Blobs: Append Blobs are optimized for appending data to an existing Blob, making them well suited for logging and 
-         event data. They are similar to Block Blobs, but once data is written to an Append Blob, it cannot be modified. (store log files generated 
-		 by applications, store event data from various sources, store time-series data)
-   ## dashboard-storage accounts-create-give details
+b. Page Blobs: Page Blobs are similar to Block Blobs, but they are optimized for random read and write operations. 
+-- They are typically used to store virtual hard disk (VHD) files, which are used by virtual machines. (data files for databases, log files, backup & restore data )
+
+c. Append Blobs: Append Blobs are optimized for appending data to an existing Blob, making them well suited for logging and event data. 
+-- They are similar to Block Blobs, but once data is written to an Append Blob, it cannot be modified. (store log files generated by applications, store event data from various sources, store time-series data)
+ ## dashboard-storage accounts-create-give details
+ 
+  
+2. Azure Files storage: (fully managed file sharing service) 
+-> structural data, allows you to create and manage file shares that can be accessed using the standard "Server Message Block (SMB)" protocol or REST API, which is the same protocol used for accessing files on a local network. The data in this storage is protected by HTTPS and SMB 3.0 Protocol.
+-> This makes it easy to migrate your existing file shares to the cloud, and to access your files from anywhere, at any time, and from any device.
+-> They are used for improving the performance and capabilities of on-premise applications.
+-> The OS deployments and hardware management is taken by Azure itself.
    
-   b. Azure Files storage: (fully managed file sharing service) structural data, allows you to create and manage file shares that can be accessed using the 
-      standard Server Message Block (SMB) protocol or REST API, which is the same protocol used for accessing files on a local network. The data in this storage is protected by HTTPS and SMB 3.0 Protocol.
-   -> This makes it easy to migrate your existing file shares to the cloud, and to access your files from anywhere, at any time, and from any device.
-   -> They are used for improving the performance and capabilities of on-premise applications.
-   -> The OS deployments and hardware management is taken by Azure itself.
-   
-   c. Azure Queue Storage: A messaging queue service for storing and processing high-volume, asynchronous messages. 
-     (e-commerce {order processing}, Inventory Management)
-   -> This storage ensures that the application becomes less prone to failure of individual components and is scalable.
-   -> With the help of message queues, it provides the queue monitoring feature for helping the application to ensure the user demands are met.
+
+3. Azure Queue Storage: 
+-> A messaging queue service for storing and processing high-volume, asynchronous messages. (e-commerce {order processing}, Inventory Management)
+-> This storage ensures that the application becomes less prone to failure of individual components and is scalable.
+-> With the help of message queues, it provides the queue monitoring feature for helping the application to ensure the user demands are met.
+
 	 
-   d. Azure Table Storage: A NoSQL key-value store for semi-structured data. designed for large-scale, non-relational data storage, 
-      and is optimized for high-performance, scalability, and ease of use.
-   -> applications that follow a flexible schema of data, data is stored in tables, and each table contains a collection of entities. An entity is a collection of properties, where each 
-      property has a name and a value. Each entity also has a unique key, called a Partition Key and a Row Key, that allows for efficient 
-	  access and retrieval of data.   (Ex:  large amount of data about user behavior and preferences in web application)
-   
-   e. Azure Disk Storage: normal disk storage, High-performance, durable disk storage for Azure virtual machines.
-   -> It is used to store data that needs to persist even if the virtual machine (VM) that it is attached to is deleted or stopped. 
-   -> 1. Standard Disk Storage: uses magnetic drives to provide low-cost, large-capacity storage.  
-      2. Premium Disk Storage: uses solid-state drives (SSDs) to provide high-performance, low-latency storage.
-   
-   f. Azure Archive Blob Storage: is a cost-effective, long-term storage solution for infrequently accessed data in Microsoft Azure. 
-      It provides secure, durable storage for large amounts of data that is not frequently accessed but must be retained for compliance or business reasons.
-   -> you have a large library of video files that are rarely accessed but still need to be kept for regulatory purposes. Instead of keeping 
-	  these files in the more expensive Azure Hot Blob Storage, you can move them to Azure Archive Blob Storage to reduce your storage costs.
-   -> there may be a retrieval time penalty for accessing archive data, as the data needs to be retrieved from tape.
-   
-   g. Azure Data Lake Storage: An analytics data lake for big data analytics and Apache Hadoop-based workloads.
-   -> provides a scalable and secure repository for big data analytics. 
-   -> It is designed to store and analyze large amounts of data of any format, including structured, semi-structured, and unstructured data.
-   -> You can store and analyze petabytes of data using Azure services such as Azure HDInsight, Azure Databricks, and Azure Machine Learning. 
-      It supports batch processing, interactive analytics, and machine learning scenarios, making it an ideal solution for a wide range of big data use cases.	  
+4. Azure Table Storage: 
+-> A NoSQL key-value store for semi-structured data. designed for large-scale, non-relational data storage, and is optimized for high-performance, scalability, and ease of use.
+-> applications that follow a flexible schema of data, data is stored in tables, and each table contains a collection of entities. 
+-> An entity is a collection of properties, where each property has a name and a value. Each entity also has a unique key, called a Partition Key and a Row Key, that allows for efficient access and retrieval of data. (Ex:  large amount of data about user behavior and preferences in web application)
+ 
+  
+5. Azure Disk Storage: normal disk storage, High-performance, durable disk storage for Azure virtual machines.
+-> It is used to store data that needs to persist even if the virtual machine (VM) that it is attached to is deleted or stopped. 
+5.1 Standard Disk Storage: uses magnetic drives to provide low-cost, large-capacity storage.  
+5.2 Premium Disk Storage: uses solid-state drives (SSDs) to provide high-performance, low-latency storage.
+  
+ 
+6. Azure Archive Blob Storage: 
+-> It is a cost-effective, long-term storage solution for infrequently accessed data in Microsoft Azure. 
+-> It provides secure, durable storage for large amounts of data that is not frequently accessed but must be retained for compliance or business reasons.
+-> you have a large library of video files that are rarely accessed but still need to be kept for regulatory purposes. Instead of keeping these files in the more expensive Azure Hot Blob Storage, you can move them to Azure Archive Blob Storage to reduce your storage costs.
+-> there may be a retrieval time penalty for accessing archive data, as the data needs to be retrieved from tape.
+ 
+  
+7. Azure Data Lake Storage: 
+-> An analytics data lake for big data analytics and Apache Hadoop-based workloads.
+-> provides a scalable and secure repository for big data analytics. 
+-> It is designed to store and analyze large amounts of data of any format, including structured, semi-structured, and unstructured data.
+-> You can store and analyze petabytes of data using Azure services such as Azure HDInsight, Azure Databricks, and Azure Machine Learning. 
+-> It supports batch processing, interactive analytics, and machine learning scenarios, making it an ideal solution for a wide range of big data use cases.	  
 
+
+------------------------------------------------------------------------------------------
 Q. What is Storage account, types of containers?
--> It allows you to store and access your data through the cloud. It provides a centralized location to store data and enables 
-   you to access your data from anywhere with an internet connection.
--> There are two types of containers in cloud storage:
-1. Blob containers: Blob containers are used to store unstructured data, such as images, videos, audio files, and text files, 
-   in binary format. Blob containers provide scalability, high availability, and low latency for accessing your data.
-2. File containers: File containers are used to store structured data, such as spreadsheets and documents, as a file system. 
-   File containers provide a way to mount a cloud-based file system on your local computer or virtual machine and access your 
-   data as if it were stored on a local drive.
+-> An Azure Storage Account is a cloud-based storage service that provides scalable, secure, and durable storage for various data types like blobs, files, queues, tables, and disks.
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> There are two types of containers in cloud storage:
+1. Blob containers: Blob containers are used to store unstructured data, such as images, videos, audio files, and text files, in binary format. 
+-> Blob containers provide scalability, high availability, and low latency for accessing your data.
+
+2. File containers: File containers are used to store structured data, such as spreadsheets and documents, as a file system. 
+-> File containers provide a way to mount a cloud-based file system on your local computer or virtual machine and access your data as if it were stored on a local drive.
+
+
+******************************************************************************************
 3. Database: an organized collection of data stored and accessed electronically. 
 -> It is designed to store, manage, and retrieve data efficiently and accurately.
-   a. Azure SQL MySQL, PostgreSQL, MariaDB Database: 
-   -> A managed relational database service based on Microsoft SQL/MySQL/PostgreSQL/Maria DB database engine. offering a fully managed, scalable, 
-      and highly available relational database solution.  (Dashboard-Database for my sql-create-give)
-   -> It provides features such as automatic patching, automatic backups, and high availability, making it a 
-       highly available and secure solution for your data.
    
-   b. Azure Cosmos DB: A globally distributed, multi-model NoSQL database that supports document, key-value, graph, and column-family data models.
--> It supports multiple data models, including document, key-value, graph, and column-family, and allows you to easily build and scale globally 
-   distributed applications. 
+3.a Azure SQL MySQL, PostgreSQL, MariaDB Database: 
+-> A managed relational database service based on Microsoft SQL/MySQL/PostgreSQL/Maria DB database engine. offering a fully managed, scalable, and highly available relational database solution.  (Dashboard-Database for my sql-create-give)
+-> It provides features such as automatic patching, automatic backups, and high availability, making it a highly available and secure solution for your data.
+   
+b. Azure Cosmos DB: A globally distributed, multi-model NoSQL database that supports document, key-value, graph, and column-family data models.
+-> It supports multiple data models, including document, key-value, graph, and column-family, and allows you to easily build and scale globally distributed applications. 
 -> Easily store and access your data globally, while ensuring low latency and high throughput. It provides features such as automatic and instant scalability, tunable consistency levels, and globally distributed data, making it a highly available and scalable solution for your data.
    
-   C. Azure Cache for Redis: A fully managed, in-memory data store and cache based on the Redis database.
-->  you can easily create, manage, and scale in-memory data stores in the cloud, without having to worry about the underlying 
-    infrastructure. 
--> It provides features such as automatic scaling, built-in high availability, and secure network isolation,
-    making it a highly available and secure solution for your data.
+C. Azure Cache for Redis: A fully managed, in-memory data store and cache based on the Redis database.
+->  you can easily create, manage, and scale in-memory data stores in the cloud, without having to worry about the underlying infrastructure. 
+-> It provides features such as automatic scaling, built-in high availability, and secure network isolation, making it a highly available and secure solution for your data.
 
 -> SQL: vulnerable, 
 -> No SQL: 
-		SQL							NOSQL
-	Rational based 						Non-ratioal, distributed database
-	Vertically scalable					Horrizontally scalable
-	Table based database					Document based, Graph based or key-value pair 
-	Pre-defined schema					Dynamic schema
-	Uses SQL-based						Uses UnQL (Unstructured Query language)
+		SQL			NOSQL
+	Rational based 		Non-ratioal, distributed database
+	Vertically scalable	Horrizontally scalable
+	Table based database	Document based, Graph based or key-value pair 
+	Pre-defined schema	Dynamic schema
+	Uses SQL-based		Uses UnQL (Unstructured Query language)
 	Not preferred for large datasets	Largly preferred for large datasets
--> SQL databases are best suited for structured data and complex transactions, while NoSQL databases are better for handling 
-   large amounts of unstructured data and provide higher scalability.
+-> SQL databases are best suited for structured data and complex transactions, while NoSQL databases are better for handling large amounts of unstructured data and provide higher scalability.
 
------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+******************************************************************************************
 4. Networking: a collection of interconnected devices that can communicate and exchange data with each other.
 
-a. Azure Virtual Network (VNet): It enables you to create and manage isolated networks in the cloud, and to securely connect your resources to the network.
--> you can create and configure your own virtual network, including virtual subnets, route tables, and network security groups. You can also control the flow of inbound and outbound network traffic to your virtual network and its resources, ensuring that your network is secure and isolated from the public internet.
+a. Azure Virtual Network (VNet): 
+🔹 Azure Virtual Network (VNet) is a logically isolated private network in Azure.
+🔹 It allows Azure resources to communicate securely with each other, the internet, or on-premises networks.
 -> Key benefits: Security, Isolation, Scalability, Interoperability, Cost-effective.
 
+✅ VNet Features:
+1. Provides IP address management (CIDR block allocation).
+2. Supports subnets to segment the network.
+3. Allows private and public communication.
+4. Can be peered with other VNets (VNet Peering).
+5. Supports VPN and ExpressRoute for on-premises connectivity.
+
+✅ Example: Creating a VNet in Azure CLI
+$$ az network vnet create --name MyVNet --resource-group MyResourceGroup --location eastus --address-prefix 10.0.0.0/16
+
+
 ** Virtual Subnets: It's a logical segment of a virtual network that you can use to segment your network into smaller, more manageable parts. 
-   Each subnet can have its own IP address range, security policies, access controls, and routing tables, and can be used to isolate different parts of your network for security and management purposes.
--> There are five classes of subnetworks: Class A, Class B, Class C, Class D, and Class E. Each class relates to a specific range of IP addresses. 
-   Classes A, B, and C are used the most often by different networks
--> Subnets are useful in situations where you need to separate different types of network traffic, such as separating front-end and 
-   back-end workloads, or creating dedicated subnets for security or compliance requirements. Subnets also provide a 
-   way to segment network traffic for scale and performance reasons.
+-> Each subnet can have its own IP address range, security policies, access controls, and routing tables, and can be used to isolate different parts of your network for security and management purposes.
+-> There are five classes of subnetworks: Class A, Class B, Class C, Class D, and Class E. Each class relates to a specific range of IP addresses. Classes A, B, and C are used the most often by different networks
+
+2️⃣ Public and Private Subnets
+In Azure, subnets are created inside a VNet, similar to AWS.
+🔹 Public Subnet – Contains resources that need direct internet access, like Web Servers.
+🔹 Private Subnet – Contains backend services like databases, application servers, etc.
+
+✅ Example: Create Subnets in a VNet
+$$ az network vnet subnet create --name PublicSubnet --vnet-name MyVNet --resource-group MyResourceGroup --address-prefixes 10.0.1.0/24
+$$ az network vnet subnet create --name PrivateSubnet --vnet-name MyVNet --resource-group MyResourceGroup --address-prefixes 10.0.2.0/24
+
 
 ** Route Tables: Its a set of rules that determine the flow of network traffic between subnets. You can use route tables to control the flow of inbound and outbound network traffic, ensuring that network traffic is routed to its intended destination.
 
 ** Inbound and outbound rules: Restrictions and policies that are put in place to control and monitor the flow of data into and out of a network. These rules are typically implemented in firewalls.
--> Inbound and outbound rules refer to the firewall rules that control access to and from a virtual machine (VM) or other network resources.
--> Inbound rules define the incoming traffic that is allowed to reach a network resource, such as a VM. 
-   For example, an inbound rule may allow traffic on a specific port (e.g. TCP port 80) from a specific source IP address range.
--> Outbound rules define the outgoing traffic that is allowed to leave a network resource, such as a VM. 
-   For example, an outbound rule may allow traffic on a specific port (e.g. TCP port 8080) to a specific destination IP address range.
--> By using inbound and outbound rules, customers can control network traffic and secure their network resources in Azure. 
    These rules can be configured at the network security group (NSG) level, which acts as a firewall for network traffic. 
    Customers can create and manage NSGs through the Azure portal, Azure CLI, or Azure PowerShell.
    
-** Network Security Groups: Its a set of security rules that control inbound and outbound network traffic to and from your virtual network and its resources. To enforce network security policies and to protect your virtual network and its resources from potential threats. 
+3️⃣ Network Security Group (NSG):
+-------------------------------
+🔹 NSG (Network Security Group) is used to control inbound and outbound traffic at the subnet or VM level.
+🔹 NSG rules define allowed/denied traffic based on source, destination, port, and protocol.
 
-** VPN (Virtual Private Network): A VPN is a private network that uses a public network, such as the internet, to securely connect remote users or devices to a centralized network. 
+✅ Example: Allow SSH (Port 22) in NSG 
+$$ az network nsg rule create --resource-group MyResourceGroup --nsg-name MyNSG --name AllowSSH --priority 100 --direction Inbound --access Allow --protocol Tcp --destination-port-ranges 22
+
+
+4️⃣ NAT Gateway 
+---------------
+🔹 NAT Gateway allows resources in a private subnet to access the internet without exposing them publicly.
+🔹 Similar to AWS NAT Gateway, but more scalable and managed by Azure.
+
+✅ Example: Deploy NAT Gateway in Azure
+$$ az network nat gateway create --resource-group MyResourceGroup --name MyNATGateway --location eastus --public-ip-addresses MyPublicIP
+
+5️⃣ Internet Gateway (IG) – "Equivalent in Azure?"
+-- In AWS, Internet Gateway (IGW) allows instances in a public subnet to access the internet.
+✅ In Azure, this function is handled by Public IP addresses + NSG rules + Default Route (0.0.0.0/0 to Internet).
+
+🔹 Public IP is assigned to Azure VMs to make them accessible from the internet.
+🔹 NSG rules control inbound & outbound traffic.
+🔹 Default Route (UDR) ensures connectivity to the internet.
+
+✅ Example: Assign Public IP to VM in Azure
+$$ az network public-ip create --resource-group MyResourceGroup --name MyPublicIP
+
+
+6️⃣ Azure ENI (Elastic Network Interface)
+🔹 In AWS, Elastic Network Interface (ENI) is used for multiple network interfaces in a VM.
+🔹 In Azure, it’s called Network Interface Card (NIC).
+
+✅ Features of Azure NIC (ENI Equivalent)
+-> Can attach multiple NICs to a VM.
+-> Supports private and public IP addresses.
+-> Can be associated with NSGs and Load Balancers.
+
+✅ Example: Create and Attach an NIC to a VM
+$$ az network nic create --resource-group MyResourceGroup --name MyNIC --vnet-name MyVNet --subnet MySubnet
+
+7️⃣ Azure Firewall & Route Tables
+🔹 Azure Firewall – A managed security service for network traffic control, equivalent to AWS Firewall.
+🔹 Route Tables (UDR - User Defined Routes) – Custom routing rules for traffic control between subnets.
+
+✅ Example: Create a Route Table
+$$ az network route-table create --resource-group MyResourceGroup --name MyRouteTable
+
+
+1️⃣ NSG (Network Security Group) = AWS Security Group
+-> Stateful (Like AWS SG).
+-> Applied to Subnets OR VM Network Interfaces (NICs).
+-> Controls inbound/outbound traffic based on rules.
+
+2️⃣ NSG at Subnet Level = AWS NACL
+-> Similar to AWS NACL but Stateful (Unlike AWS NACL, which is stateless).
+-> If attached to a subnet, it affects all VMs inside that subnet.
+
+3️⃣ NSG at VM NIC Level = AWS Security Group for EC2
+-> Applies directly to VM NIC, overriding subnet-level NSG rules.
+-> Recommended for VM-specific security needs.
+
+
+****************************************************************************************
+Q. What is Virtual Network peering?
+-> It allows customers to connect/communicate virtual networks (VNets) within the same or different Azure regions.
+-> This enables customers to easily connect and communicate between VNets, providing a fast and secure way to transfer data between resources within the same network boundary.
+
+-> There are two types of network peering in Azure:
+1. VNet peering: This allows customers to connect two VNets within the same region. 
+-> VNet peering provides a low latency, high-bandwidth connection between VNets.
+
+2. Global VNet peering: This allows customers to connect two VNets in different regions. 
+-> Global VNet peering provides a low latency, high-bandwidth connection between VNets across regions.
+-> Network peering in Azure is a resource-level connection and does not require a VPN gateway or VPN connection. 
+-> This makes it easier to set up and manage network connections, and eliminates the need for extra network components.
+
+🔹 Limitations of VNet Peering in Azure 🚀
+1️⃣ No Transitive Routing (Manual Peering Required)
+✅ If VNet A is peered with VNet B, and VNet B is peered with VNet C,
+❌ VNet A cannot communicate with VNet C unless explicitly peered.
+💡 Solution: Create direct peering between all VNets that need to communicate.
+
+2️⃣ No Overlapping Address Spaces
+✅ Each VNet must have a unique CIDR range (e.g., 10.0.0.0/16 vs. 10.1.0.0/16)
+❌ If two VNets have overlapping IP ranges, peering will fail.
+💡 Solution: Plan non-overlapping IP ranges before setting up VNet Peering.
+
+3️⃣ No Support for Route Propagation via BGP
+❌ VNet Peering does not support BGP (Border Gateway Protocol) route propagation.
+💡 Solution: Use VPN Gateway or ExpressRoute for dynamic route propagation.
+
+4️⃣ Peering is Region-Specific for Bandwidth & Cost
+✅ Regional Peering (within the same region) has no additional data transfer cost.
+❌ Global Peering (across different regions) incurs additional data transfer charges.
+💡 Solution: If cost is a concern, use regional peering or ExpressRoute for cross-region communication.
+
+5️⃣ No VNet-to-VNet NSG Enforcement
+❌ Network Security Groups (NSGs) are not applied to VNet-to-VNet traffic via peering.
+💡 Solution: Use User-Defined Routes (UDR) with a firewall (like Azure Firewall or NVA) to filter traffic.
+
+7️⃣ Peering Connections are One-Way by Default
+✅ A peering connection is unidirectional, so you must configure it in both directions.
+💡 Solution: Always set up bidirectional peering to enable full communication.
+
+** Establish network peering betweem 2 Vnets: (Vnet1 & Vnet2)
+1. Create Vnets (Different region or same region, adress space should not overlap)
+2. Create subnets (Optional)
+3. Enable network peering: Vnet1 -> Peerings -> Add (Details: peering name, select Vnet2, Choose Vnet gateway transit {VPN, Expressroute way gateway}) -> Ok
+4. Accept peering on other Vnet: Vnet2 -> Peerings -> Accept
+5. Verify conectivity: Resources within the peered virtual networks can communicate with each other using private IP addresses. Test the connectivity between resources in the peered virtual networks to ensure that they can communicate as expected.
+6. Configure Network Security Groups (NSGs) and Routes (Optional): configure Network Security Groups (NSGs) on the subnets or individual resources.
+-> However, you cannot establish peering across different Azure subscriptions.
+
+
+🔹 Azure VNet Endpoints (Service Endpoints vs. Private Endpoints)
+-> Azure provides two types of VNet Endpoints to allow secure access to Azure services from within a Virtual Network (VNet).
+
+1️⃣ Service Endpoints (Public Endpoint with VNet Routing)
+ ** No ENI Involved ❌
+✅ Extends the VNet to Azure services over a public endpoint
+✅ Traffic remains within Azure's backbone (Not over the internet)
+✅ Uses the public IP of the Azure service but restricts access to your VNet
+✅ No additional cost for enabling service endpoints
+
+🔹 Example Use Case:
+You want your VMs in a VNet to access an Azure Storage Account securely without exposing it to the internet.
+📌 Supported Services:
+✔ Azure Storage   ✔ Azure SQL Database
+✔ Key Vault      ✔ CosmosDB
+✔ Event Hub, etc.
+
+⚠ Limitations:
+1. Still uses public IPs of Azure services.
+2. Cannot access services privately from on-premises networks.
+
+
+2️⃣ Private Endpoints (Fully Private Access via Private Link)
+** ENI Comes into Picture ✅
+✅ Private Endpoints assign a private IP (from the VNet subnet) to the Azure service, creating an ENI (Elastic Network Interface) inside your VNet.
+✅ Traffic stays 100% within your private network (No exposure to the public internet)
+✅ Works even if public access to the service is disabled
+✅ Recommended for high-security environments
+
+🔹 Example Use Case:
+-> You want your VMs or AKS pods to connect privately to an Azure Storage Account without internet exposure.
+📌 Supported Services:
+✔ Azure Storage  ✔ Azure SQL
+✔ Key Vault      ✔ CosmosDB
+✔ Web Apps, etc.
+
+⚠ Limitations:
+1. Extra cost for Private Link usage.
+2. Complex setup compared to Service Endpoints.
+
+🚀 Summary
+🔹 Use Service Endpoints if you want simple, secure VNet-level access to Azure services.
+🔹 Use Private Endpoints if you need fully private, isolated access with a private IP in your VNet.
+🔹 For on-premises + VNet security, Private Endpoints are the best option.
+
+--------------------------------------------------------------------------------------
+**  VPN (Virtual Private Network): A VPN is a private network that uses a public network, such as the internet, to securely connect remote users or devices to a centralized network. 
 -> VPNs use encryption to secure the connection and to protect data from being intercepted or accessed by unauthorized parties.
     
 B. Azure ExpressRoute: A dedicated, private connection between your on-premises infrastructure and Azure, providing higher security and reliability compared to a public Internet connection.
@@ -470,7 +675,7 @@ E. Azure VPN Gateway: Create secure and encrypted connections between your virtu
 
 F. Azure Traffic Manager: A DNS-based load balancing service that enables you to distribute incoming traffic across multiple endpoints such as Azure virtual machines, Web Apps, or cloud services in a scalable and resilient manner.
 -> Traffic Manager uses a Domain Name System (DNS) query to determine the location of the user and then directs the user to the closest endpoint.
--> use cases: Global Load Balancing, High Availability, Traffic Management, Disaster Recovery
+-> Use cases: Global Load Balancing, High Availability, Traffic Management, Disaster Recovery
 
 Q. how will you create a traffic manger?
 -> To create a Traffic Manager in Microsoft Azure, you can follow these steps:
@@ -484,44 +689,96 @@ Q. how will you create a traffic manger?
 8. Add the endpoints that Traffic Manager should route traffic to. You can add endpoints from different Azure regions, or from external domains.
 9. Review the settings, and then click the "Create" button to create the Traffic Manager profile.
 
-Q. What is network peering?
--> It allows customers to connect virtual networks (VNets) within the same or different Azure regions.
--> This enables customers to easily connect and communicate between VNets, providing a fast and secure way to transfer data between resources within the same network boundary.
--> There are two types of network peering in Azure:
-1. VNet peering: This allows customers to connect two VNets within the same region. VNet peering provides a 
-   low latency, high-bandwidth connection between VNets.
-2. Global VNet peering: This allows customers to connect two VNets in different regions. Global VNet peering 
-   provides a low latency, high-bandwidth connection between VNets across regions.
--> Network peering in Azure is a resource-level connection and does not require a VPN gateway or VPN connection. 
-   This makes it easier to set up and manage network connections, and eliminates the need for extra network components.
-
-** Establish network peering betweem 2 Vnets: (Vnet1 & Vnet2)
-1. Create Vnets (Different region or same region, adress space should not overlap)
-2. Create subnets (Optional)
-3. Enable network peering: Vnet1 -> Peerings -> Add
-   (Details: peering name, select Vnet2, Choose Vnet gateway transit {VPN, Expressroute way gateway}) -> Ok
-4. Accept peering on other Vnet: Vnet2 -> Peerings -> Accept
-5. Verify conectivity: Resources within the peered virtual networks can communicate with each other using private IP addresses. Test the connectivity between resources in the peered virtual networks to ensure that they can communicate as expected.
-6. Configure Network Security Groups (NSGs) and Routes (Optional): configure Network Security Groups (NSGs) on the subnets or individual resources.
--> However, you cannot establish peering across different Azure subscriptions.
 	  
---------------------------------------------------------------------------------------------------------------------------------------------------------  
+****************************************************************************************  
 5. Security / Identity:
-    a. Azure Active Directory (AD): Authentiction and Authorization
-	-> A cloud-based identity and access management (IAM) solution that enables you to manage user identities and access to your applications and data. access to add all admin rights to (hands on folder), security and management wil give authorization powers, 
-    -> will give access to resources, proper identity, authentication, authorization.
+
+1️⃣ Azure Active Directory (AAD) 🛡️
+🔹 Azure AD is a "Cloud-based identity and access management (IAM)" service that allows organizations to manage users, groups, and access policies for applications and services.
+
+✅ Key Features for DevOps:
+-> SSO (Single Sign-On): Centralized authentication for apps like GitHub, Jenkins, Azure DevOps.
+-> MFA (Multi-Factor Authentication): Adds an extra layer of security for authentication.
+-> RBAC (Role-Based Access Control): Defines fine-grained access for users and groups.
+-> Conditional Access Policies: Restrict access based on IP, device compliance, location, etc.
+-> Managed Identities: Securely connect to Azure services without managing credentials.
+
+✅ DevOps Use Cases:
+🔹 Authenticate CI/CD pipelines using AAD authentication.
+🔹 Secure access to VMs using Azure AD login (instead of passwords).
+🔹 Control API access using AAD tokens for secure automation.
 	
-    2. ARM (Azure resource manager): about resources (manager of azure, managing deploying resources health of resources)
-      -> facility access control, permission, security, logs using ARM
+🔹 Using Azure AD Managed Identities to Access Azure Resources Without Storing Credentials 🔐
+✅ Types of Managed Identities:
+1. System-Assigned – Tied to an Azure resource (e.g., VM, Function App, AKS).
+-- Deleted when the resource is deleted.
+
+2. User-Assigned – Created independently and can be shared across multiple resources.
+-- Exists even if resources are deleted.
+
+✅ How it Works?
+-- Azure assigns an identity (similar to a service principal) to a resource.
+-- The identity gets an Azure AD token to authenticate with other services.
+-- No need to store passwords, secrets, or keys in code.
+
+
+---------------------------------------------------------------------------
+2️⃣ Azure Resource Manager (ARM) 🏗️
+🔹 Azure Resource Manager is the "orchestration and management layer" for deploying, managing, and organizing Azure resources.
     
-    b. Azure Key Vault: Managing encryption keys and secrets, such as passwords, connection strings, and 
-	   certificates, in a secure and highly available manner.
-	-> Features: Key management, Access control, Auditing and monitoring, Integration with Azure services, Scalability, Compliance and reguatory support.
-    c. Azure Security Center: to make sure all resoures in virtual network are virus free and software compliance
-	-> A unified security management solution that enables you to monitor and manage the security of your 
-	   Azure resources, and to detect and respond to threats.
-    d. Azure Monitor:  to collect, analyze, and act on log data generated by 
-	   your applications and services, and to gain insight into their performance and health.
+✅ Key Features for DevOps:
+-> ARM Templates: Declarative JSON files to define infrastructure as code (IaC).
+-> Resource Groups: Logical containers for managing Azure resources.
+-> RBAC (Role-Based Access Control): Secure access to specific resources.
+-> Tags & Policies: Standardize and automate compliance (e.g., enforce tagging policies).
+
+✅ DevOps Use Cases:
+🔹 Infrastructure as Code (IaC) with ARM Templates for consistent deployments.
+🔹 Automate resource provisioning in CI/CD pipelines using Azure DevOps or Terraform.
+🔹 Apply Policies to enforce security, compliance, and cost optimization.
+
+
+3️⃣ Azure Key Vault 🔑
+🔹 Azure Key Vault is a secure secrets management service for storing keys, secrets, certificates, and passwords.
+
+✅ Key Features for DevOps:
+-> Secrets Management: Store API keys, connection strings, and passwords securely.
+-> Key Management: Store encryption keys and control access using RBAC or policies.
+-> Certificate Management: Securely manage TLS/SSL certificates.
+-> Integration with Managed Identities: Apps and services can access secrets without credentials.
+
+✅ DevOps Use Cases:
+🔹 Store and retrieve secrets in Azure DevOps pipelines securely.
+🔹 Manage TLS/SSL certificates for Kubernetes (AKS) or App Services.
+🔹 Use Key Vault with Terraform or Ansible to secure configurations.
+    
+
+4️⃣ Azure Security Center (Microsoft Defender for Cloud) 🛡️
+🔹 Azure Security Center (now Microsoft Defender for Cloud) is a cloud-native security management tool that helps protect workloads from threats.
+
+✅ Key Features for DevOps:
+-> Threat Protection: Detects threats using AI-powered security analytics.
+-> Security Posture Management: Identifies misconfigurations in resources.
+-> Compliance Monitoring: Ensures compliance with standards like ISO, NIST, PCI-DSS.
+-> Integration with SIEM/SOAR: Connects with Microsoft Sentinel for log analytics.
+-> Just-in-Time (JIT) VM Access: Reduces exposure to RDP/SSH brute-force attacks.
+ 
+✅ DevOps Use Cases:
+🔹 Enable Defender for Containers (AKS) to scan images and detect vulnerabilities.
+🔹 Apply JIT Access for Azure VMs to reduce attack surface.
+🔹 Set up alerting for suspicious activities like unauthorized access attempts
+
+
+1️⃣ Azure Monitor
+✅ Collects and analyzes metrics, logs, and traces from Azure resources.
+-- Provides insights into performance, health, and availability.
+
+✅ Key Features:
+-- Log Analytics: Centralized logging across Azure resources.
+-- Application Insights: Monitoring for application performance.
+-- Alerts & Notifications: Detect anomalies and send alerts.
+-- Workbooks & Dashboards: Visualize data using dashboards.
+
     e. Azure DDoS protection: protect your applications from distributed denial-of-service (DDoS) 
 	   attacks, and to ensure the availability and performance of your applications.
     f. Azure Firewall: to control network traffic to and from your applications 
