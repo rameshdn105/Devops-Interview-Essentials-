@@ -92,16 +92,15 @@ Q. What is load average in Linux?
   replacement for more RAM.
 
 ** Zombie process: In Linux OS, a zombie process or a defunct process is a finished (dead) process, but it has still occupied an entry in the process table. 
--> When a parent gets killed, all child processes will become the child process of ‘init process (PID 1)’. Init process will wait for the children to die by sending a wait signal which in turn removes the zombie processes. The parent process can be killed using the ‘kill’ command.
--> Normally, a child process that has completed its execution will send a SIGCHLD signal to the parent process which has created it.
+-> A zombie process is a process that has completed execution but is still in the process table because its parent has not read its exit status.
+💡 Think of it like this:
+-> Imagine a child process finishes its work and is waiting for its parent process to acknowledge it. But if the parent ignores it, the child becomes a zombie 🧟‍♂️—still there but doing nothing.
 -> When a process becomes dead, it will free up the memory and other resources allocated to it. So, a zombie process will not be using any resources at all, other than an entry in the process table. 
 -> The problem may start only when a large number of zombie processes exist and system run out of PIDs
   
--> Killing the parent process (  $$ kill -9)
-   If the zombie processes are not able to get removed, you should kill the parent process or restart the service 
-   to get rid of the zombies.
+-> To list zombie processes: $$ ps aux | grep Z
+-> Killing the parent process (  $$ kill -9 <parent_PID>)
 
- 
 
 * Daemon process: A daemon is also called background processes. It is a UNIX or Linux program that executes inside the background. Almost every daemon contains names that finish with "d" the letter. 
 -> For example, sshd, this manages connections of SSH remote access, or the httpd daemon that manages the Apache server. 
@@ -433,8 +432,8 @@ For eg :
 9. sed -i '5d' filename -- Used to delete 5th line in original file.
 Note : if you need to change the original file then use -i= insert to a file / modify to a file.
 Note : if you dont use -i it wont affect the original file it will just print the changed output
-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------
 Links:
 There are 2 types of links
 1. soft link/ symbolic link
@@ -541,6 +540,12 @@ netstat -tulnp: active network connections along with the processes (PIDs) using
 -n	Show numeric addresses (no DNS lookup)
 -p	Show process ID (PID) and program name
 
+netcat: port scanning, file transfers, debugging, and setting up simple servers
+nc -zv 192.168.1.1 22: 
+🔹 -z → Scans without sending data
+🔹 -v → Verbose mode
+
+
 Q. What commands do you know that can be used to check DNS records?
 1. nslookup: query DNS servers for information about a specific hostname or IP address.
 2. dig: This command is similar to nslookup, but provides more detailed information about DNS records.
@@ -560,7 +565,7 @@ du -sh * : used to find disk usage of particular file
 df -h : used to check the size of a drive, disk free
 syn : df -h (disk free, disk space)
 
-free: to check free memory   - -k
+free: to check free memory   - $$ free -k
 free -m, vmstat, top, htop
 -> It's important to note that while the term "free memory" is commonly used, in reality, there is no memory 
    that is completely unused or free on a running system. Even if memory is not being actively used by an application, 
@@ -594,6 +599,13 @@ sudo shutdown -r :reboot now
 sudo hault : 
 sudo shutdown -h now : shutdown within some time (Ex: sudo shutdown -h 60)
 sudo shutdown now : shutdown within sometime
+
+Feature				ps aux (BSD)	ps -ef (System V)
+Works on		Linux, BSD, macOS	Linux, Unix (System V)
+Dash - required?	❌ No				✅ Yes
+Shows %CPU & %MEM	✅ Yes				❌ No
+Shows parent process (PPID)?	❌ No			✅ Yes
+Column order		Different format		Traditional UNIX format
 
 / is the root directory.
 /bin/ and /usr/bin/ store user commands.

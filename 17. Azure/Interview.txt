@@ -95,7 +95,8 @@ $$ az ad group create --display-name "DevOps Team" --mail-nickname "devops-team"
 
 ------------------------------------------------------------------------
 3️⃣ Managed Identities 🔑
--> Managed Identities (MI) allow Azure services (like VMs, Functions, AKS) to securely authenticate without storing credentials.
+-> A Managed Identity is an Azure feature that provides an automatically managed identity for applications, services, or virtual machines (VMs) to use when connecting to other Azure services securely. 
+-> It eliminates the need to store credentials, such as secrets or API keys, in code or configuration files.
 
 🔹 Types of Managed Identities:
 ✅ System-Assigned MI – Tied to a single resource (e.g., a VM). Gets deleted when the resource is deleted.
@@ -128,6 +129,16 @@ $$ az identity create --name MyIdentity --resource-group myRG
 -> Command to Create a Service Principal (Azure CLI):
 $$ az ad sp create-for-rbac --name "myApp" --role Contributor --scopes /subscriptions/{subscription-id}
 
+📌 Authentication Methods
+1️⃣ Using a Service Principal with a Client Secret (Most Common)
+GitHub Actions → Store in GitHub Secrets (AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET).
+
+Azure DevOps → Store in Pipeline Variables ($(AZURE_CLIENT_ID), $(AZURE_TENANT_ID), $(AZURE_CLIENT_SECRET)).
+
+
+1️⃣ Client Secret (Password-Based Authentication)
+2️⃣ Certificate-Based Authentication
+3️⃣ Managed Identity Authentication (Recommended): Works only in Azure-hosted environments like VMs, Functions, AKS, etc.
 
 ***************************************************************************************
 Azure Key Vault🔐
@@ -180,7 +191,7 @@ Q. Accessing Azure Key Vault Securely 🔑
 1️⃣ Azure Storage Data Services (Overview) 🏢
 -> Azure offers four main types of storage services:
 1. Blob Storage - Storing unstructured data (objects): Images, videos, backups, logs
-2. File Storage - Managed file shares for cloud or on-premises deployments: Lift-and-shift applications, file sharing
+2. File Storage - Allows you to store and share files across Azure VMs, on-premises servers, and applications using SMB (Server Message Block) or NFS (Network File System).
 3. Queue Storage - Message-based communication: Asynchronous messaging between services
 4. Table Storage - NoSQL key-value storage: Storing structured, fast-access data
 5. Azure managed Disks: Block-level storage volumes for Azure VMs.
@@ -453,11 +464,11 @@ Deny All	All		All	Any	Any		Deny
 🔹 Traffic Manager – Routes traffic across regions (Multi-region apps)
 
 6️⃣ Load Balancing & High Availability ⚖️
-1. Public Load Balancer	Distributes traffic from the internet to VMs.
-2. Internal Load Balancer:Distributes traffic within the private network.
+1. Public Load Balancer: Distributes traffic from the internet to VMs.
+2. Internal Load Balancer: Distributes traffic within the private network.
 
 7️⃣ Secure VM Access with Azure Bastion 🔐
-Azure Bastion provides secure SSH/RDP access to VMs without exposing public IPs.
+-> Azure Bastion provides secure SSH/RDP access to VMs without exposing public IPs.
 ✅ Eliminates security risks from exposed RDP/SSH ports.
 ✅ Fully managed by Azure, no additional VMs needed.
 
@@ -695,7 +706,45 @@ resource "azurerm_subnet" "private_subnet" {
   address_prefixes     = var.private_subnet_cidr
 }
 
+
 ✅ Variables (modules/network/variables.tf)
+variable "vm_name" {
+  description = "Name of the virtual machine"
+  type        = string
+}
+
+variable "location" {
+  description = "Azure location"
+  type        = string
+}
+
+variable "resource_group_name" {
+  description = "Resource group name"
+  type        = string
+}
+
+variable "subnet_id" {
+  description = "Subnet ID for the VM"
+  type        = string
+}
+
+variable "vm_size" {
+  description = "Size of the VM"
+  type        = string
+  default     = "Standard_B1s"
+}
+
+variable "admin_username" {
+  description = "Admin username for VM"
+  type        = string
+}
+
+variable "admin_password" {
+  description = "Admin password for VM"
+  type        = string
+  sensitive   = true
+}
+
 variable "vnet_name" {}
 variable "location" {}
 variable "resource_group_name" {}
@@ -705,6 +754,7 @@ variable "private_subnet_cidr" { type = list(string) }
 
 ✅ Outputs (modules/network/outputs.tf)
 output "vnet_id" {
+  description = "ID of the created VM"
   value = azurerm_virtual_network.vnet.id
 }
 
@@ -715,6 +765,22 @@ output "public_subnet_id" {
 output "private_subnet_id" {
   value = azurerm_subnet.private_subnet.id
 }
+
+
+** Calling the Module in Your Main Terraform Configuration
+
+module "virtual_machine" {
+  source              = "./modules/virtual_machine"
+  vm_name             = "vm-web"
+  location            = "East US"
+  resource_group_name = "3tier-rg"
+  subnet_id           = module.network.subnet_ids[0]
+  vm_size             = "Standard_B1s"
+  admin_username      = "adminuser"
+  admin_password      = "P@ssw0rd1234"
+}
+
+
 
 ---------------------------------------------------------------
 Module 2: Virtual Machines (modules/compute/main.tf)

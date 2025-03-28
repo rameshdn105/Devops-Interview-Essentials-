@@ -80,7 +80,10 @@ COMMANDS USED IN TERRAFORM:
 1. Renaming Resources in State: If you change the resource name in your configuration file, Terraform will think it's a new resource and try to recreate it. To prevent this, you can move the existing resource in the state to the new name.
 2. Moving Resources Between Modules: If you refactor your Terraform code and move a resource inside or outside of a module, terraform state mv helps retain its state without destroying and recreating it.
 3. Reorganizing Resources: If you need to restructure your Terraform project (e.g., move resources from root to a module), this command helps maintain state integrity.
-$$ terraform state mv aws_instance.old_name aws_instance.new_name
+
+1. Changes resource names in your infra code
+2. Run  $$ terraform state mv aws_instance.old_name aws_instance.new_name [in terraform referring name will be renamed]
+
 $$ terraform state list | grep <resource_name>  or
 $$ terraform plan
 $$ terraform apply
@@ -191,26 +194,6 @@ resource "aws_instance" "example" {
   instance_type = "t2.micro"
 }
 -- The data block fetches an existing AWS AMI and assigns its ID to the EC2 insta
-
--------------------------------------------------------------------------------------------------------------------------------
--> Terraform Components: Terraform Core and Terraform Plugins
-1. Terraform Core
--> Terraform Core is like the "brain" of Terraform. It does the following:
-👉 Reads and processes configuration files: Terraform Core takes the instructions you've written (in .tf files) and works out what resources you want to create, update, or destroy.
-👉 Creates a resource graph: It figures out how all the resources you defined are connected (for example, which resources depend on others).
-👉 Manages the state: It tracks the current state of your infrastructure, so it knows what has been created and what needs to change.
-👉 Handles Terraform lifecycle: The "lifecycle" is the sequence of steps Terraform goes through:
--- terraform init: Prepares Terraform to run, setting things up like downloading necessary plugins.
--- terraform plan: Shows you what changes Terraform will make to your infrastructure.
--- terraform apply: Actually makes those changes to your infrastructure.
--> In short, Terraform Core is in charge of managing the entire process of planning and applying changes to your infrastructure.
-
-2. Terraform Plugins
--> Terraform Plugins are like "helpers" that Terraform uses to interact with different services (like AWS, Azure, Google Cloud, etc.). These are separate programs that perform specific tasks.
--> Each plugin is specific to a service: For example, there's a plugin for AWS, another for Azure, etc. 
--> Each plugin knows how to create, update, and delete resources on the respective cloud provider.
--> Plugins are written in Go: The code for these plugins is written in the Go programming language. Each plugin is a separate executable file that communicates with Terraform Core.
--> They talk to Terraform Core: Plugins use a special communication method called RPC (Remote Procedure Call) to talk to Terraform Core and carry out tasks like creating an EC2 instance or an S3 bucket.
 
 ---------------------------------------------------------------------------------
 ** (Tfstate) state in terraform : condition of a resource is called state in a given time. 

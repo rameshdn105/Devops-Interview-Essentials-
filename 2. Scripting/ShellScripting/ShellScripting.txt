@@ -1,7 +1,7 @@
 SHELL SCRIPTING
 -> Any file where you put series of Linux commands that can be called as shell script.
+-> With logics and conditions.
 
-With logics and conditions.
 -- Shell script has an extention ".sh"
 -- Shell script is used to automate the manual and repetitive tasks.
 

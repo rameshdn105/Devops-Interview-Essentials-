@@ -137,8 +137,8 @@ TLS /SSL Authentication flow: [CA: Certificate Authority]
 
 4️⃣ Session Key Generation (Both Sides)
 -> Using the Client Random, Server Random, and the Pre-Master Secret, both client and server generate:
--- Symmetric Session Keys for encryption and decryption
--- MAC (Message Authentication Code) Keys for integrity verification
+1. Symmetric Session Keys for encryption and decryption
+2. MAC (Message Authentication Code) Keys for integrity verification
 🔹 Both parties now have the same shared secret key.
 
 5️⃣ Finished Messages (Client ↔ Server)

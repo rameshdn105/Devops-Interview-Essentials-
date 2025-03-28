@@ -52,6 +52,7 @@ Example:
 1️⃣ RBAC in GitHub Actions (Rulesets & Protected Branches)
 -- You can restrict workflows from running without specific approvals.
 -- Branch protection ensures that only authorized users can push to main.
+
 ------------------------------------------------------------------------------------------
 Difference between Jenkins and GitHub Actions: 
 
@@ -161,7 +162,8 @@ on:
 │ │ │ │ │
 * * * * *
 
-🔹 Jobs: A job is a set of steps in a workflow that is executed on the same runner. Each step is either a shell script that will be executed, or an action that will be run. 
+🔹 Jobs: A job is a set of steps in a workflow that is executed on the same runner. 
+-> Each step is either a shell script that will be executed, or an action that will be run. 
 -- Steps are executed in order and are dependent on each other. Since each step is executed on the same runner, you can share data from one step to another. 
 -- For example, you can have a step that builds your application followed by a step that tests the application that was built.
 
@@ -187,10 +189,10 @@ on:
 
 -- If you need a different operating system or require a specific hardware configuration, you can host your own runners.
 
--- For more information about self-hosted runners, see "Hosting your own runners."
 -- Self-hosted runners: A self-hosted runner is a system that you deploy and manage to execute jobs from GitHub Actions on GitHub.com.
 
--- A self-hosted runner is automatically removed from GitHub if it has not connected to GitHub Actions for more than 14 days. An ephemeral self-hosted runner is automatically removed from GitHub if it has not connected to GitHub Actions for more than 1 day.
+-- A self-hosted runner is automatically removed from GitHub if it has not connected to GitHub Actions for more than 14 days. 
+-- An ephemeral self-hosted runner is automatically removed from GitHub if it has not connected to GitHub Actions for more than 1 day.
 
 ---------------------------------------------------------------------------
 ** GitHub's architecture:
@@ -548,8 +550,9 @@ permissions:
   issues: none
   actions: write
 
+
 Q. How to secure GitHub actions?
--- Securing GitHub Actions is crucial to protect your code, workflows, and infrastructure from potential threats and unauthorized access. Here are some best practices and strategies to ensure the security of your GitHub Actions workflows:
+-- Securing GitHub Actions is crucial to protect your code, workflows, and infrastructure from potential threats and unauthorized access. 
 
 1. Manage Secrets Securely
 -- Use GitHub Secrets: Store sensitive data such as API keys, passwords, and tokens in GitHub Secrets. Avoid hardcoding secrets directly into your workflow files. Access secrets using the ${{ secrets.SECRET_NAME }} syntax.
@@ -573,11 +576,13 @@ Q. How to secure GitHub actions?
 -- Monitor Dependencies: Regularly update actions and dependencies to address security vulnerabilities and ensure compatibility with GitHub Actions.
 
 6. Monitor and Log Activity
--- Enable Logging: GitHub Actions automatically logs workflow runs. Review logs to detect and investigate suspicious or unexpected behavior.
+-- Enable Logging: GitHub Actions automatically logs workflow runs. 
+-- Review logs to detect and investigate suspicious or unexpected behavior.
 -- Set Up Alerts: Configure alerts and notifications for workflow failures, unauthorized access attempts, or other anomalies.
 
 7. Use Workflow Restrictions
--- Restrict Workflow Triggers: Control when workflows are triggered to reduce the risk of unauthorized or malicious activity. For example, restrict workflow triggers to specific branches or events.
+-- Restrict Workflow Triggers: Control when workflows are triggered to reduce the risk of unauthorized or malicious activity. 
+-- For example, restrict workflow triggers to specific branches or events.
 
 yaml
 Copy code
@@ -617,10 +622,25 @@ Go to Settings > Secrets and variables > Actions
 -> Anyone with collaborator access to this repository can use these secrets and variables for actions. 
 -> They are not passed to workflows that are triggered by a pull request from a fork.
 
-2. Codespaces secrets: Development environment secrets are environment variables that are encrypted. Secrets are not passed to forks.
+🔹 GitHub Codespaces Secrets
+-- Used for development environments in GitHub Codespaces.
+-- Stored as encrypted environment variables.
+-- Not shared with forks (protects secrets from being exposed when a repo is forked).
+-- Used for authentication, API keys, or any sensitive data in a Codespaces environment.
 
-3. Dependabot secrets: Secrets are credentials that are encrypted. Anyone with collaborator access to this repository can use these secrets for Dependabot.
--> Secrets are not passed to forks.
+🔹 GitHub Dependabot Secrets
+-- Used specifically for Dependabot (which updates dependencies automatically).
+-- Secrets are encrypted credentials.
+-- Available to anyone with collaborator access to the repository.
+-- Used to authenticate with private package registries (e.g., private NPM, Docker, or Maven registries).
+
+🔹 Key Differences
+Feature		Codespaces Secrets	Dependabot Secrets
+Purpose	Development environment variables	Credentials for Dependabot
+Encryption	✅ Yes				✅ Yes
+Fork Access	❌ Not shared		🔹 Available to collaborators
+Use Case	API keys, tokens for local dev	Authentication for dependency updates
+
 
 ---------------------------------------------------------------------------
 3. What are the common use cases GitHub actions is used for?
@@ -728,7 +748,7 @@ strategy:
 
 
 ---------------------------------------------------------------------------
-Q. What are the credential types supported by Jenkins?
+Q. What are the credential types supported by GitHub Actions?
 -- GitHub Actions supports various credential types for secure and flexible authentication, including:
 1. GitHub Secrets: For storing sensitive information like API keys and passwords.
 2. GitHub Tokens: For interacting with GitHub APIs.
@@ -738,13 +758,23 @@ Q. What are the credential types supported by Jenkins?
 6. Service Account Credentials: For accessing external services for authenticating and authorizing access to cloud services or external systems.
 7. Environment Variables: For passing configuration and runtime values.
 
+========================================================================================
+** Best Practices for GitHub Branch Protection
+✅ Enable at least 1 required PR review to prevent bad code merges.
+✅ Require status checks to ensure CI/CD pipelines pass before merging.
+✅ Restrict force pushes and branch deletions for production branches.
+✅ Use code owner approvals for enforcing expertise-based reviews.
+✅ Use required signed commits to verify authenticity of commits.
+
 ------------------------------------------------------------------------------------------
 Q. Branch Protection Policies vs. Rulesets:
--> Branch protection policies and rulesets both offer frameworks for implementing governance controls, but they cater to different needs:
-1. Branch Protection Policies are specific to individual branches within a repository, allowing for granular control over how code is reviewed, tested, and merged. 
+
+1. Branch Protection Policies:
+-> These are specific to individual branches within a repository, allowing for granular control over how code is reviewed, tested, and merged. 
 -> They are ideal for projects requiring specific safeguards on critical branches.
 
-2. Rulesets, on the other hand, can be applied at a more macro level, such as across an entire organization or repository. They offer a broader, more standardized approach to governance that can be consistently applied. 
+2. Rulesets:
+-> On the other hand, can be applied at a more macro level, such as across an entire organization or repository. They offer a broader, more standardized approach to governance that can be consistently applied. 
 
 ✅ How to Set Up Branch Protection Rules?
 🔹 Steps to Enable Branch Protection Rules (GitHub UI)
@@ -854,13 +884,6 @@ curl -X PUT -H "Authorization: token GITHUB_TOKEN" \
       "restrictions": null
     }'
 
-========================================================================================
-** Best Practices for GitHub Branch Protection
-✅ Enable at least 1 required PR review to prevent bad code merges.
-✅ Require status checks to ensure CI/CD pipelines pass before merging.
-✅ Restrict force pushes and branch deletions for production branches.
-✅ Use code owner approvals for enforcing expertise-based reviews.
-✅ Use required signed commits to verify authenticity of commits.
 
 ========================================================================================
 

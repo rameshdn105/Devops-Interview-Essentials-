@@ -38,12 +38,15 @@
 --> An artifact is a collection of files or packages published by a run.
 
 
--> Agent: When your build or deployment runs, the system begins one or more jobs. An agent is computing infrastructure with installed agent software that runs one job at a time. For example, your job could run on a Microsoft-hosted Ubuntu agent.
+-> Agent: When your build or deployment runs, the system begins one or more jobs. 
+-> An agent is computing infrastructure with installed agent software that runs one job at a time. For example, your job could run on a Microsoft-hosted Ubuntu agent.
 
--> Approvals: Approvals define a set of validations required before a deployment runs. Manual approval is a common check performed to control deployments to production environments. 
+-> Approvals: Approvals define a set of validations required before a deployment runs. 
+-> Manual approval is a common check performed to control deployments to production environments. 
 -- When checks are configured on an environment, a pipeline run pauses until all the checks are completed successfully.
 
--> Artifact: An artifact is a collection of files or packages published by a run. Artifacts are made available to subsequent tasks, such as distribution or deployment.
+-> Artifact: An artifact is a collection of files or packages published by a run. 
+-> Artifacts are made available to subsequent tasks, such as distribution or deployment.
 
 
 ** Azure DevOps comes with two options:
@@ -94,8 +97,8 @@ c. Task: tracks even smaller works done. It is easy to add or update your work s
 3. Azure Pipelines: A continuous integration and delivery (CI/CD) platform that enables teams to automate the build, test, and deployment of applications.
 -> Azure Pipeline is a combination of continuous integration (CI) and continuous delivery (CD) which you can use to create and test your code automatically and give access to other users.
 -> You can produce consistent and quality code with CI and CD.
--> You can work with programming languages like Python, Ruby, Java, PHP, C#, and Go. To use Azure Pipelines, 
-   your source code must be stored in a version control system such as Git.
+-> You can work with programming languages like Python, Ruby, Java, PHP, C#, and Go. 
+-> To use Azure Pipelines, your source code must be stored in a version control system such as Git.
 -> Coming to the pricing, private projects can work up to 30 hours for free, every month, and for public projects it is free.
 
 4. Azure Test Plans: A testing tool that enables teams to plan, track, and manage testing for their applications through PI(Programing increment) sprint

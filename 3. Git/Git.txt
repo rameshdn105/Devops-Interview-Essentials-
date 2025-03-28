@@ -474,7 +474,8 @@ Q. What is Branch Protection?
 -> This is particularly important in "inner sourcing" models, where everyone has "write" access to the source code repositories, but branches that are deployed to higher environments are protected. 
 
 Q. What is “Inner sourcing” and how does it work?
--> In an "inner sourcing" model, while all developers have the ability to contribute code, not all contributions are treated equally. For instance, branches destined for production deployment are shielded by branch protection rules. 
+-> In an "inner sourcing" model, while all developers have the ability to contribute code, not all contributions are treated equally. 
+-> For instance, branches destined for production deployment are shielded by branch protection rules. 
 -- This means that although developers can freely contribute to the codebase, their changes must undergo a rigorous review and testing process before being deployed to more sensitive environments. 
 -- Inner sourcing leverages the collective expertise and creativity of the entire team while ensuring that the deployed code is secure, reliable, and aligned with organizational standards.
 
