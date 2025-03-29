@@ -8,14 +8,21 @@ Creating Lambda functions:
 4. Modify lambda function to execute the task
 5. Test it
 
+-- event: Contains input data (JSON payload or event details)
+-- context: Contains runtime metadata about the Lambda execution
+
 -> In the AWS Lambda function, the event and context parameters are automatically passed by AWS Lambda when the function is triggered. These parameters provide information about the event that triggered the function and the runtime context of the Lambda execution. Let's break them down:
 
 1. event:
--> The event is the input to the Lambda function. It contains information about the event that triggered the function. This could be data passed by an AWS service like S3, SNS, API Gateway, CloudWatch Events, IoT, etc.
+-> The event is the input to the Lambda function. 
+-> It contains information about the event that triggered the function. 
+-> This could be data passed by an AWS service like S3, SNS, API Gateway, CloudWatch Events, IoT, etc.
 -> The structure and contents of the event object vary depending on the service that triggers the Lambda function.
--  Example:
--> If you trigger the Lambda function with an S3 event (e.g., when a new file is uploaded to an S3 bucket), the event will contain details about the bucket and the file.
--> If the Lambda function is triggered by an API Gateway, the event will contain HTTP request data, such as HTTP method, body, headers, query parameters, etc.
+
+--  Example:
+1. If the Lambda function is invoked via API Gateway, the event contains HTTP request details.
+2. If invoked manually, it contains the JSON payload you pass.
+3. If triggered by S3, SNS, DynamoDB, or EventBridge, it contains details of that event.
 -> Example: S3 Event (when an image is uploaded)
 
 {
@@ -32,6 +39,17 @@ Creating Lambda functions:
     }
   ]
 }
+
+or  [Payload]
+[
+  {
+    "Name": "eks-dev-eu-west-1b",
+    "min_size": 1,
+    "max_size": 4,
+    "desired_capacity": 3
+  }
+]
+
 
 2. context:
 -> The context object provides runtime information about the Lambda function invocation.

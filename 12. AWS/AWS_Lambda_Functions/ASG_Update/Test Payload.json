@@ -1,0 +1,15 @@
+[
+    {
+      "Name": "eks-dev-eu-west-1a",
+      "min_size": 2,
+      "max_size": 6,
+      "desired_capacity": 3
+    },
+    {
+      "Name": "Demo-ALB-test",
+      "min_size": 1,
+      "max_size": 3,
+      "desired_capacity": 4
+    }
+  ]
+  
