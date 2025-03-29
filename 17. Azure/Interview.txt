@@ -498,6 +498,25 @@ Features
 ✅ WAF Protection → Blocks SQL injection, XSS attacks, and DDoS threats.
 
 
+1️⃣ VNet Peering
+-> VNet Peering allows communication between two Azure Virtual Networks (VNets) privately. It enables low-latency, high-bandwidth connectivity without going over the internet.
+
+📌 Use Case: Connect multiple VNets across regions or within the same region for better resource communication.
+🔹 Key Features:
+✅ Traffic stays within Azure's backbone (no internet).
+✅ Supports cross-region peering.
+✅ No bandwidth limitations (depends on VM NIC speeds).
+
+
+2️⃣ Private Endpoint (Interface Endpoint)
+-> A Private Endpoint is a network interface that connects your VNet privately to Azure services (PaaS, Storage, SQL, etc.) via Azure Private Link.
+
+📌 Use Case: Secure access to Azure services without exposing them to the internet.
+🔹 Key Features:
+✅ Creates a private IP for Azure resources.
+✅ Prevents data from leaving the VNet.
+✅ Works with Azure Storage, SQL Database, Key Vault, etc.
+
 ***************************************************************************************
 1️⃣ Azure Functions (AWS Lambda Alternative)
 ✅ Serverless & event-driven
@@ -1019,12 +1038,4 @@ Azure Security🔒
 ✅ Compliance Manager – Tracks compliance with ISO, HIPAA, GDPR, etc.
 
 ***************************************************************************************
-
-
-
-
-
-
-
-
 

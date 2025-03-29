@@ -198,10 +198,12 @@ VM3 → Update Domain 3
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 Q. What is Azure tenant? renting hardare/sftwr, temperory subscription
--> A tenant refers to a "dedicated instance of Azure Active Directory (Azure AD)" that is used to manage access, identities, and resources within the Azure cloud platform.
--> Each Azure tenant has its own unique directory, subscription, and settings, allowing for isolated and secure management of 
-   resources and identities within the tenant. An organization can have multiple tenants to isolate resources and identities 
-   for different departments, business units, or subsidiaries.
+-> a tenant represents an organization under Azure Active Directory (AAD), where all users, groups, and resources are managed.
+-> a tenant refers to a dedicated and isolated instance of Azure Active Directory (Azure AD) that is used to manage and organize resources within Azure. 
+-> An Azure tenant represents an organization's presence in Azure and serves as a security and administrative boundary.
+-> When an organization signs up for Azure, it creates a tenant, which is associated with a unique domain name (e.g., yourdomain.onmicrosoft.com). 
+-> This tenant serves as the root of the organization's Azure AD hierarchy and provides a range of services and features for managing identities, access, and resources within Azure.
+
 -> Having a tenant in Azure provides benefits such as:
 1. Centralized management and control over resources and identities
 2. Better security through isolation of resources and identities

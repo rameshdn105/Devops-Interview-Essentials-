@@ -226,6 +226,7 @@ Q. Pipeline variables, Variable groups , predefined variables in azure devops
 1. Pipeline variables: These are variables that are defined within a specific pipeline and can be used in any stage or task within that pipeline. 
    Pipeline variables can be defined at the pipeline level, stage level, or task level.
 -> Ex: buildConfiguration: 'Release', webAppServiceName: 'my-web-app', dbConnectionString: 'my-db-connection-string'
+
 2. Variable groups: These are variables that are shared across multiple pipelines. Variable groups allow teams to define a set of variables 
    once and use them across different pipelines, reducing the need for duplication of effort. 
 -> Variable groups can be defined at the project or organization level.
@@ -239,6 +240,7 @@ $(Build.Repository.Name): The name of the repository that the build is associate
 $(Build.SourceBranch): The branch being built.
 $(System.DefaultWorkingDirectory): The default working directory for the pipeline.
 
+
 Q. Azure subscriptions:
 -> An Azure subscription is a logical container used to manage access to Azure services and resources. 
 -> It provides a way for users to access and use Azure services, such as virtual machines, storage accounts, databases, and other Azure services.
@@ -246,10 +248,10 @@ Q. Azure subscriptions:
    access to Azure services, billing, and support. Users can then create one or more subscriptions under their Azure account.
 
 Q. Azure tenants:
+-> a tenant represents an organization under Azure Active Directory (AAD), where all users, groups, and resources are managed.
 -> a tenant refers to a dedicated and isolated instance of Azure Active Directory (Azure AD) that is used to manage and organize resources within Azure. 
 -> An Azure tenant represents an organization's presence in Azure and serves as a security and administrative boundary.
--> When an organization signs up for Azure, it creates a tenant, which is associated with a unique domain name 
-   (e.g., yourdomain.onmicrosoft.com). 
+-> When an organization signs up for Azure, it creates a tenant, which is associated with a unique domain name (e.g., yourdomain.onmicrosoft.com). 
 -> This tenant serves as the root of the organization's Azure AD hierarchy and provides a range of services and features for managing identities, access, and resources within Azure.
 
 Here are a few key points about Azure tenants:
@@ -299,14 +301,15 @@ A code push occurs
 -> For example, you could use an Azure Resource Manager service connection to deploy your application to Azure, or a Docker Hub service connection to push your container images to Docker Hub.
 -> Service connections in Azure DevOps are a convenient way to manage and automate your deployments and integrations with external services, while also ensuring that your sensitive credentials and information are securely stored and managed.
 
-5. Service Endpoints:  ( Azure Resource Manager (ARM) service connections)
+5. Service Endpoints:  Deprecated and replaced by Service Connections.
 -> Service Endpoints are a feature of Azure Virtual Networks (VNets).
 -> They provide a secure and direct connection between a VNet and an Azure service (e.g., Azure Storage, Azure SQL Database) over the Azure backbone network.
 -> In Azure DevOps, a service endpoint is a secure way to connect to external services or systems from your build, release, or deployment pipelines. Service endpoints store the necessary authentication credentials (e.g., username, password, token) and connection details to enable communication with these external resources securely.
 -> Azure DevOps provides several built-in service endpoint types to connect to various external services. Some commonly used service endpoint types include:
 
 a. Azure Service Principal: 
--> An Azure Service Principal is a security identity used by applications, services, or automation tools to access Azure resources. Essentially, it is like a "user identity" for an application, and it is used to authenticate and authorize that application to perform actions in Azure.
+-> An Azure Service Principal is a security identity used by applications, services, or automation tools to access Azure resources. 
+-> Essentially, it is like a "user identity" for an application, and it is used to authenticate and authorize that application to perform actions in Azure.
 -> Used to connect to Azure resources such as Azure Resource Manager, Azure Container Registry, or Azure Key Vault. It requires a service principal (a type of Azure Active Directory application) and related credentials.
 
 b. GitHub: Used to connect to a GitHub repository to retrieve source code or trigger builds based on code changes in GitHub.

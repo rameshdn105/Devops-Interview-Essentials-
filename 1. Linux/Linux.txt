@@ -558,6 +558,10 @@ Q. What is a bash alias?
    $$ alias ll='ls -l'
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
+Checking If a Variable Is Empty or Unset: 
+$$ [ -z "$var" ] && echo "Variable is empty"
+-z stands for "zero-length string"
+
 du -sh : Used to find disk usage of file
 syn : du -sh
 du -sh * : used to find disk usage of particular file
@@ -575,6 +579,15 @@ cat /etc/passwd | awk -F ':' '{print $1}' :list all users
 who/whoami - used to check how many users logged into system 
 -> (who : Print information about users who are currently logged in. whoami : Print effective username of the user who ran whoami)
 who -r command - to determine a system's run level
+
+ps -eo pid,comm,%cpu --sort=-%cpu | head -10
+ps -eo	List all processes with specific columns.
+pid	Shows Process ID (PID).
+comm	Displays the command (process name).
+%cpu	Shows CPU usage percentage of each process.
+--sort=-%cpu	Sorts processes by CPU usage in descending order (highest first).
+head -10	Displays only the top 10 processes.
+
 
 uname - used to check the os
 uname -a -> used to check all the info about linux
